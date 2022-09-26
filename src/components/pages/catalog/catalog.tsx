@@ -4,9 +4,10 @@ import Breadcrumbs from '../../common/breadcrumbs/breadcrumbs';
 import Pagination from '../../common/pagination/pagination';
 import UnknownSvg from '../../common/unknown-svg/unknown-svg';
 
-import { Banner, ProductCard, Sorting, SideFilter } from './components/components';
+import {Banner, ProductCard, Sorting, SideFilter, AddProductModal, SuccessModal} from './components/components';
 
-
+const isModalAddOpen = false;
+const isModalSuccessOpen = false;
 //eslint-disable-next-line
 const Catalog = () => {
   return (
@@ -34,6 +35,8 @@ const Catalog = () => {
               </div>
             </section>
           </div>
+          {isModalAddOpen && <AddProductModal />}
+          {isModalSuccessOpen && <SuccessModal />}
         </main>
         <Footer />
       </div>

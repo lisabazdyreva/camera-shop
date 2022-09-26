@@ -3,8 +3,10 @@ import Footer from '../../common/footer/footer';
 import Breadcrumbs from '../../common/breadcrumbs/breadcrumbs';
 import UnknownSvg from '../../common/unknown-svg/unknown-svg';
 
-import { BasketSummary, BasketItem } from './components/components';
+import {BasketSummary, BasketItem, SuccessModal, RemoveModal} from './components/components';
 
+const isSuccessModalOpen = false;
+const isRemoveModalOpen = false;
 
 //eslint-disable-next-line
 const Basket = () => {
@@ -27,6 +29,8 @@ const Basket = () => {
             </section>
           </div>
         </main>
+        { isSuccessModalOpen && <SuccessModal /> }
+        { isRemoveModalOpen && <RemoveModal />}
         <Footer />
       </div>
     </>
