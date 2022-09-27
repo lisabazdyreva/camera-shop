@@ -9,11 +9,13 @@ import {
   ReviewCard,
 } from './components/components';
 import {Modal} from '../../common/common';
+import {useState} from 'react';
 
-const isReviewModalOpen = false;
-const isSuccessModal = false;
+
 //eslint-disable-next-line
 const Product = () => {
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   return (
     <>
       <UnknownSvg/>
@@ -33,7 +35,7 @@ const Product = () => {
                 <div className="container">
                   <div className="page-content__headed">
                     <h2 className="title title--h3">Отзывы</h2>
-                    <button className="btn" type="button">Оставить свой отзыв</button>
+                    <button className="btn" type="button" onClick={() => setIsReviewModalOpen(true)}>Оставить свой отзыв</button>
                   </div>
                   <ul className="review-block__list">
                     <ReviewCard />
@@ -45,8 +47,8 @@ const Product = () => {
               </section>
             </div>
           </div>
-          { isReviewModalOpen && <Modal modalType='product' isModalDetailed /> }
-          { isSuccessModal && <Modal modalType='product' isModalDetailed={false} />}
+          { isReviewModalOpen && <Modal modalType='product' isModalDetailed handleCloseModal={setIsReviewModalOpen}/> }
+          { isSuccessModalOpen && <Modal modalType='product' isModalDetailed={false} handleCloseModal={setIsSuccessModalOpen}/>}
         </main>
         <a className="up-btn" href="#header">
           <svg width="12" height="18" aria-hidden="true">

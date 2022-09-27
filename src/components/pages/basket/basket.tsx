@@ -9,12 +9,12 @@ import {
 } from './components/components';
 
 import {Modal} from '../../common/common';
-
-const isSuccessModalOpen = false;
-const isRemoveModalOpen = false;
+import {useState} from 'react';
 
 //eslint-disable-next-line
 const Basket = () => {
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
   return (
     <>
       <UnknownSvg/>
@@ -27,15 +27,15 @@ const Basket = () => {
               <div className="container">
                 <h1 className="title title--h2">Корзина</h1>
                 <ul className="basket__list">
-                  <BasketItem />
+                  <BasketItem handleOpenModal={setIsRemoveModalOpen} />
                 </ul>
                 <BasketSummary />
               </div>
             </section>
           </div>
         </main>
-        { isSuccessModalOpen && <Modal modalType='basket' isModalDetailed={false} /> }
-        { isRemoveModalOpen && <Modal modalType='basket' isModalDetailed /> }
+        { isSuccessModalOpen && <Modal modalType='basket' isModalDetailed={false} handleCloseModal={setIsSuccessModalOpen}/> }
+        { isRemoveModalOpen && <Modal modalType='basket' isModalDetailed handleCloseModal={setIsRemoveModalOpen}/> }
         <Footer />
       </div>
     </>

@@ -1,13 +1,22 @@
-// import Catalog from '../pages/catalog/catalog';
+import Catalog from '../pages/catalog/catalog';
 import Product from '../pages/product/product';
-// import Basket from '../pages/basket/basket';
+import Basket from '../pages/basket/basket';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {AppRoute} from '../../types/const';
+
 
 //eslint-disable-next-line
 const App = (): JSX.Element => {
   return (
-    // <Catalog />
-    <Product />
-    // <Basket />
+    <BrowserRouter>
+      <Routes>
+        <Route path={AppRoute.Catalog} element={<Catalog />}/>
+        <Route path={AppRoute.Basket} element={<Basket/>} />
+        <Route path={AppRoute.Product} element={<Product />} />
+      </Routes>
+
+    </BrowserRouter>
+
   );
 };
 

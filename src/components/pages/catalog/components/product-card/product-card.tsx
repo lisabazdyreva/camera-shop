@@ -1,5 +1,10 @@
+
+
+interface ProductCardProps {
+  handleAddModal: (isModalOpen: boolean) => void;
+}
 //eslint-disable-next-line
-const ProductCard = () => {
+const ProductCard = ({handleAddModal}: ProductCardProps) => {
   return (
     <div className="product-card">
       <div className="product-card__img">
@@ -38,10 +43,8 @@ const ProductCard = () => {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">Купить
-        </button>
-        <a className="btn btn--transparent" href="src/components/pages/catalog/components/product-card/product-card#">Подробнее
-        </a>
+        <button className="btn btn--purple product-card__btn" type="button" onClick={() => handleAddModal(true)}>Купить</button>
+        <a className="btn btn--transparent" href="src/components/pages/catalog/components/product-card/product-card#">Подробнее</a>
       </div>
     </div>
   );

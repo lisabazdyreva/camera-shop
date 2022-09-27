@@ -1,21 +1,21 @@
+import {AppRoute, MenuItemsType} from '../../../types/const';
+import {MenuItem} from '../../../types/const';
+import {Link} from 'react-router-dom';
+
+interface HeaderNavItemProps {
+  name: MenuItemsType,
+}
 //eslint-disable-next-line
-const HeaderNavItem = () => {
+const HeaderNavItem = ({name}: HeaderNavItemProps) => {
   return (
     <li className="main-nav__item">
-      <a className="main-nav__link" href="#">Каталог</a>
+      {
+        name === MenuItem.Catalog
+          ? <Link to={AppRoute.Catalog} className="main-nav__link">{name}</Link>
+          : <a className="main-nav__link" href="#">{name}</a>
+      }
     </li>
   );
 };
 
 export default HeaderNavItem;
-
-/*
-*             <li className="main-nav__item">
-              <a className="main-nav__link" href="#">Гарантии</a>
-            </li>
-            <li className="main-nav__item">
-              <a className="main-nav__link" href="#">Доставка</a>
-            </li>
-            <li className="main-nav__item">
-              <a className="main-nav__link" href="#">О компании</a>
-            </li>*/

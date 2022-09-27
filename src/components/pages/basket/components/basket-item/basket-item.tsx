@@ -1,5 +1,9 @@
+interface BasketItemProps {
+  handleOpenModal: (isOpen: boolean) => void;
+}
+
 //eslint-disable-next-line
-const BasketItem = () => {
+const BasketItem = ({handleOpenModal}: BasketItemProps) => {
   return (
     <li className="basket-item">
       <div className="basket-item__img">
@@ -45,7 +49,7 @@ const BasketItem = () => {
       <div className="basket-item__total-price">
         <span className="visually-hidden">Общая цена:</span>37 940 ₽
       </div>
-      <button className="cross-btn" type="button" aria-label="Удалить товар">
+      <button className="cross-btn" type="button" aria-label="Удалить товар" onClick={() => handleOpenModal(true)}>
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>
         </svg>

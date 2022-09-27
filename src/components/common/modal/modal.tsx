@@ -9,14 +9,15 @@ import {
   ReturnButton
 } from './components/components';
 
-import {ModalType} from '../../../types/types';
+import {ModalType} from '../../../types/const';
 
 interface ModalProps {
   modalType: typeof ModalType[keyof typeof ModalType];
   isModalDetailed: boolean;
+  handleCloseModal: (isOpen: boolean) => void;
 }
 
-const Modal = ({modalType, isModalDetailed}: ModalProps) => {
+const Modal = ({modalType, isModalDetailed, handleCloseModal}: ModalProps) => {
 
   const getSVG = () => {
     if (modalType === ModalType.Catalog) {
@@ -60,7 +61,7 @@ const Modal = ({modalType, isModalDetailed}: ModalProps) => {
           <div className="modal__buttons">
             {modalButtons}
           </div>
-          <button className="cross-btn" type="button" aria-label="Закрыть попап">
+          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => handleCloseModal(false)}>
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg>
