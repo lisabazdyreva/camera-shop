@@ -4,7 +4,13 @@ import Breadcrumbs from '../../common/breadcrumbs/breadcrumbs';
 import Pagination from '../../common/pagination/pagination';
 import UnknownSvg from '../../common/unknown-svg/unknown-svg';
 
-import {Banner, ProductCard, Sorting, SideFilter, AddProductModal, SuccessModal} from './components/components';
+import {
+  Banner,
+  ProductCard,
+  Sorting,
+  SideFilter,
+} from './components/components';
+import {Modal} from '../../common/common';
 
 const isModalAddOpen = false;
 const isModalSuccessOpen = false;
@@ -35,8 +41,8 @@ const Catalog = () => {
               </div>
             </section>
           </div>
-          {isModalAddOpen && <AddProductModal />}
-          {isModalSuccessOpen && <SuccessModal />}
+          {isModalAddOpen && <Modal modalType='catalog' isModalDetailed />}
+          {isModalSuccessOpen && <Modal modalType='catalog' isModalDetailed={false}/>}
         </main>
         <Footer />
       </div>

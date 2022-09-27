@@ -3,7 +3,12 @@ import Footer from '../../common/footer/footer';
 import Breadcrumbs from '../../common/breadcrumbs/breadcrumbs';
 import UnknownSvg from '../../common/unknown-svg/unknown-svg';
 
-import {ProductItem, ProductSimilar, ReviewCard, ReviewModal, SuccessModal} from './components/components';
+import {
+  ProductItem,
+  ProductSimilar,
+  ReviewCard,
+} from './components/components';
+import {Modal} from '../../common/common';
 
 const isReviewModalOpen = false;
 const isSuccessModal = false;
@@ -40,8 +45,8 @@ const Product = () => {
               </section>
             </div>
           </div>
-          { isReviewModalOpen && <ReviewModal /> }
-          { isSuccessModal && <SuccessModal />}
+          { isReviewModalOpen && <Modal modalType='product' isModalDetailed /> }
+          { isSuccessModal && <Modal modalType='product' isModalDetailed={false} />}
         </main>
         <a className="up-btn" href="#header">
           <svg width="12" height="18" aria-hidden="true">
