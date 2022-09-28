@@ -1,5 +1,13 @@
-//eslint-disable-next-line
-const BasketItemShort = () => {
+interface BasketItemShortProps {
+  data: {
+    name: string;
+    price: number;
+  }
+}
+
+
+const BasketItemShort = ({data}: BasketItemShortProps) => {
+  const {name, price} = data;
   return (
     <div className="basket-item basket-item--short">
       <div className="basket-item__img">
@@ -15,7 +23,7 @@ const BasketItemShort = () => {
         </picture>
       </div>
       <div className="basket-item__description">
-        <p className="basket-item__title">Фотоаппарат «Орлёнок»</p>
+        <p className="basket-item__title">{name}</p> {/*TODO format Фотоаппарат «Орлёнок»*/}
         <ul className="basket-item__list">
           <li className="basket-item__list-item">
             <span className="basket-item__article">Артикул:</span>
@@ -24,7 +32,7 @@ const BasketItemShort = () => {
           <li className="basket-item__list-item">Плёночная фотокамера</li>
           <li className="basket-item__list-item">Любительский уровень</li>
         </ul>
-        <p className="basket-item__price"><span className="visually-hidden">Цена:</span>18 970 ₽</p>
+        <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{price} ₽</p> {/*TODO format 18 970*/}
       </div>
     </div>
   );

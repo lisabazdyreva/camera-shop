@@ -15,9 +15,10 @@ interface ModalProps {
   modalType: typeof ModalType[keyof typeof ModalType];
   isModalDetailed: boolean;
   handleCloseModal: (isOpen: boolean) => void;
+  data?: any,
 }
-
-const Modal = ({modalType, isModalDetailed, handleCloseModal}: ModalProps) => {
+//TODO any
+const Modal = ({modalType, isModalDetailed, handleCloseModal, data}: ModalProps) => {
 
   const getSVG = () => {
     if (modalType === ModalType.Catalog) {
@@ -40,7 +41,7 @@ const Modal = ({modalType, isModalDetailed, handleCloseModal}: ModalProps) => {
     if (modalType === ModalType.Product) {
       return <ReviewForm />;
     }
-    return <BasketItemShort />;
+    return <BasketItemShort data={data}/>;
   };
 
   const title = getTitle(modalType, isModalDetailed);

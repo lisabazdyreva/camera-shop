@@ -12,14 +12,23 @@ import {
 } from './components/components';
 import {Modal} from '../../common/common';
 import {useState} from 'react';
+import {useSelector} from 'react-redux';
+import {getCameras} from '../../../store/app-data/selectors';
 
 
 const Catalog = () => {
   // const isModalAddOpen = false;
   // const isModalSuccessOpen = false;
-
+  const [selectedCameraData, setSelectedCameraData] = useState({name: '', price: 0});
   const [isModalAddOpen, setIsModalAddOpen] = useState(false);
   const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
+
+  const cameras = useSelector(getCameras);
+
+  const handleAddModal = (data: {name: string, price: number}) => {
+    setIsModalAddOpen(true);
+    setSelectedCameraData(data);
+  };
 
   return (
     <>
@@ -38,7 +47,10 @@ const Catalog = () => {
                   <div className="catalog__content">
                     <Sorting />
                     <div className="cards catalog__cards">
-                      <ProductCard handleAddModal={setIsModalAddOpen} />
+                      {
+                        cameras.map((camera) => <ProductCard key={camera.id} handleAddModal={handleAddModal} data={camera} />)
+                      }
+
                     </div>
                     <Pagination />
                   </div>
@@ -46,7 +58,7 @@ const Catalog = () => {
               </div>
             </section>
           </div>
-          {isModalAddOpen && <Modal modalType='catalog' isModalDetailed handleCloseModal={setIsModalAddOpen} />}
+          {isModalAddOpen && <Modal data={selectedCameraData} modalType='catalog' isModalDetailed handleCloseModal={setIsModalAddOpen} />}
           {isModalSuccessOpen && <Modal modalType='catalog' isModalDetailed={false} handleCloseModal={setIsModalSuccessOpen}/>}
         </main>
         <Footer />

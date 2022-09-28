@@ -1,4 +1,4 @@
-import {MenuItem, ModalMessage, ModalType} from '../types/const';
+import {LoadingStatus, MenuItem, ModalMessage, ModalType} from '../types/const';
 
 export const getTitle = (modalType: typeof ModalType[keyof typeof ModalType], isModalDetailed: boolean) => {
   if (modalType === ModalType.Basket) {
@@ -11,3 +11,12 @@ export const getTitle = (modalType: typeof ModalType[keyof typeof ModalType], is
 };
 
 export const menuItems = Object.values(MenuItem);
+
+export const loadingStatuses = Object.values(LoadingStatus);
+
+export const getDateTime = (isoDate: string) => isoDate.slice(0, 10); //TODO придумать способ получше
+
+export const getDateValue = (isoDate: string) => new Date(isoDate)
+  .toLocaleString('ru', {month: 'long', day: 'numeric'}); //TODO убрать магические значения
+
+

@@ -26,4 +26,11 @@ export const ModalMessage = {
   ProductReviewAdd: 'Оставить отзыв',
 } as const;
 
+export const LoadingStatus = {
+  Default: 'default',
+  Loading: 'loading',
+  Success: 'success',
+  Error: 'error',
+} as const;
+
 export type MenuItemsType = typeof MenuItem[keyof typeof MenuItem];

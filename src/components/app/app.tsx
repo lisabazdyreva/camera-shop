@@ -12,7 +12,7 @@ const App = (): JSX.Element => {
       <Routes>
         <Route path={AppRoute.Catalog} element={<Catalog />}/>
         <Route path={AppRoute.Basket} element={<Basket/>} />
-        <Route path={AppRoute.Product} element={<Product />} />
+        <Route path={`${AppRoute.Product}/:id`} element={<Product />} />
       </Routes>
 
     </BrowserRouter>
