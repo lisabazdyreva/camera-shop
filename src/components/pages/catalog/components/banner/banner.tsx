@@ -13,10 +13,10 @@ const Banner = ({promos}: BannerProps) => {
   return (
     <div className="banner">
       <picture>
-        <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`} />
+        <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x} 2x`} />
         <img
-          src={previewImg}
-          srcSet={`${previewImg2x} 2x`}
+          src={`/${previewImg}`}
+          srcSet={`/${previewImg2x} 2x`}
           width="1280"
           height="280"
           alt="баннер"

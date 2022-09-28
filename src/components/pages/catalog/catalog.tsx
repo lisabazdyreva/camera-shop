@@ -14,17 +14,32 @@ import {Modal} from '../../common/common';
 import {useState} from 'react';
 import {useSelector} from 'react-redux';
 import {getCameras, getPromos} from '../../../store/app-data/selectors';
-import {initialCamera} from '../../../types/const';
+import {initialCamera, LoadingStatus} from '../../../types/const';
 import {Camera} from '../../../types/types';
+import {getCamerasFetchStatus, getPromosFetchStatus} from '../../../store/app-status/selectors';
+import {useParams} from 'react-router-dom';
 
+const CARDS_PER_PAGE = 9;
 
 const Catalog = () => {
+  const params = useParams();
+  const {pageNum} = params;
+
   const [selectedCameraData, setSelectedCameraData] = useState(initialCamera);
   const [isModalAddOpen, setIsModalAddOpen] = useState(false);
   const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
 
+  const [currentPageNumber, setCurrentPageNumber] = useState(Number(pageNum));
+
   const cameras = useSelector(getCameras);
   const promos = useSelector(getPromos);
+
+  const promosFetchStatus = useSelector(getPromosFetchStatus);
+  const camerasFetchStatus = useSelector(getCamerasFetchStatus);
+
+  const indexOfLastPost = currentPageNumber * CARDS_PER_PAGE;
+  const indexOfFirstPost = indexOfLastPost - CARDS_PER_PAGE;
+  const currentCameras = cameras.slice(indexOfFirstPost, indexOfLastPost);
 
   const handleAddModal = (data: Camera) => {
     setIsModalAddOpen(true);
@@ -37,7 +52,7 @@ const Catalog = () => {
       <div className="wrapper">
         <Header />
         <main>
-          <Banner promos={promos} />
+          {promosFetchStatus === LoadingStatus.Success && <Banner promos={promos} />}
           <div className="page-content">
             <Breadcrumbs />
             <section className="catalog">
@@ -49,11 +64,11 @@ const Catalog = () => {
                     <Sorting />
                     <div className="cards catalog__cards">
                       {
-                        cameras.map((camera) => <ProductCard key={camera.id} handleAddModal={handleAddModal} data={camera} />)
+                        camerasFetchStatus === LoadingStatus.Success &&
+                        currentCameras.map((camera) => <ProductCard key={camera.id} handleAddModal={handleAddModal} data={camera} />)
                       }
-
                     </div>
-                    <Pagination />
+                    {camerasFetchStatus === LoadingStatus.Success && <Pagination camerasAmount={cameras.length} currentPageNumber={currentPageNumber} setCurrentPageNumber={setCurrentPageNumber}/>}
                   </div>
                 </div>
               </div>

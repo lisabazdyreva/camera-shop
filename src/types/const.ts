@@ -19,6 +19,11 @@ export const AppRoute = {
   Product: '/product'
 } as const;
 
+export const PaginationRoute = {
+  PageOne: '/page_1',
+  Page: '/page_',
+} as const;
+
 export const ModalMessage = {
   BasketSuccess: 'Спасибо за покупку',
   BasketRemove: 'Удалить этот товар?',

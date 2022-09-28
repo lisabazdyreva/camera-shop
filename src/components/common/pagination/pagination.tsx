@@ -1,20 +1,57 @@
+import {Link} from 'react-router-dom';
+import {AppRoute, PaginationRoute} from '../../../types/const';
+
+interface PaginationProps {
+  currentPageNumber: number;
+  setCurrentPageNumber: (page: number) => void;
+  camerasAmount: number;
+}
+const CARDS_PER_PAGE = 9;
 //eslint-disable-next-line
-const Pagination = () => {
+const Pagination = ({currentPageNumber, setCurrentPageNumber, camerasAmount}: PaginationProps) => {
+  const handlePageClick = (number: number) => {
+    setCurrentPageNumber(number);
+  };
+
+  const handleNextClick = () => {
+    setCurrentPageNumber(currentPageNumber + 1);
+  };
+  const handlePreviousClick = () => {
+    setCurrentPageNumber(currentPageNumber - 1);
+  };
+
+  const pagesAmount = Math.ceil(camerasAmount / CARDS_PER_PAGE);
+  const pages = []; //TODO without arr
+
+  for (let i = 1; i <= pagesAmount; i++) {
+    pages[i - 1] = i;
+  }
+
   return (
     <div className="pagination">
       <ul className="pagination__list">
-        <li className="pagination__item">
-          <a className="pagination__link pagination__link--active" href="1">1</a>
-        </li>
-        <li className="pagination__item">
-          <a className="pagination__link" href="2">2</a>
-        </li>
-        <li className="pagination__item">
-          <a className="pagination__link" href="3">3</a>
-        </li>
-        <li className="pagination__item">
-          <a className="pagination__link pagination__link--text" href="2">Далее</a>
-        </li>
+        {
+          currentPageNumber !== 1 &&
+          <li className="pagination__item">
+            <Link onClick={handlePreviousClick} className="pagination__link pagination__link--text" to={`${AppRoute.Catalog}${PaginationRoute.Page}${currentPageNumber - 1}`}>Назад</Link>
+          </li>
+        }
+        {//eslint-disable-next-line
+          pages.map((pageNum: number, index: number) => {
+            return (
+              //eslint-disable-next-line
+              <li className="pagination__item" key={index}>
+                <Link onClick={() => handlePageClick(pageNum)} className={`pagination__link ${ pageNum === currentPageNumber && 'pagination__link--active'}`} to={`${AppRoute.Catalog}${PaginationRoute.Page}${pageNum}`}>{pageNum}</Link>
+              </li>
+            );
+          })
+        }
+        {
+          currentPageNumber !== pages.length &&
+          <li className="pagination__item">
+            <Link onClick={handleNextClick} className="pagination__link pagination__link--text" to={`${AppRoute.Catalog}${PaginationRoute.Page}${currentPageNumber + 1}`}>Далее</Link>
+          </li>
+        }
       </ul>
     </div>
   );
