@@ -8,6 +8,7 @@ export enum ActionType {
   SetCamera = 'data/setCamera',
   SetReviews = 'data/setReviews',
   SetSimilarCameras = 'data/setSimilarCameras',
+  SetBasket= 'app/setBasket',
   SetFetchCamerasStatus = 'status/setFetchCamerasStatus',
   SetFetchCameraStatus = 'status/setFetchCameraStatus',
   SetFetchReviewsStatus = 'status/setFetchReviewsStatus',

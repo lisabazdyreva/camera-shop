@@ -1,3 +1,5 @@
+import {Camera} from './types';
+
 export const ModalType = {
   Catalog: 'catalog',
   Basket: 'basket',
@@ -34,3 +36,20 @@ export const LoadingStatus = {
 } as const;
 
 export type MenuItemsType = typeof MenuItem[keyof typeof MenuItem];
+
+export const initialCamera: Camera = {
+  id: 0,
+  name: '',
+  vendorCode: '',
+  type: '',
+  category: '',
+  description: '',
+  level: '',
+  rating: 0,
+  price: 0,
+  previewImg: '',
+  previewImg2x: '',
+  previewImgWebp: '',
+  previewImgWebp2x: '',
+  reviewCount: 0,
+};

@@ -1,3 +1,5 @@
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../../../../types/const';
 //eslint-disable-next-line
 const Banner = () => {
   return (
@@ -16,7 +18,7 @@ const Banner = () => {
         <span className="banner__message">Новинка!</span>
         <span className="title title--h1">Cannonball&nbsp;Pro&nbsp;MX&nbsp;8i</span>
         <span className="banner__text">Профессиональная камера от&nbsp;известного производителя</span>
-        <a className="btn" href="src/components/pages/catalog/components/banner/banner#">Подробнее</a>
+        <Link className="btn" to={`${AppRoute.Product}/`}>Подробнее</Link>
       </p>
     </div>
   );

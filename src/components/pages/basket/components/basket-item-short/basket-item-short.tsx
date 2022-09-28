@@ -1,24 +1,22 @@
+import {Camera} from '../../../../../types/types';
+
 interface BasketItemShortProps {
-  data: {
-    name: string;
-    price: number;
-  }
+  data: Camera;
 }
 
-
 const BasketItemShort = ({data}: BasketItemShortProps) => {
-  const {name, price} = data;
+  const {name, price, previewImg, previewImgWebp, previewImgWebp2x, previewImg2x, level, category, vendorCode} = data;
   return (
     <div className="basket-item basket-item--short">
       <div className="basket-item__img">
         <picture>
-          <source type="image/webp" srcSet="img/content/img9.webp, img/content/img9@2x.webp 2x" />
+          <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`} />
           <img
-            src="img/content/img9.jpg"
-            srcSet="img/content/img9@2x.jpg 2x"
+            src={previewImg}
+            srcSet={`${previewImg2x} 2x`}
             width="140"
             height="120"
-            alt="Фотоаппарат «Орлёнок»"
+            alt={name}
           />
         </picture>
       </div>
@@ -27,10 +25,10 @@ const BasketItemShort = ({data}: BasketItemShortProps) => {
         <ul className="basket-item__list">
           <li className="basket-item__list-item">
             <span className="basket-item__article">Артикул:</span>
-            <span className="basket-item__number">O78DFGSD832</span>
+            <span className="basket-item__number"> {vendorCode}</span>
           </li>
-          <li className="basket-item__list-item">Плёночная фотокамера</li>
-          <li className="basket-item__list-item">Любительский уровень</li>
+          <li className="basket-item__list-item">{category}</li>
+          <li className="basket-item__list-item">{level} уровень</li>
         </ul>
         <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{price} ₽</p> {/*TODO format 18 970*/}
       </div>

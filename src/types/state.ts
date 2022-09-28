@@ -17,4 +17,8 @@ export type AppStatus = {
   similarCamerasFetchStatus: typeof LoadingStatus[keyof typeof LoadingStatus],
 }
 
+export type AppProcess = {
+  basket: [] | Camera [];
+}
+
 export type State = RootState;

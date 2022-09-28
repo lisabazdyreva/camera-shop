@@ -31,6 +31,13 @@ export const setSimilarCameras = createAction(
   })
 );
 
+export const setBasket = createAction(
+  ActionType.SetBasket,
+  (camera: Camera) => ({
+    payload: camera,
+  })
+);
+
 export const setFetchCamerasStatus = createAction(
   ActionType.SetFetchCamerasStatus,
   (status: typeof LoadingStatus[keyof typeof LoadingStatus]) => ({

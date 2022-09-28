@@ -5,13 +5,13 @@ import {RatingProductCard} from '../components';
 
 
 interface ProductCardProps {
-  handleAddModal: (data: {name: string, price: number}) => void;
+  handleAddModal: (data: Camera) => void;
   data: Camera;
   additionalClass?: 'is-active' | null;
 }
 //eslint-disable-next-line
 const ProductCard = ({handleAddModal, data, additionalClass}: ProductCardProps) => {
-  const {name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price, id, reviewCount, rating} = data;
+  const {name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price, id, reviewCount, rating, level, vendorCode, category} = data;
   //{TODO for slider for three first add class is-active:  product-card is-active}
   //{TODO component to common}
   return (
@@ -37,7 +37,7 @@ const ProductCard = ({handleAddModal, data, additionalClass}: ProductCardProps) 
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button" onClick={() => handleAddModal({name, price})}>Купить</button>
+        <button className="btn btn--purple product-card__btn" type="button" onClick={() => handleAddModal(data)}>Купить</button>
         <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}`}>Подробнее</Link>
       </div>
     </div>

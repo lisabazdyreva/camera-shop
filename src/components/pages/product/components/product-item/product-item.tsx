@@ -22,6 +22,12 @@ const ProductItem = ({data}: ProductItemProps) => {
     level,
     description
   } = data;
+
+  const handleButtonClick = () => {
+    //eslint-disable-next-line
+    console.log('added');
+  };
+
   return (
     <section className="product">
       <div className="container">
@@ -44,7 +50,7 @@ const ProductItem = ({data}: ProductItemProps) => {
             <span className="visually-hidden">Цена:</span>
             {price} ₽{/*TODO Format 73 450*/}
           </p>
-          <button className="btn btn--purple" type="button">
+          <button className="btn btn--purple" type="button" onClick={handleButtonClick}>
             <svg width="24" height="16" aria-hidden="true">
               <use xlinkHref="#icon-add-basket"></use>
             </svg>

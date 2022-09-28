@@ -24,7 +24,7 @@ const Product = () => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isSuccessReviewModalOpen, setIsSuccessReviewModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const Product = () => {
             </div>
           </div>
           { isReviewModalOpen && <Modal modalType='product' isModalDetailed handleCloseModal={setIsReviewModalOpen}/> }
-          { isSuccessModalOpen && <Modal modalType='product' isModalDetailed={false} handleCloseModal={setIsSuccessModalOpen}/>}
+          { isSuccessReviewModalOpen && <Modal modalType='product' isModalDetailed={false} handleCloseModal={setIsSuccessReviewModalOpen}/> }
         </main>
         <a className="up-btn" href="#header">
           <svg width="12" height="18" aria-hidden="true">

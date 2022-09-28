@@ -10,15 +10,17 @@ import {
 } from './components/components';
 
 import {ModalType} from '../../../types/const';
+import {Camera} from '../../../types/types';
 
 interface ModalProps {
   modalType: typeof ModalType[keyof typeof ModalType];
   isModalDetailed: boolean;
   handleCloseModal: (isOpen: boolean) => void;
-  data?: any,
+  data?: Camera,
+  handleOpenSuccessModal?: (isOpen: boolean) => void;
 }
 //TODO any
-const Modal = ({modalType, isModalDetailed, handleCloseModal, data}: ModalProps) => {
+const Modal = ({modalType, isModalDetailed, handleCloseModal, handleOpenSuccessModal, data}: ModalProps) => {
 
   const getSVG = () => {
     if (modalType === ModalType.Catalog) {
@@ -31,7 +33,7 @@ const Modal = ({modalType, isModalDetailed, handleCloseModal, data}: ModalProps)
     if (modalType === ModalType.Basket) {
       return isModalDetailed ? <BasketRemoveButtons /> : <ReturnButton />;
     } else if (modalType === ModalType.Catalog) {
-      return isModalDetailed ? <BasketAddButton/> : <CatalogButtons />;
+      return isModalDetailed ? <BasketAddButton data={data} handleCloseModal={handleCloseModal} handleOpenSuccessModal={handleOpenSuccessModal}/> : <CatalogButtons handleCloseSuccessModal={handleCloseModal}/>;
     } else if (modalType === ModalType.Product) {
       return isModalDetailed ? null : <ReturnButton />;
     }
@@ -41,7 +43,10 @@ const Modal = ({modalType, isModalDetailed, handleCloseModal, data}: ModalProps)
     if (modalType === ModalType.Product) {
       return <ReviewForm />;
     }
-    return <BasketItemShort data={data}/>;
+
+    if (data) {
+      return <BasketItemShort data={data}/>;
+    }
   };
 
   const title = getTitle(modalType, isModalDetailed);
