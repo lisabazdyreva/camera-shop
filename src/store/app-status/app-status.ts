@@ -3,7 +3,7 @@ import {LoadingStatus} from '../../types/const';
 import {createReducer} from '@reduxjs/toolkit';
 import {
   setFetchCamerasStatus,
-  setFetchCameraStatus,
+  setFetchCameraStatus, setFetchPromosStatus,
   setFetchReviewsStatus,
   setFetchSimilarCamerasStatus
 } from '../actions/actions';
@@ -12,7 +12,8 @@ const initialState: AppStatus = {
   camerasFetchStatus: LoadingStatus.Default,
   cameraFetchStatus: LoadingStatus.Default,
   reviewsFetchStatus: LoadingStatus.Default,
-  similarCamerasFetchStatus: LoadingStatus.Default
+  similarCamerasFetchStatus: LoadingStatus.Default,
+  promosFetchStatus: LoadingStatus.Default,
 };
 
 export const appStatus = createReducer(initialState, (builder) => {
@@ -28,5 +29,8 @@ export const appStatus = createReducer(initialState, (builder) => {
     })
     .addCase(setFetchSimilarCamerasStatus, (state, action) => {
       state.similarCamerasFetchStatus = action.payload;
+    })
+    .addCase(setFetchPromosStatus, (state, action) => {
+      state.promosFetchStatus = action.payload;
     });
 });

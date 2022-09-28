@@ -1,6 +1,6 @@
 import {createAction} from '@reduxjs/toolkit';
 import {ActionType} from '../../types/action';
-import {Camera, Review} from '../../types/types';
+import {Camera, Review, Promo} from '../../types/types';
 import {LoadingStatus} from '../../types/const';
 
 export const setCameras = createAction(
@@ -27,6 +27,13 @@ export const setReviews = createAction(
 export const setSimilarCameras = createAction(
   ActionType.SetSimilarCameras,
   (data: Camera[]) => ({
+    payload: data,
+  })
+);
+
+export const setPromos = createAction(
+  ActionType.SetPromos,
+  (data: Promo[]) => ({
     payload: data,
   })
 );
@@ -61,6 +68,13 @@ export const setFetchReviewsStatus = createAction(
 
 export const setFetchSimilarCamerasStatus = createAction(
   ActionType.SetFetchSimilarCamerasStatus,
+  (status: typeof LoadingStatus[keyof typeof LoadingStatus]) => ({
+    payload: status,
+  })
+);
+
+export const setFetchPromosStatus = createAction(
+  ActionType.SetFetchPromosStatus,
   (status: typeof LoadingStatus[keyof typeof LoadingStatus]) => ({
     payload: status,
   })

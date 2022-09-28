@@ -13,7 +13,7 @@ import {
 import {Modal} from '../../common/common';
 import {useState} from 'react';
 import {useSelector} from 'react-redux';
-import {getCameras} from '../../../store/app-data/selectors';
+import {getCameras, getPromos} from '../../../store/app-data/selectors';
 import {initialCamera} from '../../../types/const';
 import {Camera} from '../../../types/types';
 
@@ -24,6 +24,7 @@ const Catalog = () => {
   const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
 
   const cameras = useSelector(getCameras);
+  const promos = useSelector(getPromos);
 
   const handleAddModal = (data: Camera) => {
     setIsModalAddOpen(true);
@@ -36,7 +37,7 @@ const Catalog = () => {
       <div className="wrapper">
         <Header />
         <main>
-          <Banner />
+          <Banner promos={promos} />
           <div className="page-content">
             <Breadcrumbs />
             <section className="catalog">
@@ -58,14 +59,16 @@ const Catalog = () => {
               </div>
             </section>
           </div>
-          {isModalAddOpen
-            && <Modal
+          {
+            isModalAddOpen
+            &&
+            <Modal
               data={selectedCameraData}
               modalType='catalog'
               isModalDetailed
               handleCloseModal={setIsModalAddOpen}
               handleOpenSuccessModal={setIsModalSuccessOpen}
-              />
+            />
           }
           {isModalSuccessOpen && <Modal modalType='catalog' isModalDetailed={false} handleCloseModal={setIsModalSuccessOpen}/>}
         </main>

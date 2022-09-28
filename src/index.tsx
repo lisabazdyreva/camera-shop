@@ -5,6 +5,7 @@ import {configureStore} from '@reduxjs/toolkit';
 import { rootReducer } from './store/root-reducer';
 import {fetchCameras} from './store/actions/api-actions/api-actions-cameras';
 import {Provider} from 'react-redux';
+import {fetchPromos} from './store/actions/api-actions/api-actions-promo';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -15,6 +16,7 @@ export const store = configureStore({
 });
 
 store.dispatch(fetchCameras());
+store.dispatch(fetchPromos());
 
 root.render(
   <React.StrictMode>

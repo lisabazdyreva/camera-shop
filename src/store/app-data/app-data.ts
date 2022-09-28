@@ -1,12 +1,13 @@
 import {AppData} from '../../types/state';
 import {createReducer} from '@reduxjs/toolkit';
-import {setCamera, setCameras, setReviews, setSimilarCameras} from '../actions/actions';
+import {setCamera, setCameras, setPromos, setReviews, setSimilarCameras} from '../actions/actions';
 
 const initialState: AppData = {
   cameras: [],
   camera: null,
   reviews: [],
   similarCameras: [],
+  promos: [],
 };
 
 export const appData = createReducer(initialState, (builder) => {
@@ -22,5 +23,9 @@ export const appData = createReducer(initialState, (builder) => {
     })
     .addCase(setSimilarCameras, (state, action) => {
       state.similarCameras = action.payload;
+    })
+    .addCase(setPromos, (state, action) => {
+      // const promo = action.payload;
+      state.promos = action.payload;
     });
 });

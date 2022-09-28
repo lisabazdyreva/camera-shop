@@ -8,11 +8,13 @@ export enum ActionType {
   SetCamera = 'data/setCamera',
   SetReviews = 'data/setReviews',
   SetSimilarCameras = 'data/setSimilarCameras',
-  SetBasket= 'app/setBasket',
+  SetPromos = 'data/setPromos',
+  SetBasket = 'app/setBasket',
   SetFetchCamerasStatus = 'status/setFetchCamerasStatus',
   SetFetchCameraStatus = 'status/setFetchCameraStatus',
   SetFetchReviewsStatus = 'status/setFetchReviewsStatus',
   SetFetchSimilarCamerasStatus = 'status/setFetchSimilarCamerasStatus',
+  SetFetchPromosStatus = 'status/setFetchPromosStatus',
 }
 
 export type ThunkActionResult<P = Promise<void>> = ThunkAction<P, State, unknown, Action>;

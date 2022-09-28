@@ -24,4 +24,13 @@ export type Review = {
   rating: number,
   createAt: string,
   cameraId: number,
-}
+};
+
+export type Promo = {
+  id: number,
+  name: string,
+  previewImg: string,
+  previewImg2x: string,
+  previewImgWebp: string,
+  previewImgWebp2x: string,
+};
