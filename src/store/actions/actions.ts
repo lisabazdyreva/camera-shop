@@ -1,7 +1,7 @@
 import {createAction} from '@reduxjs/toolkit';
 import {ActionType} from '../../types/action';
 import {Camera, Review, Promo} from '../../types/types';
-import {LoadingStatus} from '../../types/const';
+import {LoadingStatus} from '../../utils/const';
 
 export const setCameras = createAction(
   ActionType.SetCameras,

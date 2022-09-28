@@ -1,13 +1,12 @@
 import {Link} from 'react-router-dom';
-import {AppRoute, PaginationRoute} from '../../../types/const';
+import {AppRoute, PaginationRoute, CARDS_PER_PAGE} from '../../../utils/const';
 
 interface PaginationProps {
   currentPageNumber: number;
   setCurrentPageNumber: (page: number) => void;
   camerasAmount: number;
 }
-const CARDS_PER_PAGE = 9;
-//eslint-disable-next-line
+
 const Pagination = ({currentPageNumber, setCurrentPageNumber, camerasAmount}: PaginationProps) => {
   const handlePageClick = (number: number) => {
     setCurrentPageNumber(number);

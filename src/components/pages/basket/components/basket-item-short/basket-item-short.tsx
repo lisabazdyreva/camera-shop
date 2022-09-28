@@ -6,6 +6,7 @@ interface BasketItemShortProps {
 
 const BasketItemShort = ({data}: BasketItemShortProps) => {
   const {name, price, previewImg, previewImgWebp, previewImgWebp2x, previewImg2x, level, category, vendorCode} = data;
+
   return (
     <div className="basket-item basket-item--short">
       <div className="basket-item__img">

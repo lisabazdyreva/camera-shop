@@ -1,6 +1,6 @@
 import {State} from '../../types/state';
 import {Camera, Promo, Review} from '../../types/types';
-import {NameSpace} from '../root-reducer';
+import {NameSpace} from '../../utils/const';
 
 export const getCameras = (state: State): Camera[] => state[NameSpace.Data].cameras;
 export const getCamera = (state: State): Camera | null => state[NameSpace.Data].camera;

@@ -9,38 +9,38 @@ import {
   ReturnButton
 } from './components/components';
 
-import {ModalType} from '../../../types/const';
+import {ComponentName, ComponentNameType, ModalType, ModalContent} from '../../../utils/const';
 import {Camera} from '../../../types/types';
 
 interface ModalProps {
-  modalType: typeof ModalType[keyof typeof ModalType];
-  isModalDetailed: boolean;
+  usingComponent: ComponentNameType;
+  modalType: ModalType;
   handleCloseModal: (isOpen: boolean) => void;
   data?: Camera,
   handleOpenSuccessModal?: (isOpen: boolean) => void;
 }
-//TODO any
-const Modal = ({modalType, isModalDetailed, handleCloseModal, handleOpenSuccessModal, data}: ModalProps) => {
 
+const Modal = ({usingComponent, modalType, handleCloseModal, handleOpenSuccessModal, data}: ModalProps) => {
+  const isModalAction = modalType === ModalContent.Action;
   const getSVG = () => {
-    if (modalType === ModalType.Catalog) {
+    if (usingComponent === ComponentName.Catalog) {
       return <IconSuccess/>;
     }
     return <IconReviewSuccess />;
   };
 
   const getButtons = () => {
-    if (modalType === ModalType.Basket) {
-      return isModalDetailed ? <BasketRemoveButtons /> : <ReturnButton />;
-    } else if (modalType === ModalType.Catalog) {
-      return isModalDetailed ? <BasketAddButton data={data} handleCloseModal={handleCloseModal} handleOpenSuccessModal={handleOpenSuccessModal}/> : <CatalogButtons handleCloseSuccessModal={handleCloseModal}/>;
-    } else if (modalType === ModalType.Product) {
-      return isModalDetailed ? null : <ReturnButton />;
+    if (usingComponent === ComponentName.Basket) {
+      return isModalAction ? <BasketRemoveButtons /> : <ReturnButton />;
+    } else if (usingComponent === ComponentName.Catalog) {
+      return isModalAction ? <BasketAddButton data={data} handleCloseModal={handleCloseModal} handleOpenSuccessModal={handleOpenSuccessModal}/> : <CatalogButtons handleCloseSuccessModal={handleCloseModal}/>;
+    } else if (usingComponent === ComponentName.Product) {
+      return isModalAction ? null : <ReturnButton />;
     }
   };
 
   const getDetails = () => {
-    if (modalType === ModalType.Product) {
+    if (usingComponent === ComponentName.Product) {
       return <ReviewForm />;
     }
 
@@ -49,12 +49,12 @@ const Modal = ({modalType, isModalDetailed, handleCloseModal, handleOpenSuccessM
     }
   };
 
-  const title = getTitle(modalType, isModalDetailed);
-  const modalSvg = isModalDetailed ? null : getSVG();
+  const title = getTitle(usingComponent, modalType);
+  const modalSvg = isModalAction ? null : getSVG();
   const modalButtons = getButtons();
-  const modalDetails = isModalDetailed ? getDetails() : null;
+  const modalDetails = isModalAction ? getDetails() : null;
 
-  const modalClassnames = `modal is-active ${!isModalDetailed ? 'modal--narrow' : ''}`;
+  const modalClassnames = `modal is-active ${!isModalAction ? 'modal--narrow' : ''}`;
 
   return (
     <div className={modalClassnames}>

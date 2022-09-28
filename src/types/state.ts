@@ -1,6 +1,6 @@
 import { RootState } from '../store/root-reducer';
 import {Camera, Promo, Review} from './types';
-import { LoadingStatus } from './const';
+import { LoadingStatus } from '../utils/const';
 
 
 export type AppData = {

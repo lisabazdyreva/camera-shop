@@ -1,26 +1,18 @@
+import {ComponentName, ComponentNameType} from '../../../utils/const';
+
 interface LogoProps {
-  isHeader: boolean,
+  usingComponent: ComponentNameType,
 }
 
-const Logo = ({isHeader}: LogoProps) => {
-  if (isHeader) {
-    return (
-      <a className="header__logo" href="#" aria-label="Переход на главную">
-        <svg width="100" height="36" aria-hidden="true">
-          <use xlinkHref="#icon-logo"></use>
-        </svg>
-      </a>
-    );
-  } else {
-    return (
-      <a className="footer__logo" href="#" aria-label="Переход на главную">
-        <svg width="100" height="36" aria-hidden="true">
-          <use xlinkHref="#icon-logo-mono"></use>
-        </svg>
-      </a>
-    );
-  }
-
+const Logo = ({usingComponent}: LogoProps) => {
+  const icon = usingComponent === ComponentName.Footer ? '#icon-logo-mono' : '#icon-logo';
+  return (
+    <a className={`${usingComponent}__logo`} href="#" aria-label="Переход на главную">
+      <svg width="100" height="36" aria-hidden="true">
+        <use xlinkHref={icon}></use>
+      </svg>
+    </a>
+  );
 };
 
 export default Logo;

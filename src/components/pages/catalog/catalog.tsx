@@ -1,8 +1,5 @@
-import Header from '../../common/header/header';
-import Footer from '../../common/footer/footer';
 import Breadcrumbs from '../../common/breadcrumbs/breadcrumbs';
 import Pagination from '../../common/pagination/pagination';
-import UnknownSvg from '../../common/unknown-svg/unknown-svg';
 
 import {
   Banner,
@@ -14,12 +11,11 @@ import {Modal} from '../../common/common';
 import {useState} from 'react';
 import {useSelector} from 'react-redux';
 import {getCameras, getPromos} from '../../../store/app-data/selectors';
-import {initialCamera, LoadingStatus} from '../../../types/const';
+import {initialCamera, LoadingStatus, CARDS_PER_PAGE, ComponentName, ModalContent} from '../../../utils/const';
 import {Camera} from '../../../types/types';
 import {getCamerasFetchStatus, getPromosFetchStatus} from '../../../store/app-status/selectors';
 import {useParams} from 'react-router-dom';
 
-const CARDS_PER_PAGE = 9;
 
 const Catalog = () => {
   const params = useParams();
@@ -47,49 +43,43 @@ const Catalog = () => {
   };
 
   return (
-    <>
-      <UnknownSvg />
-      <div className="wrapper">
-        <Header />
-        <main>
-          {promosFetchStatus === LoadingStatus.Success && <Banner promos={promos} />}
-          <div className="page-content">
-            <Breadcrumbs />
-            <section className="catalog">
-              <div className="container">
-                <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
-                <div className="page-content__columns">
-                  <SideFilter />
-                  <div className="catalog__content">
-                    <Sorting />
-                    <div className="cards catalog__cards">
-                      {
-                        camerasFetchStatus === LoadingStatus.Success &&
-                        currentCameras.map((camera) => <ProductCard key={camera.id} handleAddModal={handleAddModal} data={camera} />)
-                      }
-                    </div>
-                    {camerasFetchStatus === LoadingStatus.Success && <Pagination camerasAmount={cameras.length} currentPageNumber={currentPageNumber} setCurrentPageNumber={setCurrentPageNumber}/>}
-                  </div>
+    <main>
+      {promosFetchStatus === LoadingStatus.Success && <Banner promos={promos} />}
+      <div className="page-content">
+        <Breadcrumbs />
+        <section className="catalog">
+          <div className="container">
+            <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
+            <div className="page-content__columns">
+              <SideFilter />
+              <div className="catalog__content">
+                <Sorting />
+                <div className="cards catalog__cards">
+                  {
+                    camerasFetchStatus === LoadingStatus.Success &&
+                    currentCameras.map((camera) => <ProductCard key={camera.id} handleAddModal={handleAddModal} data={camera} />)
+                  }
                 </div>
+                {camerasFetchStatus === LoadingStatus.Success && <Pagination camerasAmount={cameras.length} currentPageNumber={currentPageNumber} setCurrentPageNumber={setCurrentPageNumber}/>}
               </div>
-            </section>
+            </div>
           </div>
-          {
-            isModalAddOpen
-            &&
-            <Modal
-              data={selectedCameraData}
-              modalType='catalog'
-              isModalDetailed
-              handleCloseModal={setIsModalAddOpen}
-              handleOpenSuccessModal={setIsModalSuccessOpen}
-            />
-          }
-          {isModalSuccessOpen && <Modal modalType='catalog' isModalDetailed={false} handleCloseModal={setIsModalSuccessOpen}/>}
-        </main>
-        <Footer />
+        </section>
       </div>
-    </>
+      {
+        isModalAddOpen
+        &&
+        <Modal
+          data={selectedCameraData}
+          usingComponent={ComponentName.Catalog}
+          modalType={ModalContent.Action}
+          handleCloseModal={setIsModalAddOpen}
+          handleOpenSuccessModal={setIsModalSuccessOpen}
+        />
+      }
+      {/*TODO remove magic values*/}
+      {isModalSuccessOpen && <Modal usingComponent={ComponentName.Catalog} modalType={ModalContent.Info} handleCloseModal={setIsModalSuccessOpen}/>}
+    </main>
   );
 };
 

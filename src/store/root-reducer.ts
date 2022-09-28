@@ -2,12 +2,8 @@ import {combineReducers} from '@reduxjs/toolkit';
 import {appData} from './app-data/app-data';
 import {appStatus} from './app-status/app-status';
 import {appProcess} from './app-process/app-process';
+import {NameSpace} from '../utils/const';
 
-export enum NameSpace {
-  Data = 'DATA',
-  App = 'APP',
-  Status = 'STATUS',
-}
 
 export const rootReducer = combineReducers({
   [NameSpace.Data]: appData,

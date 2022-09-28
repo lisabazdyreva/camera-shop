@@ -1,8 +1,4 @@
-import Header from '../../common/header/header';
-import Footer from '../../common/footer/footer';
 import Breadcrumbs from '../../common/breadcrumbs/breadcrumbs';
-import UnknownSvg from '../../common/unknown-svg/unknown-svg';
-
 import {
   BasketSummary,
   BasketItem
@@ -10,35 +6,31 @@ import {
 
 import {Modal} from '../../common/common';
 import {useState} from 'react';
+import {ComponentName, ModalContent} from '../../../utils/const';
 
-//eslint-disable-next-line
+
 const Basket = () => {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
+
   return (
-    <>
-      <UnknownSvg/>
-      <div className="wrapper">
-        <Header />
-        <main>
-          <div className="page-content">
-            <Breadcrumbs />
-            <section className="basket">
-              <div className="container">
-                <h1 className="title title--h2">Корзина</h1>
-                <ul className="basket__list">
-                  <BasketItem handleOpenModal={setIsRemoveModalOpen} />
-                </ul>
-                <BasketSummary />
-              </div>
-            </section>
+    <main>
+      <div className="page-content">
+        <Breadcrumbs />
+        <section className="basket">
+          <div className="container">
+            <h1 className="title title--h2">Корзина</h1>
+            <ul className="basket__list">
+              <BasketItem handleOpenModal={setIsRemoveModalOpen} />
+            </ul>
+            <BasketSummary />
           </div>
-        </main>
-        { isSuccessModalOpen && <Modal modalType='basket' isModalDetailed={false} handleCloseModal={setIsSuccessModalOpen}/> }
-        { isRemoveModalOpen && <Modal modalType='basket' isModalDetailed handleCloseModal={setIsRemoveModalOpen}/> }
-        <Footer />
+        </section>
       </div>
-    </>
+      { isSuccessModalOpen && <Modal usingComponent={ComponentName.Basket} modalType={ModalContent.Info} handleCloseModal={setIsSuccessModalOpen}/> }
+      { isRemoveModalOpen && <Modal usingComponent={ComponentName.Basket} modalType={ModalContent.Action} handleCloseModal={setIsRemoveModalOpen}/> }
+      {/*TODO  remove magic values*/}
+    </main>
   );
 };
 

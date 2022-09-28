@@ -1,5 +1,5 @@
 import {useNavigate} from 'react-router-dom';
-import {AppRoute} from '../../../../../types/const';
+import {AppRoute} from '../../../../../utils/const';
 
 interface CatalogButtonsProps {
   handleCloseSuccessModal: (isOpen: boolean) => void;

@@ -1,5 +1,5 @@
 import {Camera} from '../../../../../types/types';
-import {RatingProductCard} from '../../../catalog/components/components';
+import {Rating} from '../../../../common/common';
 
 interface ProductItemProps {
   data: Camera;
@@ -33,7 +33,7 @@ const ProductItem = ({data}: ProductItemProps) => {
       <div className="container">
         <div className="product__img">
           <picture>
-            <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x}`} />
+            <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x}  2x`} />
             <img
               src={`/${previewImg}`}
               srcSet={`/${previewImg2x} 2x`}
@@ -45,7 +45,7 @@ const ProductItem = ({data}: ProductItemProps) => {
         </div>
         <div className="product__content">
           <h1 className="title title--h3">{name}</h1>{/*TODO Format Ретрокамера «Das Auge IV»*/}
-          <RatingProductCard rating={rating} reviewCount={reviewCount} id={id} isCatalogRating={false} />
+          <Rating rating={rating} reviewCount={reviewCount} id={id} isCatalogRating={false} />
           <p className="product__price">
             <span className="visually-hidden">Цена:</span>
             {price} ₽{/*TODO Format 73 450*/}

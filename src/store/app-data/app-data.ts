@@ -25,7 +25,6 @@ export const appData = createReducer(initialState, (builder) => {
       state.similarCameras = action.payload;
     })
     .addCase(setPromos, (state, action) => {
-      // const promo = action.payload;
       state.promos = action.payload;
     });
 });

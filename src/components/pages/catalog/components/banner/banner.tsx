@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../../../../types/const';
+import {AppRoute} from '../../../../../utils/const';
 import {Promo} from '../../../../../types/types';
 
 interface BannerProps {
@@ -9,7 +9,7 @@ interface BannerProps {
 const Banner = ({promos}: BannerProps) => {
   const [promo] = promos;
   const {id, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, name} = promo;
-
+  //TODO picture in component?
   return (
     <div className="banner">
       <picture>

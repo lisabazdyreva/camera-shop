@@ -1,9 +1,9 @@
 import Search from '../search/search';
-import HeaderNavItem from '../header-nav-item/header-nav-item';
+import {NavItem} from '../common';
 import Logo from '../logo/logo';
 import {menuItems} from '../../../utils/utils';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../../types/const';
+import {AppRoute, ComponentName} from '../../../utils/const';
 
 
 //eslint-disable-next-line
@@ -11,11 +11,11 @@ const Header = () => {
   return (
     <header className="header" id="header">
       <div className="container">
-        <Logo isHeader />
+        <Logo usingComponent={ComponentName.Header} />
         <nav className="main-nav header__main-nav">
           <ul className="main-nav__list">
             {
-              menuItems.map((itemName, index) => <HeaderNavItem name={itemName} key={`${itemName}_${itemName.length}`} />)
+              menuItems.map((menuItem) => <NavItem usingComponent={ComponentName.Header} name={menuItem} key={`${menuItem}_${menuItem.length}`} />)
             }
             {/*TODO keyprop*/}
           </ul>

@@ -1,5 +1,5 @@
 import {Review} from '../../../../../types/types';
-import {RatingProductCard} from '../../../catalog/components/components';
+import { Rating } from '../../../../common/common';
 
 import {getDateTime, getDateValue} from '../../../../../utils/utils';
 
@@ -19,7 +19,7 @@ const ReviewCard = ({data}: ReviewCardProps) => {
         <p className="title title--h4">{userName}</p>
         <time className="review-card__data" dateTime={dateTime}>{dateValue}</time>
       </div>
-      <RatingProductCard rating={rating} id={id} isReviewCard />
+      <Rating rating={rating} id={id} isReviewCard />
       <ul className="review-card__list">
         <li className="item-list">
           <span className="item-list__title">Достоинства:</span>

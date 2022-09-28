@@ -1,5 +1,5 @@
 import {AppStatus} from '../../types/state';
-import {LoadingStatus} from '../../types/const';
+import {LoadingStatus} from '../../utils/const';
 import {createReducer} from '@reduxjs/toolkit';
 import {
   setFetchCamerasStatus,

@@ -1,14 +1,14 @@
 import {ThunkActionResult} from '../../../types/action';
 import {setFetchPromosStatus, setPromos} from '../actions';
-import {LoadingStatus} from '../../../types/const';
+import {LoadingStatus} from '../../../utils/const';
 import axios from 'axios';
 import {Promo} from '../../../types/types';
+import {UrlRoute} from '../../../utils/const';
 
-const BASE_URL = 'https://camera-shop.accelerator.pages.academy';
 
 const fetchPromos = ():ThunkActionResult => async (dispatch, _getState): Promise<void> => {
   dispatch(setFetchPromosStatus(LoadingStatus.Loading));
-  await axios.get(`${BASE_URL}/promo`)
+  await axios.get(`${UrlRoute.Base}${UrlRoute.Promo}`)
     .then((response) => {
       const promos: Promo | Promo[] = response.data;
       const isList = Array.isArray(promos);
