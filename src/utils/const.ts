@@ -112,3 +112,24 @@ export const ModalContent = {
 
 export type ModalType = typeof ModalContent[keyof typeof ModalContent];
 export type ComponentNameType = typeof ComponentName[keyof typeof ComponentName];
+
+
+export const BreadcrumbsItem = {
+  Basket: {
+    Main: 'Главная',
+    Basket: 'Корзина',
+  },
+  Product: {
+    Main: 'Главная',
+    Catalog: 'Каталог',
+    Product: 'Товар',
+  },
+  Catalog: {
+    Main: 'Главная',
+    Catalog: 'Каталог',
+  }
+} as const;
+
+export type BreadcrumbsItemBasketType = typeof BreadcrumbsItem.Basket;
+export type BreadcrumbsItemCatalogType = typeof BreadcrumbsItem.Catalog;
+export type BreadcrumbsItemProductType = typeof BreadcrumbsItem.Product;

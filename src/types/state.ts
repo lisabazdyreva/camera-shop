@@ -21,6 +21,7 @@ export type AppStatus = {
 
 export type AppProcess = {
   basket: [] | Camera [];
+  currentCatalogPage: number;
 }
 
 export type State = RootState;

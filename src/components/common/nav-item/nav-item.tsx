@@ -22,7 +22,7 @@ const NavItem = ({name, usingComponent}: NavItemProps) => {
     <li className={classesListItem}>{/*TODO нужно ли здесь делать ссылку на первую страницу Catalog*/}
       {
         name === MenuItem.Catalog
-          ? <Link to={`${AppRoute.Catalog}${PaginationRoute.Page}`} className={classesLink}>{name}</Link>
+          ? <Link to={`${AppRoute.Catalog}${PaginationRoute.Page}1`} className={classesLink}>{name}</Link>
           : <a className={classesLink} href="#">{name}</a>
       }
     </li>

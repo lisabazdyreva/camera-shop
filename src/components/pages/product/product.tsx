@@ -13,8 +13,7 @@ import {AppDispatch} from '../../../types/action';
 import {getCamera, getReviews, getSimilarCameras} from '../../../store/app-data/selectors';
 import {fetchReviews} from '../../../store/actions/api-actions/api-actions-reviews';
 import {ProductCard} from '../catalog/components/components';
-import {ComponentName, ModalContent} from '../../../utils/const';
-
+import {ComponentName, ModalContent, BreadcrumbsItem} from '../../../utils/const';
 
 
 const Product = () => {
@@ -35,11 +34,12 @@ const Product = () => {
   const camera = useSelector(getCamera);
   const reviews = useSelector(getReviews);
   const similarCameras = useSelector(getSimilarCameras);
+
   return (
     <>
       <main>
         <div className="page-content">
-          <Breadcrumbs />
+          {camera && <Breadcrumbs breadcrumbItems={BreadcrumbsItem.Product} data={camera} usingComponent={ComponentName.Product}/>}
           <div className="page-content__section">
             {camera && <ProductItem data={camera}/>}
           </div>

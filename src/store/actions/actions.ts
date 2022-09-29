@@ -45,6 +45,13 @@ export const setBasket = createAction(
   })
 );
 
+export const setCurrentPage = createAction(
+  ActionType.SetCurrentPage,
+  (pageNumber: number) => ({
+    payload: pageNumber,
+  })
+);
+
 export const setFetchCamerasStatus = createAction(
   ActionType.SetFetchCamerasStatus,
   (status: typeof LoadingStatus[keyof typeof LoadingStatus]) => ({

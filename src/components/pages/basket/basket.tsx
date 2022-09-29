@@ -6,7 +6,7 @@ import {
 
 import {Modal} from '../../common/common';
 import {useState} from 'react';
-import {ComponentName, ModalContent} from '../../../utils/const';
+import {ComponentName, ModalContent, BreadcrumbsItem} from '../../../utils/const';
 
 
 const Basket = () => {
@@ -16,7 +16,7 @@ const Basket = () => {
   return (
     <main>
       <div className="page-content">
-        <Breadcrumbs />
+        <Breadcrumbs breadcrumbItems={BreadcrumbsItem.Basket} usingComponent={ComponentName.Basket}/>
         <section className="basket">
           <div className="container">
             <h1 className="title title--h2">Корзина</h1>

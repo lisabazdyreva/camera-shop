@@ -8,16 +8,21 @@ import {
   SideFilter,
 } from './components/components';
 import {Modal} from '../../common/common';
-import {useState} from 'react';
-import {useSelector} from 'react-redux';
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {getCameras, getPromos} from '../../../store/app-data/selectors';
-import {initialCamera, LoadingStatus, CARDS_PER_PAGE, ComponentName, ModalContent} from '../../../utils/const';
+import {initialCamera, LoadingStatus, CARDS_PER_PAGE, ComponentName, ModalContent, BreadcrumbsItem} from '../../../utils/const';
 import {Camera} from '../../../types/types';
 import {getCamerasFetchStatus, getPromosFetchStatus} from '../../../store/app-status/selectors';
 import {useParams} from 'react-router-dom';
+import {getCurrentPage} from '../../../store/app-process/selectors';
+import {setCurrentPage} from '../../../store/actions/actions';
 
 
 const Catalog = () => {
+  const dispatch = useDispatch();
+  const currentPageNumber = useSelector(getCurrentPage);
+
   const params = useParams();
   const {pageNum} = params;
 
@@ -25,7 +30,14 @@ const Catalog = () => {
   const [isModalAddOpen, setIsModalAddOpen] = useState(false);
   const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
 
-  const [currentPageNumber, setCurrentPageNumber] = useState(Number(pageNum));
+  const setCurrentPageNumber = (pageNumber: number) => {
+    dispatch(setCurrentPage(pageNumber));
+  };
+
+  useEffect(() => {
+    setCurrentPageNumber(Number(pageNum));
+  }, []);
+
 
   const cameras = useSelector(getCameras);
   const promos = useSelector(getPromos);
@@ -46,7 +58,7 @@ const Catalog = () => {
     <main>
       {promosFetchStatus === LoadingStatus.Success && <Banner promos={promos} />}
       <div className="page-content">
-        <Breadcrumbs />
+        <Breadcrumbs breadcrumbItems={BreadcrumbsItem.Catalog} usingComponent={ComponentName.Catalog}/>
         <section className="catalog">
           <div className="container">
             <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
