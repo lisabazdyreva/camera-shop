@@ -12,7 +12,7 @@ import {fetchCamera, fetchSimilarCameras} from '../../../store/actions/api-actio
 import {AppDispatch} from '../../../types/action';
 import {getCamera, getReviews, getSimilarCameras} from '../../../store/app-data/selectors';
 import {fetchReviews} from '../../../store/actions/api-actions/api-actions-reviews';
-import {ProductCard} from '../catalog/components/components';
+import {Slider} from '../catalog/components/components';
 import {ComponentName, ModalContent, BreadcrumbsItem} from '../../../utils/const';
 
 
@@ -43,49 +43,17 @@ const Product = () => {
           <div className="page-content__section">
             {camera && <ProductItem data={camera}/>}
           </div>
-          <div className="page-content__section">
-            <section className="product-similar">
-              <div className="container">
-                <h2 className="title title--h3">Похожие товары</h2>
-                <div className="product-similar__slider">
-                  <div className="product-similar__slider-list">
-                    {
-
-                      similarCameras.map((similarCamera, index) => (
-                        <ProductCard
-                          //TODO
-                          //eslint-disable-next-line
-                          handleAddModal={() => console.log('f')}
-                          data={similarCamera}
-                          key={similarCamera.id}
-                          additionalClass={index < 3 ? 'is-active' : null}
-                        />
-                      ))
-                    }
-                  </div>
-                  <button
-                    className="slider-controls slider-controls--prev"
-                    type="button"
-                    aria-label="Предыдущий слайд"
-                    disabled
-                  >
-                    <svg width="7" height="12" aria-hidden="true">
-                      <use xlinkHref="#icon-arrow"></use>
-                    </svg>
-                  </button>
-                  <button
-                    className="slider-controls slider-controls--next"
-                    type="button"
-                    aria-label="Следующий слайд"
-                  >
-                    <svg width="7" height="12" aria-hidden="true">
-                      <use xlinkHref="#icon-arrow"></use>
-                    </svg>
-                  </button>
+          {
+            similarCameras.length &&
+            <div className="page-content__section">
+              <section className="product-similar">
+                <div className="container">
+                  <h2 className="title title--h3">Похожие товары</h2>
+                  <Slider similarCameras={similarCameras} />
                 </div>
-              </div>
-            </section>
-          </div>
+              </section>
+            </div>
+          }
           <div className="page-content__section">
             <section className="review-block">
               <div className="container">

@@ -2,6 +2,7 @@ import {Camera} from '../../../../../types/types';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../../../../utils/const';
 import {Rating} from '../../../../common/common';
+import {TabType} from '../../../product/components/product-tabs/product-tabs';
 
 
 interface ProductCardProps {
@@ -15,7 +16,7 @@ const ProductCard = ({handleAddModal, data, additionalClass}: ProductCardProps) 
   //{TODO for slider for three first add class is-active:  product-card is-active}
   //{TODO component to common}
   return (
-    <div className={`product-card ${additionalClass || ''}`}>
+    <div className={`product-card ${additionalClass}`}>
       <div className="product-card__img">
         <picture>
           <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x} 2x`} /> {/*"img/content/img1.webp, img/content/img1@2x.webp 2x"*/}
@@ -38,7 +39,7 @@ const ProductCard = ({handleAddModal, data, additionalClass}: ProductCardProps) 
       </div>
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button" onClick={() => handleAddModal(data)}>Купить</button>
-        <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}`}>Подробнее</Link>
+        <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}/${ TabType.Features}`}>Подробнее</Link>
       </div>
     </div>
   );

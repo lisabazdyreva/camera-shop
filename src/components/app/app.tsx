@@ -16,7 +16,7 @@ const App = (): JSX.Element => (
       <Routes>
         <Route path={`${AppRoute.Catalog}${PaginationRoute.Page}:pageNum`} element={<Catalog />}/>
         <Route path={AppRoute.Basket} element={<Basket/>} />
-        <Route path={`${AppRoute.Product}/:id`} element={<Product />} />
+        <Route path={`${AppRoute.Product}/:id/:tab`} element={<Product />} />
       </Routes>
       <Footer />
     </div>
