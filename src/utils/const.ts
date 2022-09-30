@@ -133,3 +133,25 @@ export const BreadcrumbsItem = {
 export type BreadcrumbsItemBasketType = typeof BreadcrumbsItem.Basket;
 export type BreadcrumbsItemCatalogType = typeof BreadcrumbsItem.Catalog;
 export type BreadcrumbsItemProductType = typeof BreadcrumbsItem.Product;
+
+export const BreadcrumbsLink = {
+  Main: '/',
+  Catalog: '/catalog/page_',
+} as const;
+
+export const DescriptionLength = {
+  Short: 1,
+  Medium: 2,
+  Long: 3,
+} as const;
+
+export const TabType = {
+  Features: 'features',
+  Description: 'description',
+} as const;
+
+
+export const TabDictionary = {
+  Features: 'Характеристики',
+  Description: 'Описание',
+} as const;

@@ -1,22 +1,43 @@
+import {DescriptionLength} from '../../../../../utils/const';
+
 interface DescriptionTabProps {
   description: string,
 }
 
-const DescriptionTab = ({description}: DescriptionTabProps) => (
-  <div className="product__tabs-text">
-    {description}
-  </div>
-);
+const DescriptionTab = ({description}: DescriptionTabProps) => {
+  let paragraph;
+  let firstParagraph;
+  let secondParagraph;
 
-{/*<p>*/}
-{/*  Немецкий концерн BRW разработал видеокамеру Das Auge IV в&nbsp;начале 80-х годов, однако*/}
-{/*  она до&nbsp;сих пор пользуется популярностью среди коллекционеров и&nbsp;яростных*/}
-{/*  почитателей старинной техники.*/}
-{/*</p>*/}
-{/*<p>*/}
-{/*  Вы&nbsp;тоже можете прикоснуться к&nbsp;волшебству аналоговой съёмки, заказав этот*/}
-{/*  чудо-аппарат. Кто знает, может с&nbsp;Das Auge IV&nbsp;начнётся ваш путь к&nbsp;наградам*/}
-{/*  всех престижных кинофестивалей.*/}
-{/*</p>*/}
+  const sentences = description.split('.').filter((sentence) => sentence !== '' && sentence !== ' ');
+
+  switch (sentences.length) {
+    case DescriptionLength.Short:
+      paragraph = <p>{description}</p>;
+      break;
+    case DescriptionLength.Medium:
+      paragraph = <p>{`${sentences.join('.')}.`}</p>;
+      break;
+    default:
+      firstParagraph = <p>{`${sentences[0]}.`}</p>;
+      secondParagraph = <p>{[`${sentences[1]}.`, `${sentences[2]}.`]}</p>;
+      break;
+  }
+
+  return (
+    <div className="product__tabs-text">
+      {
+        (sentences.length === DescriptionLength.Medium || sentences.length === DescriptionLength.Short)
+          ? paragraph
+          : (
+            <>
+              {firstParagraph}
+              {secondParagraph}
+            </>
+          )
+      }
+    </div>
+  );
+};
 
 export default DescriptionTab;

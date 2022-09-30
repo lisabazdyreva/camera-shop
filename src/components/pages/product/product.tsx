@@ -4,36 +4,25 @@ import {
   ProductItem,
   ReviewCard,
 } from './components/components';
-import {Modal} from '../../common/common';
-import {useEffect, useState} from 'react';
+import {ModalInfo, ModalAction} from '../../common/common';
+import {useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
-import {fetchCamera, fetchSimilarCameras} from '../../../store/actions/api-actions/api-actions-cameras';
-import {AppDispatch} from '../../../types/action';
-import {getCamera, getReviews, getSimilarCameras} from '../../../store/app-data/selectors';
-import {fetchReviews} from '../../../store/actions/api-actions/api-actions-reviews';
-import {Slider} from '../catalog/components/components';
-import {ComponentName, ModalContent, BreadcrumbsItem} from '../../../utils/const';
+import {Slider} from './components/components';
+import {ComponentName, BreadcrumbsItem} from '../../../utils/const';
+import useProductDispatch from '../../../hooks/product-hooks/useProductDispatch';
+import useProductSelectors from '../../../hooks/product-hooks/useProductSelectors';
 
 
 const Product = () => {
   const params = useParams();
   const {id} = params;
 
-  const dispatch = useDispatch<AppDispatch>();
-
   const [isSuccessReviewModalOpen, setIsSuccessReviewModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
-  useEffect(() => {
-    dispatch(fetchCamera(Number(id)));
-    dispatch(fetchReviews(Number(id)));
-    dispatch(fetchSimilarCameras(Number(id)));
-  }, [id]);
+  useProductDispatch(Number(id));
 
-  const camera = useSelector(getCamera);
-  const reviews = useSelector(getReviews);
-  const similarCameras = useSelector(getSimilarCameras);
+  const {camera, reviews, similarCameras} = useProductSelectors();
 
   return (
     <>
@@ -74,8 +63,8 @@ const Product = () => {
             </section>
           </div>
         </div>
-        { isReviewModalOpen && <Modal usingComponent={ComponentName.Product} modalType={ModalContent.Action} handleCloseModal={setIsReviewModalOpen}/> }
-        { isSuccessReviewModalOpen && <Modal usingComponent={ComponentName.Product} modalType={ModalContent.Info} handleCloseModal={setIsSuccessReviewModalOpen}/> }
+        { isReviewModalOpen && <ModalAction usingComponent={ComponentName.Product} handleCloseModal={setIsReviewModalOpen}/> }
+        { isSuccessReviewModalOpen && <ModalInfo usingComponent={ComponentName.Product} handleCloseModal={setIsSuccessReviewModalOpen}/> }
       </main>
       <a className="up-btn" href="#header">
         <svg width="12" height="18" aria-hidden="true">

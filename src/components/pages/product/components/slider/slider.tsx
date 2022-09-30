@@ -1,32 +1,21 @@
-import {ProductCard} from '../components';
+import {ProductCard} from '../../../../common/common';
 import {Camera} from '../../../../../types/types';
-import {useState} from 'react';
+import useSlider from '../../../../../hooks/product-hooks/useSlider';
 
 const CARDS_PER_STEP = 3;
 
 interface SliderProps {
   similarCameras: Camera[];
 }
-//eslint-disable-next-line
+
 const Slider = ({similarCameras}: SliderProps) => {
-  //TODO возможно выделить в хук
-  const [counter, setCount] = useState(0);
-  const handlePreviousButtonClick = () => {
-    setCount(counter - 1);
-  };
-
-  const handleNextButtonClick = () => {
-
-    setCount(counter + 1);
-  };
-
-  const cameras = similarCameras.slice(counter, counter + CARDS_PER_STEP);
+  const { items, handlePreviousClick, handleNextClick, disabling } = useSlider(similarCameras, CARDS_PER_STEP);
 
   return (
     <div className="product-similar__slider">
       <div className="product-similar__slider-list">
         {
-          cameras.map((similarCamera, index) => (
+          items.map((similarCamera, index) => (
             <ProductCard
               //TODO
               //eslint-disable-next-line
@@ -42,8 +31,8 @@ const Slider = ({similarCameras}: SliderProps) => {
         className="slider-controls slider-controls--prev"
         type="button"
         aria-label="Предыдущий слайд"
-        onClick={handlePreviousButtonClick}
-        disabled={counter === 0}
+        onClick={handlePreviousClick}
+        disabled={disabling.isFirst}
       >
         <svg width="7" height="12" aria-hidden="true">
           <use xlinkHref="#icon-arrow"></use>
@@ -53,8 +42,8 @@ const Slider = ({similarCameras}: SliderProps) => {
         className="slider-controls slider-controls--next"
         type="button"
         aria-label="Следующий слайд"
-        onClick={handleNextButtonClick}
-        disabled={cameras.length < 3}
+        onClick={handleNextClick}
+        disabled={disabling.isLast}
       >
         <svg width="7" height="12" aria-hidden="true">
           <use xlinkHref="#icon-arrow"></use>

@@ -1,26 +1,27 @@
-import {Camera} from '../../../../../types/types';
+import {Camera} from '../../../types/types';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../../../../utils/const';
-import {Rating} from '../../../../common/common';
-import {TabType} from '../../../product/components/product-tabs/product-tabs';
+import {AppRoute} from '../../../utils/const';
+import {Rating} from '../common';
+import {TabType} from '../../../utils/const';
+import {getFormattedPrice} from '../../../utils/utils';
 
 
 interface ProductCardProps {
   handleAddModal: (data: Camera) => void;
   data: Camera;
-  additionalClass?: 'is-active' | null;
+  additionalClass?: 'is-active';
 }
 
 const ProductCard = ({handleAddModal, data, additionalClass}: ProductCardProps) => {
   const {name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price, id, reviewCount, rating} = data;
   //{TODO for slider for three first add class is-active:  product-card is-active}
-  //{TODO component to common}
+  const formattedPrice = getFormattedPrice(price);
+
   return (
     <div className={`product-card ${additionalClass}`}>
       <div className="product-card__img">
         <picture>
-          <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x} 2x`} /> {/*"img/content/img1.webp, img/content/img1@2x.webp 2x"*/}
-          {/*TODO quotes Ретрокамера «Das Auge IV»*/}
+          <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x} 2x`} />
           <img
             src={`/${previewImg}`}
             srcSet={`/${previewImg2x} 2x`}
@@ -32,9 +33,8 @@ const ProductCard = ({handleAddModal, data, additionalClass}: ProductCardProps) 
       </div>
       <div className="product-card__info">
         <Rating rating={rating} reviewCount={reviewCount} id={id} isCatalogRating/>
-
-        <p className="product-card__title">{name}</p>{/*TODO quotes Ретрокамера «Das Auge IV»*/}
-        <p className="product-card__price"><span className="visually-hidden">Цена:</span>{price} ₽ {/*TODO format 73 450*/}
+        <p className="product-card__title">{name}</p>
+        <p className="product-card__price"><span className="visually-hidden">Цена:</span>{formattedPrice}
         </p>
       </div>
       <div className="product-card__buttons">

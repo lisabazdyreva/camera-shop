@@ -1,13 +1,19 @@
 import {Camera} from '../../../../../types/types';
 import {Rating} from '../../../../common/common';
 import {ProductTabs} from '../components';
+import {getFormattedPrice} from '../../../../../utils/utils';
+import {useDispatch} from 'react-redux';
+import {setBasket} from '../../../../../store/actions/actions';
+import {useState} from 'react';
+
 
 interface ProductItemProps {
   data: Camera;
 }
 
-
 const ProductItem = ({data}: ProductItemProps) => {
+  const dispatch = useDispatch();
+  const [isAddedBasket, setIsAddedBasket] = useState('Not Added'); // TODO добавить модальное
   const {
     name,
     previewImg,
@@ -26,10 +32,12 @@ const ProductItem = ({data}: ProductItemProps) => {
   } = data;
 
 
-  const handleButtonClick = () => {
-    //eslint-disable-next-line
-    console.log('added');
+  const handleButtonAddClick = () => {
+    dispatch(setBasket(data));
+    setIsAddedBasket('Added');
   };
+
+  const formattedPrice = getFormattedPrice(price);
 
   return (
     <section className="product">
@@ -47,18 +55,19 @@ const ProductItem = ({data}: ProductItemProps) => {
           </picture>
         </div>
         <div className="product__content">
-          <h1 className="title title--h3">{name}</h1>{/*TODO Format Ретрокамера «Das Auge IV»*/}
+          <h1 className="title title--h3">{name}</h1>
           <Rating rating={rating} reviewCount={reviewCount} id={id} isCatalogRating={false} />
           <p className="product__price">
             <span className="visually-hidden">Цена:</span>
-            {price} ₽{/*TODO Format 73 450*/}
+            {formattedPrice}
           </p>
-          <button className="btn btn--purple" type="button" onClick={handleButtonClick}>
+          <button className="btn btn--purple" type="button" onClick={handleButtonAddClick}>
             <svg width="24" height="16" aria-hidden="true">
               <use xlinkHref="#icon-add-basket"></use>
             </svg>
             Добавить в корзину
           </button>
+          {isAddedBasket}
           <ProductTabs data={{vendorCode, category, type, level, description}}/>
         </div>
       </div>

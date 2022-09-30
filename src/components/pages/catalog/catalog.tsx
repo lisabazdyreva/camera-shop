@@ -1,58 +1,50 @@
 import Breadcrumbs from '../../common/breadcrumbs/breadcrumbs';
-import Pagination from '../../common/pagination/pagination';
+import { ProductCard } from '../../common/common';
 
 import {
   Banner,
-  ProductCard,
+  Pagination,
   Sorting,
   SideFilter,
 } from './components/components';
-import {Modal} from '../../common/common';
+import {ModalInfo, ModalAction} from '../../common/common';
 import {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {getCameras, getPromos} from '../../../store/app-data/selectors';
-import {initialCamera, LoadingStatus, CARDS_PER_PAGE, ComponentName, ModalContent, BreadcrumbsItem} from '../../../utils/const';
+import {useDispatch} from 'react-redux';
+import {initialCamera, LoadingStatus, CARDS_PER_PAGE, ComponentName, BreadcrumbsItem} from '../../../utils/const';
 import {Camera} from '../../../types/types';
-import {getCamerasFetchStatus, getPromosFetchStatus} from '../../../store/app-status/selectors';
 import {useParams} from 'react-router-dom';
-import {getCurrentPage} from '../../../store/app-process/selectors';
 import {setCurrentPage} from '../../../store/actions/actions';
+import usePagination from '../../../hooks/catalog-hooks/usePagination';
+import useCatalogSelectors from '../../../hooks/catalog-hooks/useCatalogSelectors';
 
 
 const Catalog = () => {
   const dispatch = useDispatch();
-  const currentPageNumber = useSelector(getCurrentPage);
-
-  const params = useParams();
-  const {pageNum} = params;
 
   const [selectedCameraData, setSelectedCameraData] = useState(initialCamera);
   const [isModalAddOpen, setIsModalAddOpen] = useState(false);
   const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
 
+  const {cameras, promos, promosFetchStatus, camerasFetchStatus, currentPageNumber} = useCatalogSelectors();
+  const {pages, currentItems} = usePagination(currentPageNumber, CARDS_PER_PAGE, cameras);
+
+  const params = useParams();
+  const {pageNum} = params;
+
   const setCurrentPageNumber = (pageNumber: number) => {
     dispatch(setCurrentPage(pageNumber));
   };
-
-  useEffect(() => {
-    setCurrentPageNumber(Number(pageNum));
-  }, []);
-
-
-  const cameras = useSelector(getCameras);
-  const promos = useSelector(getPromos);
-
-  const promosFetchStatus = useSelector(getPromosFetchStatus);
-  const camerasFetchStatus = useSelector(getCamerasFetchStatus);
-
-  const indexOfLastPost = currentPageNumber * CARDS_PER_PAGE;
-  const indexOfFirstPost = indexOfLastPost - CARDS_PER_PAGE;
-  const currentCameras = cameras.slice(indexOfFirstPost, indexOfLastPost);
 
   const handleAddModal = (data: Camera) => {
     setIsModalAddOpen(true);
     setSelectedCameraData(data);
   };
+
+  const isCamerasLoaded = camerasFetchStatus === LoadingStatus.Success;
+
+  useEffect(() => {
+    setCurrentPageNumber(Number(pageNum));
+  }, []);
 
   return (
     <main>
@@ -68,11 +60,11 @@ const Catalog = () => {
                 <Sorting />
                 <div className="cards catalog__cards">
                   {
-                    camerasFetchStatus === LoadingStatus.Success &&
-                    currentCameras.map((camera) => <ProductCard key={camera.id} handleAddModal={handleAddModal} data={camera} />)
+                    isCamerasLoaded &&
+                    currentItems.map((camera) => <ProductCard key={camera.id} handleAddModal={handleAddModal} data={camera} />)
                   }
                 </div>
-                {camerasFetchStatus === LoadingStatus.Success && <Pagination camerasAmount={cameras.length} currentPageNumber={currentPageNumber} setCurrentPageNumber={setCurrentPageNumber}/>}
+                {isCamerasLoaded && <Pagination pages={pages} currentPageNumber={currentPageNumber} setCurrentPageNumber={setCurrentPageNumber}/>}
               </div>
             </div>
           </div>
@@ -81,16 +73,15 @@ const Catalog = () => {
       {
         isModalAddOpen
         &&
-        <Modal
+        <ModalAction
           data={selectedCameraData}
           usingComponent={ComponentName.Catalog}
-          modalType={ModalContent.Action}
           handleCloseModal={setIsModalAddOpen}
           handleOpenSuccessModal={setIsModalSuccessOpen}
         />
       }
       {/*TODO remove magic values*/}
-      {isModalSuccessOpen && <Modal usingComponent={ComponentName.Catalog} modalType={ModalContent.Info} handleCloseModal={setIsModalSuccessOpen}/>}
+      {isModalSuccessOpen && <ModalInfo usingComponent={ComponentName.Catalog} handleCloseModal={setIsModalSuccessOpen}/>}
     </main>
   );
 };

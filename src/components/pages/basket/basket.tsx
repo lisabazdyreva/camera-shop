@@ -4,9 +4,9 @@ import {
   BasketItem
 } from './components/components';
 
-import {Modal} from '../../common/common';
+import {ModalInfo, ModalAction} from '../../common/common';
 import {useState} from 'react';
-import {ComponentName, ModalContent, BreadcrumbsItem} from '../../../utils/const';
+import {ComponentName, BreadcrumbsItem} from '../../../utils/const';
 
 
 const Basket = () => {
@@ -27,8 +27,8 @@ const Basket = () => {
           </div>
         </section>
       </div>
-      { isSuccessModalOpen && <Modal usingComponent={ComponentName.Basket} modalType={ModalContent.Info} handleCloseModal={setIsSuccessModalOpen}/> }
-      { isRemoveModalOpen && <Modal usingComponent={ComponentName.Basket} modalType={ModalContent.Action} handleCloseModal={setIsRemoveModalOpen}/> }
+      { isSuccessModalOpen && <ModalInfo usingComponent={ComponentName.Basket} handleCloseModal={setIsSuccessModalOpen}/> }
+      { isRemoveModalOpen && <ModalAction usingComponent={ComponentName.Basket} handleCloseModal={setIsRemoveModalOpen}/> }
       {/*TODO  remove magic values*/}
     </main>
   );

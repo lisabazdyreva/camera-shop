@@ -3,7 +3,7 @@ import {ComponentName, ComponentNameType, BreadcrumbsItemBasketType, Breadcrumbs
 import {Camera} from '../../../types/types';
 import {useSelector} from 'react-redux';
 import {getCurrentPage} from '../../../store/app-process/selectors';
-
+import {breadcrumbsLinks} from '../../../utils/utils';
 
 interface BreadcrumbsProps {
   data?: Camera;
@@ -11,15 +11,7 @@ interface BreadcrumbsProps {
   breadcrumbItems: BreadcrumbsItemProductType | BreadcrumbsItemBasketType | BreadcrumbsItemCatalogType,
 }
 
-const BreadcrumbsLink = {
-  Main: '/',
-  Catalog: '/catalog/page_',
-} as const;
-
-const breadcrumbsLinks = Object.values(BreadcrumbsLink);
-
 const Breadcrumbs = ({data, usingComponent, breadcrumbItems}: BreadcrumbsProps) => {
-
   const items = Object.values(breadcrumbItems);
 
   const currentPage = useSelector(getCurrentPage);
