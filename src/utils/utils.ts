@@ -12,6 +12,7 @@ import {
   TabType,
   TabsList, ReviewItemsList
 } from './const';
+import {Review} from '../types/types';
 
 export const getTitle = (component: ComponentNameType, modalType: ModalType) => {
   const isModalAction = modalType === ModalContent.Action;
@@ -61,4 +62,12 @@ export const getFormattedPrice = (price: number): string => {
 
   return (`${hundreds.join('')} ${tens.join('')} ₽`);
 };
+
+export const sortReviews = (reviews: Review[]) => reviews.sort((reviewA, reviewB) => {
+  const a = new Date(reviewA.createAt).getTime();
+  const b = new Date(reviewB.createAt).getTime();
+
+  return b - a;
+});
+
 

@@ -15,8 +15,8 @@ interface ModalActionProps {
 const ModalAction = ({usingComponent, data, handleCloseModal, handleOpenSuccessModal}: ModalActionProps) => {
 
   const getDetails = () => {
-    if (usingComponent === ComponentName.Product) {
-      return <ReviewForm />;
+    if (usingComponent === ComponentName.Product && data) {
+      return <ReviewForm id={data.id} handleCloseModal={handleCloseModal} handleOpenSuccessModal={handleOpenSuccessModal}/>;
     }
 
     if (data) {

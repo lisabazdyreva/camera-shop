@@ -65,7 +65,7 @@ const Product = () => {
             </section>
           </div>
         </div>
-        { isReviewModalOpen && <ModalAction usingComponent={ComponentName.Product} handleCloseModal={setIsReviewModalOpen}/> }
+        { isReviewModalOpen && camera && <ModalAction data={camera} usingComponent={ComponentName.Product} handleOpenSuccessModal={setIsSuccessReviewModalOpen} handleCloseModal={setIsReviewModalOpen}/> }
         { isSuccessReviewModalOpen && <ModalInfo usingComponent={ComponentName.Product} handleCloseModal={setIsSuccessReviewModalOpen}/> }
       </main>
       <a className="up-btn" href="#header">

@@ -28,7 +28,7 @@ const ModalInfo = ({usingComponent, handleCloseModal}: ModalInfoProps) => {
     } else if (usingComponent === ComponentName.Catalog) {
       return <CatalogButtons handleCloseSuccessModal={handleCloseModal}/>;
     } else if (usingComponent === ComponentName.Product) {
-      return <ReturnButton />;
+      return <ReturnButton handleCloseSuccessModal={handleCloseModal}/>;
     }
   };
 
