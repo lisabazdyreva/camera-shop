@@ -1,8 +1,10 @@
-import Search from '../search/search';
-import {NavItem} from '../common';
-import Logo from '../logo/logo';
-import {menuItems} from '../../../utils/utils';
 import {Link} from 'react-router-dom';
+import {
+  Logo,
+  NavItem,
+  Search
+} from '../common';
+import {menuItems} from '../../../utils/utils';
 import {AppRoute, ComponentName} from '../../../utils/const';
 
 

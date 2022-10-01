@@ -1,6 +1,8 @@
-import FooterNavigations from '../footer-navigations/footer-navigations';
-import Social from '../social/social';
-import Logo from '../logo/logo';
+import {
+  Logo,
+  Social,
+  FooterNavigation
+} from '../common';
 import {ComponentName} from '../../../utils/const';
 
 
@@ -13,7 +15,7 @@ const Footer = () => (
         <Social />
       </div>
       <ul className="footer__nav">
-        <FooterNavigations />
+        <FooterNavigation />
       </ul>
     </div>
   </footer>

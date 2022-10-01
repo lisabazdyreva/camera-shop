@@ -1,11 +1,5 @@
 import {Camera} from '../types/types';
 
-// export const ModalType = {
-//   Catalog: 'catalog',
-//   Basket: 'basket',
-//   Product: 'product',
-// } as const;
-
 export const MenuItem = {
   Catalog: 'Каталог',
   Guarantees: 'Гарантии',
@@ -94,7 +88,10 @@ export enum NameSpace {
   Status = 'STATUS',
 }
 
-export const CARDS_PER_PAGE = 9;
+export const Step = {
+  Pagination: 9,
+  Slider: 3,
+} as const;
 
 export const ComponentName = {
   Footer: 'footer',
@@ -155,3 +152,57 @@ export const TabDictionary = {
   Features: 'Характеристики',
   Description: 'Описание',
 } as const;
+
+export const DefaultValue = {
+  CatalogPageNumber: 1,
+} as const;
+
+export const Navigation = {
+  Translation: 'Навигация',
+  Items: Object.values(MenuItem),
+} as const;
+
+export const Source = {
+  Translation: 'Ресурсы',
+  Items: Object.values(SourceItem),
+} as const;
+
+export const Support = {
+  Translation: 'Поддержка',
+  Items: Object.values(SupportItem),
+} as const;
+
+export const FooterNavigation = {
+  Navigation: Navigation,
+  Sources: Source,
+  Support: Support,
+} as const;
+
+export const RatingClass = {
+  Catalog: 'product-card__rate',
+  Product: 'product__rate',
+  Review: 'review-card__rate',
+} as const;
+
+export type RatingClassType = typeof RatingClass[keyof typeof RatingClass];
+
+export const SocialName = {
+  Vk: 'vk',
+  Pinterest: 'pinterest',
+  Reddit: 'reddit'
+} as const;
+
+export const TabsList = {
+  VendorCode: 'Артикул',
+  Category: 'Категория',
+  Type: 'Тип камеры',
+  Level: 'Уровень',
+} as const;
+
+export const ReviewItemsList = {
+  Advantage: 'Достоинства',
+  Disadvantage: 'Недостатки',
+  Review: 'Комментарий',
+} as const;
+
+export const CAMERA_ADJECTIVE_ENDING = 'ая';

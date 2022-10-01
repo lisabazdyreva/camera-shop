@@ -1,3 +1,4 @@
+import {tabsListNames} from '../../../../../utils/utils';
 
 interface FeatureTabProps {
   data: {
@@ -7,13 +8,6 @@ interface FeatureTabProps {
     level: string,
   }
 }
-
-const TabsList = {
-  VendorCode: 'Артикул',
-  Category: 'Категория',
-  Type: 'Тип камеры',
-  Level: 'Уровень',
-} as const;
 
 
 const FeatureTab = ({data}: FeatureTabProps) => {
@@ -26,8 +20,6 @@ const FeatureTab = ({data}: FeatureTabProps) => {
     Level: level,
   } as const;
 
-
-  const tabsListNames = Object.values(TabsList);
   const tabsListElements = Object.values(TabsListElement);
 
   return (

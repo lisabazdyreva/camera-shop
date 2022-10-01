@@ -1,10 +1,12 @@
+import {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import {Camera} from '../../../../../types/types';
-import {Rating} from '../../../../common/common';
+import {Picture, Rating} from '../../../../common/common';
 import {ProductTabs} from '../components';
 import {getFormattedPrice} from '../../../../../utils/utils';
-import {useDispatch} from 'react-redux';
+
 import {setBasket} from '../../../../../store/actions/actions';
-import {useState} from 'react';
+import {RatingClass} from '../../../../../utils/const';
 
 
 interface ProductItemProps {
@@ -13,7 +15,8 @@ interface ProductItemProps {
 
 const ProductItem = ({data}: ProductItemProps) => {
   const dispatch = useDispatch();
-  const [isAddedBasket, setIsAddedBasket] = useState('Not Added'); // TODO добавить модальное
+  const [isAddedBasket, setIsAddedBasket] = useState('Not added to basket');// TODO next iteration
+
   const {
     name,
     previewImg,
@@ -34,7 +37,7 @@ const ProductItem = ({data}: ProductItemProps) => {
 
   const handleButtonAddClick = () => {
     dispatch(setBasket(data));
-    setIsAddedBasket('Added');
+    setIsAddedBasket('Added to basket');
   };
 
   const formattedPrice = getFormattedPrice(price);
@@ -43,20 +46,18 @@ const ProductItem = ({data}: ProductItemProps) => {
     <section className="product">
       <div className="container">
         <div className="product__img">
-          <picture>
-            <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x}  2x`} />
-            <img
-              src={`/${previewImg}`}
-              srcSet={`/${previewImg2x} 2x`}
-              width="560"
-              height="480"
-              alt={name}
-            />
-          </picture>
+          <Picture
+            width={560}
+            height={480}
+            alt={name}
+            src={`/${previewImg}`}
+            srcSetImg={`/${previewImg2x}`}
+            srcSetSource={[`/${previewImgWebp}`, `/${previewImgWebp2x}`]}
+          />
         </div>
         <div className="product__content">
           <h1 className="title title--h3">{name}</h1>
-          <Rating rating={rating} reviewCount={reviewCount} id={id} isCatalogRating={false} />
+          <Rating additionalClass={RatingClass.Product} rating={rating} reviewCount={reviewCount} id={id} isDetailed />
           <p className="product__price">
             <span className="visually-hidden">Цена:</span>
             {formattedPrice}

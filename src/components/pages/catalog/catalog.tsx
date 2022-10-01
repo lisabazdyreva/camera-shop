@@ -1,5 +1,7 @@
-import Breadcrumbs from '../../common/breadcrumbs/breadcrumbs';
-import { ProductCard } from '../../common/common';
+import {
+  ProductCard,
+  Breadcrumbs
+} from '../../common/common';
 
 import {
   Banner,
@@ -10,7 +12,7 @@ import {
 import {ModalInfo, ModalAction} from '../../common/common';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {initialCamera, LoadingStatus, CARDS_PER_PAGE, ComponentName, BreadcrumbsItem} from '../../../utils/const';
+import {initialCamera, LoadingStatus, Step, ComponentName, BreadcrumbsItem} from '../../../utils/const';
 import {Camera} from '../../../types/types';
 import {useParams} from 'react-router-dom';
 import {setCurrentPage} from '../../../store/actions/actions';
@@ -26,7 +28,7 @@ const Catalog = () => {
   const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
 
   const {cameras, promos, promosFetchStatus, camerasFetchStatus, currentPageNumber} = useCatalogSelectors();
-  const {pages, currentItems} = usePagination(currentPageNumber, CARDS_PER_PAGE, cameras);
+  const {pages, currentItems} = usePagination(currentPageNumber, Step.Pagination, cameras);
 
   const params = useParams();
   const {pageNum} = params;
@@ -40,15 +42,27 @@ const Catalog = () => {
     setSelectedCameraData(data);
   };
 
+  const getPromoLevel = () => {
+    const [promo] = promos;
+    const promoId = promo.id;
+    const promoCameras = cameras.filter((camera) => camera.id === promoId);
+    const [promoCamera] = promoCameras;
+
+    return promoCamera.level;
+  };
+
   const isCamerasLoaded = camerasFetchStatus === LoadingStatus.Success;
 
   useEffect(() => {
     setCurrentPageNumber(Number(pageNum));
   }, []);
 
+
+  const level = promosFetchStatus === LoadingStatus.Success && isCamerasLoaded ? getPromoLevel() : '';
+
   return (
     <main>
-      {promosFetchStatus === LoadingStatus.Success && <Banner promos={promos} />}
+      {promosFetchStatus === LoadingStatus.Success && <Banner level={level} promos={promos} />}
       <div className="page-content">
         <Breadcrumbs breadcrumbItems={BreadcrumbsItem.Catalog} usingComponent={ComponentName.Catalog}/>
         <section className="catalog">
@@ -80,7 +94,6 @@ const Catalog = () => {
           handleOpenSuccessModal={setIsModalSuccessOpen}
         />
       }
-      {/*TODO remove magic values*/}
       {isModalSuccessOpen && <ModalInfo usingComponent={ComponentName.Catalog} handleCloseModal={setIsModalSuccessOpen}/>}
     </main>
   );

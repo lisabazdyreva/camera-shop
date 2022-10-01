@@ -1,10 +1,11 @@
 import {AppProcess} from '../../types/state';
 import {createReducer} from '@reduxjs/toolkit';
 import {setBasket, setCurrentPage} from '../actions/actions';
+import {DefaultValue} from '../../utils/const';
 
 const initialState: AppProcess = {
   basket: [],
-  currentCatalogPage: 1, // TODO remove magic value
+  currentCatalogPage: DefaultValue.CatalogPageNumber,
 };
 
 export const appProcess = createReducer(initialState, (builder) => {

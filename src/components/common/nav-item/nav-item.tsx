@@ -1,6 +1,6 @@
 import {
   AppRoute,
-  ComponentName,
+  ComponentName, DefaultValue,
   MenuItemsType,
   PaginationRoute,
   SourceItemsType,
@@ -19,10 +19,10 @@ const NavItem = ({name, usingComponent}: NavItemProps) => {
   const classesLink = usingComponent === ComponentName.Header ? 'main-nav__link' : 'link';
 
   return (
-    <li className={classesListItem}>{/*TODO нужно ли здесь делать ссылку на первую страницу Catalog*/}
+    <li className={classesListItem}>
       {
         name === MenuItem.Catalog
-          ? <Link to={`${AppRoute.Catalog}${PaginationRoute.Page}1`} className={classesLink}>{name}</Link>
+          ? <Link to={`${AppRoute.Catalog}${PaginationRoute.Page}${DefaultValue.CatalogPageNumber}`} className={classesLink}>{name}</Link>
           : <a className={classesLink} href="#">{name}</a>
       }
     </li>

@@ -1,28 +1,34 @@
+import {useDispatch} from 'react-redux';
 import {ProductCard} from '../../../../common/common';
 import {Camera} from '../../../../../types/types';
 import useSlider from '../../../../../hooks/product-hooks/useSlider';
+import {Step} from '../../../../../utils/const';
 
-const CARDS_PER_STEP = 3;
+import {setBasket} from '../../../../../store/actions/actions';
 
 interface SliderProps {
   similarCameras: Camera[];
 }
 
 const Slider = ({similarCameras}: SliderProps) => {
-  const { items, handlePreviousClick, handleNextClick, disabling } = useSlider(similarCameras, CARDS_PER_STEP);
+  const dispatch = useDispatch();
+  const { items, handlePreviousClick, handleNextClick, disabling } = useSlider(similarCameras, Step.Slider);
+
+  const handleAddBasketButtonClick = (data: Camera) => {
+    dispatch(setBasket(data));
+  };
 
   return (
     <div className="product-similar__slider">
       <div className="product-similar__slider-list">
         {
-          items.map((similarCamera, index) => (
+          items.map((similarCamera) => (
             <ProductCard
-              //TODO
-              //eslint-disable-next-line
-              handleAddModal={() => console.log('f')}
+              handleAddModal={handleAddBasketButtonClick}
               data={similarCamera}
               key={similarCamera.id}
               additionalClass={'is-active'}
+              withoutBasketImplementation
             />
           ))
         }

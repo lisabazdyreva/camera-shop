@@ -9,7 +9,7 @@ const DescriptionTab = ({description}: DescriptionTabProps) => {
   let firstParagraph;
   let secondParagraph;
 
-  const sentences = description.split('.').filter((sentence) => sentence !== '' && sentence !== ' ');
+  const sentences = description.trim().split('.').filter((sentence) => sentence !== '');
 
   switch (sentences.length) {
     case DescriptionLength.Short:

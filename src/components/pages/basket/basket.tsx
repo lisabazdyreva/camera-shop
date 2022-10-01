@@ -1,4 +1,4 @@
-import Breadcrumbs from '../../common/breadcrumbs/breadcrumbs';
+import {Breadcrumbs} from '../../common/common';
 import {
   BasketSummary,
   BasketItem
@@ -29,7 +29,6 @@ const Basket = () => {
       </div>
       { isSuccessModalOpen && <ModalInfo usingComponent={ComponentName.Basket} handleCloseModal={setIsSuccessModalOpen}/> }
       { isRemoveModalOpen && <ModalAction usingComponent={ComponentName.Basket} handleCloseModal={setIsRemoveModalOpen}/> }
-      {/*TODO  remove magic values*/}
     </main>
   );
 };

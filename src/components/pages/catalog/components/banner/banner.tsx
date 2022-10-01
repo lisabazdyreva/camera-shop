@@ -1,31 +1,33 @@
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../../../../utils/const';
+import {AppRoute, CAMERA_ADJECTIVE_ENDING} from '../../../../../utils/const';
 import {Promo} from '../../../../../types/types';
+import {Picture} from '../../../../common/common';
 
 interface BannerProps {
   promos: Promo[];
+  level: string;
 }
 
-const Banner = ({promos}: BannerProps) => {
+
+const Banner = ({promos, level}: BannerProps) => {
   const [promo] = promos;
   const {id, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, name} = promo;
-  //TODO picture in component?
+
+  const levelText = level.slice(0, -2) + CAMERA_ADJECTIVE_ENDING;
   return (
     <div className="banner">
-      <picture>
-        <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x} 2x`} />
-        <img
-          src={`/${previewImg}`}
-          srcSet={`/${previewImg2x} 2x`}
-          width="1280"
-          height="280"
-          alt="баннер"
-        />
-      </picture>
+      <Picture
+        width={1280}
+        height={280}
+        alt={"баннер"}
+        src={`/${previewImg}`}
+        srcSetImg={`/${previewImg2x}`}
+        srcSetSource={[`/${previewImgWebp}`, `/${previewImgWebp2x}`]}
+      />
       <p className="banner__info">
         <span className="banner__message">Новинка!</span>
         <span className="title title--h1">{name}</span>
-        <span className="banner__text">Профессиональная камера от&nbsp;известного производителя</span>
+        <span className="banner__text">{levelText} камера от&nbsp;известного производителя</span>
         <Link className="btn" to={`${AppRoute.Product}/${id}`}>Подробнее</Link>
       </p>
     </div>

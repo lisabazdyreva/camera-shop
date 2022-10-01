@@ -2,13 +2,15 @@ import {
   BreadcrumbsLink,
   ComponentName,
   ComponentNameType,
+  FooterNavigation,
   MenuItem,
   ModalContent,
   ModalMessage,
   ModalType,
-  Rating,
-  SourceItem,
-  SupportItem, TabDictionary, TabType
+  Rating, SocialName,
+  TabDictionary,
+  TabType,
+  TabsList, ReviewItemsList
 } from './const';
 
 export const getTitle = (component: ComponentNameType, modalType: ModalType) => {
@@ -26,19 +28,23 @@ export const menuItems = Object.values(MenuItem);
 
 export const ratings = Object.values(Rating);
 
-export const sourceItems = Object.values(SourceItem);
-
-export const supportItems = Object.values(SupportItem);
-
 export const tabTypes = Object.values(TabType);
 
 export const tabNames = Object.values(TabDictionary);
 
+export const footerNavs = Object.values(FooterNavigation);
+
+export const socialNames = Object.values(SocialName);
+
+export const tabsListNames = Object.values(TabsList);
+
+export const reviewItems = Object.values(ReviewItemsList);
+export const reviewNames = Object.keys(ReviewItemsList);
 
 export const getDateTime = (isoDate: string) => isoDate.slice(0, 10); //TODO придумать способ получше
 
 export const getDateValue = (isoDate: string) => new Date(isoDate)
-  .toLocaleString('ru', {month: 'long', day: 'numeric'}); //TODO убрать магические значения
+  .toLocaleString('ru', {month: 'long', day: 'numeric'});
 
 export const breadcrumbsLinks = Object.values(BreadcrumbsLink);
 

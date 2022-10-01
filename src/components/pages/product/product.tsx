@@ -1,10 +1,12 @@
-import Breadcrumbs from '../../common/breadcrumbs/breadcrumbs';
-
 import {
   ProductItem,
   ReviewCard,
 } from './components/components';
-import {ModalInfo, ModalAction} from '../../common/common';
+import {
+  ModalInfo,
+  ModalAction,
+  Breadcrumbs
+} from '../../common/common';
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {Slider} from './components/components';

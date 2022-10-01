@@ -1,4 +1,3 @@
-//eslint-disable-next-line
 const SideFilter = () => (
   <div className="catalog__aside">
     <div className="catalog-filter">
