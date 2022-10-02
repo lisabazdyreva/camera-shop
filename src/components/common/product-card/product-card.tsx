@@ -48,7 +48,7 @@ const ProductCard = ({handleAddModal, data, additionalClass, withoutBasketImplem
       </div>
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button" onClick={handleButtonAddClick}>Купить</button>
-        <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}/${ TabType.Features}`}>Подробнее</Link>
+        <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}/${TabType.Features}`}>Подробнее</Link>
       </div>
     </div>
   );

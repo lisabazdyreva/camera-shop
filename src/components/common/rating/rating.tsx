@@ -1,4 +1,4 @@
-import {ratings} from '../../../utils/utils';
+import {ratingItems as ratings} from '../../../utils/utils';
 import {RatingClassType} from '../../../utils/const';
 
 interface RatingProps {

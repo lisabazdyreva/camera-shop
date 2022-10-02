@@ -7,12 +7,21 @@ import {
   ModalContent,
   ModalMessage,
   ModalType,
-  Rating, SocialName,
+  Rating,
+  SocialName,
   TabDictionary,
   TabType,
-  TabsList, ReviewItemsList
+  TabsList,
+  ReviewItemsList,
+  InputPlaceholder,
+  InputErrorMessage,
+  InputTitles,
+  InputName,
+  RatingDictionary,
+  RatingValue
 } from './const';
 import {Review} from '../types/types';
+import {ChangeEvent} from 'react';
 
 export const getTitle = (component: ComponentNameType, modalType: ModalType) => {
   const isModalAction = modalType === ModalContent.Action;
@@ -27,7 +36,7 @@ export const getTitle = (component: ComponentNameType, modalType: ModalType) => 
 
 export const menuItems = Object.values(MenuItem);
 
-export const ratings = Object.values(Rating);
+export const ratingItems = Object.values(Rating);
 
 export const tabTypes = Object.values(TabType);
 
@@ -70,4 +79,26 @@ export const sortReviews = (reviews: Review[]) => reviews.sort((reviewA, reviewB
   return b - a;
 });
 
+export const inputs = Object.keys(InputName);
+export const inputNames = Object.values(InputName);
+export const inputTitles = Object.values(InputTitles);
+export const inputPlaceholders = Object.values(InputPlaceholder);
+export const inputErrorMessages = Object.values(InputErrorMessage);
+
+export const ratings = Object.values(RatingDictionary);
+export const ratingValues = Object.values(RatingValue);
+
+
+export const checkValidity = (evt: ChangeEvent<HTMLInputElement>) => {
+  if (evt.target.value.length < 2) {
+    evt.target.setCustomValidity('Введите минимум 2 символа.');
+    return false;
+  } else if (!isNaN(Number(evt.target.value))) {
+    evt.target.setCustomValidity('Ввод чисел не предусмотрен.');
+    return false;
+  } else {
+    evt.target.setCustomValidity('');
+    return true;
+  }
+};
 

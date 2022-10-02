@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom';
 import {AppRoute, CAMERA_ADJECTIVE_ENDING} from '../../../../../utils/const';
 import {Promo} from '../../../../../types/types';
 import {Picture} from '../../../../common/common';
+import {TabType} from '../../../../../utils/const';
 
 interface BannerProps {
   promos: Promo[];
@@ -19,7 +20,7 @@ const Banner = ({promos, level}: BannerProps) => {
       <Picture
         width={1280}
         height={280}
-        alt={"баннер"}
+        alt={'баннер'}
         src={`/${previewImg}`}
         srcSetImg={`/${previewImg2x}`}
         srcSetSource={[`/${previewImgWebp}`, `/${previewImgWebp2x}`]}
@@ -28,7 +29,7 @@ const Banner = ({promos, level}: BannerProps) => {
         <span className="banner__message">Новинка!</span>
         <span className="title title--h1">{name}</span>
         <span className="banner__text">{levelText} камера от&nbsp;известного производителя</span>
-        <Link className="btn" to={`${AppRoute.Product}/${id}`}>Подробнее</Link>
+        <Link className="btn" to={`${AppRoute.Product}/${id}/${TabType.Features}`}>Подробнее</Link>
       </p>
     </div>
   );

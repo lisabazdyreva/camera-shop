@@ -20,7 +20,7 @@ const fetchReviews = (id: number): ThunkActionResult => async (dispatch, _setSta
 };
 
 const postReview = (data: ReviewPost): ThunkActionResult => async (dispatch, _setState): Promise<void> => {
-  await axios.post(`${UrlRoute.Base}${UrlRoute.Reviews}`, data)
+  await axios.post(`${UrlRoute.Base}${UrlRoute.Reviews}`, data);
   //TODO add something for error
 };
 

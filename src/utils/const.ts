@@ -206,3 +206,44 @@ export const ReviewItemsList = {
 } as const;
 
 export const CAMERA_ADJECTIVE_ENDING = 'ая';
+
+export const InputName = {
+  Name: 'name',
+  Advantage: 'plus',
+  Disadvantage: 'minus',
+} as const;
+
+export const InputTitles = {
+  Name: 'Ваше имя',
+  Advantage: 'Достоинства',
+  Disadvantage: 'Недостатки',
+} as const;
+
+export const InputPlaceholder = {
+  Name: 'Введите ваше имя',
+  Advantage: 'Основные преимущества товара',
+  Disadvantage: 'Главные недостатки товара',
+} as const;
+
+export const InputErrorMessage = {
+  Name: 'Нужно указать имя',
+  Advantage: 'Нужно указать достоинства',
+  Disadvantage: 'Нужно указать недостатки',
+} as const;
+
+export const RatingValue = {
+  Excellent: 5,
+  Good: 4,
+  Normal: 3,
+  Bad: 2,
+  Worse: 1,
+} as const;
+
+export const RatingDictionary = {
+  Excellent: 'Отлично',
+  Good: 'Хорошо',
+  Normal: 'Нормально',
+  Bad: 'Плохо',
+  Worse: 'Ужасно',
+} as const;
+export const MAX_RATING = 5;

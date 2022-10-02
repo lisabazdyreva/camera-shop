@@ -1,28 +1,17 @@
-import {ChangeEvent, FormEvent, Fragment, useState} from 'react';
+import {FormEvent} from 'react';
 import {useDispatch} from 'react-redux';
 import {AppDispatch} from '../../../../../types/action';
 import {fetchReviews, postReview} from '../../../../../store/actions/api-actions/api-actions-reviews';
+import {ReviewFormItem, ReviewFormRateBar, ReviewFormComment} from '../components';
+import {
+  inputs,
+  inputNames,
+  inputPlaceholders,
+  inputTitles,
+  inputErrorMessages,
+} from '../../../../../utils/utils';
+import useForm from '../../../../../hooks/product-hooks/useForm';
 
-const RatingValue = {
-  Excellent: 5,
-  Good: 4,
-  Normal: 3,
-  Bad: 2,
-  Worse: 1,
-} as const;
-
-const RatingDictionary = {
-  Excellent: 'Отлично',
-  Good: 'Хорошо',
-  Normal: 'Нормально',
-  Bad: 'Плохо',
-  Worse: 'Ужасно',
-} as const;
-
-const MAX_RATING = 5;
-
-const ratings = Object.values(RatingDictionary);
-const ratingValues = Object.values(RatingValue);
 
 interface ReviewFormProps {
   handleCloseModal: (isOpen: boolean) => void;
@@ -30,17 +19,9 @@ interface ReviewFormProps {
   id: number;
 }
 const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormProps) => {
-  //eslint-disable-next-line
-  const [selectedRating, setSelectedRating] = useState(0);
-  const [name, setName] = useState('');
-  const [advantage, setAdvantage] = useState('');
-  const [disadvantage, setDisadvantage] = useState('');
-  const [review, setReview] = useState('');
-  const dispatch = useDispatch<AppDispatch>();
 
-  const handleRateClick = (rate: number) => {
-    setSelectedRating(rate);
-  };
+  const {stateValue, handler} = useForm();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
@@ -48,11 +29,11 @@ const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormPr
 
     const data = {
       cameraId: id,
-      userName: name,
-      advantage,
-      disadvantage,
-      review,
-      rating: selectedRating,
+      userName: stateValue.userName,
+      advantage: stateValue.advantage,
+      disadvantage: stateValue.disadvantage,
+      review: stateValue.review,
+      rating: stateValue.selectedRating,
     };
 
     dispatch(postReview(data))
@@ -62,103 +43,59 @@ const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormPr
           handleOpenSuccessModal(true);
         }
       });
-    //eslint-disable-next-line
-    console.log('submitted');
   };
 
-  const handleNameChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setName(evt.target.value);
-  };
-
-  const handleAdvantageChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setAdvantage(evt.target.value);
-  };
-
-  const handleDisadvantageChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setDisadvantage(evt.target.value);
-  };
-
-  const handleReviewChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    setReview(evt.target.value);
-  };
+  const InputState = {
+    Name: {
+      value: stateValue.userName,
+      handler: handler.handleUserNameChange,
+    },
+    Advantage: {
+      value: stateValue.advantage,
+      handler: handler.handleAdvantageChange,
+    },
+    Disadvantage: {
+      value: stateValue.disadvantage,
+      handler: handler.handleDisadvantageChange,
+    },
+  } as const;
+  const inputStates = Object.values(InputState);
 
   return (
     <div className="form-review">
       <form method="post" onSubmit={handleFormSubmit}>
         <div className="form-review__rate">
-          <fieldset className="rate form-review__item">
-            <legend className="rate__caption">Рейтинг
-              <svg width="9" height="9" aria-hidden="true">
-                <use xlinkHref="#icon-snowflake"></use>
-              </svg>
-            </legend>
-            <div className="rate__bar">
-              <div className="rate__group">
-                {
-                  ratings.map((rating, index) => {
-                    const idRating = `star-${ratingValues[index]}`;
-                    return (
-                      <Fragment key={rating}>
-                        <input onChange={() => handleRateClick(ratingValues[index])} className="visually-hidden" id={idRating} name="rate" type="radio" value={ratingValues[index]} />
-                        <label className="rate__label" htmlFor={idRating} title={rating}></label>
-                      </Fragment>
-                    );
-                  })
-                }
-              </div>
-              <div className="rate__progress"><span className="rate__stars">{selectedRating}</span>
-                <span>/</span>
-                <span className="rate__all-stars">{MAX_RATING}</span>
-              </div>
-            </div>
-            <p className="rate__message">Нужно оценить товар</p>
-          </fieldset>
-          <div className="custom-input form-review__item">
-            <label>
-              <span className="custom-input__label">Ваше имя
-                <svg width="9" height="9" aria-hidden="true">
-                  <use xlinkHref="#icon-snowflake"></use>
-                </svg>
-              </span>
-              <input type="text" name="user-name" placeholder="Введите ваше имя" required onChange={handleNameChange} value={name} />
-            </label>
-            <p className="custom-input__error">Нужно указать имя</p>
-          </div>
-          <div className="custom-input form-review__item">
-            <label>
-              <span className="custom-input__label">Достоинства
-                <svg width="9" height="9" aria-hidden="true">
-                  <use xlinkHref="#icon-snowflake"></use>
-                </svg>
-              </span>
-              <input type="text" name="user-plus" placeholder="Основные преимущества товара" required onChange={handleAdvantageChange} value={advantage}/>
-            </label>
-            <p className="custom-input__error">Нужно указать достоинства</p>
-          </div>
-          <div className="custom-input form-review__item">
-            <label>
-              <span className="custom-input__label">
-                Недостатки
-                <svg width="9" height="9" aria-hidden="true">
-                  <use xlinkHref="#icon-snowflake"></use>
-                </svg>
-              </span>
-              <input type="text" name="user-minus" placeholder="Главные недостатки товара" required onChange={handleDisadvantageChange} value={disadvantage}/>
-            </label>
-            <p className="custom-input__error">Нужно указать недостатки</p>
-          </div>
-          <div className="custom-textarea form-review__item">
-            <label>
-              <span className="custom-textarea__label">
-                Комментарий
-                <svg width="9" height="9" aria-hidden="true">
-                  <use xlinkHref="#icon-snowflake"></use>
-                </svg>
-              </span>
-              <textarea name="user-comment" minLength={5} placeholder="Поделитесь своим опытом покупки" value={review} onChange={handleReviewChange}></textarea>
-            </label>
-            <div className="custom-textarea__error">Нужно добавить комментарий</div>
-          </div>
+          <ReviewFormRateBar
+            handleRateClick={handler.handleRateClick}
+            selectedRating={stateValue.selectedRating}
+          />
+
+          {
+            inputs.map((input, index) => {
+              const placeholder = inputPlaceholders[index];
+              const name = inputNames[index];
+              const errorMessage = inputErrorMessages[index];
+              const state = inputStates[index].value;
+              const handlerStateValue = inputStates[index].handler;
+              const title = inputTitles[index];
+
+              return (
+                <ReviewFormItem
+                  errorMessage={errorMessage}
+                  title={title}
+                  placeholder={placeholder}
+                  name={name}
+                  key={input}
+                  stateValue={state}
+                  handleStateValue={handlerStateValue}
+                />
+              );
+            })
+          }
+          <ReviewFormComment
+            handleReviewChange={handler.handleReviewChange}
+            review={stateValue.review}
+          />
         </div>
         <button className="btn btn--purple form-review__btn" type="submit">Отправить отзыв</button>
       </form>
