@@ -5,7 +5,7 @@ import {
   setFetchCamerasStatus,
   setFetchCameraStatus, setFetchPromosStatus,
   setFetchReviewsStatus,
-  setFetchSimilarCamerasStatus
+  setFetchSimilarCamerasStatus, setPostReviewStatus
 } from '../actions/actions';
 
 const initialState: AppStatus = {
@@ -14,6 +14,7 @@ const initialState: AppStatus = {
   reviewsFetchStatus: LoadingStatus.Default,
   similarCamerasFetchStatus: LoadingStatus.Default,
   promosFetchStatus: LoadingStatus.Default,
+  reviewPostStatus: LoadingStatus.Default,
 };
 
 export const appStatus = createReducer(initialState, (builder) => {
@@ -32,5 +33,8 @@ export const appStatus = createReducer(initialState, (builder) => {
     })
     .addCase(setFetchPromosStatus, (state, action) => {
       state.promosFetchStatus = action.payload;
+    })
+    .addCase(setPostReviewStatus, (state, action) => {
+      state.reviewPostStatus = action.payload;
     });
 });

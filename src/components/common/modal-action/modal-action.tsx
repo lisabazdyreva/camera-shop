@@ -1,9 +1,10 @@
-import {getTitle} from '../../../utils/utils';
+import {escPressHandler, getTitle} from '../../../utils/utils';
 import {ComponentName, ComponentNameType, ModalContent} from '../../../utils/const';
 import {ReviewForm} from '../../pages/product/components/components';
 import {BasketItemShort} from '../../pages/basket/components/components';
 import {Camera} from '../../../types/types';
 import {BasketAddButton, BasketRemoveButtons} from './components/components';
+import {useEffect} from 'react';
 
 interface ModalActionProps {
   usingComponent: ComponentNameType;
@@ -36,11 +37,15 @@ const ModalAction = ({usingComponent, data, handleCloseModal, handleOpenSuccessM
   const modalDetails = getDetails();
   const modalButtons = getButtons();
 
+  useEffect(() => {
+    escPressHandler(handleCloseModal);
+  }, [handleCloseModal]);
+
   return (
     <div className="modal is-active">
-      <div className="modal__wrapper">
+      <div className="modal__wrapper" onClick={() => handleCloseModal(false)}>
         <div className="modal__overlay"></div>
-        <div className="modal__content">
+        <div className="modal__content" onClick={(evt) => evt.stopPropagation()}>
           <p className="title title--h4">{title}</p>
           {modalDetails}
           <div className="modal__buttons">

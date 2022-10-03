@@ -23,14 +23,17 @@ import {
 import {Review} from '../types/types';
 import {ChangeEvent} from 'react';
 
-export const getTitle = (component: ComponentNameType, modalType: ModalType) => {
+export const getTitle = (component: ComponentNameType, modalType: ModalType, isReviewError?: boolean) => {
   const isModalAction = modalType === ModalContent.Action;
+
+  const productTitle = isReviewError ? ModalMessage.ProductError : ModalMessage.ProductSuccess;
+
   if (component === ComponentName.Basket) {
     return isModalAction ? ModalMessage.BasketRemove : ModalMessage.BasketSuccess;
   } else if (component === ComponentName.Catalog) {
     return isModalAction ? ModalMessage.CatalogAdd : ModalMessage.CatalogSuccess;
   } else if (component === ComponentName.Product) {
-    return isModalAction ? ModalMessage.ProductReviewAdd : ModalMessage.ProductSuccess;
+    return isModalAction ? ModalMessage.ProductReviewAdd : productTitle;
   }
 };
 
@@ -100,5 +103,26 @@ export const checkValidity = (evt: ChangeEvent<HTMLInputElement>) => {
     evt.target.setCustomValidity('');
     return true;
   }
+};
+
+export const isEsc = (code: string) => code === 'Escape' || code === 'Esc';
+
+export const escPressHandler = (handler: any) => {
+  let isMounted = true;
+
+  const handleEscapeKeyPress = (evt: KeyboardEvent) => {
+    if (isEsc(evt.code)) {
+      handler(false);
+    }
+  };
+
+  if (isMounted) {
+    document.addEventListener('keydown', handleEscapeKeyPress);
+  }
+
+  return () => {
+    document.removeEventListener('keydown', handleEscapeKeyPress);
+    isMounted = false;
+  };
 };
 

@@ -86,3 +86,10 @@ export const setFetchPromosStatus = createAction(
     payload: status,
   })
 );
+
+export const setPostReviewStatus = createAction(
+  ActionType.SetPostReviewStatus,
+  (status: typeof LoadingStatus[keyof typeof LoadingStatus]) => ({
+    payload: status,
+  })
+);

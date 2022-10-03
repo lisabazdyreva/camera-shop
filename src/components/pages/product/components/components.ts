@@ -8,3 +8,4 @@ export { default as Slider } from './slider/slider';
 export { default as ReviewFormItem} from './refiew-form-item/review-form-item';
 export { default as ReviewFormRateBar } from './review-form-rate-bar/review-form-rate-bar';
 export { default as ReviewFormComment} from './review-form-comment/review-form-comment';
+export { default as ReviewListCard } from './review-list-card/review-list-card';

@@ -1,16 +1,16 @@
 import {
   ProductItem,
-  ReviewCard,
+  ReviewListCard,
 } from './components/components';
 import {
   ModalInfo,
   ModalAction,
-  Breadcrumbs
+  Breadcrumbs, Loader, ErrorInfo
 } from '../../common/common';
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {Slider} from './components/components';
-import {ComponentName, BreadcrumbsItem} from '../../../utils/const';
+import {ComponentName, BreadcrumbsItem, LoadingStatus, ErrorData} from '../../../utils/const';
 import useProductDispatch from '../../../hooks/product-hooks/useProductDispatch';
 import useProductSelectors from '../../../hooks/product-hooks/useProductSelectors';
 
@@ -24,27 +24,30 @@ const Product = () => {
 
   useProductDispatch(Number(id));
 
-  const {camera, reviews, similarCameras} = useProductSelectors();
+  const {camera, reviews, similarCameras, cameraFetchStatus, similarCamerasFetchStatus, reviewsFetchStatus} = useProductSelectors();
+
+  const isCameraLoaded = cameraFetchStatus === LoadingStatus.Success;
+  const isCameraLoading = cameraFetchStatus === LoadingStatus.Loading;
+  const isCameraError = cameraFetchStatus === LoadingStatus.Error;
 
   return (
     <>
       <main>
         <div className="page-content">
-          {camera && <Breadcrumbs breadcrumbItems={BreadcrumbsItem.Product} data={camera} usingComponent={ComponentName.Product}/>}
+          <Breadcrumbs breadcrumbItems={BreadcrumbsItem.Product} data={camera} usingComponent={ComponentName.Product}/>
           <div className="page-content__section">
-            {camera && <ProductItem data={camera}/>}
+            {isCameraError && <ErrorInfo text={ErrorData.Product} />}
+            {isCameraLoading && <Loader />}
+            {isCameraLoaded && camera && <ProductItem data={camera}/>}
           </div>
-          {
-            similarCameras.length &&
-            <div className="page-content__section">
-              <section className="product-similar">
-                <div className="container">
-                  <h2 className="title title--h3">Похожие товары</h2>
-                  <Slider similarCameras={similarCameras} />
-                </div>
-              </section>
-            </div>
-          }
+          <div className="page-content__section">
+            <section className="product-similar">
+              <div className="container">
+                <h2 className="title title--h3">Похожие товары</h2>
+                <Slider fetchStatus={similarCamerasFetchStatus} similarCameras={similarCameras} />
+              </div>
+            </section>
+          </div>
           <div className="page-content__section">
             <section className="review-block">
               <div className="container">
@@ -52,12 +55,7 @@ const Product = () => {
                   <h2 className="title title--h3">Отзывы</h2>
                   <button className="btn" type="button" onClick={() => setIsReviewModalOpen(true)}>Оставить свой отзыв</button>
                 </div>
-                <ul className="review-block__list">
-                  {
-                    reviews.map((review) => <ReviewCard key={review.id} data={review}/>)
-                  }
-
-                </ul>
+                <ReviewListCard fetchStatus={reviewsFetchStatus} reviews={reviews}/>
                 <div className="review-block__buttons">
                   <button className="btn btn--purple" type="button">Показать больше отзывов</button>
                 </div>

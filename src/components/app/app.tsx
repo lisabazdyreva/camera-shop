@@ -33,7 +33,6 @@ const App = (): JSX.Element => (
     </div>
   </BrowserRouter>
 );
-//TODO Modals close events add
-//TODO Loader, Modals for errors
 //TODO think of hooks, data structures
+//TODO favicon
 export default App;

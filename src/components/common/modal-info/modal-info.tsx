@@ -1,25 +1,32 @@
-import {getTitle} from '../../../utils/utils';
-import {ComponentName, ComponentNameType} from '../../../utils/const';
+import {getTitle, escPressHandler} from '../../../utils/utils';
+import {ComponentName, ComponentNameType, LoadingStatus} from '../../../utils/const';
 import {
   CatalogButtons,
-  IconReviewSuccess,
+  IconReview,
   IconSuccess,
   ReturnButton
 } from './components/components';
 import {ModalContent} from '../../../utils/const';
+import {useEffect} from 'react';
+import {useSelector} from 'react-redux';
+import {getReviewPostStatus} from '../../../store/app-status/selectors';
 
 interface ModalInfoProps {
   usingComponent: ComponentNameType;
   handleCloseModal: (isOpen: boolean) => void;
 }
 const ModalInfo = ({usingComponent, handleCloseModal}: ModalInfoProps) => {
-  const title = getTitle(usingComponent, ModalContent.Info);
+  const reviewPostStatus = useSelector(getReviewPostStatus);
+  const title =
+    usingComponent === ComponentName.Product
+      ? getTitle(usingComponent, ModalContent.Info,  reviewPostStatus === LoadingStatus.Error)
+      : getTitle(usingComponent, ModalContent.Info);
 
   const getSVG = () => {
     if (usingComponent === ComponentName.Catalog) {
       return <IconSuccess/>;
     }
-    return <IconReviewSuccess />;
+    return <IconReview status={reviewPostStatus}/>;
   };
 
   const getButtons = () => {
@@ -35,11 +42,15 @@ const ModalInfo = ({usingComponent, handleCloseModal}: ModalInfoProps) => {
   const modalSvg = getSVG();
   const modalButtons = getButtons();
 
+  useEffect(() => {
+    escPressHandler(handleCloseModal);
+  }, [handleCloseModal]);
+
   return (
-    <div className="modal is-active modal--narrow">
+    <div className="modal is-active modal--narrow" onClick={() => handleCloseModal(false)}>
       <div className="modal__wrapper">
         <div className="modal__overlay"></div>
-        <div className="modal__content">
+        <div className="modal__content" onClick={(evt) => evt.stopPropagation()}>
           <p className="title title--h4">{title}</p>
           {modalSvg}
           <div className="modal__buttons">

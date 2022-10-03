@@ -16,6 +16,7 @@ export enum ActionType {
   SetFetchReviewsStatus = 'status/setFetchReviewsStatus',
   SetFetchSimilarCamerasStatus = 'status/setFetchSimilarCamerasStatus',
   SetFetchPromosStatus = 'status/setFetchPromosStatus',
+  SetPostReviewStatus = 'status/setPostReviewStatus,'
 }
 
 export type ThunkActionResult<P = Promise<void>> = ThunkAction<P, State, unknown, Action>;

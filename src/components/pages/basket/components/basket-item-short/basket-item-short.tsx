@@ -17,9 +17,9 @@ const BasketItemShort = ({data}: BasketItemShortProps) => {
           width={140}
           height={120}
           alt={name}
-          src={previewImg}
-          srcSetImg={previewImg2x}
-          srcSetSource={[previewImgWebp, previewImgWebp2x]}
+          src={`/${previewImg}`}
+          srcSetImg={`/${previewImg2x}`}
+          srcSetSource={[`/${previewImgWebp}`, `/${previewImgWebp2x}`]}
         />
       </div>
       <div className="basket-item__description">

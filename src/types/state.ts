@@ -17,6 +17,7 @@ export type AppStatus = {
   reviewsFetchStatus: typeof LoadingStatus[keyof typeof LoadingStatus],
   similarCamerasFetchStatus: typeof LoadingStatus[keyof typeof LoadingStatus],
   promosFetchStatus: typeof LoadingStatus[keyof typeof LoadingStatus],
+  reviewPostStatus: typeof LoadingStatus[keyof typeof LoadingStatus],
 }
 
 export type AppProcess = {

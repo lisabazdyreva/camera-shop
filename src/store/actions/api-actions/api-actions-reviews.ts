@@ -1,7 +1,7 @@
 import {ThunkActionResult} from '../../../types/action';
 import axios, {AxiosResponse} from 'axios';
 import {Review, ReviewPost} from '../../../types/types';
-import {setFetchReviewsStatus, setReviews} from '../actions';
+import {setFetchReviewsStatus, setPostReviewStatus, setReviews} from '../actions';
 import {LoadingStatus, UrlRoute} from '../../../utils/const';
 import { sortReviews} from '../../../utils/utils';
 
@@ -20,8 +20,14 @@ const fetchReviews = (id: number): ThunkActionResult => async (dispatch, _setSta
 };
 
 const postReview = (data: ReviewPost): ThunkActionResult => async (dispatch, _setState): Promise<void> => {
-  await axios.post(`${UrlRoute.Base}${UrlRoute.Reviews}`, data);
-  //TODO add something for error
+  dispatch(setPostReviewStatus(LoadingStatus.Loading));
+  await axios.post(`${UrlRoute.Base}${UrlRoute.Reviews}`, data)
+    .then((response) => {
+      if (response.statusText === 'Created') {
+        dispatch(setPostReviewStatus(LoadingStatus.Success));
+      }
+    })
+    .catch(() => dispatch(setPostReviewStatus(LoadingStatus.Error)));
 };
 
 export {fetchReviews, postReview};

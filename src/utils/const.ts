@@ -43,6 +43,7 @@ export const ModalMessage = {
   CatalogSuccess: 'Товар успешно добавлен в корзину',
   CatalogAdd: 'Добавить товар в корзину',
   ProductSuccess: 'Спасибо за отзыв',
+  ProductError: 'Произошла ошибка',
   ProductReviewAdd: 'Оставить отзыв',
 } as const;
 
@@ -247,3 +248,10 @@ export const RatingDictionary = {
   Worse: 'Ужасно',
 } as const;
 export const MAX_RATING = 5;
+
+export const ErrorData = {
+  Reviews: 'отзывов',
+  Product: 'информации о камере',
+  Catalog: 'списка камер'
+} as const;
+

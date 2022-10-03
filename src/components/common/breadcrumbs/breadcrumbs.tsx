@@ -1,5 +1,12 @@
 import {Link} from 'react-router-dom';
-import {ComponentName, ComponentNameType, BreadcrumbsItemBasketType, BreadcrumbsItemCatalogType, BreadcrumbsItemProductType, BreadcrumbsItem} from '../../../utils/const';
+import {
+  ComponentName,
+  ComponentNameType,
+  BreadcrumbsItemBasketType,
+  BreadcrumbsItemCatalogType,
+  BreadcrumbsItemProductType,
+  BreadcrumbsItem,
+} from '../../../utils/const';
 import {Camera} from '../../../types/types';
 import {useSelector} from 'react-redux';
 import {getCurrentPage} from '../../../store/app-process/selectors';
@@ -7,7 +14,7 @@ import {breadcrumbsLinks} from '../../../utils/utils';
 
 
 interface BreadcrumbsProps {
-  data?: Camera;
+  data?: Camera | null;
   usingComponent: ComponentNameType;
   breadcrumbItems: BreadcrumbsItemProductType | BreadcrumbsItemBasketType | BreadcrumbsItemCatalogType,
 }
@@ -44,7 +51,7 @@ const Breadcrumbs = ({data, usingComponent, breadcrumbItems}: BreadcrumbsProps) 
 
               return (
                 <li className="breadcrumbs__item" key={breadcrumb}>
-                  {index === breadcrumb.length - 1 ? textElement : linkElement}
+                  {index === breadcrumbs.length - 1 ? textElement : linkElement}
                 </li>
               );
             })
