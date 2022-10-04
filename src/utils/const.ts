@@ -252,6 +252,7 @@ export const MAX_RATING = 5;
 export const ErrorData = {
   Reviews: 'отзывов',
   Product: 'информации о камере',
-  Catalog: 'списка камер'
+  Catalog: 'списка камер',
+  Banner: 'баннера',
 } as const;
 

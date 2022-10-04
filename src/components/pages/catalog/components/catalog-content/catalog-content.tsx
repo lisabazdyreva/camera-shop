@@ -18,7 +18,7 @@ const CatalogContent = ({fetchStatus, cards, handleAddModal, pages, currentPageN
   const isCamerasError = fetchStatus === LoadingStatus.Error;
 
   return (
-    <div className="catalog__content">
+    <div className="catalog__content" data-testid='catalog-content'>
       <Sorting />
       {isCamerasError && <ErrorInfo text={ErrorData.Catalog} />}
       {isCamerasLoading && <Loader />}

@@ -28,7 +28,7 @@ const ProductCard = ({handleAddModal, data, additionalClass, withoutBasketImplem
   };
 
   return (
-    <div className={`product-card ${additionalClass}`}>
+    <div className={`product-card ${additionalClass}`} data-testid='card'>
       {withoutBasketImplementation && isAddedBasket}
       <div className="product-card__img">
         <Picture

@@ -11,7 +11,7 @@ import {
 import {LoadingStatus, UrlRoute} from '../../../utils/const';
 
 
-const fetchCameras = (): ThunkActionResult => async (dispatch, _getState): Promise<void> => {
+const fetchCameras = (): ThunkActionResult => async (dispatch, _getState, api): Promise<void> => {
   dispatch(setFetchCamerasStatus(LoadingStatus.Loading));
 
   await axios.get(`${UrlRoute.Base}${UrlRoute.Cameras}`)
@@ -23,7 +23,7 @@ const fetchCameras = (): ThunkActionResult => async (dispatch, _getState): Promi
     .catch(() => dispatch(setFetchCamerasStatus(LoadingStatus.Error)));
 };
 
-const fetchCamera = (id: number): ThunkActionResult => async (dispatch, _getState): Promise<void> => {
+const fetchCamera = (id: number): ThunkActionResult => async (dispatch, _getState, api): Promise<void> => {
   dispatch(setFetchCameraStatus(LoadingStatus.Loading));
 
   await axios.get(`${UrlRoute.Base}${UrlRoute.Cameras}/${id}`)

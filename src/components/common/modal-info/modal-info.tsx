@@ -47,7 +47,7 @@ const ModalInfo = ({usingComponent, handleCloseModal}: ModalInfoProps) => {
   }, [handleCloseModal]);
 
   return (
-    <div className="modal is-active modal--narrow" onClick={() => handleCloseModal(false)}>
+    <div className="modal is-active modal--narrow" onClick={() => handleCloseModal(false)} data-testid='modal-info'>
       <div className="modal__wrapper">
         <div className="modal__overlay"></div>
         <div className="modal__content" onClick={(evt) => evt.stopPropagation()}>

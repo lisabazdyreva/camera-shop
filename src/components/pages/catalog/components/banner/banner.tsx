@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
-import {AppRoute, CAMERA_ADJECTIVE_ENDING, LoadingStatus} from '../../../../../utils/const';
+import {AppRoute, CAMERA_ADJECTIVE_ENDING, ErrorData, LoadingStatus} from '../../../../../utils/const';
 import {Promo} from '../../../../../types/types';
-import {Loader, Picture} from '../../../../common/common';
+import {ErrorInfo, Loader, Picture} from '../../../../common/common';
 import {TabType} from '../../../../../utils/const';
 
 interface BannerProps {
@@ -21,7 +21,7 @@ const Banner = ({promos, level, fetchStatus}: BannerProps) => {
   return (
     <div className="banner">
       {isPromosLoading && <Loader/>}
-      {isPromosError && <div>Произошла ошибка при загрузке баннера, попробуйте позже.</div>}
+      {isPromosError && <ErrorInfo text={ErrorData.Banner}/>}
       {isPromosLoaded &&
         <>
           <Picture

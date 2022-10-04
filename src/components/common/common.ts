@@ -14,3 +14,4 @@ export { default as FooterNavigation } from './footer-navigation/footer-navigati
 export { default as Picture } from './picture/picture';
 export { default as Loader } from './loader/loader';
 export { default as ErrorInfo} from './error/error';
+export {default as HistoryRoute} from './history-route/history-route';

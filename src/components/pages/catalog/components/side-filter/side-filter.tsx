@@ -1,5 +1,5 @@
 const SideFilter = () => (
-  <div className="catalog__aside">
+  <div className="catalog__aside" data-testid='filter'>
     <div className="catalog-filter">
       <form action="src/components/pages/catalog/components/side-filter/side-filter#">
         <h2 className="visually-hidden">Фильтр</h2>

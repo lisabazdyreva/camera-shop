@@ -7,12 +7,16 @@ import {
   ModalAction,
   Breadcrumbs, Loader, ErrorInfo
 } from '../../common/common';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {Slider} from './components/components';
 import {ComponentName, BreadcrumbsItem, LoadingStatus, ErrorData} from '../../../utils/const';
-import useProductDispatch from '../../../hooks/product-hooks/useProductDispatch';
+// import useProductDispatch from '../../../hooks/product-hooks/useProductDispatch';
 import useProductSelectors from '../../../hooks/product-hooks/useProductSelectors';
+import {useDispatch} from 'react-redux';
+import {AppDispatch} from '../../../types/action';
+import {fetchCamera, fetchSimilarCameras} from '../../../store/actions/api-actions/api-actions-cameras';
+import {fetchReviews} from '../../../store/actions/api-actions/api-actions-reviews';
 
 
 const Product = () => {
@@ -22,7 +26,17 @@ const Product = () => {
   const [isSuccessReviewModalOpen, setIsSuccessReviewModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
-  useProductDispatch(Number(id));
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (id) {
+      const numberId = Number(id);
+
+      dispatch(fetchCamera(numberId));
+      dispatch(fetchReviews(numberId));
+      dispatch(fetchSimilarCameras(numberId));
+    }
+  }, [id]);
 
   const {camera, reviews, similarCameras, cameraFetchStatus, similarCamerasFetchStatus, reviewsFetchStatus} = useProductSelectors();
 

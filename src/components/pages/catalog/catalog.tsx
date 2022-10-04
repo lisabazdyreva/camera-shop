@@ -9,7 +9,13 @@ import {
 import {ModalInfo, ModalAction} from '../../common/common';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {initialCamera, LoadingStatus, Step, ComponentName, BreadcrumbsItem} from '../../../utils/const';
+import {
+  initialCamera,
+  LoadingStatus,
+  Step,
+  ComponentName,
+  BreadcrumbsItem,
+} from '../../../utils/const';
 import {Camera} from '../../../types/types';
 import {useParams} from 'react-router-dom';
 import {setCurrentPage} from '../../../store/actions/actions';

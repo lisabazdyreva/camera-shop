@@ -42,7 +42,7 @@ const ModalAction = ({usingComponent, data, handleCloseModal, handleOpenSuccessM
   }, [handleCloseModal]);
 
   return (
-    <div className="modal is-active">
+    <div className="modal is-active" data-testid='modal-action'>
       <div className="modal__wrapper" onClick={() => handleCloseModal(false)}>
         <div className="modal__overlay"></div>
         <div className="modal__content" onClick={(evt) => evt.stopPropagation()}>

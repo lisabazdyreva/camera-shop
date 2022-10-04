@@ -2,7 +2,6 @@ import Catalog from '../pages/catalog/catalog';
 import Product from '../pages/product/product';
 import Basket from '../pages/basket/basket';
 import {
-  BrowserRouter,
   Route,
   Routes
 } from 'react-router-dom';
@@ -10,16 +9,12 @@ import {
   AppRoute,
   PaginationRoute}
   from '../../utils/const';
-import {
-  UnknownSvg,
-  Header,
-  Footer
-} from '../common/common';
+import {UnknownSvg, Header, Footer} from '../common/common';
 import NotFound from '../pages/not-found/not-found';
 
 
 const App = (): JSX.Element => (
-  <BrowserRouter>
+  <>
     <UnknownSvg/>
     <div className="wrapper">
       <Header />
@@ -31,8 +26,7 @@ const App = (): JSX.Element => (
       </Routes>
       <Footer />
     </div>
-  </BrowserRouter>
+  </>
 );
 //TODO think of hooks, data structures
-//TODO favicon
 export default App;

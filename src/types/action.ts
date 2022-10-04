@@ -2,6 +2,7 @@ import { Action } from '@reduxjs/toolkit';
 import { ThunkAction } from '@reduxjs/toolkit';
 import { store } from '../index';
 import { State} from './state';
+import {AxiosInstance} from 'axios';
 
 export enum ActionType {
   SetCameras = 'data/setCameras',
@@ -19,6 +20,6 @@ export enum ActionType {
   SetPostReviewStatus = 'status/setPostReviewStatus,'
 }
 
-export type ThunkActionResult<P = Promise<void>> = ThunkAction<P, State, unknown, Action>;
+export type ThunkActionResult<P = Promise<void>> = ThunkAction<P, State, AxiosInstance, Action>;
 export type AppDispatch = typeof store.dispatch;
 
