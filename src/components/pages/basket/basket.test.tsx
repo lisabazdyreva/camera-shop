@@ -7,39 +7,16 @@ import {DefaultValue, LoadingStatus, NameSpace} from '../../../utils/const';
 import {makeFakeCamera, makeFakePromo, makeFakeReview} from '../../../mocks';
 import thunk from 'redux-thunk';
 import {createAPI} from '../../../services/api';
-
-
+import userEvent from '@testing-library/user-event';
 
 const api = createAPI();
 const middlewares = [thunk.withExtraArgument(api)];
 const mockStore = configureMockStore(middlewares);
 
-const mockCamera = makeFakeCamera();
-const mockCameras = [makeFakeCamera(), makeFakeCamera()];
-const mockSimilarCameras = [makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera()];
-
-const mockReviews = [makeFakeReview(), makeFakeReview()];
-const mockPromos = [makeFakePromo()];
-
 const store = mockStore({
-  [NameSpace.Data]: {
-    cameras: mockCameras,
-    camera: mockCamera,
-    reviews: mockReviews,
-    similarCameras: mockSimilarCameras,
-    promos: mockPromos,
-  },
+
   [NameSpace.App]: {
-    basket: [],
     currentCatalogPage: DefaultValue.CatalogPageNumber,
-  },
-  [NameSpace.Status]: {
-    camerasFetchStatus: LoadingStatus.Default, //?
-    cameraFetchStatus: LoadingStatus.Success,
-    reviewsFetchStatus: LoadingStatus.Default,
-    similarCamerasFetchStatus: LoadingStatus.Default,
-    promosFetchStatus: LoadingStatus.Default,
-    reviewPostStatus: LoadingStatus.Default,
   },
 });
 
@@ -54,5 +31,23 @@ describe('Basket page', () => {
     );
 
     expect(screen.getByText(/Общая цена/i)).toBeInTheDocument();
+  });
+
+  it ('should render with modal', async () => {
+    render (
+      <Provider store={store}>
+        <MemoryRouter>
+          <Basket />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const buttonRemove = document.querySelector('.cross-btn');
+
+    if (buttonRemove) {
+      await userEvent.click(buttonRemove);
+    }
+
+    await expect(screen.getByTestId('modal-action')).toBeInTheDocument();
   });
 });

@@ -14,11 +14,11 @@ const ReviewListCard = ({fetchStatus, reviews}: ReviewListCardProps) => {
   const isReviewsError = fetchStatus === LoadingStatus.Error;
 
   return (
-    <ul className="review-block__list">
+    <>
       {isReviewsError && <ErrorInfo text={ErrorData.Reviews} />}
       {isReviewsLoading && <Loader />}
-      {isReviewsLoaded && reviews.map((review) => <ReviewCard key={review.id} data={review}/>)}
-    </ul>
+      {isReviewsLoaded && <ul className="review-block__list">{reviews.map((review) => <ReviewCard key={review.id} data={review}/>)}</ul>}
+    </>
   );
 };
 

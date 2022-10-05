@@ -31,7 +31,7 @@ const ReviewFormItem = ({stateValue, handleStateValue, placeholder, name, title,
         <span className="custom-input__label">{title}
           {icon}
         </span>
-        <input autoComplete='off' type="text" name={`user-${name}`} placeholder={placeholder} required onChange={handleInputChange} value={stateValue} />
+        <input data-testid={name} autoComplete='off' type="text" name={`user-${name}`} placeholder={placeholder} required onChange={handleInputChange} value={stateValue} />
       </label>
       <p className="custom-input__error">{errorMessage}</p>
     </div>

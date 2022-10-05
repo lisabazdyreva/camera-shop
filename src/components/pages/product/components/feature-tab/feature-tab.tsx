@@ -9,7 +9,6 @@ interface FeatureTabProps {
   }
 }
 
-
 const FeatureTab = ({data}: FeatureTabProps) => {
   const {vendorCode, category, type, level} = data;
 
@@ -28,7 +27,8 @@ const FeatureTab = ({data}: FeatureTabProps) => {
         tabsListNames.map((tabName, index) => {
           const element = tabsListElements[index];
           return (
-            <li key={tabName} className="item-list"><span className="item-list__title">{tabName}:</span>
+            <li key={tabName} className="item-list">
+              <span className="item-list__title">{tabName}:</span>
               <p className="item-list__text">{element}</p>
             </li>
           );

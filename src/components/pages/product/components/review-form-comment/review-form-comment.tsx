@@ -21,7 +21,7 @@ const ReviewFormComment = ({handleReviewChange, review}: ReviewFormCommentProps)
           Комментарий
           {icon}
         </span>
-        <textarea name="user-comment" minLength={MIN_REVIEW_LENGTH} placeholder="Поделитесь своим опытом покупки" value={review} onChange={handleReviewChange}></textarea>
+        <textarea data-testid='review' name="user-comment" minLength={MIN_REVIEW_LENGTH} placeholder="Поделитесь своим опытом покупки" value={review} onChange={handleReviewChange}></textarea>
       </label>
       <div className="custom-textarea__error">Нужно добавить комментарий</div>
     </div>

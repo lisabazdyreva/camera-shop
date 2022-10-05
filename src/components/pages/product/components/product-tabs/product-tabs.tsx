@@ -47,9 +47,9 @@ const ProductTabs = ({data}: ProductTabsProps) => {
       <div className="tabs__content">
         <div className="tabs__element is-active">
           {
-            tab === TabType.Features
-              ? <FeatureTab data={{vendorCode, category, type, level}} />
-              : <DescriptionTab description={description} />
+            tab === TabType.Description
+              ? <DescriptionTab description={description} />
+              : <FeatureTab data={{vendorCode, category, type, level}} />
           }
         </div>
       </div>
