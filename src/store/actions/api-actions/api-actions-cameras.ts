@@ -14,8 +14,11 @@ import {LoadingStatus, UrlRoute} from '../../../utils/const';
 const fetchCameras = (): ThunkActionResult => async (dispatch, _getState, api): Promise<void> => {
   dispatch(setFetchCamerasStatus(LoadingStatus.Loading));
 
-  await axios.get(`${UrlRoute.Base}${UrlRoute.Cameras}`)
+  await axios.get(`${UrlRoute.Base}${UrlRoute.Cameras}`) //?_start=10&_end=20
     .then((response: AxiosResponse) => {
+      //eslint-disable-next-line
+      console.log(response);
+
       const cameras: Camera[] = response.data;
       dispatch(setCameras(cameras));
       dispatch(setFetchCamerasStatus(LoadingStatus.Success));

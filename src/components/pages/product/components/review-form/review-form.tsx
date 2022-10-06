@@ -1,16 +1,15 @@
-import {FormEvent} from 'react';
+import {ChangeEvent, FormEvent, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {AppDispatch} from '../../../../../types/action';
 import {fetchReviews, postReview} from '../../../../../store/actions/api-actions/api-actions-reviews';
-import {ReviewFormItem, ReviewFormRateBar, ReviewFormComment} from '../components';
+import {ReviewFormRateBar} from '../components';
+import {InputErrorMessage, InputName} from '../../../../../utils/const';
 import {
-  inputs,
-  inputNames,
-  inputPlaceholders,
-  inputTitles,
-  inputErrorMessages,
+  checkIsAdvantageValid,
+  checkIsDisadvantageValid, checkIsLength,
+  checkIsNameValid,
+  checkIsReviewValid
 } from '../../../../../utils/utils';
-import useForm from '../../../../../hooks/product-hooks/useForm';
 
 
 interface ReviewFormProps {
@@ -19,22 +18,29 @@ interface ReviewFormProps {
   id: number;
 }
 const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormProps) => {
+  const [isUserNameValid, setIsUserNameValid] = useState(true);
+  const [userName, setUserName] = useState('');
 
-  const {stateValue, handler} = useForm();
+  const [isAdvantageValid, setIsAdvantageValid] = useState(true);
+  const [advantage, setAdvantage] = useState('');
+
+  const [isDisadvantageValid, setIsDisadvantageValid] = useState(true);
+  const [disadvantage, setDisadvantage] = useState('');
+
+  const [isReviewValid, setIsReviewValid] = useState(true);
+  const [review, setReview] = useState('');
+
+  const [isRatingValid, setIsRatingValid] = useState(true);
+  const [rating, setSelectedRating] = useState(0);
+
+
   const dispatch = useDispatch<AppDispatch>();
 
   const handleFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     handleCloseModal(false);
 
-    const data = {
-      cameraId: id,
-      userName: stateValue.userName,
-      advantage: stateValue.advantage,
-      disadvantage: stateValue.disadvantage,
-      review: stateValue.review,
-      rating: stateValue.selectedRating,
-    };
+    const data = {cameraId: id, userName, advantage, disadvantage, review, rating};
 
     dispatch(postReview(data))
       .then(() => {
@@ -45,59 +51,142 @@ const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormPr
       });
   };
 
-  const InputState = {
-    Name: {
-      value: stateValue.userName,
-      handler: handler.handleUserNameChange,
-    },
-    Advantage: {
-      value: stateValue.advantage,
-      handler: handler.handleAdvantageChange,
-    },
-    Disadvantage: {
-      value: stateValue.disadvantage,
-      handler: handler.handleDisadvantageChange,
-    },
-  } as const;
-  const inputStates = Object.values(InputState);
+  const handleInputChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const value = evt.target.value;
+
+    switch (evt.currentTarget.name) {
+      case InputName.Name: {
+        setUserName(value);
+        if (checkIsNameValid(evt)) {
+          setIsUserNameValid(true);
+        }
+        break;
+      }
+      case InputName.Advantage: {
+        setAdvantage(value);
+        if (checkIsAdvantageValid(evt)) {
+          setIsAdvantageValid(true);
+        }
+        break;
+      }
+      case InputName.Disadvantage: {
+        setDisadvantage(value);
+        if (checkIsDisadvantageValid(evt)) {
+          setIsDisadvantageValid(true);
+        }
+        break;
+      }
+      case InputName.Review: {
+        setReview(value);
+        if (checkIsReviewValid(evt)) {
+          setIsReviewValid(true);
+        }
+        break;
+      }
+    }
+  };
+
+  const handleButtonClick = () => {
+    setIsUserNameValid(checkIsLength(userName));
+    setIsAdvantageValid(checkIsLength(advantage));
+    setIsDisadvantageValid(checkIsLength(disadvantage));
+    setIsReviewValid(checkIsLength(review));
+    setIsRatingValid(rating !== 0);
+  };
+
+  const icon = (
+    <svg width="9" height="9" aria-hidden="true">
+      <use xlinkHref="#icon-snowflake"></use>
+    </svg>
+  );
 
   return (
     <div className="form-review">
       <form method="post" onSubmit={handleFormSubmit}>
         <div className="form-review__rate">
           <ReviewFormRateBar
-            handleRateClick={handler.handleRateClick}
-            selectedRating={stateValue.selectedRating}
+            handleRateClick={(rate: number) => setSelectedRating(rate)}
+            selectedRating={rating}
+            isValid={isRatingValid}
+            isValidHandler={setIsRatingValid}
           />
+          <div className={`custom-input form-review__item ${!isUserNameValid && 'is-invalid'}`}>
+            <label>
+              <span className="custom-input__label">Ваше имя
+                {icon}
+              </span>
+              <input
+                data-testid='name'
+                autoComplete='off'
+                type="text"
+                name='user-name'
+                placeholder='Ваше имя'
+                onChange={handleInputChange}
+                value={userName}
+                required
+              />
+            </label>
+            <p className="custom-input__error">{InputErrorMessage.Name}</p>
+          </div>
 
-          {
-            inputs.map((input, index) => {
-              const placeholder = inputPlaceholders[index];
-              const name = inputNames[index];
-              const errorMessage = inputErrorMessages[index];
-              const state = inputStates[index].value;
-              const handlerStateValue = inputStates[index].handler;
-              const title = inputTitles[index];
+          <div className={`custom-input form-review__item ${!isAdvantageValid && 'is-invalid'}`}>
+            <label>
+              <span className="custom-input__label">Достоинства
+                {icon}
+              </span>
+              <input
+                data-testid='plus'
+                autoComplete='off'
+                type="text"
+                name='user-plus'
+                placeholder='Основные преимущества товара'
+                onChange={handleInputChange}
+                value={advantage}
+                required
+              />
+            </label>
+            <p className="custom-input__error">{InputErrorMessage.Advantage}</p>
+          </div>
 
-              return (
-                <ReviewFormItem
-                  errorMessage={errorMessage}
-                  title={title}
-                  placeholder={placeholder}
-                  name={name}
-                  key={input}
-                  stateValue={state}
-                  handleStateValue={handlerStateValue}
-                />
-              );
-            })
-          }
-          <ReviewFormComment
-            handleReviewChange={handler.handleReviewChange}
-            review={stateValue.review}
-          />
+          <div className={`custom-input form-review__item ${!isDisadvantageValid && 'is-invalid'}`}>
+            <label>
+              <span className="custom-input__label">Недостатки
+                {icon}
+              </span>
+              <input
+                data-testid='minus'
+                autoComplete='off'
+                type="text"
+                name='user-minus'
+                placeholder='Главные недостатки товара'
+                onChange={handleInputChange}
+                value={disadvantage}
+                required
+              />
+            </label>
+            <p className="custom-input__error">{InputErrorMessage.Disadvantage}</p>
+          </div>
+
+          <div className={`custom-textarea form-review__item ${!isReviewValid && 'is-invalid'}`}>
+            <label>
+              <span className="custom-textarea__label">
+                Комментарий
+                {icon}
+              </span>
+              <textarea
+                data-testid='review'
+                name="user-comment"
+                minLength={5}
+                placeholder="Поделитесь своим опытом покупки"
+                value={review}
+                onChange={handleInputChange}
+                required
+              />
+            </label>
+            <div className="custom-textarea__error">Нужно добавить комментарий</div>
+          </div>
         </div>
-        <button className="btn btn--purple form-review__btn" type="submit">Отправить отзыв</button>
+        <button className="btn btn--purple form-review__btn" type="submit" onClick={handleButtonClick}>Отправить отзыв</button>
       </form>
     </div>
   );

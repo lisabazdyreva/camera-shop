@@ -5,13 +5,17 @@ import {
 } from './components/components';
 
 import {ModalInfo, ModalAction} from '../../common/common';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {ComponentName, BreadcrumbsItem} from '../../../utils/const';
 
 
 const Basket = () => {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <main>

@@ -1,17 +1,15 @@
 import {render, screen} from '@testing-library/react';
 import {ReviewListCard} from '../components';
 import {LoadingStatus} from '../../../../../utils/const';
-import {makeFakeReview} from '../../../../../mocks';
 
 const fakeSuccessStatus = LoadingStatus.Success;
 const fakeErrorStatus = LoadingStatus.Error;
 const fakeLoadingStatus = LoadingStatus.Loading;
-const fakeReviews = [makeFakeReview(), makeFakeReview(), makeFakeReview()];
 
 describe('reviews list', () => {
   it('renders correctly with success status', () => {
     render(
-      <ReviewListCard fetchStatus={fakeSuccessStatus} reviews={fakeReviews} />
+      <ReviewListCard fetchStatus={fakeSuccessStatus} />
     );
 
     const list = document.querySelector('.review-block__list');
@@ -27,7 +25,7 @@ describe('reviews list', () => {
 
   it('renders correctly with error status', () => {
     render(
-      <ReviewListCard fetchStatus={fakeErrorStatus} reviews={[]} />
+      <ReviewListCard fetchStatus={fakeErrorStatus} />
     );
 
     expect(screen.getByText(/Произошла ошибка при загрузке/i)).toBeInTheDocument();
@@ -35,7 +33,7 @@ describe('reviews list', () => {
 
   it('renders correctly with loading status', () => {
     render(
-      <ReviewListCard fetchStatus={fakeLoadingStatus} reviews={[]} />
+      <ReviewListCard fetchStatus={fakeLoadingStatus} />
     );
 
     expect(screen.getByText(/Идёт загрузка/i)).toBeInTheDocument();

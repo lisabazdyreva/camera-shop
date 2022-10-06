@@ -5,15 +5,18 @@ import { MAX_RATING } from '../../../../../utils/const';
 interface ReviewFormRateBarProps {
   handleRateClick: (rate: number) => void;
   selectedRating: number;
+  isValid: boolean;
+  isValidHandler: (isValid: boolean) => void;
 }
 
-const ReviewFormRateBar = ({handleRateClick, selectedRating}: ReviewFormRateBarProps) => {
+const ReviewFormRateBar = ({handleRateClick, selectedRating, isValid, isValidHandler}: ReviewFormRateBarProps) => {
   const handleInputClick = (index: number) => {
     handleRateClick(ratingValues[index]);
+    isValidHandler(true);
   };
 
   return (
-    <fieldset className={`rate form-review__item ${selectedRating === 0 && 'is-invalid'}`}>
+    <fieldset className={`rate form-review__item ${!isValid && 'is-invalid'}`}>
       <legend className="rate__caption">Рейтинг
         <svg width="9" height="9" aria-hidden="true">
           <use xlinkHref="#icon-snowflake"></use>

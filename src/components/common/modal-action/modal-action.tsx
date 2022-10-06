@@ -6,6 +6,8 @@ import {Camera} from '../../../types/types';
 import {BasketAddButton, BasketRemoveButtons} from './components/components';
 import {useEffect} from 'react';
 
+import {blockBody} from '../../../utils/modal-block-utils';
+
 interface ModalActionProps {
   usingComponent: ComponentNameType;
   data? : Camera;
@@ -40,6 +42,10 @@ const ModalAction = ({usingComponent, data, handleCloseModal, handleOpenSuccessM
   useEffect(() => {
     escPressHandler(handleCloseModal);
   }, [handleCloseModal]);
+
+  useEffect(() => {
+    blockBody();
+  }, []);
 
   return (
     <div className="modal is-active" data-testid='modal-action'>

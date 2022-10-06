@@ -209,9 +209,10 @@ export const ReviewItemsList = {
 export const CAMERA_ADJECTIVE_ENDING = 'ая';
 
 export const InputName = {
-  Name: 'name',
-  Advantage: 'plus',
-  Disadvantage: 'minus',
+  Name: 'user-name',
+  Advantage: 'user-plus',
+  Disadvantage: 'user-minus',
+  Review: 'user-comment',
 } as const;
 
 export const InputTitles = {

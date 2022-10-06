@@ -9,7 +9,9 @@ const CatalogButtons = ({handleCloseSuccessModal}: CatalogButtonsProps) => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
+    handleCloseSuccessModal(false);
     navigate(AppRoute.Basket);
+
   };
 
   const handleCloseClick = () => {

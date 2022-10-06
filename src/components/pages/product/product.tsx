@@ -38,11 +38,19 @@ const Product = () => {
     }
   }, [id]);
 
-  const {camera, reviews, similarCameras, cameraFetchStatus, similarCamerasFetchStatus, reviewsFetchStatus} = useProductSelectors();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const {camera, similarCameras, cameraFetchStatus, similarCamerasFetchStatus, reviewsFetchStatus} = useProductSelectors();
 
   const isCameraLoaded = cameraFetchStatus === LoadingStatus.Success;
   const isCameraLoading = cameraFetchStatus === LoadingStatus.Loading;
   const isCameraError = cameraFetchStatus === LoadingStatus.Error;
+
+  const handleButtonToTopClick = () => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  };
 
   return (
     <>
@@ -69,10 +77,7 @@ const Product = () => {
                   <h2 className="title title--h3">Отзывы</h2>
                   <button className="btn" type="button" onClick={() => setIsReviewModalOpen(true)}>Оставить свой отзыв</button>
                 </div>
-                <ReviewListCard fetchStatus={reviewsFetchStatus} reviews={reviews}/>
-                <div className="review-block__buttons">
-                  <button className="btn btn--purple" type="button">Показать больше отзывов</button>
-                </div>
+                <ReviewListCard fetchStatus={reviewsFetchStatus}/>
               </div>
             </section>
           </div>
@@ -80,11 +85,11 @@ const Product = () => {
         { isReviewModalOpen && camera && <ModalAction data={camera} usingComponent={ComponentName.Product} handleOpenSuccessModal={setIsSuccessReviewModalOpen} handleCloseModal={setIsReviewModalOpen}/> }
         { isSuccessReviewModalOpen && <ModalInfo usingComponent={ComponentName.Product} handleCloseModal={setIsSuccessReviewModalOpen}/> }
       </main>
-      <a className="up-btn" href="#header">
+      <button className="up-btn" type='button' onClick={handleButtonToTopClick}>
         <svg width="12" height="18" aria-hidden="true">
           <use xlinkHref="#icon-arrow2"></use>
         </svg>
-      </a>
+      </button>
     </>
   );
 };

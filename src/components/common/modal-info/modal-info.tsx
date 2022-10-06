@@ -11,15 +11,18 @@ import {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {getReviewPostStatus} from '../../../store/app-status/selectors';
 
+import {blockBody} from '../../../utils/modal-block-utils';
+
 interface ModalInfoProps {
   usingComponent: ComponentNameType;
   handleCloseModal: (isOpen: boolean) => void;
 }
 const ModalInfo = ({usingComponent, handleCloseModal}: ModalInfoProps) => {
   const reviewPostStatus = useSelector(getReviewPostStatus);
+
   const title =
     usingComponent === ComponentName.Product
-      ? getTitle(usingComponent, ModalContent.Info,  reviewPostStatus === LoadingStatus.Error)
+      ? getTitle(usingComponent, ModalContent.Info, reviewPostStatus === LoadingStatus.Error)
       : getTitle(usingComponent, ModalContent.Info);
 
   const getSVG = () => {
@@ -45,6 +48,10 @@ const ModalInfo = ({usingComponent, handleCloseModal}: ModalInfoProps) => {
   useEffect(() => {
     escPressHandler(handleCloseModal);
   }, [handleCloseModal]);
+
+  useEffect(() => {
+    blockBody();
+  }, []);
 
   return (
     <div className="modal is-active modal--narrow" onClick={() => handleCloseModal(false)} data-testid='modal-info'>

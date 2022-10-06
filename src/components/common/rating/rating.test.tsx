@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {Rating} from '../common';
 import {RatingClass} from '../../../utils/const';
-import faker, {fake} from 'faker';
+import faker from 'faker';
 
 describe('rating test', () => {
   it('renders correctly review page', () => {
@@ -31,5 +31,5 @@ describe('rating test', () => {
     );
     expect(screen.getByText(/Всего оценок:/i)).toBeInTheDocument();
   });
-  
+
 });

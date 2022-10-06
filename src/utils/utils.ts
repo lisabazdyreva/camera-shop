@@ -13,10 +13,6 @@ import {
   TabType,
   TabsList,
   ReviewItemsList,
-  InputPlaceholder,
-  InputErrorMessage,
-  InputTitles,
-  InputName,
   RatingDictionary,
   RatingValue
 } from './const';
@@ -82,26 +78,69 @@ export const sortReviews = (reviews: Review[]) => reviews.sort((reviewA, reviewB
   return b - a;
 });
 
-export const inputs = Object.keys(InputName);
-export const inputNames = Object.values(InputName);
-export const inputTitles = Object.values(InputTitles);
-export const inputPlaceholders = Object.values(InputPlaceholder);
-export const inputErrorMessages = Object.values(InputErrorMessage);
-
 export const ratings = Object.values(RatingDictionary);
 export const ratingValues = Object.values(RatingValue);
 
+export const checkIsLength = (value: string) => value.trim().length !== 0;
 
-export const checkValidity = (evt: ChangeEvent<HTMLInputElement>) => {
-  if (evt.target.value.length < 2) {
-    evt.target.setCustomValidity('Введите минимум 2 символа.');
-    return false;
-  } else if (!isNaN(Number(evt.target.value))) {
-    evt.target.setCustomValidity('Ввод чисел не предусмотрен.');
-    return false;
-  } else {
-    evt.target.setCustomValidity('');
-    return true;
+export const checkIsReviewValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  switch(evt.target.value.length) {
+    case 0:
+      evt.target.setCustomValidity('Добавьте комментарий');
+      return false;
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+      evt.target.setCustomValidity('Минимальная длина комментария: 5');
+      return false;
+    default:
+      evt.target.setCustomValidity('');
+      return true;
+  }
+};
+
+export const checkIsNameValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  switch (evt.target.value.trim().length) {
+    case 0:
+      evt.target.setCustomValidity('Введите имя');
+      return false;
+    case 1:
+      evt.target.setCustomValidity('Минимальная длина имени: 2');
+      return false;
+    default:
+      evt.target.setCustomValidity('');
+      return true;
+  }
+};
+
+export const checkIsAdvantageValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  switch (evt.target.value.trim().length) {
+    case 0:
+      evt.target.setCustomValidity('Укажите достоинства');
+      return false;
+    case 1:
+    case 2:
+      evt.target.setCustomValidity('Введите минимум 3 символа');
+      return false;
+    default:
+      evt.target.setCustomValidity('');
+      return true;
+  }
+};
+
+export const checkIsDisadvantageValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  switch (evt.target.value.trim().length) {
+    case 0:
+      evt.target.setCustomValidity('Укажите недостатки');
+      return false;
+    case 1:
+    case 2:
+      evt.target.setCustomValidity('Введите минимум 3 символа');
+      return false;
+    default:
+      evt.target.setCustomValidity('');
+      return true;
   }
 };
 

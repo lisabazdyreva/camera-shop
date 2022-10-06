@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {DefaultValue, LoadingStatus, NameSpace} from '../../../utils/const';
 import {makeFakeCamera, makeFakeReview} from '../../../mocks';
-import {fireEvent, getByText, render, screen} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {MemoryRouter} from 'react-router-dom';
 import Product from './product';
