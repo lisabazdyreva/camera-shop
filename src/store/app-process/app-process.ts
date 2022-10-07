@@ -16,7 +16,7 @@ const initialState: AppProcess = {
     advantage: '',
     disadvantage: '',
     review: '',
-    rating: 0,
+    rating: 0, //TODO вынести
   },
 };
 

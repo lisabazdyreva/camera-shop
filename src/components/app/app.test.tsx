@@ -1,14 +1,17 @@
 import {render, screen} from '@testing-library/react';
-import App from './app';
 import {Provider} from 'react-redux';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {createMemoryHistory} from 'history';
+import {generatePath} from 'react-router-dom';
+import thunk from 'redux-thunk';
+
+import App from './app';
+
 import {AppRoute, DefaultValue, LoadingStatus, NameSpace, PaginationRoute, TabType} from '../../utils/const';
 import {HistoryRoute} from '../common/common';
 import {makeFakeCamera, makeFakePromo, makeFakeReview} from '../../utils/mocks';
-import {generatePath} from 'react-router-dom';
-import thunk from 'redux-thunk';
 import {createAPI} from '../../services/api';
+
 
 const api = createAPI();
 const history = createMemoryHistory();

@@ -18,17 +18,17 @@ const Banner = ():JSX.Element => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const [promo] = promos;
-
   const isPromosLoaded = fetchStatus === LoadingStatus.Success;
   const isPromosLoading = fetchStatus === LoadingStatus.Loading;
   const isPromosError = fetchStatus === LoadingStatus.Error;
+
+  const promo = isPromosLoaded && promos[0];
 
   const getPromoLevel = () => camera ? camera.level.slice(0, -2) + CAMERA_ADJECTIVE_ENDING : '';
   const levelText = getPromoLevel();
 
   useEffect(() => {
-    if (isPromosLoaded) {
+    if (promo) {
       const promoId = promo.id;
       dispatch(fetchCameraAction({id: promoId}));
     }
@@ -38,7 +38,7 @@ const Banner = ():JSX.Element => {
     <div className="banner">
       {isPromosLoading && <Loader/>}
       {isPromosError && <ErrorInfo text={ErrorData.Banner}/>}
-      {isPromosLoaded &&
+      {isPromosLoaded && promo &&
         <>
           <Picture
             width={1280}

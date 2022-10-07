@@ -1,13 +1,15 @@
-import {createAPI} from '../../../services/api';
+import userEvent from '@testing-library/user-event';
 import thunk from 'redux-thunk';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import {makeFakeCamera, makeFakePromo} from '../../../utils/mocks';
-import {DefaultValue, LoadingStatus, NameSpace} from '../../../utils/const';
 import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {MemoryRouter} from 'react-router-dom';
+
 import Catalog from './catalog';
-import userEvent from '@testing-library/user-event';
+
+import {makeFakeCamera, makeFakePromo} from '../../../utils/mocks';
+import {DefaultValue, LoadingStatus, NameSpace} from '../../../utils/const';
+import {createAPI} from '../../../services/api';
 
 const api = createAPI();
 const middlewares = [thunk.withExtraArgument(api)];

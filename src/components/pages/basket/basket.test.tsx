@@ -1,12 +1,16 @@
 import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {MemoryRouter} from 'react-router-dom';
-import Basket from './basket';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import {DefaultValue, NameSpace} from '../../../utils/const';
-import thunk from 'redux-thunk';
-import {createAPI} from '../../../services/api';
 import userEvent from '@testing-library/user-event';
+import thunk from 'redux-thunk';
+
+import Basket from './basket';
+
+import {DefaultValue, NameSpace} from '../../../utils/const';
+
+import {createAPI} from '../../../services/api';
+
 
 const api = createAPI();
 const middlewares = [thunk.withExtraArgument(api)];
