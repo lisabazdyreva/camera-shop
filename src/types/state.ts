@@ -1,28 +1,42 @@
-import { RootState } from '../store/root-reducer';
-import {Camera, Promo, Review} from './types';
-import { LoadingStatus } from '../utils/const';
+import {Promos} from './promo';
+import {Cameras, Camera} from './camera';
+import {ReviewPost, Reviews} from './review';
+import {store} from '../store';
+import {LoadingStatusType} from './types';
 
 
-export type AppData = {
-  cameras: Camera[],
-  camera: Camera | null,
-  reviews: Review[],
-  similarCameras: Camera[],
-  promos: Promo[],
+export type AppCameras = {
+  cameras: Cameras,
+  camerasFetchStatus: LoadingStatusType,
 }
 
-export type AppStatus = {
-  camerasFetchStatus: typeof LoadingStatus[keyof typeof LoadingStatus],
-  cameraFetchStatus: typeof LoadingStatus[keyof typeof LoadingStatus],
-  reviewsFetchStatus: typeof LoadingStatus[keyof typeof LoadingStatus],
-  similarCamerasFetchStatus: typeof LoadingStatus[keyof typeof LoadingStatus],
-  promosFetchStatus: typeof LoadingStatus[keyof typeof LoadingStatus],
-  reviewPostStatus: typeof LoadingStatus[keyof typeof LoadingStatus],
+export type AppCamera = {
+  camera: Camera | null,
+  cameraFetchStatus: LoadingStatusType,
+}
+
+export type AppSimilarCameras = {
+  similarCameras: Cameras,
+  similarCamerasFetchStatus: LoadingStatusType,
+}
+
+export type AppPromos = {
+  promos: Promos,
+  promosFetchStatus: LoadingStatusType,
+}
+
+export type AppReviews = {
+  reviews: Reviews,
+  reviewsFetchStatus: LoadingStatusType,
+  reviewPostStatus: LoadingStatusType,
 }
 
 export type AppProcess = {
-  basket: [] | Camera [];
+  basket: [] | Cameras;
   currentCatalogPage: number;
+  camerasTotalCount: number;
+  reviewFormData: ReviewPost;
 }
 
-export type State = RootState;
+export type State = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

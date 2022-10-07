@@ -1,10 +1,11 @@
 import {LoadingStatus} from '../../../../../utils/const';
+import {LoadingStatusType} from '../../../../../types/types';
 
 interface IconReviewProps {
-  status: string;
+  status: LoadingStatusType;
 }
-const IconReview = ({status}: IconReviewProps) => {
 
+const IconReview = ({status}: IconReviewProps):JSX.Element => {
   const isSuccess = status === LoadingStatus.Success;
   const isError = status === LoadingStatus.Error;
 

@@ -2,7 +2,7 @@ interface ReturnButtonProps {
   handleCloseSuccessModal?: (isOpen: boolean) => void;
 }
 
-const ReturnButton = ({handleCloseSuccessModal}: ReturnButtonProps) => {
+const ReturnButton = ({handleCloseSuccessModal}: ReturnButtonProps):JSX.Element => {
   const handleButtonClick = () => {
     if (handleCloseSuccessModal) {
       handleCloseSuccessModal(false);

@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {Slider} from '../components';
 import {LoadingStatus, NameSpace} from '../../../../../utils/const';
-import {makeFakeCamera} from '../../../../../mocks';
+import {makeFakeCamera} from '../../../../../utils/mocks';
 import {Provider} from 'react-redux';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import thunk from 'redux-thunk';
@@ -20,7 +20,7 @@ const fakeLoadingStatus = LoadingStatus.Loading;
 const fakeCameras = [makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera()];
 
 const store = mockStore({
-  [NameSpace.Data]: {
+  [NameSpace.SimilarCameras]: {
     similarCameras: fakeCameras,
   },
   [NameSpace.App]: {
@@ -45,7 +45,7 @@ describe('slider test', () => {
     expect(nextButton).toBeInTheDocument();
   });
 
-  it('slider render correctly when error status', () => {
+  it('slider render correctly when error-info status', () => {
     render (
       <Provider store={store}>
         <MemoryRouter>

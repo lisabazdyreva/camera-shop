@@ -1,56 +1,68 @@
-import {
-  ProductItem,
-  ReviewListCard,
-} from './components/components';
+import {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+
+import {ProductItem, ReviewListCard, Slider} from './components/components';
 import {
   ModalInfo,
   ModalAction,
-  Breadcrumbs, Loader, ErrorInfo
+  Breadcrumbs,
+  Loader,
+  ErrorInfo
 } from '../../common/common';
-import {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
-import {Slider} from './components/components';
-import {ComponentName, BreadcrumbsItem, LoadingStatus, ErrorData} from '../../../utils/const';
-// import useProductDispatch from '../../../hooks/product-hooks/useProductDispatch';
+
+import{AppDispatch} from '../../../types/state';
+import {
+  ComponentName,
+  BreadcrumbsItem,
+  LoadingStatus,
+  ErrorData,
+  ScrollSetting,
+  TopCoordinate
+} from '../../../utils/const';
 import useProductSelectors from '../../../hooks/product-hooks/useProductSelectors';
-import {useDispatch} from 'react-redux';
-import {AppDispatch} from '../../../types/action';
-import {fetchCamera, fetchSimilarCameras} from '../../../store/actions/api-actions/api-actions-cameras';
-import {fetchReviews} from '../../../store/actions/api-actions/api-actions-reviews';
+
+import {fetchCameraAction, fetchSimilarCamerasAction} from '../../../store/api-actions/api-actions-cameras';
+import {fetchReviewsAction} from '../../../store/api-actions/api-actions-reviews';
 
 
-const Product = () => {
-  const params = useParams();
-  const {id} = params;
-
+const Product = ():JSX.Element => {
   const [isSuccessReviewModalOpen, setIsSuccessReviewModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
+  const {camera, similarCameras, cameraFetchStatus, similarCamerasFetchStatus, reviewsFetchStatus} = useProductSelectors();
+
   const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
-    if (id) {
-      const numberId = Number(id);
-
-      dispatch(fetchCamera(numberId));
-      dispatch(fetchReviews(numberId));
-      dispatch(fetchSimilarCameras(numberId));
-    }
-  }, [id]);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const {camera, similarCameras, cameraFetchStatus, similarCamerasFetchStatus, reviewsFetchStatus} = useProductSelectors();
+  const params = useParams();
+  const {id} = params;
 
   const isCameraLoaded = cameraFetchStatus === LoadingStatus.Success;
   const isCameraLoading = cameraFetchStatus === LoadingStatus.Loading;
   const isCameraError = cameraFetchStatus === LoadingStatus.Error;
 
   const handleButtonToTopClick = () => {
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    window.scrollTo(ScrollSetting);
   };
+
+  const fetchData = () => {
+    const numberId = Number(id);
+    const data = {id: numberId};
+
+    dispatch(fetchCameraAction(data));
+    dispatch(fetchReviewsAction(data));
+    dispatch(fetchSimilarCamerasAction(data));
+  };
+
+  useEffect(() => {
+    if (id) {
+      fetchData();
+    }
+  }, [id]);
+
+  useEffect(() => {
+    window.scrollTo(TopCoordinate.X, TopCoordinate.Y);
+  }, []);
 
   return (
     <>

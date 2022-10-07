@@ -1,11 +1,12 @@
-import {Camera} from '../../../types/types';
-import {Link} from 'react-router-dom';
-import {AppRoute, RatingClass} from '../../../utils/const';
-import {Picture, Rating} from '../common';
-import {TabType} from '../../../utils/const';
-import {getFormattedPrice} from '../../../utils/utils';
 import {useState} from 'react';
+import {Link} from 'react-router-dom';
 
+import {Picture, Rating} from '../common';
+
+import {Camera} from '../../../types/camera';
+
+import {AppRoute, RatingClass, TabType} from '../../../utils/const';
+import {getFormattedPrice} from '../../../utils/utils';
 
 interface ProductCardProps {
   handleAddModal: (data: Camera) => void;
@@ -14,7 +15,7 @@ interface ProductCardProps {
   withoutBasketImplementation?: boolean;
 }
 
-const ProductCard = ({handleAddModal, data, additionalClass, withoutBasketImplementation}: ProductCardProps) => {
+const ProductCard = ({handleAddModal, data, additionalClass, withoutBasketImplementation}: ProductCardProps):JSX.Element => {
   const {name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price, id, reviewCount, rating} = data;
   const formattedPrice = getFormattedPrice(price);
 

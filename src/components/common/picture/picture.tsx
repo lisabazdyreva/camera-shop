@@ -1,4 +1,3 @@
-
 interface PictureProps {
   width: number,
   height: number,
@@ -8,7 +7,7 @@ interface PictureProps {
   srcSetSource: string[],
 }
 
-const Picture = ({width, height, alt, src, srcSetImg, srcSetSource}: PictureProps) => (
+const Picture = ({width, height, alt, src, srcSetImg, srcSetSource}: PictureProps):JSX.Element => (
   <picture>
     <source type="image/webp" srcSet={`${srcSetSource[0]}, ${srcSetSource[1]} 2x`} />
     <img

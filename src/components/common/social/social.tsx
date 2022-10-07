@@ -1,6 +1,6 @@
 import {socialNames} from '../../../utils/utils';
 
-const Social = () => (
+const Social = ():JSX.Element => (
   <ul className="social">
     {
       socialNames.map((socialName) => {

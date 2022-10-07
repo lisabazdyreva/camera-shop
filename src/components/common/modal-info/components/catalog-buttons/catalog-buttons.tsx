@@ -5,7 +5,7 @@ interface CatalogButtonsProps {
   handleCloseSuccessModal: (isOpen: boolean) => void;
 }
 
-const CatalogButtons = ({handleCloseSuccessModal}: CatalogButtonsProps) => {
+const CatalogButtons = ({handleCloseSuccessModal}: CatalogButtonsProps):JSX.Element => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {

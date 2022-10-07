@@ -1,4 +1,6 @@
-import {Camera, Promo, Review} from './types/types';
+import {Promo} from '../types/promo';
+import {Camera} from '../types/camera';
+import {Review} from '../types/review';
 import faker from 'faker';
 
 export const makeFakeCamera = (): Camera => ({

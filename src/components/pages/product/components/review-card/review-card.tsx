@@ -1,6 +1,6 @@
-import {Review} from '../../../../../types/types';
-import { Rating } from '../../../../common/common';
+import {Rating} from '../../../../common/common';
 
+import {Review} from '../../../../../types/review';
 import {getDateTime, getDateValue, reviewItems, reviewNames} from '../../../../../utils/utils';
 import {RatingClass} from '../../../../../utils/const';
 
@@ -8,7 +8,7 @@ interface ReviewCardProps {
   data: Review;
 }
 
-const ReviewCard = ({data}: ReviewCardProps) => {
+const ReviewCard = ({data}: ReviewCardProps):JSX.Element => {
   const {userName, id, rating, advantage, disadvantage, review, createAt} = data;
 
   const dateTime = getDateTime(createAt);
@@ -20,8 +20,6 @@ const ReviewCard = ({data}: ReviewCardProps) => {
     Review: review,
   } as const;
 
-  const dataReviews = Object.values(DataReview);
-
   return (
     <li className="review-card">
       <div className="review-card__head">
@@ -32,7 +30,7 @@ const ReviewCard = ({data}: ReviewCardProps) => {
       <ul className="review-card__list">
         {
           reviewItems.map((reviewItem, index) => {
-            const text = dataReviews[index];
+            const text = Object.values(DataReview)[index];
             return (
               <li className="item-list" key={reviewNames[index]}>
                 <span className="item-list__title">{reviewItem}</span>

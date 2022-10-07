@@ -1,5 +1,5 @@
 import {ratingItems as ratings} from '../../../utils/utils';
-import {RatingClassType} from '../../../utils/const';
+import {RatingClassType} from '../../../types/types';
 
 interface RatingProps {
   rating: number,
@@ -9,7 +9,7 @@ interface RatingProps {
   additionalClass: RatingClassType;
 }
 
-const Rating = ({rating, reviewCount, id, isDetailed, additionalClass} :RatingProps) => (
+const Rating = ({rating, reviewCount, id, isDetailed, additionalClass} :RatingProps):JSX.Element => (
   <div className={`rate ${additionalClass}`}>
     {
       ratings.map((ratingItem) => {

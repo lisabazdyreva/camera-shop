@@ -1,7 +1,7 @@
 import {useState} from 'react';
-import {Camera} from '../../types/types';
+import {Cameras} from '../../types/camera';
 
-const useSlider = (items: Camera[], step: number) => {
+const useSlider = (items: Cameras, step: number) => {
   const [counter, setCount] = useState(0);
 
   const handlePreviousClick = () => {

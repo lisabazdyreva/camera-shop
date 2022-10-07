@@ -1,23 +1,21 @@
-import {getTitle, escPressHandler} from '../../../utils/utils';
-import {ComponentName, ComponentNameType, LoadingStatus} from '../../../utils/const';
-import {
-  CatalogButtons,
-  IconReview,
-  IconSuccess,
-  ReturnButton
-} from './components/components';
-import {ModalContent} from '../../../utils/const';
 import {useEffect} from 'react';
 import {useSelector} from 'react-redux';
-import {getReviewPostStatus} from '../../../store/app-status/selectors';
+import {createFocusTrap} from 'focus-trap';
 
-import {blockBody} from '../../../utils/modal-block-utils';
+import {CatalogButtons, IconReview, IconSuccess, ReturnButton} from './components/components';
+
+import {getTitle, escPressHandler} from '../../../utils/utils';
+import {ComponentName, LoadingStatus, ModalContent, TopCoordinate} from '../../../utils/const';
+
+import {ComponentNameType} from '../../../types/types';
+
+import {getReviewPostStatus} from '../../../store/app-reviews/selectors';
 
 interface ModalInfoProps {
   usingComponent: ComponentNameType;
   handleCloseModal: (isOpen: boolean) => void;
 }
-const ModalInfo = ({usingComponent, handleCloseModal}: ModalInfoProps) => {
+const ModalInfo = ({usingComponent, handleCloseModal}: ModalInfoProps):JSX.Element => {
   const reviewPostStatus = useSelector(getReviewPostStatus);
 
   const title =
@@ -44,13 +42,26 @@ const ModalInfo = ({usingComponent, handleCloseModal}: ModalInfoProps) => {
 
   const modalSvg = getSVG();
   const modalButtons = getButtons();
-
+  //TODO ?
   useEffect(() => {
     escPressHandler(handleCloseModal);
   }, [handleCloseModal]);
 
   useEffect(() => {
-    blockBody();
+    const focusModalTrap = createFocusTrap('.modal');
+    document.body.dataset.scrollY = String((document.documentElement && document.documentElement.scrollTop) || (document.body && document.body.scrollTop));
+    document.body.style.top = `-${document.body.dataset.scrollY}px`;
+    document.body.classList.add('scroll-lock-ios');
+
+    focusModalTrap.activate();
+
+    window.scrollTo(TopCoordinate.X, TopCoordinate.Y);
+
+    return () => {
+      document.body.classList.remove('scroll-lock-ios');
+      focusModalTrap.deactivate();
+      window.scrollTo(TopCoordinate.X, Number(document.body.dataset.scrollY));
+    };
   }, []);
 
   return (

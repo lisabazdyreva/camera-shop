@@ -1,4 +1,4 @@
-import {makeFakeCamera} from '../../../../../mocks';
+import {makeFakeCamera} from '../../../../../utils/mocks';
 import {LoadingStatus} from '../../../../../utils/const';
 import {render, screen} from '@testing-library/react';
 import {CatalogContent} from '../components';
@@ -12,10 +12,10 @@ describe('Render Catalog correctly', () => {
     render (
         <MemoryRouter>
             <CatalogContent
-              fetchStatus={LoadingStatus.Success}
-              cards={mockCameras}
+              // fetchStatus={LoadingStatus.Success}
+              // cards={mockCameras}
               handleAddModal={jest.fn()}
-              pages={[1, 2, 3]}
+              // pages={[1, 2, 3]}
               currentPageNumber={1}
               setCurrentPageNumber={jest.fn()}
             />
@@ -25,14 +25,14 @@ describe('Render Catalog correctly', () => {
     expect(screen.getByTestId('catalog-content')).toBeInTheDocument();
   });
 
-  it ('should render error message when it is error in data', () => {
+  it ('should render error-info message when it is error-info in data', () => {
     render (
       <MemoryRouter>
         <CatalogContent
-          fetchStatus={LoadingStatus.Error}
-          cards={[]}
+          // fetchStatus={LoadingStatus.Error}
+          // cards={[]}
           handleAddModal={jest.fn()}
-          pages={[]}
+          // pages={[]}
           currentPageNumber={1}
           setCurrentPageNumber={jest.fn()}
         />
@@ -45,10 +45,10 @@ describe('Render Catalog correctly', () => {
     render (
       <MemoryRouter>
         <CatalogContent
-          fetchStatus={LoadingStatus.Loading}
-          cards={[]}
+          // fetchStatus={LoadingStatus.Loading}
+          // cards={[]}
           handleAddModal={jest.fn()}
-          pages={[]}
+          // pages={[]}
           currentPageNumber={1}
           setCurrentPageNumber={jest.fn()}
         />

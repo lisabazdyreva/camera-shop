@@ -1,16 +1,17 @@
 import {Link} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+
+import {ComponentName, BreadcrumbsItem,} from '../../../utils/const';
+import {breadcrumbsLinks} from '../../../utils/utils';
 import {
-  ComponentName,
   ComponentNameType,
   BreadcrumbsItemBasketType,
   BreadcrumbsItemCatalogType,
   BreadcrumbsItemProductType,
-  BreadcrumbsItem,
-} from '../../../utils/const';
-import {Camera} from '../../../types/types';
-import {useSelector} from 'react-redux';
+} from '../../../types/types';
+import {Camera} from '../../../types/camera';
+
 import {getCurrentPage} from '../../../store/app-process/selectors';
-import {breadcrumbsLinks} from '../../../utils/utils';
 
 
 interface BreadcrumbsProps {
@@ -19,7 +20,7 @@ interface BreadcrumbsProps {
   breadcrumbItems: BreadcrumbsItemProductType | BreadcrumbsItemBasketType | BreadcrumbsItemCatalogType,
 }
 
-const Breadcrumbs = ({data, usingComponent, breadcrumbItems}: BreadcrumbsProps) => {
+const Breadcrumbs = ({data, usingComponent, breadcrumbItems}: BreadcrumbsProps):JSX.Element => {
   const breadcrumbs = Object.values(breadcrumbItems);
 
   const currentPage = useSelector(getCurrentPage);

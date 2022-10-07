@@ -1,21 +1,23 @@
-import {Camera} from '../../types/types';
-
-const usePagination = (currentPage: number, step: number, arr: Camera[]) => {
-  const indexLast = currentPage * step;
-  const indexFirst = indexLast - step;
-  const currentItems = arr.slice(indexFirst, indexLast);
-
-  const pagesAmount = Math.ceil(arr.length / step);
-
-  const pages = [];
-  for (let i = 1; i <= pagesAmount; i++) {
-    pages[i - 1] = i;
-  }
-
-  return {
-    pages,
-    currentItems,
-  };
-};
-
-export default usePagination;
+// import {useSelector} from 'react-redux';
+// import {getCamerasTotalCount, getCurrentPage} from '../../store/app-process/selectors';
+//
+// const usePagination = (step: number) => {
+//   const currentPage = useSelector(getCurrentPage);
+//   const camerasTotalCount = useSelector(getCamerasTotalCount);
+//
+//   const startIndex = (currentPage - 1) * step;
+//   const pagesAmount = Math.ceil( camerasTotalCount / step);
+//
+//   const pages = [];
+//   for (let i = 1; i <= pagesAmount; i++) {
+//     pages[i - 1] = i;
+//   }
+//
+//   return {
+//     startIndex,
+//     pages,
+//   };
+// };
+//
+// export default usePagination;
+export {};

@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import {ProductItem} from '../components';
-import {makeFakeCamera} from '../../../../../mocks';
+import {makeFakeCamera} from '../../../../../utils/mocks';
 import {Provider} from 'react-redux';
 import {MemoryRouter} from 'react-router-dom';
 

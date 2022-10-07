@@ -1,4 +1,5 @@
-import {Camera} from '../types/types';
+import {Camera as CameraType} from '../types/camera';
+import catalog from '../components/pages/catalog/catalog';
 
 export const MenuItem = {
   Catalog: 'Каталог',
@@ -54,11 +55,7 @@ export const LoadingStatus = {
   Error: 'error',
 } as const;
 
-export type MenuItemsType = typeof MenuItem[keyof typeof MenuItem];
-export type SourceItemsType = typeof SourceItem[keyof typeof SourceItem];
-export type SupportItemsType = typeof SupportItem[keyof typeof SupportItem];
-
-export const initialCamera: Camera = {
+export const initialCamera: CameraType = {
   id: 0,
   name: '',
   vendorCode: '',
@@ -83,10 +80,14 @@ export const UrlRoute = {
   Reviews: '/reviews',
 } as const;
 
+
 export enum NameSpace {
-  Data = 'DATA',
   App = 'APP',
-  Status = 'STATUS',
+  Cameras = 'CAMERAS',
+  Camera = 'CAMERA',
+  Promos = 'PROMOS',
+  SimilarCameras = 'SIMILAR_CAMERAS',
+  Reviews = 'REVIEWS',
 }
 
 export const Step = {
@@ -107,11 +108,6 @@ export const ModalContent = {
   Action: 'action',
 } as const;
 
-
-export type ModalType = typeof ModalContent[keyof typeof ModalContent];
-export type ComponentNameType = typeof ComponentName[keyof typeof ComponentName];
-
-
 export const BreadcrumbsItem = {
   Basket: {
     Main: 'Главная',
@@ -127,10 +123,6 @@ export const BreadcrumbsItem = {
     Catalog: 'Каталог',
   }
 } as const;
-
-export type BreadcrumbsItemBasketType = typeof BreadcrumbsItem.Basket;
-export type BreadcrumbsItemCatalogType = typeof BreadcrumbsItem.Catalog;
-export type BreadcrumbsItemProductType = typeof BreadcrumbsItem.Product;
 
 export const BreadcrumbsLink = {
   Main: '/',
@@ -185,8 +177,6 @@ export const RatingClass = {
   Review: 'review-card__rate',
 } as const;
 
-export type RatingClassType = typeof RatingClass[keyof typeof RatingClass];
-
 export const SocialName = {
   Vk: 'vk',
   Pinterest: 'pinterest',
@@ -213,18 +203,22 @@ export const InputName = {
   Advantage: 'user-plus',
   Disadvantage: 'user-minus',
   Review: 'user-comment',
+  Rating: 'rate',
 } as const;
 
-export const InputTitles = {
+export const InputTitle = {
   Name: 'Ваше имя',
   Advantage: 'Достоинства',
   Disadvantage: 'Недостатки',
+  Review: 'Комментарий',
+  Rating: 'Рейтинг',
 } as const;
 
 export const InputPlaceholder = {
   Name: 'Введите ваше имя',
   Advantage: 'Основные преимущества товара',
   Disadvantage: 'Главные недостатки товара',
+  Review: 'Поделитесь своим опытом покупки',
 } as const;
 
 export const InputErrorMessage = {
@@ -248,6 +242,7 @@ export const RatingDictionary = {
   Bad: 'Плохо',
   Worse: 'Ужасно',
 } as const;
+
 export const MAX_RATING = 5;
 
 export const ErrorData = {
@@ -257,3 +252,21 @@ export const ErrorData = {
   Banner: 'баннера',
 } as const;
 
+
+export const FORM_ID_TYPE = 'id';
+
+export const TopCoordinate = {
+  X: 0,
+  Y: 0,
+} as const;
+
+
+export const NOT_FOUND_NOTIFICATION = 'Такой страницы не найдено.';
+export const LOADER_NOTIFICATION = 'Идёт загрузка...';
+
+export const ScrollSetting = {
+  top: 0,
+  behavior: 'smooth',
+} as const;
+
+export const REVIEWS_PER_TIME = 3;

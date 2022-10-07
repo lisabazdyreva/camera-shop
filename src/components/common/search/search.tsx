@@ -1,4 +1,4 @@
-const Search = () => (
+const Search = ():JSX.Element => (
   <div className="form-search">
     <form>
       <label>

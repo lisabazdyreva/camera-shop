@@ -1,9 +1,8 @@
 import {useNavigate} from 'react-router-dom';
-import {AppRoute, DefaultValue, PaginationRoute} from '../../../utils/const';
+import {AppRoute, DefaultValue, NOT_FOUND_NOTIFICATION, PaginationRoute} from '../../../utils/const';
 
-const NotFound = () => {
+const NotFound = ():JSX.Element => {
   const navigate = useNavigate();
-  const text = 'Такой страницы не найдено.';
 
   const onButtonToMainClick = () => {
     navigate(`${AppRoute.Catalog}${PaginationRoute.Page}${DefaultValue.CatalogPageNumber}`);
@@ -14,7 +13,7 @@ const NotFound = () => {
       <div className='page-content__section'>
         <section className='not-found'>
           <p className='not-found__text'>
-            {text}
+            {NOT_FOUND_NOTIFICATION}
           </p>
           <div className='not-found__buttons'>
             <button className='btn btn--purple' onClick={onButtonToMainClick}>На главную</button>

@@ -1,4 +1,4 @@
-import {Camera} from '../../../../../types/types';
+import {Camera} from '../../../../../types/camera';
 import {getFormattedPrice} from '../../../../../utils/utils';
 import {Picture} from '../../../../common/common';
 
@@ -6,7 +6,7 @@ interface BasketItemShortProps {
   data: Camera;
 }
 
-const BasketItemShort = ({data}: BasketItemShortProps) => {
+const BasketItemShort = ({data}: BasketItemShortProps):JSX.Element => {
   const {name, price, previewImg, previewImgWebp, previewImgWebp2x, previewImg2x, level, category, vendorCode} = data;
   const formattedPrice = getFormattedPrice(price);
 

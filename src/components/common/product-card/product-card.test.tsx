@@ -1,4 +1,4 @@
-import {makeFakeCamera} from '../../../mocks';
+import {makeFakeCamera} from '../../../utils/mocks';
 import {render, screen} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import {ProductCard} from '../common';

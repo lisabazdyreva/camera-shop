@@ -1,10 +1,11 @@
-import {ComponentName, ComponentNameType} from '../../../utils/const';
+import {ComponentName} from '../../../utils/const';
+import {ComponentNameType} from '../../../types/types';
 
 interface LogoProps {
   usingComponent: ComponentNameType,
 }
 
-const Logo = ({usingComponent}: LogoProps) => {
+const Logo = ({usingComponent}: LogoProps):JSX.Element => {
   const icon = usingComponent === ComponentName.Footer ? '#icon-logo-mono' : '#icon-logo';
   return (
     <a className={`${usingComponent}__logo`} href="#" aria-label="Переход на главную">

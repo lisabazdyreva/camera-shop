@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import {BasketItemShort} from '../components';
-import {makeFakeCamera} from '../../../../../mocks';
+import {makeFakeCamera} from '../../../../../utils/mocks';
 
 const camera = makeFakeCamera();
 

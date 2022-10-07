@@ -1,7 +1,6 @@
-import {Camera} from '../../../../../types/types';
 import {useDispatch} from 'react-redux';
-import {setBasket} from '../../../../../store/actions/actions';
-// import {getBasket} from '../../../../../store/app-process/selectors';
+import {Camera} from '../../../../../types/camera';
+import {setBasket} from '../../../../../store/app-process/app-process';
 
 interface BasketAddButtonProps {
   data?: Camera;
@@ -9,9 +8,8 @@ interface BasketAddButtonProps {
   handleOpenSuccessModal?: (isOpen: boolean) => void;
 }
 
-const BasketAddButton = ({data, handleOpenSuccessModal, handleCloseModal}: BasketAddButtonProps) => {
+const BasketAddButton = ({data, handleOpenSuccessModal, handleCloseModal}: BasketAddButtonProps):JSX.Element => {
   const dispatch = useDispatch();
-  // const basket = useSelector(getBasket);
 
   const handleButtonAddClick = () => {
     if (data && handleOpenSuccessModal) {

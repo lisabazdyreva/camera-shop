@@ -1,12 +1,10 @@
 import {
   BreadcrumbsLink,
   ComponentName,
-  ComponentNameType,
   FooterNavigation,
   MenuItem,
   ModalContent,
   ModalMessage,
-  ModalType,
   Rating,
   SocialName,
   TabDictionary,
@@ -14,10 +12,11 @@ import {
   TabsList,
   ReviewItemsList,
   RatingDictionary,
-  RatingValue
+  RatingValue, Step
 } from './const';
-import {Review} from '../types/types';
-import {ChangeEvent} from 'react';
+import {Reviews} from '../types/review';
+// import {ChangeEvent, FormEvent} from 'react';
+import {ComponentNameType, ModalType} from '../types/types';
 
 export const getTitle = (component: ComponentNameType, modalType: ModalType, isReviewError?: boolean) => {
   const isModalAction = modalType === ModalContent.Action;
@@ -71,7 +70,7 @@ export const getFormattedPrice = (price: number): string => {
   return (`${hundreds.join('')} ${tens.join('')} ₽`);
 };
 
-export const sortReviews = (reviews: Review[]) => reviews.sort((reviewA, reviewB) => {
+export const sortReviews = (reviews: Reviews) => reviews.sort((reviewA, reviewB) => {
   const a = new Date(reviewA.createAt).getTime();
   const b = new Date(reviewB.createAt).getTime();
 
@@ -83,66 +82,110 @@ export const ratingValues = Object.values(RatingValue);
 
 export const checkIsLength = (value: string) => value.trim().length !== 0;
 
-export const checkIsReviewValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  switch(evt.target.value.length) {
-    case 0:
-      evt.target.setCustomValidity('Добавьте комментарий');
-      return false;
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-      evt.target.setCustomValidity('Минимальная длина комментария: 5');
-      return false;
+export const checkIsValid = (target: HTMLInputElement | HTMLTextAreaElement): boolean => {
+  switch (target.name) {
+    case 'user-name': {
+      if (target.value.length === 0) {
+        target.setCustomValidity('Введите имя');
+        return false;
+      } else if (target.value.length < 2) {
+        target.setCustomValidity('Минимальная длина имени: 2');
+        return false;
+      } else {
+        target.setCustomValidity('');
+        return true;
+      }
+    }
+    case 'user-plus':
+    case 'user-minus': {
+      if (target.value.length === 0) {
+        target.setCustomValidity('Заполните поле');
+        return false;
+      } else if (target.value.length < 3) {
+        target.setCustomValidity('Введите минимум 3 символа');
+        return false;
+      } else {
+        target.setCustomValidity('');
+        return true;
+      }
+    }
+    case 'user-comment': {
+      if (target.value.length === 0) {
+        target.setCustomValidity('Добавьте комментарий');
+        return false;
+      } else if (target.value.length < 5) {
+        target.setCustomValidity('Минимальная длина комментария: 5');
+        return false;
+      } else {
+        target.setCustomValidity('');
+        return true;
+      }
+    }
     default:
-      evt.target.setCustomValidity('');
-      return true;
+      return false;
   }
 };
 
-export const checkIsNameValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  switch (evt.target.value.trim().length) {
-    case 0:
-      evt.target.setCustomValidity('Введите имя');
-      return false;
-    case 1:
-      evt.target.setCustomValidity('Минимальная длина имени: 2');
-      return false;
-    default:
-      evt.target.setCustomValidity('');
-      return true;
-  }
-};
+// export const checkIsReviewValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+//   switch(evt.target.value.length) {
+//     case 0:
+//       evt.target.setCustomValidity('Добавьте комментарий');
+//       return false;
+//     case 1:
+//     case 2:
+//     case 3:
+//     case 4:
+//       evt.target.setCustomValidity('Минимальная длина комментария: 5');
+//       return false;
+//     default:
+//       evt.target.setCustomValidity('');
+//       return true;
+//   }
+// };
 
-export const checkIsAdvantageValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  switch (evt.target.value.trim().length) {
-    case 0:
-      evt.target.setCustomValidity('Укажите достоинства');
-      return false;
-    case 1:
-    case 2:
-      evt.target.setCustomValidity('Введите минимум 3 символа');
-      return false;
-    default:
-      evt.target.setCustomValidity('');
-      return true;
-  }
-};
+// export const checkIsNameValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+//   switch (evt.target.value.trim().length) {
+//     case 0:
+//       evt.target.setCustomValidity('Введите имя');
+//       return false;
+//     case 1:
+//       evt.target.setCustomValidity('Минимальная длина имени: 2');
+//       return false;
+//     default:
+//       evt.target.setCustomValidity('');
+//       return true;
+//   }
+// };
 
-export const checkIsDisadvantageValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  switch (evt.target.value.trim().length) {
-    case 0:
-      evt.target.setCustomValidity('Укажите недостатки');
-      return false;
-    case 1:
-    case 2:
-      evt.target.setCustomValidity('Введите минимум 3 символа');
-      return false;
-    default:
-      evt.target.setCustomValidity('');
-      return true;
-  }
-};
+// export const checkIsAdvantageValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+//   switch (evt.target.value.trim().length) {
+//     case 0:
+//       evt.target.setCustomValidity('Укажите достоинства');
+//       return false;
+//     case 1:
+//     case 2:
+//       evt.target.setCustomValidity('Введите минимум 3 символа');
+//       return false;
+//     default:
+//       evt.target.setCustomValidity('');
+//       return true;
+//   }
+// };
+
+// export const checkIsDisadvantageValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+//   switch (evt.target.value.trim().length) {
+//     case 0:
+//       evt.target.setCustomValidity('Укажите недостатки');
+//       return false;
+//     case 1:
+//     case 2:
+//       evt.target.setCustomValidity('Введите минимум 3 символа');
+//       return false;
+//     default:
+//       evt.target.setCustomValidity('');
+//       return true;
+//   }
+// };
 
 export const isEsc = (code: string) => code === 'Escape' || code === 'Esc';
 
@@ -163,5 +206,15 @@ export const escPressHandler = (handler: any) => {
     document.removeEventListener('keydown', handleEscapeKeyPress);
     isMounted = false;
   };
+};
+
+export const getPages = (totalCount: number) => {
+  const pagesAmount = Math.ceil( totalCount / Step.Pagination);
+
+  const pagesNumbers = [];
+  for (let i = 1; i <= pagesAmount; i++) {
+    pagesNumbers.push(i);
+  }
+  return pagesNumbers;
 };
 

@@ -1,8 +1,9 @@
 import {NavItem} from '../common';
+
 import {ComponentName} from '../../../utils/const';
 import {footerNavs} from '../../../utils/utils';
 
-const FooterNavigation = () => (
+const FooterNavigation = ():JSX.Element => (
   <>
     {
       footerNavs.map((footerNav) => {

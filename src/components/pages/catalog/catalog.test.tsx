@@ -1,7 +1,7 @@
 import {createAPI} from '../../../services/api';
 import thunk from 'redux-thunk';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import {makeFakeCamera, makeFakePromo} from '../../../mocks';
+import {makeFakeCamera, makeFakePromo} from '../../../utils/mocks';
 import {DefaultValue, LoadingStatus, NameSpace} from '../../../utils/const';
 import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
@@ -16,17 +16,18 @@ const mockStore = configureMockStore(middlewares);
 const mockCameras = [makeFakeCamera(), makeFakeCamera()];
 const mockPromos = [makeFakePromo()];
 
+
 const store = mockStore({
-  [NameSpace.Data]: {
+  [NameSpace.Cameras]: {
     cameras: mockCameras,
+    camerasFetchStatus:  LoadingStatus.Success, //?
+  },
+  [NameSpace.Promos]: {
     promos: mockPromos,
+    promosFetchStatus: LoadingStatus.Default,
   },
   [NameSpace.App]: {
     currentCatalogPage: DefaultValue.CatalogPageNumber,
-  },
-  [NameSpace.Status]: {
-    camerasFetchStatus: LoadingStatus.Success,
-    promosFetchStatus: LoadingStatus.Default,
   },
 });
 

@@ -1,19 +1,16 @@
 import {useNavigate, useParams} from 'react-router-dom';
+
 import {DescriptionTab, FeatureTab} from '../components';
+
 import {AppRoute, TabType} from '../../../../../utils/const';
 import {tabTypes, tabNames} from '../../../../../utils/utils';
+import {CameraFeatures} from '../../../../../types/camera';
 
 interface ProductTabsProps {
-  data: {
-    vendorCode: string,
-    category: string,
-    type: string,
-    level: string,
-    description: string,
-  }
+  data: CameraFeatures & {description: string};
 }
 
-const ProductTabs = ({data}: ProductTabsProps) => {
+const ProductTabs = ({data}: ProductTabsProps):JSX.Element => {
   const params = useParams();
   const {id, tab} = params;
 

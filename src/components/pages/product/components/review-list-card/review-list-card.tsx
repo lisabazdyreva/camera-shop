@@ -1,28 +1,35 @@
+import {useState} from 'react';
+import {useSelector} from 'react-redux';
+
 import {ErrorInfo, Loader} from '../../../../common/common';
 import {ReviewCard} from '../components';
-import {LoadingStatus, ErrorData} from '../../../../../utils/const';
-import {useSelector} from 'react-redux';
-import {getReviews} from '../../../../../store/app-data/selectors';
-import {useState} from 'react';
+
+import {LoadingStatusType} from '../../../../../types/types';
+import {LoadingStatus, ErrorData, REVIEWS_PER_TIME} from '../../../../../utils/const';
+
+import {getReviews} from '../../../../../store/app-reviews/selectors';
+
 
 interface ReviewListCardProps {
-  fetchStatus: string;
+  fetchStatus: LoadingStatusType;
 }
 
-const ReviewListCard = ({fetchStatus}: ReviewListCardProps) => {
-  const [reviewsValue, setReviewsValue] = useState(3);
+
+
+const ReviewListCard = ({fetchStatus}: ReviewListCardProps):JSX.Element => {
+  const [reviewsValue, setReviewsValue] = useState(REVIEWS_PER_TIME);
   const [isShowButtonActive, setIsShowButtonActive] = useState(true);
+
+  const reviews = useSelector(getReviews);
 
   const isReviewsLoaded = fetchStatus === LoadingStatus.Success;
   const isReviewsLoading = fetchStatus === LoadingStatus.Loading;
   const isReviewsError = fetchStatus === LoadingStatus.Error;
 
-  const reviews = useSelector(getReviews);
-
   let reviewsPerIteration = reviews.slice(0, reviewsValue); // TODO with scroll?
 
   const handleButtonClick = () => {
-    const newReviewValue = reviewsValue + 3;
+    const newReviewValue = reviewsValue + REVIEWS_PER_TIME;
     reviewsPerIteration = reviews.slice(0, newReviewValue);
 
     if (reviews.length - newReviewValue < 0) {

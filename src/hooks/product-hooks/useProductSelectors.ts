@@ -1,10 +1,9 @@
 import {useSelector} from 'react-redux';
-import {getCamera, getSimilarCameras} from '../../store/app-data/selectors';
-import {
-  getCameraFetchStatus,
-  getReviewsFetchStatus,
-  getSimilarCamerasFetchStatus
-} from '../../store/app-status/selectors';
+
+import {getCamera, getCameraFetchStatus} from '../../store/app-camera/selectors';
+import {getSimilarCameras, getSimilarCamerasFetchStatus} from '../../store/app-similar-cameras/selectors';
+import {getReviewsFetchStatus} from '../../store/app-reviews/selectors';
+
 
 const useProductSelectors = () => {
   const camera = useSelector(getCamera);

@@ -5,7 +5,7 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import {createMemoryHistory} from 'history';
 import {AppRoute, DefaultValue, LoadingStatus, NameSpace, PaginationRoute, TabType} from '../../utils/const';
 import {HistoryRoute} from '../common/common';
-import {makeFakeCamera, makeFakePromo, makeFakeReview} from '../../mocks';
+import {makeFakeCamera, makeFakePromo, makeFakeReview} from '../../utils/mocks';
 import {generatePath} from 'react-router-dom';
 import thunk from 'redux-thunk';
 import {createAPI} from '../../services/api';
@@ -24,24 +24,30 @@ const mockReviews = [makeFakeReview(), makeFakeReview()];
 const mockPromos = [makeFakePromo()];
 
 const store = mockStore({
-  [NameSpace.Data]: {
+  [NameSpace.Cameras]: {
     cameras: mockCameras,
+    camerasFetchStatus: LoadingStatus.Default, //?
+  },
+  [NameSpace.Camera]: {
     camera: mockCamera,
-    reviews: mockReviews,
+    cameraFetchStatus: LoadingStatus.Success,
+  },
+  [NameSpace.SimilarCameras]: {
     similarCameras: mockSimilarCameras,
+    similarCamerasFetchStatus: LoadingStatus.Default,
+  },
+  [NameSpace.Reviews]: {
+    reviews: mockReviews,
+    reviewsFetchStatus: LoadingStatus.Default,
+    reviewPostStatus: LoadingStatus.Default,
+  },
+  [NameSpace.Promos]: {
     promos: mockPromos,
+    promosFetchStatus: LoadingStatus.Default,
   },
   [NameSpace.App]: {
     basket: [],
     currentCatalogPage: DefaultValue.CatalogPageNumber,
-  },
-  [NameSpace.Status]: {
-    camerasFetchStatus: LoadingStatus.Default, //?
-    cameraFetchStatus: LoadingStatus.Success,
-    reviewsFetchStatus: LoadingStatus.Default,
-    similarCamerasFetchStatus: LoadingStatus.Default,
-    promosFetchStatus: LoadingStatus.Default,
-    reviewPostStatus: LoadingStatus.Default,
   },
 });
 

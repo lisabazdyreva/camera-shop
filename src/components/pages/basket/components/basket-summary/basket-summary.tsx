@@ -1,5 +1,4 @@
-//eslint-disable-next-line
-const BasketSummary = () => (
+const BasketSummary = ():JSX.Element => (
   <div className="basket__summary">
     <div className="basket__promo">
       <p className="title title--h4">Если у вас есть промокод на скидку, примените его в этом поле</p>
@@ -34,6 +33,5 @@ const BasketSummary = () => (
     </div>
   </div>
 );
-
 
 export default BasketSummary;

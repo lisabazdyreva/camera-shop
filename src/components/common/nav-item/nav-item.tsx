@@ -1,20 +1,14 @@
-import {
-  AppRoute,
-  ComponentName, DefaultValue,
-  MenuItemsType,
-  PaginationRoute,
-  SourceItemsType,
-  SupportItemsType
-} from '../../../utils/const';
-import {MenuItem} from '../../../utils/const';
 import {Link} from 'react-router-dom';
+
+import {AppRoute, ComponentName, DefaultValue, PaginationRoute, MenuItem} from '../../../utils/const';
+import {MenuItemsType, SourceItemsType, SupportItemsType} from '../../../types/types';
 
 interface NavItemProps {
   name: MenuItemsType | SourceItemsType | SupportItemsType,
   usingComponent: typeof ComponentName[keyof typeof ComponentName],
 }
 
-const NavItem = ({name, usingComponent}: NavItemProps) => {
+const NavItem = ({name, usingComponent}: NavItemProps):JSX.Element => {
   const classesListItem = usingComponent === ComponentName.Header ? 'main-nav__item' : 'footer__item';
   const classesLink = usingComponent === ComponentName.Header ? 'main-nav__link' : 'link';
 

@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import {ReviewCard} from '../components';
-import {makeFakeReview} from '../../../../../mocks';
+import {makeFakeReview} from '../../../../../utils/mocks';
 
 const fakeReview = makeFakeReview();
 

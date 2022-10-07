@@ -2,7 +2,7 @@ import {render, screen} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import {Banner} from '../components';
 import {LoadingStatus} from '../../../../../utils/const';
-import {makeFakePromo} from '../../../../../mocks';
+import {makeFakePromo} from '../../../../../utils/mocks';
 
 const mockPromos = [makeFakePromo()];
 
@@ -11,9 +11,9 @@ describe('banner tests', () => {
     render (
       <MemoryRouter>
         <Banner
-          promos={mockPromos}
-          level={'Профессиональный'}
-          fetchStatus={LoadingStatus.Success}
+          // promos={mockPromos}
+          // level={'Профессиональный'}
+          // fetchStatus={LoadingStatus.Success}
         />
       </MemoryRouter>
     );
@@ -22,13 +22,13 @@ describe('banner tests', () => {
     expect(screen.getByText(/Новинка!/i)).toBeInTheDocument();
   });
 
-  it('should render error information when it is error in downloading', () => {
+  it('should render error-info information when it is error-info in downloading', () => {
     render (
       <MemoryRouter>
         <Banner
-          promos={[]}
-          level={''}
-          fetchStatus={LoadingStatus.Error}
+          // promos={[]}
+          // level={''}
+          // fetchStatus={LoadingStatus.Error}
         />
       </MemoryRouter>
     );

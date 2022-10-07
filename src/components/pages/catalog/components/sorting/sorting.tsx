@@ -1,4 +1,4 @@
-const Sorting = () => (
+const Sorting = ():JSX.Element => (
   <div className="catalog-sort">
     <form action="src/components/pages/catalog/components/sorting/sorting#">
       <div className="catalog-sort__inner">

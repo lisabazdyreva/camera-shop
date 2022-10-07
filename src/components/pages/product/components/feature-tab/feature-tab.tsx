@@ -1,15 +1,10 @@
-import {tabsListNames} from '../../../../../utils/utils';
+import {CameraFeatures} from '../../../../../types/camera';
 
 interface FeatureTabProps {
-  data: {
-    vendorCode: string,
-    category: string,
-    type: string,
-    level: string,
-  }
+  data: CameraFeatures
 }
 
-const FeatureTab = ({data}: FeatureTabProps) => {
+const FeatureTab = ({data}: FeatureTabProps):JSX.Element => {
   const {vendorCode, category, type, level} = data;
 
   const TabsListElement = {
@@ -19,13 +14,11 @@ const FeatureTab = ({data}: FeatureTabProps) => {
     Level: level,
   } as const;
 
-  const tabsListElements = Object.values(TabsListElement);
-
   return (
     <ul className="product__tabs-list">
       {
-        tabsListNames.map((tabName, index) => {
-          const element = tabsListElements[index];
+        Object.values(TabsListElement).map((tabName, index) => {
+          const element = Object.values(TabsListElement)[index];
           return (
             <li key={tabName} className="item-list">
               <span className="item-list__title">{tabName}:</span>

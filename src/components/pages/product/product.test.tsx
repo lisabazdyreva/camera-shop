@@ -2,7 +2,7 @@ import {createAPI} from '../../../services/api';
 import thunk from 'redux-thunk';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {DefaultValue, LoadingStatus, NameSpace} from '../../../utils/const';
-import {makeFakeCamera, makeFakeReview} from '../../../mocks';
+import {makeFakeCamera, makeFakeReview} from '../../../utils/mocks';
 import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {MemoryRouter} from 'react-router-dom';
@@ -18,19 +18,21 @@ const mockReviews = [makeFakeReview(), makeFakeReview(), makeFakeReview(), makeF
 const mockSimilarCameras = [makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera()];
 
 const store = mockStore({
-  [NameSpace.Data]: {
+  [NameSpace.Camera]: {
     camera: mockCamera,
+    cameraFetchStatus: LoadingStatus.Success,
+  },
+  [NameSpace.Reviews]: {
     reviews: mockReviews,
+    reviewsFetchStatus: LoadingStatus.Default,
+    reviewPostStatus: LoadingStatus.Default,
+  },
+  [NameSpace.SimilarCameras]: {
     similarCameras: mockSimilarCameras,
+    similarCamerasFetchStatus: LoadingStatus.Default,
   },
   [NameSpace.App]: {
     currentCatalogPage: DefaultValue.CatalogPageNumber,
-  },
-  [NameSpace.Status]: {
-    cameraFetchStatus: LoadingStatus.Success,
-    reviewsFetchStatus: LoadingStatus.Default,
-    similarCamerasFetchStatus: LoadingStatus.Default,
-    reviewPostStatus: LoadingStatus.Default,
   },
 });
 

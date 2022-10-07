@@ -1,23 +1,27 @@
-import {Fragment} from 'react';
+import {ChangeEvent, FormEvent, Fragment} from 'react';
 import {ratings, ratingValues} from '../../../../../utils/utils';
-import { MAX_RATING } from '../../../../../utils/const';
+import {InputName, InputTitle, MAX_RATING} from '../../../../../utils/const';
+import {useDispatch} from 'react-redux';
+import {AppDispatch} from '../../../../../types/state';
+import {setReviewFormData} from '../../../../../store/app-process/app-process';
 
 interface ReviewFormRateBarProps {
-  handleRateClick: (rate: number) => void;
   selectedRating: number;
-  isValid: boolean;
-  isValidHandler: (isValid: boolean) => void;
+  isValid: boolean | null;
+  handleInputInvalid: (evt: FormEvent, rating?: number) => void;
 }
 
-const ReviewFormRateBar = ({handleRateClick, selectedRating, isValid, isValidHandler}: ReviewFormRateBarProps) => {
-  const handleInputClick = (index: number) => {
-    handleRateClick(ratingValues[index]);
-    isValidHandler(true);
+const ReviewFormRateBar = ({selectedRating, isValid, handleInputInvalid}: ReviewFormRateBarProps):JSX.Element => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleInputChange = (evt: ChangeEvent, index: number) => {
+    dispatch(setReviewFormData({type: InputName.Rating, value: ratingValues[index]}));
+    handleInputInvalid(evt, ratingValues[index]);
   };
 
   return (
-    <fieldset className={`rate form-review__item ${!isValid && 'is-invalid'}`}>
-      <legend className="rate__caption">Рейтинг
+    <fieldset className={`rate form-review__item ${isValid === false && 'is-invalid'}`}>
+      <legend className="rate__caption">{InputTitle.Rating}
         <svg width="9" height="9" aria-hidden="true">
           <use xlinkHref="#icon-snowflake"></use>
         </svg>
@@ -29,7 +33,16 @@ const ReviewFormRateBar = ({handleRateClick, selectedRating, isValid, isValidHan
               const idRating = `star-${ratingValues[index]}`;
               return (
                 <Fragment key={rating}>
-                  <input onChange={() => handleInputClick(index)} className="visually-hidden" id={idRating} name="rate" type="radio" value={ratingValues[index]} />
+                  <input
+                    className="visually-hidden"
+                    required
+                    onInvalid={handleInputInvalid}
+                    onChange={(evt) => handleInputChange(evt, index)}
+                    id={idRating}
+                    name="rate"
+                    type="radio"
+                    value={ratingValues[index]}
+                  />
                   <label className="rate__label" htmlFor={idRating} title={rating}></label>
                 </Fragment>
               );

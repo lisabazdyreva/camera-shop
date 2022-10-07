@@ -4,7 +4,7 @@ interface DescriptionTabProps {
   description: string,
 }
 
-const DescriptionTab = ({description}: DescriptionTabProps) => {
+const DescriptionTab = ({description}: DescriptionTabProps):JSX.Element => {
   let paragraph;
   let firstParagraph;
   let secondParagraph;

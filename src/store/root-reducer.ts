@@ -1,14 +1,19 @@
 import {combineReducers} from '@reduxjs/toolkit';
-import {appData} from './app-data/app-data';
-import {appStatus} from './app-status/app-status';
-import {appProcess} from './app-process/app-process';
 import {NameSpace} from '../utils/const';
+
+import {appProcess} from './app-process/app-process';
+import {appCameras} from './app-cameras/app-cameras';
+import {appCamera} from './app-camera/app-camera';
+import {appPromos} from './app-promos/app-promos';
+import {appReviews} from './app-reviews/app-reviews';
+import {appSimilarCameras} from './app-similar-cameras/app-similar-cameras';
 
 
 export const rootReducer = combineReducers({
-  [NameSpace.Data]: appData,
-  [NameSpace.Status]: appStatus,
-  [NameSpace.App]: appProcess,
+  [NameSpace.App]: appProcess.reducer,
+  [NameSpace.Cameras]: appCameras.reducer,
+  [NameSpace.Camera]: appCamera.reducer,
+  [NameSpace.Promos]: appPromos.reducer,
+  [NameSpace.Reviews]: appReviews.reducer,
+  [NameSpace.SimilarCameras]: appSimilarCameras.reducer
 });
-
-export type RootState = ReturnType<typeof rootReducer>;

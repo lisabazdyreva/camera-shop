@@ -23,7 +23,7 @@ describe('reviews list', () => {
     expect(titleText).toBe('Достоинства')
   });
 
-  it('renders correctly with error status', () => {
+  it('renders correctly with error-info status', () => {
     render(
       <ReviewListCard fetchStatus={fakeErrorStatus} />
     );

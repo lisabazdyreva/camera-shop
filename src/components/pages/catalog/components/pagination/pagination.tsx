@@ -7,19 +7,7 @@ interface PaginationProps {
   pages: number[];
 }
 
-const Pagination = ({currentPageNumber, setCurrentPageNumber, pages}: PaginationProps) => {
-  const handlePageLinkClick = (number: number) => {
-    setCurrentPageNumber(number);
-  };
-
-  const handleNextClick = () => {
-    setCurrentPageNumber(currentPageNumber + 1);
-  };
-
-  const handlePreviousClick = () => {
-    setCurrentPageNumber(currentPageNumber - 1);
-  };
-
+const Pagination = ({currentPageNumber, setCurrentPageNumber, pages}: PaginationProps):JSX.Element => {
   const isNotFirstPage = currentPageNumber !== 1;
   const isNotLastPage = currentPageNumber !== pages.length;
 
@@ -33,7 +21,7 @@ const Pagination = ({currentPageNumber, setCurrentPageNumber, pages}: Pagination
           isNotFirstPage &&
           <li className="pagination__item">
             <Link
-              onClick={handlePreviousClick}
+              onClick={() => setCurrentPageNumber(currentPageNumber - 1)}
               className="pagination__link pagination__link--text"
               to={previousRoute}
             >
@@ -48,7 +36,7 @@ const Pagination = ({currentPageNumber, setCurrentPageNumber, pages}: Pagination
             return (
               <li className="pagination__item" key={pageNum}>
                 <Link
-                  onClick={() => handlePageLinkClick(pageNum)}
+                  onClick={() => setCurrentPageNumber(pageNum)}
                   className={classes}
                   to={route}
                 >
@@ -63,7 +51,7 @@ const Pagination = ({currentPageNumber, setCurrentPageNumber, pages}: Pagination
            &&
           <li className="pagination__item">
             <Link
-              onClick={handleNextClick}
+              onClick={() => setCurrentPageNumber(currentPageNumber + 1)}
               className="pagination__link pagination__link--text"
               to={nextRoute}
             >

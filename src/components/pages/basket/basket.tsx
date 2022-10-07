@@ -6,15 +6,15 @@ import {
 
 import {ModalInfo, ModalAction} from '../../common/common';
 import {useState, useEffect} from 'react';
-import {ComponentName, BreadcrumbsItem} from '../../../utils/const';
+import {ComponentName, BreadcrumbsItem, TopCoordinate} from '../../../utils/const';
 
 
-const Basket = () => {
+const Basket = ():JSX.Element => {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo(TopCoordinate.X, TopCoordinate.Y);
   }, []);
 
   return (

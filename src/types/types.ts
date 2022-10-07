@@ -1,45 +1,22 @@
-export type Camera = {
-  id: number,
-  name: string,
-  vendorCode: string,
-  type: string,
-  category: string,
-  description: string,
-  level: string,
-  rating: number,
-  price: number,
-  previewImg: string,
-  previewImg2x: string,
-  previewImgWebp: string,
-  previewImgWebp2x: string,
-  reviewCount: number,
-};
+import {
+  BreadcrumbsItem,
+  ComponentName,
+  LoadingStatus,
+  MenuItem,
+  ModalContent,
+  RatingClass,
+  SourceItem, SupportItem
+} from '../utils/const';
 
-export type Review = {
-  id: string,
-  userName: string,
-  advantage: string,
-  disadvantage: string,
-  review: string,
-  rating: number,
-  createAt: string,
-  cameraId: number,
-};
+export type ModalType = typeof ModalContent[keyof typeof ModalContent];
+export type ComponentNameType = typeof ComponentName[keyof typeof ComponentName];
+export type BreadcrumbsItemBasketType = typeof BreadcrumbsItem.Basket;
+export type BreadcrumbsItemCatalogType = typeof BreadcrumbsItem.Catalog;
+export type BreadcrumbsItemProductType = typeof BreadcrumbsItem.Product;
+export type RatingClassType = typeof RatingClass[keyof typeof RatingClass];
+export type LoadingStatusType = typeof LoadingStatus[keyof typeof LoadingStatus];
 
-export type ReviewPost = {
-  cameraId: number,
-  userName: string,
-  advantage: string,
-  disadvantage: string,
-  review: string,
-  rating: number,
-};
+export type MenuItemsType = typeof MenuItem[keyof typeof MenuItem];
+export type SourceItemsType = typeof SourceItem[keyof typeof SourceItem];
+export type SupportItemsType = typeof SupportItem[keyof typeof SupportItem];
 
-export type Promo = {
-  id: number,
-  name: string,
-  previewImg: string,
-  previewImg2x: string,
-  previewImgWebp: string,
-  previewImgWebp2x: string,
-};

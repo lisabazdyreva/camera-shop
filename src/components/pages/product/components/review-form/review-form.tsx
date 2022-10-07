@@ -1,98 +1,92 @@
-import {ChangeEvent, FormEvent, useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {AppDispatch} from '../../../../../types/action';
-import {fetchReviews, postReview} from '../../../../../store/actions/api-actions/api-actions-reviews';
-import {ReviewFormRateBar} from '../components';
-import {InputErrorMessage, InputName} from '../../../../../utils/const';
-import {
-  checkIsAdvantageValid,
-  checkIsDisadvantageValid, checkIsLength,
-  checkIsNameValid,
-  checkIsReviewValid
-} from '../../../../../utils/utils';
+import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
+import {ReviewFormRateBar} from '../components';
+
+import {FORM_ID_TYPE, InputErrorMessage, InputName, InputPlaceholder, InputTitle} from '../../../../../utils/const';
+import {checkIsValid} from '../../../../../utils/utils';
+import {AppDispatch} from '../../../../../types/state';
+
+import {cleanForm, setReviewFormData} from '../../../../../store/app-process/app-process';
+import {getReviewFormData} from '../../../../../store/app-process/selectors';
+import {fetchReviewsAction, postReviewAction} from '../../../../../store/api-actions/api-actions-reviews';
+
+type isValidState = {
+  userName: boolean | null,
+  advantage: boolean | null,
+  disadvantage: boolean | null,
+  review: boolean | null,
+  rating: boolean | null
+};
+
+const initialIsValidState = {
+  userName: null,
+  advantage: null,
+  disadvantage: null,
+  review: null,
+  rating: null,
+};
 
 interface ReviewFormProps {
   handleCloseModal: (isOpen: boolean) => void;
   handleOpenSuccessModal?: (isOpen: boolean) => void;
   id: number;
 }
-const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormProps) => {
-  const [isUserNameValid, setIsUserNameValid] = useState(true);
-  const [userName, setUserName] = useState('');
 
-  const [isAdvantageValid, setIsAdvantageValid] = useState(true);
-  const [advantage, setAdvantage] = useState('');
-
-  const [isDisadvantageValid, setIsDisadvantageValid] = useState(true);
-  const [disadvantage, setDisadvantage] = useState('');
-
-  const [isReviewValid, setIsReviewValid] = useState(true);
-  const [review, setReview] = useState('');
-
-  const [isRatingValid, setIsRatingValid] = useState(true);
-  const [rating, setSelectedRating] = useState(0);
-
-
+const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormProps):JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
+  const formData = useSelector(getReviewFormData);
+
+  const [validity, setValidity] = useState<isValidState>(initialIsValidState);
 
   const handleFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     handleCloseModal(false);
 
-    const data = {cameraId: id, userName, advantage, disadvantage, review, rating};
-
-    dispatch(postReview(data))
+    dispatch(postReviewAction(formData))
       .then(() => {
-        dispatch(fetchReviews(id));
-        if (handleOpenSuccessModal) {
-          handleOpenSuccessModal(true);
-        }
+        dispatch(fetchReviewsAction({id}));
+        dispatch(cleanForm());
       });
+
+    if (handleOpenSuccessModal) {
+      handleOpenSuccessModal(true);
+    }
+  };
+
+  const handleInputInvalid = (evt: FormEvent, rating?: number) => {
+    const target = evt.target as HTMLInputElement | HTMLTextAreaElement;
+    const isValid = checkIsValid(target);
+
+    let validityItem;
+    switch (target.name) {
+      case InputName.Name :
+        validityItem = {userName: isValid};
+        break;
+      case InputName.Advantage:
+        validityItem = {advantage: isValid};
+        break;
+      case InputName.Disadvantage:
+        validityItem = {disadvantage: isValid};
+        break;
+      case InputName.Review:
+        validityItem = {review: isValid};
+        break;
+      case InputName.Rating:
+        validityItem = {rating: rating !== 0 && rating !== undefined};
+        break;
+    }
+    setValidity({...validity, ...validityItem});
   };
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const value = evt.target.value;
-
-    switch (evt.currentTarget.name) {
-      case InputName.Name: {
-        setUserName(value);
-        if (checkIsNameValid(evt)) {
-          setIsUserNameValid(true);
-        }
-        break;
-      }
-      case InputName.Advantage: {
-        setAdvantage(value);
-        if (checkIsAdvantageValid(evt)) {
-          setIsAdvantageValid(true);
-        }
-        break;
-      }
-      case InputName.Disadvantage: {
-        setDisadvantage(value);
-        if (checkIsDisadvantageValid(evt)) {
-          setIsDisadvantageValid(true);
-        }
-        break;
-      }
-      case InputName.Review: {
-        setReview(value);
-        if (checkIsReviewValid(evt)) {
-          setIsReviewValid(true);
-        }
-        break;
-      }
-    }
+    dispatch(setReviewFormData({type: evt.target.name, value}));
+    handleInputInvalid(evt);
   };
 
-  const handleButtonClick = () => {
-    setIsUserNameValid(checkIsLength(userName));
-    setIsAdvantageValid(checkIsLength(advantage));
-    setIsDisadvantageValid(checkIsLength(disadvantage));
-    setIsReviewValid(checkIsLength(review));
-    setIsRatingValid(rating !== 0);
-  };
+  const getBlockClasses = (value: boolean | null) => `custom-input form-review__item
+  ${value === false && 'is-invalid'} ${value && 'is-valid'}`;
 
   const icon = (
     <svg width="9" height="9" aria-hidden="true">
@@ -100,19 +94,22 @@ const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormPr
     </svg>
   );
 
+  useEffect(() => {
+    dispatch(setReviewFormData({type: FORM_ID_TYPE, value: id}));
+  }, [id]);
+
   return (
     <div className="form-review">
       <form method="post" onSubmit={handleFormSubmit}>
         <div className="form-review__rate">
           <ReviewFormRateBar
-            handleRateClick={(rate: number) => setSelectedRating(rate)}
-            selectedRating={rating}
-            isValid={isRatingValid}
-            isValidHandler={setIsRatingValid}
+            selectedRating={formData.rating}
+            isValid={validity.rating}
+            handleInputInvalid={handleInputInvalid}
           />
-          <div className={`custom-input form-review__item ${!isUserNameValid && 'is-invalid'}`}>
+          <div className={getBlockClasses(validity.userName)}>
             <label>
-              <span className="custom-input__label">Ваше имя
+              <span className="custom-input__label">{InputTitle.Name}
                 {icon}
               </span>
               <input
@@ -120,18 +117,19 @@ const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormPr
                 autoComplete='off'
                 type="text"
                 name='user-name'
-                placeholder='Ваше имя'
+                placeholder={InputPlaceholder.Name}
                 onChange={handleInputChange}
-                value={userName}
+                value={formData.userName}
                 required
+                onInvalid={handleInputInvalid}
               />
             </label>
             <p className="custom-input__error">{InputErrorMessage.Name}</p>
           </div>
 
-          <div className={`custom-input form-review__item ${!isAdvantageValid && 'is-invalid'}`}>
+          <div className={getBlockClasses(validity.advantage)}>
             <label>
-              <span className="custom-input__label">Достоинства
+              <span className="custom-input__label">{InputTitle.Advantage}
                 {icon}
               </span>
               <input
@@ -139,18 +137,19 @@ const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormPr
                 autoComplete='off'
                 type="text"
                 name='user-plus'
-                placeholder='Основные преимущества товара'
+                placeholder={InputPlaceholder.Advantage}
                 onChange={handleInputChange}
-                value={advantage}
+                value={formData.advantage}
                 required
+                onInvalid={handleInputInvalid}
               />
             </label>
             <p className="custom-input__error">{InputErrorMessage.Advantage}</p>
           </div>
 
-          <div className={`custom-input form-review__item ${!isDisadvantageValid && 'is-invalid'}`}>
+          <div className={getBlockClasses(validity.disadvantage)}>
             <label>
-              <span className="custom-input__label">Недостатки
+              <span className="custom-input__label">{InputTitle.Disadvantage}
                 {icon}
               </span>
               <input
@@ -158,35 +157,37 @@ const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormPr
                 autoComplete='off'
                 type="text"
                 name='user-minus'
-                placeholder='Главные недостатки товара'
+                placeholder={InputPlaceholder.Disadvantage}
                 onChange={handleInputChange}
-                value={disadvantage}
+                value={formData.disadvantage}
                 required
+                onInvalid={handleInputInvalid}
               />
             </label>
             <p className="custom-input__error">{InputErrorMessage.Disadvantage}</p>
           </div>
 
-          <div className={`custom-textarea form-review__item ${!isReviewValid && 'is-invalid'}`}>
+          <div className={`custom-textarea form-review__item ${validity.review === false && 'is-invalid'}`}>
             <label>
               <span className="custom-textarea__label">
-                Комментарий
+                {InputTitle.Review}
                 {icon}
               </span>
               <textarea
                 data-testid='review'
                 name="user-comment"
                 minLength={5}
-                placeholder="Поделитесь своим опытом покупки"
-                value={review}
+                placeholder={InputPlaceholder.Review}
+                value={formData.review}
                 onChange={handleInputChange}
                 required
+                onInvalid={handleInputInvalid}
               />
             </label>
             <div className="custom-textarea__error">Нужно добавить комментарий</div>
           </div>
         </div>
-        <button className="btn btn--purple form-review__btn" type="submit" onClick={handleButtonClick}>Отправить отзыв</button>
+        <button className="btn btn--purple form-review__btn" type="submit" >Отправить отзыв</button>
       </form>
     </div>
   );

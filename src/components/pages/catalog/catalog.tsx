@@ -1,43 +1,35 @@
-import {
-  Breadcrumbs
-} from '../../common/common';
-
-import {
-  Banner,
-  SideFilter, CatalogContent,
-} from './components/components';
-import {ModalInfo, ModalAction} from '../../common/common';
 import {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {
-  initialCamera,
-  LoadingStatus,
-  Step,
-  ComponentName,
-  BreadcrumbsItem,
-} from '../../../utils/const';
-import {Camera} from '../../../types/types';
+import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
-import {setCurrentPage} from '../../../store/actions/actions';
-import usePagination from '../../../hooks/catalog-hooks/usePagination';
-import useCatalogSelectors from '../../../hooks/catalog-hooks/useCatalogSelectors';
+
+import {Breadcrumbs, ModalInfo, ModalAction} from '../../common/common';
+import {Banner, SideFilter, CatalogContent} from './components/components';
+
+import {initialCamera, Step, ComponentName, BreadcrumbsItem} from '../../../utils/const';
+import {Camera} from '../../../types/camera';
+import {AppDispatch} from '../../../types/state';
+
+import {setCurrentPage} from '../../../store/app-process/app-process';
+import {fetchCamerasAction} from '../../../store/api-actions/api-actions-cameras';
+import {fetchPromosAction} from '../../../store/api-actions/api-actions-promo';
+import {getCurrentPage} from '../../../store/app-process/selectors';
 
 
-const Catalog = () => {
-  const dispatch = useDispatch();
+const Catalog = ():JSX.Element => {
+  const dispatch = useDispatch<AppDispatch>();
 
   const [selectedCameraData, setSelectedCameraData] = useState(initialCamera);
   const [isModalAddOpen, setIsModalAddOpen] = useState(false);
   const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
 
-  const {cameras, promos, promosFetchStatus, camerasFetchStatus, currentPageNumber} = useCatalogSelectors();
-  const {pages, currentItems} = usePagination(currentPageNumber, Step.Pagination, cameras);
+  const currentPageNumber = useSelector(getCurrentPage);
 
   const params = useParams();
-  const {pageNum} = params;
+  const {pageNumber} = params;
+  const pageNumberUrl = Number(pageNumber);
 
-  const setCurrentPageNumber = (pageNumber: number) => {
-    dispatch(setCurrentPage(pageNumber));
+  const setCurrentPageNumber = (page: number) => {
+    dispatch(setCurrentPage(page));
   };
 
   const handleAddModal = (data: Camera) => {
@@ -45,28 +37,23 @@ const Catalog = () => {
     setSelectedCameraData(data);
   };
 
-  const getPromoLevel = () => {
-    const [promo] = promos;
-    const promoId = promo.id;
-    const promoCameras = cameras.filter((camera) => camera.id === promoId);
-    const [promoCamera] = promoCameras;
-
-    return promoCamera.level;
+  const fetchCameras = (page: number) => {
+    const startIndex = (page - 1) * Step.Pagination;
+    dispatch(fetchCamerasAction({limit: Step.Pagination, startIndex}));
   };
 
-  const isCamerasLoaded = camerasFetchStatus === LoadingStatus.Success;
-  const isPromosLoaded = promosFetchStatus === LoadingStatus.Success;
-
   useEffect(() => {
-    setCurrentPageNumber(Number(pageNum));
+    dispatch(fetchPromosAction());
   }, []);
 
-
-  const level = isPromosLoaded && isCamerasLoaded ? getPromoLevel() : '';
+  useEffect(() => {
+    setCurrentPageNumber(pageNumberUrl);
+    fetchCameras(pageNumberUrl);
+  }, [currentPageNumber]);
 
   return (
     <main>
-      <Banner fetchStatus={promosFetchStatus} level={level} promos={promos} />
+      <Banner />
       <div className="page-content">
         <Breadcrumbs breadcrumbItems={BreadcrumbsItem.Catalog} usingComponent={ComponentName.Catalog}/>
         <section className="catalog">
@@ -75,10 +62,7 @@ const Catalog = () => {
             <div className="page-content__columns">
               <SideFilter />
               <CatalogContent
-                fetchStatus={camerasFetchStatus}
-                cards={currentItems}
                 handleAddModal={handleAddModal}
-                pages={pages}
                 currentPageNumber={currentPageNumber}
                 setCurrentPageNumber={setCurrentPageNumber}
               />
