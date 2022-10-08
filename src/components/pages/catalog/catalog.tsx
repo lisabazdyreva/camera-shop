@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
 
 import {Breadcrumbs, ModalInfo, ModalAction} from '../../common/common';
@@ -7,7 +6,7 @@ import {Banner, SideFilter, CatalogContent} from './components/components';
 
 import {initialCamera, Step, ComponentName, BreadcrumbsItem} from '../../../utils/const';
 import {Camera} from '../../../types/camera';
-import {AppDispatch} from '../../../types/state';
+import {useAppDispatch, useAppSelector} from '../../../hooks';
 
 import {setCurrentPage} from '../../../store/app-process/app-process';
 import {fetchCamerasAction} from '../../../store/api-actions/api-actions-cameras';
@@ -16,13 +15,13 @@ import {getCurrentPage} from '../../../store/app-process/selectors';
 
 
 const Catalog = ():JSX.Element => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const [selectedCameraData, setSelectedCameraData] = useState(initialCamera);
   const [isModalAddOpen, setIsModalAddOpen] = useState(false);
   const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
 
-  const currentPageNumber = useSelector(getCurrentPage);
+  const currentPageNumber = useAppSelector(getCurrentPage);
 
   const params = useParams();
   const {pageNumber} = params;

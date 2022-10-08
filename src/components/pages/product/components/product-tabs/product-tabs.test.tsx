@@ -1,17 +1,13 @@
 import {render, screen} from '@testing-library/react';
-import {ProductTabs} from '../components';
 import {MemoryRouter} from 'react-router-dom';
-import faker from 'faker';
 
-const fakeDataTabs = {
-  vendorCode: faker.datatype.string(),
-  category: faker.datatype.string(),
-  type: faker.datatype.string(),
-  level: faker.datatype.string(),
-  description: faker.datatype.string(),
-};
+import {ProductTabs} from '../components';
 
-describe('product tabs', () => {
+import {makeFakeDataTabs} from '../../../../../utils/mocks';
+
+const fakeDataTabs = makeFakeDataTabs();
+
+describe('product tabs test', () => {
   it ('renders correctly', () => {
     render (
       <MemoryRouter>
@@ -21,6 +17,6 @@ describe('product tabs', () => {
 
     expect(screen.getByText(/Характеристики/i)).toBeInTheDocument();
     expect(screen.getByText(/Описание/i)).toBeInTheDocument();
-    expect(screen.getByText(/Артикул/i)).toBeInTheDocument();
+    expect(screen.getByText(/Артикул/i)).toBeInTheDocument(); //TODO click case?
   });
 });

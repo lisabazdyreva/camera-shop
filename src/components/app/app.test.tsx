@@ -7,9 +7,16 @@ import thunk from 'redux-thunk';
 
 import App from './app';
 
-import {AppRoute, DefaultValue, LoadingStatus, NameSpace, PaginationRoute, TabType} from '../../utils/const';
+import {
+  AppRoute,
+  DefaultValue,
+  initialReview,
+  NameSpace,
+  PaginationRoute,
+  TabType
+} from '../../utils/const';
 import {HistoryRoute} from '../common/common';
-import {makeFakeCamera, makeFakePromo, makeFakeReview} from '../../utils/mocks';
+import {getFakeSuccessStatus, makeFakeCamera, makeFakePromo, makeFakeReview} from '../../utils/mocks';
 import {createAPI} from '../../services/api';
 
 
@@ -29,28 +36,30 @@ const mockPromos = [makeFakePromo()];
 const store = mockStore({
   [NameSpace.Cameras]: {
     cameras: mockCameras,
-    camerasFetchStatus: LoadingStatus.Default, //?
+    camerasFetchStatus: getFakeSuccessStatus(),
   },
   [NameSpace.Camera]: {
     camera: mockCamera,
-    cameraFetchStatus: LoadingStatus.Success,
+    cameraFetchStatus: getFakeSuccessStatus(),
   },
   [NameSpace.SimilarCameras]: {
     similarCameras: mockSimilarCameras,
-    similarCamerasFetchStatus: LoadingStatus.Default,
+    similarCamerasFetchStatus: getFakeSuccessStatus(),
   },
   [NameSpace.Reviews]: {
     reviews: mockReviews,
-    reviewsFetchStatus: LoadingStatus.Default,
-    reviewPostStatus: LoadingStatus.Default,
+    reviewsFetchStatus: getFakeSuccessStatus(),
+    reviewPostStatus: getFakeSuccessStatus(),
   },
   [NameSpace.Promos]: {
     promos: mockPromos,
-    promosFetchStatus: LoadingStatus.Default,
+    promosFetchStatus: getFakeSuccessStatus(),
   },
   [NameSpace.App]: {
     basket: [],
     currentCatalogPage: DefaultValue.CatalogPageNumber,
+    camerasTotalCount: 10,
+    reviewFormData: initialReview,
   },
 });
 

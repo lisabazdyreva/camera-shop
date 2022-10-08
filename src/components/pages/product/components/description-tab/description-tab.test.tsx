@@ -1,20 +1,35 @@
 import {render} from '@testing-library/react';
+
 import {DescriptionTab} from '../components';
-import faker from 'faker';
+import {makeFakeLongDescription, makeFakeShortDescription} from '../../../../../utils/mocks';
 
-const description = faker.datatype.string() + '. ' + faker.datatype.string() + '. ';
+const descriptionLong = makeFakeLongDescription();
+const descriptionShort = makeFakeShortDescription();
 
-describe('description tab', () => {
-  it('render correctly', () => {
+describe('description tab test', () => {
+  it('render correctly with long description', () => {
     render (
-      <DescriptionTab description={description}/>
+      <DescriptionTab description={descriptionLong}/>
     );
-    //
-    // const descriptionContainer = document.querySelector('.product__tabs-text');
-    // const descriptionParagraphs = descriptionContainer && descriptionContainer.querySelectorAll('p');
-    //
-    // const descriptionParagraphsAmount = descriptionParagraphs && descriptionParagraphs.length;
-    //
-    // expect(descriptionParagraphsAmount).toBe( 2); TODO
+
+    const descriptionContainer = document.querySelector('.product__tabs-text');
+    const descriptionParagraphs = descriptionContainer && descriptionContainer.querySelectorAll('p');
+
+    const descriptionParagraphsAmount = descriptionParagraphs && descriptionParagraphs.length;
+
+    expect(descriptionParagraphsAmount).toBe( 2);
+  });
+
+  it('render correctly with short description', () => {
+    render (
+      <DescriptionTab description={descriptionShort}/>
+    );
+
+    const descriptionContainer = document.querySelector('.product__tabs-text');
+    const descriptionParagraphs = descriptionContainer && descriptionContainer.querySelectorAll('p');
+
+    const descriptionParagraphsAmount = descriptionParagraphs && descriptionParagraphs.length;
+
+    expect(descriptionParagraphsAmount).toBe( 1);
   });
 });

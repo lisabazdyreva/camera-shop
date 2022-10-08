@@ -1,5 +1,4 @@
 import {Camera as CameraType} from '../types/camera';
-import catalog from '../components/pages/catalog/catalog';
 
 export const MenuItem = {
   Catalog: 'Каталог',
@@ -22,7 +21,8 @@ export const SupportItem = {
 export const AppRoute = {
   Catalog: '/catalog',
   Basket: '/basket',
-  Product: '/product'
+  Product: '/product',
+  NotFound: '*',
 } as const;
 
 export const PaginationRoute = {
@@ -270,3 +270,13 @@ export const ScrollSetting = {
 } as const;
 
 export const REVIEWS_PER_TIME = 3;
+
+
+export const initialReview = {
+  cameraId: 0,
+  userName: '',
+  advantage: '',
+  disadvantage: '',
+  review: '',
+  rating: 0,
+};

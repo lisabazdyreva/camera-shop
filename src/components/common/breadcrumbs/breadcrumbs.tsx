@@ -1,8 +1,8 @@
 import {Link} from 'react-router-dom';
-import {useSelector} from 'react-redux';
 
 import {ComponentName, BreadcrumbsItem,} from '../../../utils/const';
 import {breadcrumbsLinks} from '../../../utils/utils';
+import {useAppSelector} from '../../../hooks';
 import {
   ComponentNameType,
   BreadcrumbsItemBasketType,
@@ -23,7 +23,7 @@ interface BreadcrumbsProps {
 const Breadcrumbs = ({data, usingComponent, breadcrumbItems}: BreadcrumbsProps):JSX.Element => {
   const breadcrumbs = Object.values(breadcrumbItems);
 
-  const currentPage = useSelector(getCurrentPage);
+  const currentPage = useAppSelector(getCurrentPage);
 
   let name: string;
   if (data) {

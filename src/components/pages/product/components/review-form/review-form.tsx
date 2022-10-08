@@ -1,15 +1,15 @@
 import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
 
 import {ReviewFormRateBar} from '../components';
 
 import {FORM_ID_TYPE, InputErrorMessage, InputName, InputPlaceholder, InputTitle} from '../../../../../utils/const';
 import {checkIsValid} from '../../../../../utils/utils';
-import {AppDispatch} from '../../../../../types/state';
+import {useAppDispatch, useAppSelector} from '../../../../../hooks';
 
 import {cleanForm, setReviewFormData} from '../../../../../store/app-process/app-process';
 import {getReviewFormData} from '../../../../../store/app-process/selectors';
 import {fetchReviewsAction, postReviewAction} from '../../../../../store/api-actions/api-actions-reviews';
+
 
 type isValidState = {
   userName: boolean | null,
@@ -34,8 +34,8 @@ interface ReviewFormProps {
 }
 
 const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormProps):JSX.Element => {
-  const dispatch = useDispatch<AppDispatch>();
-  const formData = useSelector(getReviewFormData);
+  const dispatch = useAppDispatch();
+  const formData = useAppSelector(getReviewFormData);
 
   const [validity, setValidity] = useState<isValidState>(initialIsValidState);
 

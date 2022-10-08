@@ -1,23 +1,36 @@
 import {render, screen} from '@testing-library/react';
-import {Slider} from '../components';
-import {LoadingStatus, NameSpace} from '../../../../../utils/const';
-import {makeFakeCamera} from '../../../../../utils/mocks';
 import {Provider} from 'react-redux';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import thunk from 'redux-thunk';
-import {createAPI} from '../../../../../services/api';
 import {MemoryRouter} from 'react-router-dom';
+import thunk from 'redux-thunk';
+
+import {Slider} from '../components';
+
+import { NameSpace} from '../../../../../utils/const';
+import {
+  getFakeErrorStatus,
+  getFakeLoadingStatus,
+  getFakeSuccessStatus,
+  makeFakeCamera
+} from '../../../../../utils/mocks';
+import {createAPI} from '../../../../../services/api';
+
 
 const api = createAPI();
 
 const middlewares = [thunk.withExtraArgument(api)];
 const mockStore = configureMockStore(middlewares);
 
-const fakeSuccessStatus = LoadingStatus.Success;
-const fakeErrorStatus = LoadingStatus.Error;
-const fakeLoadingStatus = LoadingStatus.Loading;
+const fakeSuccessStatus = getFakeSuccessStatus();
+const fakeErrorStatus = getFakeErrorStatus();
+const fakeLoadingStatus = getFakeLoadingStatus();
 
-const fakeCameras = [makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera()];
+const fakeCameras = [
+  makeFakeCamera(), makeFakeCamera(),
+  makeFakeCamera(), makeFakeCamera(),
+  makeFakeCamera(), makeFakeCamera(),
+  makeFakeCamera(),
+];
 
 const store = mockStore({
   [NameSpace.SimilarCameras]: {

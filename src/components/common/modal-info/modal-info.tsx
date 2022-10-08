@@ -1,27 +1,26 @@
 import {useEffect} from 'react';
-import {useSelector} from 'react-redux';
-import {createFocusTrap} from 'focus-trap';
 
 import {CatalogButtons, IconReview, IconSuccess, ReturnButton} from './components/components';
 
 import {getTitle, escPressHandler} from '../../../utils/utils';
-import {ComponentName, LoadingStatus, ModalContent, TopCoordinate} from '../../../utils/const';
+import {ComponentName, LoadingStatus, ModalContent} from '../../../utils/const';
 
 import {ComponentNameType} from '../../../types/types';
 
 import {getReviewPostStatus} from '../../../store/app-reviews/selectors';
+import {useBodyBlock} from '../../../hooks/useBodyBlock';
+import {useAppSelector} from '../../../hooks';
 
 interface ModalInfoProps {
   usingComponent: ComponentNameType;
   handleCloseModal: (isOpen: boolean) => void;
 }
 const ModalInfo = ({usingComponent, handleCloseModal}: ModalInfoProps):JSX.Element => {
-  const reviewPostStatus = useSelector(getReviewPostStatus);
+  const reviewPostStatus = useAppSelector(getReviewPostStatus);
 
-  const title =
-    usingComponent === ComponentName.Product
-      ? getTitle(usingComponent, ModalContent.Info, reviewPostStatus === LoadingStatus.Error)
-      : getTitle(usingComponent, ModalContent.Info);
+  const title = usingComponent === ComponentName.Product
+    ? getTitle(usingComponent, ModalContent.Info, reviewPostStatus === LoadingStatus.Error)
+    : getTitle(usingComponent, ModalContent.Info);
 
   const getSVG = () => {
     if (usingComponent === ComponentName.Catalog) {
@@ -42,27 +41,13 @@ const ModalInfo = ({usingComponent, handleCloseModal}: ModalInfoProps):JSX.Eleme
 
   const modalSvg = getSVG();
   const modalButtons = getButtons();
-  //TODO ?
+
+
   useEffect(() => {
     escPressHandler(handleCloseModal);
   }, [handleCloseModal]);
 
-  useEffect(() => {
-    const focusModalTrap = createFocusTrap('.modal');
-    document.body.dataset.scrollY = String((document.documentElement && document.documentElement.scrollTop) || (document.body && document.body.scrollTop));
-    document.body.style.top = `-${document.body.dataset.scrollY}px`;
-    document.body.classList.add('scroll-lock-ios');
-
-    focusModalTrap.activate();
-
-    window.scrollTo(TopCoordinate.X, TopCoordinate.Y);
-
-    return () => {
-      document.body.classList.remove('scroll-lock-ios');
-      focusModalTrap.deactivate();
-      window.scrollTo(TopCoordinate.X, Number(document.body.dataset.scrollY));
-    };
-  }, []);
+  useBodyBlock();
 
   return (
     <div className="modal is-active modal--narrow" onClick={() => handleCloseModal(false)} data-testid='modal-info'>

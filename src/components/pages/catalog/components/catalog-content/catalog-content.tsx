@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react';
-import {useSelector} from 'react-redux';
 
 import {Pagination, Sorting} from '../components';
 import {ErrorInfo, Loader, ProductCard} from '../../../../common/common';
@@ -8,6 +7,7 @@ import {Camera} from '../../../../../types/camera';
 
 import {ErrorData, LoadingStatus} from '../../../../../utils/const';
 import {getPages} from '../../../../../utils/utils';
+import {useAppSelector} from '../../../../../hooks';
 
 import {getCamerasTotalCount} from '../../../../../store/app-process/selectors';
 import {getCameras, getCamerasFetchStatus} from '../../../../../store/app-cameras/selectors';
@@ -22,9 +22,9 @@ interface CatalogContentProps {
 const CatalogContent = ({handleAddModal, currentPageNumber, setCurrentPageNumber}: CatalogContentProps):JSX.Element => {
   const [pages, setPages] = useState<number[]>([]);
 
-  const fetchStatus = useSelector(getCamerasFetchStatus);
-  const camerasTotalCount = useSelector(getCamerasTotalCount);
-  const cameras = useSelector(getCameras);
+  const fetchStatus = useAppSelector(getCamerasFetchStatus);
+  const camerasTotalCount = useAppSelector(getCamerasTotalCount);
+  const cameras = useAppSelector(getCameras);
 
   const isCamerasLoaded = fetchStatus === LoadingStatus.Success;
   const isCamerasLoading = fetchStatus === LoadingStatus.Loading;

@@ -1,19 +1,18 @@
 import {useEffect} from 'react';
-import {createFocusTrap} from 'focus-trap';
 
 import {ReviewForm} from '../../pages/product/components/components';
 import {BasketItemShort} from '../../pages/basket/components/components';
 import {BasketAddButton, BasketRemoveButtons} from './components/components';
 
 import {escPressHandler, getTitle} from '../../../utils/utils';
-import {ComponentName, ModalContent, TopCoordinate} from '../../../utils/const';
+import {ComponentName, ModalContent} from '../../../utils/const';
+import {useBodyBlock} from '../../../hooks/useBodyBlock';
+import {useAppDispatch} from '../../../hooks';
+
 import {ComponentNameType} from '../../../types/types';
 import {Camera} from '../../../types/camera';
-import {cleanForm} from '../../../store/app-process/app-process';
-import {useDispatch} from 'react-redux';
-import {AppDispatch} from '../../../types/state';
 
-// import {blockBody} from '../../../utils/modal-blocking-body';
+import {cleanForm} from '../../../store/app-process/app-process';
 
 
 interface ModalActionProps {
@@ -24,7 +23,8 @@ interface ModalActionProps {
 }
 
 const ModalAction = ({usingComponent, data, handleCloseModal, handleOpenSuccessModal}: ModalActionProps):JSX.Element => {
-  const dispatch = useDispatch<AppDispatch>(); //TODO useAppDispatch
+  const dispatch = useAppDispatch();
+
   const getDetails = () => {
     if (usingComponent === ComponentName.Product && data) {
       return <ReviewForm id={data.id} handleCloseModal={handleCloseModal} handleOpenSuccessModal={handleOpenSuccessModal}/>;
@@ -55,29 +55,14 @@ const ModalAction = ({usingComponent, data, handleCloseModal, handleOpenSuccessM
     escPressHandler(handleCloseModal);
   }, [handleCloseModal]);
 
-  // TODO ??
-  useEffect(() => {
-    const focusModalTrap = createFocusTrap('.modal');
-    document.body.dataset.scrollY = String((document.documentElement && document.documentElement.scrollTop) || (document.body && document.body.scrollTop));
-    document.body.style.top = `-${document.body.dataset.scrollY}px`;
-    document.body.classList.add('scroll-lock-ios');
 
-    focusModalTrap.activate();
-
-    window.scrollTo(TopCoordinate.X, TopCoordinate.Y);
-
-    return () => {
-      document.body.classList.remove('scroll-lock-ios');
-      focusModalTrap.deactivate();
-      window.scrollTo(TopCoordinate.X, Number(document.body.dataset.scrollY));
-    };
-  }, []);
+  useBodyBlock();
 
   const handleModalClose = () => {
     if (usingComponent === ComponentName.Product) {
       dispatch(cleanForm());
     }
-    handleCloseModal(false)
+    handleCloseModal(false);
   };
 
   return (

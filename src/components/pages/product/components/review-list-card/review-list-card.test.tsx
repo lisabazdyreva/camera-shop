@@ -1,26 +1,26 @@
 import {render, screen} from '@testing-library/react';
 import {ReviewListCard} from '../components';
-import {LoadingStatus} from '../../../../../utils/const';
+import {getFakeErrorStatus, getFakeLoadingStatus, getFakeSuccessStatus} from '../../../../../utils/mocks';
 
-const fakeSuccessStatus = LoadingStatus.Success;
-const fakeErrorStatus = LoadingStatus.Error;
-const fakeLoadingStatus = LoadingStatus.Loading;
+const fakeSuccessStatus = getFakeSuccessStatus();
+const fakeErrorStatus = getFakeErrorStatus();
+const fakeLoadingStatus = getFakeLoadingStatus();
 
-describe('reviews list', () => {
+describe('reviews list test', () => {
   it('renders correctly with success status', () => {
     render(
       <ReviewListCard fetchStatus={fakeSuccessStatus} />
     );
 
     const list = document.querySelector('.review-block__list');
-    const listChildsLength = list && list.childNodes.length;
+    const listChildrenLength = list && list.childNodes.length;
 
-    expect(listChildsLength).toBe(3);
+    expect(listChildrenLength).toBe(3);
 
     const title = list && list.querySelector('.item-list__title');
     const titleText = title && title.textContent;
 
-    expect(titleText).toBe('Достоинства')
+    expect(titleText).toBe('Достоинства'); //TODO check with button click
   });
 
   it('renders correctly with error-info status', () => {

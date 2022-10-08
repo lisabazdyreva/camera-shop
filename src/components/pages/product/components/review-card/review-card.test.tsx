@@ -4,7 +4,7 @@ import {makeFakeReview} from '../../../../../utils/mocks';
 
 const fakeReview = makeFakeReview();
 
-describe('review card', () => {
+describe('review card test', () => {
   it('renders correctly', () => {
     render (
       <ReviewCard data={fakeReview} />

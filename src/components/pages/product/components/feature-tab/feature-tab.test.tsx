@@ -1,19 +1,15 @@
 import {render, screen} from '@testing-library/react';
+
 import {FeatureTab} from '../components';
-import faker from 'faker';
+import {makeFakeProductFeatures} from '../../../../../utils/mocks';
 
-const fakeData = {
-  vendorCode: faker.datatype.string(),
-  category: faker.datatype.string(),
-  type: faker.datatype.string(),
-  level: faker.datatype.string(),
-};
+const fakeFeatures = makeFakeProductFeatures();
 
 
-describe('feature tab', () => {
+describe('feature tab test', () => {
   it('renders correctly', () => {
     render(
-      <FeatureTab data={fakeData} />
+      <FeatureTab data={fakeFeatures} />
     );
 
     const featureItem = document.querySelectorAll('.item-list');

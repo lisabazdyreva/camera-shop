@@ -8,6 +8,7 @@ const FooterNavigation = ():JSX.Element => (
     {
       footerNavs.map((footerNav) => {
         const title = footerNav.Translation;
+
         return (
           <li className="footer__nav-item" key={title}>
             <p className="footer__title">{title}</p>

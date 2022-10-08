@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import {useDispatch} from 'react-redux';
 
 import {Picture, Rating} from '../../../../common/common';
 import {ProductTabs} from '../components';
@@ -7,15 +6,17 @@ import {ProductTabs} from '../components';
 import {Camera} from '../../../../../types/camera';
 import {RatingClass} from '../../../../../utils/const';
 import {getFormattedPrice} from '../../../../../utils/utils';
+import {useAppDispatch} from '../../../../../hooks';
 
 import {setBasket} from '../../../../../store/app-process/app-process';
+
 
 interface ProductItemProps {
   data: Camera;
 }
 
 const ProductItem = ({data}: ProductItemProps):JSX.Element => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isAddedBasket, setIsAddedBasket] = useState('Not added to basket');// TODO next iteration
 
   const {

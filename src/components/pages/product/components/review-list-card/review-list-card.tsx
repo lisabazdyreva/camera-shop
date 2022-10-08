@@ -1,11 +1,11 @@
 import {useState} from 'react';
-import {useSelector} from 'react-redux';
 
 import {ErrorInfo, Loader} from '../../../../common/common';
 import {ReviewCard} from '../components';
 
 import {LoadingStatusType} from '../../../../../types/types';
 import {LoadingStatus, ErrorData, REVIEWS_PER_TIME} from '../../../../../utils/const';
+import {useAppSelector} from '../../../../../hooks';
 
 import {getReviews} from '../../../../../store/app-reviews/selectors';
 
@@ -15,12 +15,11 @@ interface ReviewListCardProps {
 }
 
 
-
 const ReviewListCard = ({fetchStatus}: ReviewListCardProps):JSX.Element => {
   const [reviewsValue, setReviewsValue] = useState(REVIEWS_PER_TIME);
   const [isShowButtonActive, setIsShowButtonActive] = useState(true);
 
-  const reviews = useSelector(getReviews);
+  const reviews = useAppSelector(getReviews);
 
   const isReviewsLoaded = fetchStatus === LoadingStatus.Success;
   const isReviewsLoading = fetchStatus === LoadingStatus.Loading;

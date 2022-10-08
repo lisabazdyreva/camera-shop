@@ -1,4 +1,5 @@
 import {CameraFeatures} from '../../../../../types/camera';
+import {TabsList} from '../../../../../utils/const';
 
 interface FeatureTabProps {
   data: CameraFeatures
@@ -17,7 +18,7 @@ const FeatureTab = ({data}: FeatureTabProps):JSX.Element => {
   return (
     <ul className="product__tabs-list">
       {
-        Object.values(TabsListElement).map((tabName, index) => {
+        Object.values(TabsList).map((tabName, index) => {
           const element = Object.values(TabsListElement)[index];
           return (
             <li key={tabName} className="item-list">

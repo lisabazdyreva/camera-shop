@@ -1,24 +1,18 @@
 import {render, screen} from '@testing-library/react';
-import {ProductItem} from '../components';
-import {makeFakeCamera} from '../../../../../utils/mocks';
 import {Provider} from 'react-redux';
 import {MemoryRouter} from 'react-router-dom';
-
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import {NameSpace} from '../../../../../utils/const';
+
+import {ProductItem} from '../components';
+
+import {makeFakeCamera} from '../../../../../utils/mocks';
 
 
 const mockStore = configureMockStore();
-
 const fakeCamera = makeFakeCamera();
+const store = mockStore();
 
-const store = mockStore({
-  [NameSpace.App]: {
-    basket: [],
-  },
-});
-
-describe('product item', () => {
+describe('product item test', () => {
   it('renders correctly', () => {
     render (
       <Provider store={store} >

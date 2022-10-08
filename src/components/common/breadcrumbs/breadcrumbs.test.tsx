@@ -1,9 +1,10 @@
 import {render, screen} from '@testing-library/react';
-import {Breadcrumbs} from '../common';
-import {BreadcrumbsItem, ComponentName, DefaultValue, NameSpace} from '../../../utils/const';
 import {Provider} from 'react-redux';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {MemoryRouter} from 'react-router-dom';
+
+import {Breadcrumbs} from '../common';
+import {BreadcrumbsItem, ComponentName, DefaultValue, NameSpace} from '../../../utils/const';
 
 const mockStore = configureMockStore();
 

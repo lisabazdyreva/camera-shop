@@ -15,7 +15,6 @@ import {
   RatingValue, Step
 } from './const';
 import {Reviews} from '../types/review';
-// import {ChangeEvent, FormEvent} from 'react';
 import {ComponentNameType, ModalType} from '../types/types';
 
 export const getTitle = (component: ComponentNameType, modalType: ModalType, isReviewError?: boolean) => {
@@ -125,67 +124,6 @@ export const checkIsValid = (target: HTMLInputElement | HTMLTextAreaElement): bo
       return false;
   }
 };
-
-// export const checkIsReviewValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-//   switch(evt.target.value.length) {
-//     case 0:
-//       evt.target.setCustomValidity('Добавьте комментарий');
-//       return false;
-//     case 1:
-//     case 2:
-//     case 3:
-//     case 4:
-//       evt.target.setCustomValidity('Минимальная длина комментария: 5');
-//       return false;
-//     default:
-//       evt.target.setCustomValidity('');
-//       return true;
-//   }
-// };
-
-// export const checkIsNameValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-//   switch (evt.target.value.trim().length) {
-//     case 0:
-//       evt.target.setCustomValidity('Введите имя');
-//       return false;
-//     case 1:
-//       evt.target.setCustomValidity('Минимальная длина имени: 2');
-//       return false;
-//     default:
-//       evt.target.setCustomValidity('');
-//       return true;
-//   }
-// };
-
-// export const checkIsAdvantageValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-//   switch (evt.target.value.trim().length) {
-//     case 0:
-//       evt.target.setCustomValidity('Укажите достоинства');
-//       return false;
-//     case 1:
-//     case 2:
-//       evt.target.setCustomValidity('Введите минимум 3 символа');
-//       return false;
-//     default:
-//       evt.target.setCustomValidity('');
-//       return true;
-//   }
-// };
-
-// export const checkIsDisadvantageValid = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-//   switch (evt.target.value.trim().length) {
-//     case 0:
-//       evt.target.setCustomValidity('Укажите недостатки');
-//       return false;
-//     case 1:
-//     case 2:
-//       evt.target.setCustomValidity('Введите минимум 3 символа');
-//       return false;
-//     default:
-//       evt.target.setCustomValidity('');
-//       return true;
-//   }
-// };
 
 export const isEsc = (code: string) => code === 'Escape' || code === 'Esc';
 

@@ -2,6 +2,7 @@ import {Promo} from '../types/promo';
 import {Camera} from '../types/camera';
 import {Review} from '../types/review';
 import faker from 'faker';
+import {LoadingStatus} from './const';
 
 export const makeFakeCamera = (): Camera => ({
   id: faker.datatype.number(),
@@ -38,4 +39,33 @@ export const makeFakePromo = () : Promo => ({
   previewImg2x: faker.datatype.string(),
   previewImgWebp: faker.datatype.string(),
   previewImgWebp2x: faker.datatype.string(),
+});
+
+export const makeFakeLongDescription = () => faker.datatype.string() + '. ' + faker.datatype.string() + '. ' + faker.datatype.string() + '. ';
+export const makeFakeShortDescription = () => faker.datatype.string() + '. ' + faker.datatype.string() + '. ';
+
+export const makeFakeProductFeatures = () => ({
+  vendorCode: faker.datatype.string(),
+  category: faker.datatype.string(),
+  type: faker.datatype.string(),
+  level: faker.datatype.string(),
+});
+
+export const makeFakeDataTabs = () => ({...makeFakeProductFeatures(), description: makeFakeLongDescription()});
+
+
+export const getFakeSuccessStatus = () => LoadingStatus.Success;
+export const getFakeErrorStatus = () => LoadingStatus.Error;
+export const getFakeLoadingStatus = () => LoadingStatus.Loading;
+
+export const makeFakeErrorText = () => faker.datatype.string();
+
+
+export const makeFakePicture = () => ({
+  width: faker.datatype.number(),
+  height: faker.datatype.number(),
+  alt: faker.datatype.string(),
+  src: faker.datatype.string(),
+  srcSetImg: faker.datatype.string(),
+  srcSetSource: [faker.datatype.string(), faker.datatype.string()],
 });

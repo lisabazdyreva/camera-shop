@@ -1,15 +1,9 @@
-import faker from 'faker';
 import {render, screen} from '@testing-library/react';
-import {Picture} from '../common';
 
-const fakePicture = {
-  width: faker.datatype.number(),
-  height: faker.datatype.number(),
-  alt: faker.datatype.string(),
-  src: faker.datatype.string(),
-  srcSetImg: faker.datatype.string(),
-  srcSetSource: [faker.datatype.string(), faker.datatype.string()],
-}
+import {Picture} from '../common';
+import {makeFakePicture} from '../../../utils/mocks';
+
+const fakePicture = makeFakePicture();
 
 describe('picture test', () => {
   it('renders correctly', () => {
@@ -20,7 +14,8 @@ describe('picture test', () => {
         alt={fakePicture.alt}
         src={fakePicture.src}
         srcSetImg={fakePicture.srcSetImg}
-        srcSetSource={fakePicture.srcSetSource}/>
+        srcSetSource={fakePicture.srcSetSource}
+      />
     );
 
     expect(screen.getByRole('img')).toBeInTheDocument();

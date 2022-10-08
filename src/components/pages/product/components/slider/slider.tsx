@@ -1,12 +1,13 @@
-import {useDispatch} from 'react-redux';
-
 import {ErrorInfo, Loader, ProductCard} from '../../../../common/common';
+
 import {Camera, Cameras} from '../../../../../types/camera';
 import {LoadingStatusType} from '../../../../../types/types';
 import {ErrorData, LoadingStatus, Step} from '../../../../../utils/const';
+import {useAppDispatch} from '../../../../../hooks';
 
 import useSlider from '../../../../../hooks/product-hooks/useSlider';
 import {setBasket} from '../../../../../store/app-process/app-process';
+
 
 interface SliderProps {
   similarCameras: Cameras;
@@ -14,7 +15,7 @@ interface SliderProps {
 }
 
 const Slider = ({similarCameras, fetchStatus}: SliderProps):JSX.Element => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { items, handlePreviousClick, handleNextClick, disabling } = useSlider(similarCameras, Step.Slider);
 
   const handleAddBasketButtonClick = (data: Camera) => {

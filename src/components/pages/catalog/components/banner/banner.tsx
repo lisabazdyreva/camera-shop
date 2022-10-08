@@ -1,10 +1,9 @@
 import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
 
 import {ErrorInfo, Loader, Picture} from '../../../../common/common';
-import {AppDispatch} from '../../../../../types/state';
 import {AppRoute, CAMERA_ADJECTIVE_ENDING, ErrorData, LoadingStatus, TabType} from '../../../../../utils/const';
+import {useAppDispatch, useAppSelector} from '../../../../../hooks';
 
 import {fetchCameraAction} from '../../../../../store/api-actions/api-actions-cameras';
 import {getCamera} from '../../../../../store/app-camera/selectors';
@@ -12,11 +11,11 @@ import {getPromos, getPromosFetchStatus} from '../../../../../store/app-promos/s
 
 
 const Banner = ():JSX.Element => {
-  const promos = useSelector(getPromos);
-  const fetchStatus = useSelector(getPromosFetchStatus);
-  const camera = useSelector(getCamera);
+  const promos = useAppSelector(getPromos);
+  const fetchStatus = useAppSelector(getPromosFetchStatus);
+  const camera = useAppSelector(getCamera);
 
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const isPromosLoaded = fetchStatus === LoadingStatus.Success;
   const isPromosLoading = fetchStatus === LoadingStatus.Loading;

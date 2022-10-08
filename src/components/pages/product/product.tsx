@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
 
 import {ProductItem, ReviewListCard, Slider} from './components/components';
 import {
@@ -11,7 +10,6 @@ import {
   ErrorInfo
 } from '../../common/common';
 
-import{AppDispatch} from '../../../types/state';
 import {
   ComponentName,
   BreadcrumbsItem,
@@ -21,6 +19,7 @@ import {
   TopCoordinate
 } from '../../../utils/const';
 import useProductSelectors from '../../../hooks/product-hooks/useProductSelectors';
+import {useAppDispatch} from '../../../hooks';
 
 import {fetchCameraAction, fetchSimilarCamerasAction} from '../../../store/api-actions/api-actions-cameras';
 import {fetchReviewsAction} from '../../../store/api-actions/api-actions-reviews';
@@ -32,7 +31,7 @@ const Product = ():JSX.Element => {
 
   const {camera, similarCameras, cameraFetchStatus, similarCamerasFetchStatus, reviewsFetchStatus} = useProductSelectors();
 
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const params = useParams();
   const {id} = params;

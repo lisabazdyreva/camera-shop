@@ -1,11 +1,13 @@
-import {fetchCameraAction, fetchSimilarCamerasAction} from '../../store/api-actions/api-actions-cameras';
-import {fetchReviewsAction} from '../../store/api-actions/api-actions-reviews';
-import {useDispatch} from 'react-redux';
-import {AppDispatch} from '../../types/state';
 import {useEffect} from 'react';
 
+import {useAppDispatch} from '../index';
+
+import {fetchCameraAction, fetchSimilarCamerasAction} from '../../store/api-actions/api-actions-cameras';
+import {fetchReviewsAction} from '../../store/api-actions/api-actions-reviews';
+
+
 const useProductDispatch = (id: number) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchCameraAction({id}));

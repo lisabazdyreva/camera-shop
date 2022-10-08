@@ -3,21 +3,14 @@ import {createSlice} from '@reduxjs/toolkit';
 import {AppProcess} from '../../types/state';
 import {Camera} from '../../types/camera';
 
-import {DefaultValue, FORM_ID_TYPE, InputName, NameSpace} from '../../utils/const';
+import {DefaultValue, FORM_ID_TYPE, initialReview, InputName, NameSpace} from '../../utils/const';
 
 
 const initialState: AppProcess = {
   basket: [],
   currentCatalogPage: DefaultValue.CatalogPageNumber,
   camerasTotalCount: 0,
-  reviewFormData: {
-    cameraId: 0,
-    userName: '',
-    advantage: '',
-    disadvantage: '',
-    review: '',
-    rating: 0, //TODO вынести
-  },
+  reviewFormData: initialReview,
 };
 
 export const appProcess = createSlice({

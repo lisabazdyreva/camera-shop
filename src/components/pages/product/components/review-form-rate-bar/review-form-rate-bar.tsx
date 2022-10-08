@@ -1,8 +1,9 @@
 import {ChangeEvent, FormEvent, Fragment} from 'react';
+
 import {ratings, ratingValues} from '../../../../../utils/utils';
 import {InputName, InputTitle, MAX_RATING} from '../../../../../utils/const';
-import {useDispatch} from 'react-redux';
-import {AppDispatch} from '../../../../../types/state';
+import {useAppDispatch} from '../../../../../hooks';
+
 import {setReviewFormData} from '../../../../../store/app-process/app-process';
 
 interface ReviewFormRateBarProps {
@@ -12,7 +13,7 @@ interface ReviewFormRateBarProps {
 }
 
 const ReviewFormRateBar = ({selectedRating, isValid, handleInputInvalid}: ReviewFormRateBarProps):JSX.Element => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const handleInputChange = (evt: ChangeEvent, index: number) => {
     dispatch(setReviewFormData({type: InputName.Rating, value: ratingValues[index]}));
@@ -20,7 +21,7 @@ const ReviewFormRateBar = ({selectedRating, isValid, handleInputInvalid}: Review
   };
 
   return (
-    <fieldset className={`rate form-review__item ${isValid === false && 'is-invalid'}`}>
+    <fieldset className={`rate form-review__item ${isValid === false && 'is-invalid'}`} data-testid='rating'>
       <legend className="rate__caption">{InputTitle.Rating}
         <svg width="9" height="9" aria-hidden="true">
           <use xlinkHref="#icon-snowflake"></use>
