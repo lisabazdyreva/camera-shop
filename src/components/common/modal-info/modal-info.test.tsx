@@ -2,12 +2,10 @@ import {render, screen} from '@testing-library/react';
 import {ModalInfo} from '../common';
 import {ComponentName, NameSpace} from '../../../utils/const';
 import {Provider} from 'react-redux';
-import {configureMockStore} from '@jedmao/redux-mock-store';
 import {MemoryRouter} from 'react-router-dom';
-import {getFakeErrorStatus, getFakeSuccessStatus} from '../../../utils/mocks';
+import {getFakeErrorStatus, getFakeSuccessStatus, mockStore} from '../../../utils/mocks';
 
 
-const mockStore = configureMockStore();
 const storeSuccess = mockStore({
   [NameSpace.Reviews]: {
     reviewPostStatus: getFakeSuccessStatus(),
@@ -20,8 +18,8 @@ const storeError = mockStore({
   }
 });
 
-describe('test modal info', () => {
-  it('renders correctly catalog modal', () => {
+describe('modal info component', () => {
+  it('should render correctly modal on catalog page', () => {
     window.scrollTo = jest.fn();
 
     render(
@@ -36,7 +34,7 @@ describe('test modal info', () => {
     expect(screen.getByText(/Перейти в корзину/i)).toBeInTheDocument();
   });
 
-  it('renders correctly product modal when form successful sent', () => {
+  it('should render correctly product modal when form successful sent', () => {
     window.scrollTo = jest.fn();
 
     render(
@@ -51,7 +49,7 @@ describe('test modal info', () => {
     expect(screen.getByText(/Спасибо за отзыв/i)).toBeInTheDocument();
   });
 
-  it('renders correctly product modal when form failed', () => {
+  it('should render correctly product modal when form failed', () => {
     window.scrollTo = jest.fn();
 
     render(
@@ -65,7 +63,7 @@ describe('test modal info', () => {
     expect(screen.getByText(/Произошла ошибка/i)).toBeInTheDocument();
   });
 
-  it('renders correctly basket modal', () => {
+  it('should render correctly modal on basket page', () => {
     window.scrollTo = jest.fn();
 
     render(

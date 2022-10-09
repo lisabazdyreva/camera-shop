@@ -8,20 +8,20 @@ interface CatalogButtonsProps {
 const CatalogButtons = ({handleCloseSuccessModal}: CatalogButtonsProps):JSX.Element => {
   const navigate = useNavigate();
 
-  const handleButtonClick = () => {
+  const handleButtonToBasketClick = () => {
     handleCloseSuccessModal(false);
     navigate(AppRoute.Basket);
 
   };
 
-  const handleCloseClick = () => {
+  const handleButtonCloseClick = () => {
     handleCloseSuccessModal(false);
   };
 
   return (
     <>
-      <a className="btn btn--transparent modal__btn" onClick={handleCloseClick}>Продолжить покупки</a>
-      <button className="btn btn--purple modal__btn modal__btn--fit-width" onClick={handleButtonClick}>Перейти в корзину</button>
+      <button className="btn btn--transparent modal__btn" onClick={handleButtonCloseClick}>Продолжить покупки</button>{/*CHANGED*/}
+      <button className="btn btn--purple modal__btn modal__btn--fit-width" onClick={handleButtonToBasketClick}>Перейти в корзину</button>
     </>
   );
 };

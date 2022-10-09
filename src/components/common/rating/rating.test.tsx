@@ -1,35 +1,36 @@
 import {render, screen} from '@testing-library/react';
 import {Rating} from '../common';
 import {RatingClass} from '../../../utils/const';
-import faker from 'faker';
+import {getFakeID} from '../../../utils/mocks';
 
-describe('rating test', () => {
-  it('renders correctly review page', () => {
+const fakeId = getFakeID();
+describe('rating component', () => {
+  it('should render correctly on review page', () => {
     render (
       <Rating
         rating={3}
-        id={faker.datatype.string()}
+        id={fakeId}
         isDetailed={false}
-        additionalClass={RatingClass.Review} />
+        additionalClass={RatingClass.Review}
+      />
     );
 
-    const rateCount = document.querySelector('.rate__count');
+    const rateCount = screen.queryByText(/Всего оценок:/i);
 
     expect(rateCount).not.toBeInTheDocument();
     expect(screen.getByText(/Рейтинг:/i)).toBeInTheDocument();
   });
 
-  it('renders correctly product and catalog page', () => {
+  it('should render correctly on product and catalog pages', () => {
     render (
       <Rating
         rating={3}
-        id={faker.datatype.number()}
+        id={fakeId}
         isDetailed
         additionalClass={RatingClass.Product}
-        reviewCount={faker.datatype.number()}
+        reviewCount={10}
       />
     );
     expect(screen.getByText(/Всего оценок:/i)).toBeInTheDocument();
   });
-
 });

@@ -1,19 +1,14 @@
 import {render, screen} from '@testing-library/react';
 import {SideFilter} from '../components';
 
-describe('side filter', () => {
-  it('side filter renders correctly', () => {
+describe('side filter component', () => {
+  it('should render correctly', () => {
     render (
       <SideFilter />
     );
-    const header = document.querySelector('h2');
-    let text;
+    const header = screen.getByRole('heading').innerHTML;
 
-    if (header) {
-      text = header.innerHTML;
-    }
-
-    expect(text).toBe('Фильтр');
+    expect(header).toBe('Фильтр');
     expect(screen.getByText(/Категория/i)).toBeInTheDocument();
   });
 });

@@ -5,15 +5,15 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 
 import {ProductItem} from '../components';
 
-import {makeFakeCamera} from '../../../../../utils/mocks';
+import {getFakeCamera} from '../../../../../utils/mocks';
 
 
 const mockStore = configureMockStore();
-const fakeCamera = makeFakeCamera();
+const fakeCamera = getFakeCamera();
 const store = mockStore();
 
-describe('product item test', () => {
-  it('renders correctly', () => {
+describe('product item component', () => {
+  it('should render correctly', () => {
     render (
       <Provider store={store} >
         <MemoryRouter>

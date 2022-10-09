@@ -1,8 +1,8 @@
 import {render, screen} from '@testing-library/react';
 import {BasketItem} from '../components';
 
-describe('basket item', () => {
-  it('render correctly', () => {
+describe('basket item component', () => {
+  it('should render correctly', () => {
     render (
       <BasketItem handleOpenModal={jest.fn()} />
     );

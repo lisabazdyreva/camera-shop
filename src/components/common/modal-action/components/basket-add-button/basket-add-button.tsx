@@ -11,7 +11,7 @@ interface BasketAddButtonProps {
 const BasketAddButton = ({data, handleOpenSuccessModal, handleCloseModal}: BasketAddButtonProps):JSX.Element => {
   const dispatch = useAppDispatch();
 
-  const handleButtonAddClick = () => {
+  const handleButtonAddToBasketClick = () => {
     if (data && handleOpenSuccessModal) {
       dispatch(setBasket(data));
       handleCloseModal(false);
@@ -20,7 +20,7 @@ const BasketAddButton = ({data, handleOpenSuccessModal, handleCloseModal}: Baske
   };
 
   return (
-    <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={handleButtonAddClick}>
+    <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={handleButtonAddToBasketClick}>
       <svg width="24" height="16" aria-hidden="true">
         <use xlinkHref="#icon-add-basket"></use>
       </svg>

@@ -20,29 +20,21 @@ const ProductItem = ({data}: ProductItemProps):JSX.Element => {
   const [isAddedBasket, setIsAddedBasket] = useState('Not added to basket');// TODO next iteration
 
   const {
-    name,
-    previewImg,
-    previewImg2x,
-    previewImgWebp,
-    previewImgWebp2x,
-    rating,
-    reviewCount,
-    id,
-    price,
-    vendorCode,
-    category,
-    type,
-    level,
-    description
+    name, previewImg,
+    previewImg2x, previewImgWebp,
+    previewImgWebp2x, rating,
+    reviewCount, id,
+    price, vendorCode,
+    category, type,
+    level, description
   } = data;
 
+  const formattedPrice = getFormattedPrice(price);
 
-  const handleButtonAddClick = () => {
+  const handleButtonAddToBasketClick = () => {
     dispatch(setBasket(data));
     setIsAddedBasket('Added to basket');
   };
-
-  const formattedPrice = getFormattedPrice(price);
 
   return (
     <section className="product">
@@ -64,7 +56,7 @@ const ProductItem = ({data}: ProductItemProps):JSX.Element => {
             <span className="visually-hidden">Цена:</span>
             {formattedPrice}
           </p>
-          <button className="btn btn--purple" type="button" onClick={handleButtonAddClick}>
+          <button className="btn btn--purple" type="button" onClick={handleButtonAddToBasketClick}>
             <svg width="24" height="16" aria-hidden="true">
               <use xlinkHref="#icon-add-basket"></use>
             </svg>

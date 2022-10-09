@@ -8,7 +8,7 @@ import {useAppDispatch, useAppSelector} from '../../../../../hooks';
 
 import {cleanForm, setReviewFormData} from '../../../../../store/app-process/app-process';
 import {getReviewFormData} from '../../../../../store/app-process/selectors';
-import {fetchReviewsAction, postReviewAction} from '../../../../../store/api-actions/api-actions-reviews';
+import {fetchReviewsAction, postReviewAction} from '../../../../../store/api-actions/api-actions-reviews/api-actions-reviews';
 
 
 type isValidState = {
@@ -96,7 +96,7 @@ const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormPr
 
   useEffect(() => {
     dispatch(setReviewFormData({type: FORM_ID_TYPE, value: id}));
-  }, [id]);
+  }, [id, dispatch]);
 
   return (
     <div className="form-review">

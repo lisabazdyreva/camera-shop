@@ -1,20 +1,18 @@
-import {makeFakeCamera} from '../../../utils/mocks';
+import {getFakeCamera} from '../../../utils/mocks';
 import {render, screen} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import {ProductCard} from '../common';
 import userEvent from '@testing-library/user-event';
 
-const mockCamera = makeFakeCamera();
+const mockCamera = getFakeCamera();
 
-describe('Render Product Card correctly', () => {
-  it('should render Product Card with data for Catalog', () => {
+describe('product card component', () => {
+  it('should render product card with data for catalog correctly', () => {
     render(
       <MemoryRouter>
         <ProductCard
           handleAddModal={jest.fn()}
           data={mockCamera}
-          // additionalClass={}
-          // withoutBasketImplementation={}
         />
       </MemoryRouter>
     );
@@ -23,7 +21,7 @@ describe('Render Product Card correctly', () => {
     expect(screen.getByText(/Цена:/i)).toBeInTheDocument();
   });
 
-  it('should render Product Card for Catalog and check is add Modal handler working', async () => {
+  it('should correctly render product card for catalog and check is add modal handler working', async () => {
     const onClick = jest.fn();
 
     render (
@@ -35,7 +33,7 @@ describe('Render Product Card correctly', () => {
       </MemoryRouter>
     );
 
-    const button = document.querySelector('.product-card__btn');
+    const button = screen.getByRole('button');
 
     if (button) {
       await userEvent.click(button);

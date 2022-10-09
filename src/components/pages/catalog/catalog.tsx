@@ -9,8 +9,8 @@ import {Camera} from '../../../types/camera';
 import {useAppDispatch, useAppSelector} from '../../../hooks';
 
 import {setCurrentPage} from '../../../store/app-process/app-process';
-import {fetchCamerasAction} from '../../../store/api-actions/api-actions-cameras';
-import {fetchPromosAction} from '../../../store/api-actions/api-actions-promo';
+import {fetchCamerasAction} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
+import {fetchPromosAction} from '../../../store/api-actions/api-actions-promo/api-actions-promo';
 import {getCurrentPage} from '../../../store/app-process/selectors';
 
 
@@ -27,11 +27,11 @@ const Catalog = ():JSX.Element => {
   const {pageNumber} = params;
   const pageNumberUrl = Number(pageNumber);
 
-  const setCurrentPageNumber = (page: number) => {
+  const handlePageNumberClick = (page: number) => {
     dispatch(setCurrentPage(page));
   };
 
-  const handleAddModal = (data: Camera) => {
+  const handleModalShow = (data: Camera) => {
     setIsModalAddOpen(true);
     setSelectedCameraData(data);
   };
@@ -43,12 +43,12 @@ const Catalog = ():JSX.Element => {
 
   useEffect(() => {
     dispatch(fetchPromosAction());
-  }, []);
+  });
 
   useEffect(() => {
-    setCurrentPageNumber(pageNumberUrl);
+    handlePageNumberClick(pageNumberUrl);
     fetchCameras(pageNumberUrl);
-  }, [currentPageNumber]);
+  }, [currentPageNumber]); //TODO dependecies
 
   return (
     <main>
@@ -61,9 +61,9 @@ const Catalog = ():JSX.Element => {
             <div className="page-content__columns">
               <SideFilter />
               <CatalogContent
-                handleAddModal={handleAddModal}
+                handleAddModal={handleModalShow}
                 currentPageNumber={currentPageNumber}
-                setCurrentPageNumber={setCurrentPageNumber}
+                setCurrentPageNumber={handlePageNumberClick}
               />
             </div>
           </div>

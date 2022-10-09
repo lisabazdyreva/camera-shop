@@ -1,12 +1,10 @@
 import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
-import {configureMockStore} from '@jedmao/redux-mock-store';
 import {MemoryRouter} from 'react-router-dom';
 
 import {Breadcrumbs} from '../common';
 import {BreadcrumbsItem, ComponentName, DefaultValue, NameSpace} from '../../../utils/const';
-
-const mockStore = configureMockStore();
+import {mockStore} from '../../../utils/mocks';
 
 const store = mockStore({
   [NameSpace.App] : {
@@ -14,8 +12,8 @@ const store = mockStore({
   },
 });
 
-describe('breadcrumbs', () => {
-  it('renders correctly without link', () => {
+describe('breadcrumbs component', () => {
+  it('should render correctly without link', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
@@ -23,16 +21,13 @@ describe('breadcrumbs', () => {
         </MemoryRouter>
       </Provider>
     );
-    const breadcrumbsList = document.querySelector('.breadcrumbs__list');
+    const breadcrumbsList = screen.getByRole('list');
     expect(breadcrumbsList).toBeInTheDocument();
 
-    const breadcrumbsItems = breadcrumbsList && breadcrumbsList.childNodes;
-    const breadcrumbsAmount = breadcrumbsItems && breadcrumbsItems.length;
-
-    expect(breadcrumbsAmount).toBe(2);
+    expect(breadcrumbsList.childNodes.length).toBe(2);
   });
 
-  it('renders correctly on basket page', () => {
+  it('should render correctly on basket page', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
@@ -44,7 +39,7 @@ describe('breadcrumbs', () => {
     expect(screen.getByText(/Корзина/i)).toBeInTheDocument();
   });
 
-  it('renders correctly on catalog page', () => {
+  it('should render correctly on catalog page', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
@@ -52,12 +47,10 @@ describe('breadcrumbs', () => {
         </MemoryRouter>
       </Provider>
     );
-
     expect(screen.getByText(/Каталог/i)).toBeInTheDocument();
-
   });
 
-  it('renders correctly on product page', () => {
+  it('should render correctly on product page', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
@@ -66,14 +59,9 @@ describe('breadcrumbs', () => {
       </Provider>
     );
 
-    const breadcrumbsList = document.querySelector('.breadcrumbs__list');
+    const breadcrumbsList = screen.getByRole('list');
+    expect(breadcrumbsList).toBeInTheDocument();
 
-    const breadcrumbsItems = breadcrumbsList && breadcrumbsList.childNodes;
-    const breadcrumbsAmount = breadcrumbsItems && breadcrumbsItems.length;
-
-    expect(breadcrumbsAmount).toBe(3);
-
-    const breadcrumbsLink = document.querySelector('.breadcrumbs__link');
-    expect(breadcrumbsLink).toBeInTheDocument();
+    expect(breadcrumbsList.childNodes.length).toBe(3);
   });
 });

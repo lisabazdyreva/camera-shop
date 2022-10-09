@@ -1,18 +1,18 @@
 import {render, screen} from '@testing-library/react';
 
 import {ErrorInfo} from '../common';
-import {makeFakeErrorText} from '../../../utils/mocks';
+import {getFakeErrorText} from '../../../utils/mocks';
 
-const fakeText = makeFakeErrorText();
+const fakeText = getFakeErrorText();
 
-describe('error info test', () => {
-  it('renders correctly', () => {
+describe('error info component', () => {
+  it('should render correctly', () => {
     render (
       <ErrorInfo text={fakeText} />
     );
-    const container = document.querySelector('.error-text');
+    const paragraph = screen.getByText(/Произошла ошибка при загрузк/i);
 
-    expect(screen.getByText(/Произошла ошибка при загрузк/i)).toBeInTheDocument();
-    expect(container).toBeInTheDocument();
+    expect(paragraph).toBeInTheDocument();
+    expect(paragraph.className === 'error-text').toBe(true);
   });
 });

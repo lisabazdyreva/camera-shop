@@ -1,9 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
-import {configureMockStore} from '@jedmao/redux-mock-store';
 import {createMemoryHistory} from 'history';
 import {generatePath} from 'react-router-dom';
-import thunk from 'redux-thunk';
 
 import App from './app';
 
@@ -16,22 +14,17 @@ import {
   TabType
 } from '../../utils/const';
 import {HistoryRoute} from '../common/common';
-import {getFakeSuccessStatus, makeFakeCamera, makeFakePromo, makeFakeReview} from '../../utils/mocks';
-import {createAPI} from '../../services/api';
+import {getFakeSuccessStatus, getFakeCameras, getFakeCamera, getFakePromo, getFakeReviews, mockStore} from '../../utils/mocks';
 
 
-const api = createAPI();
 const history = createMemoryHistory();
 
-const middlewares = [thunk.withExtraArgument(api)];
-const mockStore = configureMockStore(middlewares);
-const mockCamera = makeFakeCamera();
+const mockCamera = getFakeCamera();
 const mockId = mockCamera.id;
-const mockCameras = [makeFakeCamera(), makeFakeCamera()];
-const mockSimilarCameras = [makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera()];
-
-const mockReviews = [makeFakeReview(), makeFakeReview()];
-const mockPromos = [makeFakePromo()];
+const mockCameras = getFakeCameras();
+const mockSimilarCameras = getFakeCameras();
+const mockReviews = getFakeReviews();
+const mockPromos = [getFakePromo()];
 
 const store = mockStore({
   [NameSpace.Cameras]: {
@@ -105,7 +98,7 @@ describe('Application Routing', () => {
     render(fakeApp);
 
     const element = screen.getByRole('heading', {level: 1});
-    expect(element.innerHTML).toBe("Корзина");
+    expect(element.innerHTML).toBe('Корзина');
 
     expect(screen.getByText(/Общая цена/i)).toBeInTheDocument();
   });

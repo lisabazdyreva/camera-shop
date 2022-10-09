@@ -1,11 +1,11 @@
 import {render, screen} from '@testing-library/react';
 import {ReviewCard} from '../components';
-import {makeFakeReview} from '../../../../../utils/mocks';
+import {getFakeReview} from '../../../../../utils/mocks';
 
-const fakeReview = makeFakeReview();
+const fakeReview = getFakeReview();
 
-describe('review card test', () => {
-  it('renders correctly', () => {
+describe('review card component', () => {
+  it('should render correctly', () => {
     render (
       <ReviewCard data={fakeReview} />
     );

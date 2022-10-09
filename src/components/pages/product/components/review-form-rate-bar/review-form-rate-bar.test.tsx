@@ -1,24 +1,24 @@
 import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {MemoryRouter} from 'react-router-dom';
-import {configureMockStore} from '@jedmao/redux-mock-store';
 
 import {ReviewFormRateBar} from '../components';
+import {mockStore} from '../../../../../utils/mocks';
 
-const mockStore = configureMockStore();
+
 const store = mockStore({});
 
-describe('review form rating bar test', () => {
-  it ('renders correctly when valid', () => {
+describe('review form rating bar component', () => {
+  it ('should render correctly when valid', () => {
     render (
       <Provider store={store} >
-         <MemoryRouter>
+        <MemoryRouter>
           <ReviewFormRateBar
             selectedRating={2}
-            isValid={true}
+            isValid
             handleInputInvalid={jest.fn()}
           />
-         </MemoryRouter>
+        </MemoryRouter>
       </Provider>
     );
 
@@ -26,7 +26,7 @@ describe('review form rating bar test', () => {
     expect(screen.getByTestId('rating')).toBeInTheDocument();
   });
 
-  it ('renders correctly when invalid', () => {
+  it ('should render correctly when invalid', () => {
     render (
       <Provider store={store} >
         <MemoryRouter>
@@ -39,9 +39,7 @@ describe('review form rating bar test', () => {
       </Provider>
     );
 
-    const fieldset = document.querySelector('.is-invalid');
-
-    expect(fieldset).toBeInTheDocument();
-    expect(screen.getByTestId('rating')).toBeInTheDocument();
+    const input = screen.getAllByRole('radio')[0] as HTMLInputElement;
+    expect(input).toBeInvalid();
   });
 });

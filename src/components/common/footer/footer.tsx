@@ -9,7 +9,7 @@ const Footer = ():JSX.Element => (
         <p className="footer__description">Интернет-магазин фото- и видеотехники</p>
         <Social />
       </div>
-      <ul className="footer__nav">
+      <ul className="footer__nav" data-testid='footer-navigation'>
         <FooterNavigation />
       </ul>
     </div>

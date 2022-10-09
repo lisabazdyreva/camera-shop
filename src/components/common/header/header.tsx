@@ -10,7 +10,7 @@ const Header = ():JSX.Element => (
     <div className="container">
       <Logo usingComponent={ComponentName.Header} />
       <nav className="main-nav header__main-nav">
-        <ul className="main-nav__list">
+        <ul className="main-nav__list" data-testid='header-list'>
           {
             menuItems.map((menuItem) => <NavItem usingComponent={ComponentName.Header} name={menuItem} key={`${menuItem}_${menuItem.length}`} />)
           }

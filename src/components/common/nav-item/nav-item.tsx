@@ -17,7 +17,7 @@ const NavItem = ({name, usingComponent}: NavItemProps):JSX.Element => {
       {
         name === MenuItem.Catalog
           ? <Link to={`${AppRoute.Catalog}${PaginationRoute.Page}${DefaultValue.CatalogPageNumber}`} className={classesLink}>{name}</Link>
-          : <a className={classesLink} href="#">{name}</a>
+          : <a className={classesLink} href={AppRoute.Catalog}>{name}</a>
       }
     </li>
   );

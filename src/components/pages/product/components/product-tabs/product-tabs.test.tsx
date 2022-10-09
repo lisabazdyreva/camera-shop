@@ -3,12 +3,12 @@ import {MemoryRouter} from 'react-router-dom';
 
 import {ProductTabs} from '../components';
 
-import {makeFakeDataTabs} from '../../../../../utils/mocks';
+import {getFakeDataTabs} from '../../../../../utils/mocks';
 
-const fakeDataTabs = makeFakeDataTabs();
+const fakeDataTabs = getFakeDataTabs();
 
-describe('product tabs test', () => {
-  it ('renders correctly', () => {
+describe('product tabs component', () => {
+  it ('should render correctly', () => {
     render (
       <MemoryRouter>
         <ProductTabs data={fakeDataTabs} />

@@ -1,15 +1,15 @@
 import {LoadingStatus} from '../../utils/const';
-import {makeFakePromo} from '../../utils/mocks';
+import {getFakePromo, UNKNOWN_TYPE} from '../../utils/mocks';
 import {appPromos} from './app-promos';
-import {fetchPromosAction} from '../api-actions/api-actions-promo';
+import {fetchPromosAction} from '../api-actions/api-actions-promo/api-actions-promo';
+import {AppPromos} from '../../types/state';
 
-const promos = [makeFakePromo()];
+const promos = [getFakePromo()];
+const state: AppPromos = {promos: [], promosFetchStatus: LoadingStatus.Default};
 
 describe('reducer app-promos', () => {
-  const state = {promos: [], promosFetchStatus: LoadingStatus.Default};
-
   it('without values should return initial values', () => {
-    expect(appPromos.reducer(void 0, {type: 'UNKNOWN_ACTION'}))
+    expect(appPromos.reducer(void 0, UNKNOWN_TYPE))
       .toEqual(state);
   });
 

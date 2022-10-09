@@ -2,8 +2,8 @@ import {render, screen} from '@testing-library/react';
 import {CatalogButtons} from '../components';
 import {MemoryRouter} from 'react-router-dom';
 
-describe('test catalog buttons', () => {
-  it('renders correctly', () => {
+describe('catalog buttons component', () => {
+  it('should render correctly', () => {
     render (
       <MemoryRouter>
         <CatalogButtons handleCloseSuccessModal={jest.fn()} />

@@ -1,12 +1,12 @@
 import {render, screen} from '@testing-library/react';
 
 import {Picture} from '../common';
-import {makeFakePicture} from '../../../utils/mocks';
+import {getFakePicture} from '../../../utils/mocks';
 
-const fakePicture = makeFakePicture();
+const fakePicture = getFakePicture();
 
-describe('picture test', () => {
-  it('renders correctly', () => {
+describe('picture component', () => {
+  it('should render correctly', () => {
     render (
       <Picture
         width={fakePicture.width}

@@ -3,7 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {AppPromos} from '../../types/state';
 import {LoadingStatus, NameSpace} from '../../utils/const';
 
-import {fetchPromosAction} from '../api-actions/api-actions-promo';
+import {fetchPromosAction} from '../api-actions/api-actions-promo/api-actions-promo';
 
 
 const initialState: AppPromos = {

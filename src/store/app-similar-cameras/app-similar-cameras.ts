@@ -3,7 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {AppSimilarCameras} from '../../types/state';
 import {LoadingStatus, NameSpace} from '../../utils/const';
 
-import {fetchSimilarCamerasAction} from '../api-actions/api-actions-cameras';
+import {fetchSimilarCamerasAction} from '../api-actions/api-actions-cameras/api-actions-cameras';
 
 const initialState: AppSimilarCameras = {
   similarCameras: [],

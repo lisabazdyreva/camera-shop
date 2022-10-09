@@ -127,7 +127,7 @@ export const checkIsValid = (target: HTMLInputElement | HTMLTextAreaElement): bo
 
 export const isEsc = (code: string) => code === 'Escape' || code === 'Esc';
 
-export const escPressHandler = (handler: any) => {
+export const escPressHandler = (handler: (isOpen: boolean) => void) => { //TODO change name
   let isMounted = true;
 
   const handleEscapeKeyPress = (evt: KeyboardEvent) => {

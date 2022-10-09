@@ -1,15 +1,15 @@
 import {LoadingStatus} from '../../utils/const';
-import {fetchSimilarCamerasAction} from '../api-actions/api-actions-cameras';
+import {fetchSimilarCamerasAction} from '../api-actions/api-actions-cameras/api-actions-cameras';
 import {appSimilarCameras} from './app-similar-cameras';
-import {makeFakeCamera} from '../../utils/mocks';
+import {getFakeCameras, UNKNOWN_TYPE} from '../../utils/mocks';
+import {AppSimilarCameras} from '../../types/state';
 
-const similarCameras = [makeFakeCamera(), makeFakeCamera(), makeFakeCamera()];
+const similarCameras = getFakeCameras();
+const state: AppSimilarCameras = {similarCameras: [], similarCamerasFetchStatus: LoadingStatus.Default};
 
 describe('reducer app-similar-cameras', () => {
-  const state = {similarCameras: [], similarCamerasFetchStatus: LoadingStatus.Default};
-
   it('without values should return initial values', () => {
-    expect(appSimilarCameras.reducer(void 0, {type: 'UNKNOWN_ACTION'}))
+    expect(appSimilarCameras.reducer(void 0, UNKNOWN_TYPE))
       .toEqual(state);
   });
 

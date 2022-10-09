@@ -1,16 +1,17 @@
 import {appCamera} from './app-camera';
-import {LoadingStatus} from '../../utils/const';
-import {makeFakeCamera} from '../../utils/mocks';
-import {fetchCameraAction} from '../api-actions/api-actions-cameras';
+import {fetchCameraAction} from '../api-actions/api-actions-cameras/api-actions-cameras';
 
-const camera = makeFakeCamera();
+import {LoadingStatus} from '../../utils/const';
+import {getFakeCamera, UNKNOWN_TYPE} from '../../utils/mocks';
+import {AppCamera} from '../../types/state';
+
+
+const camera = getFakeCamera();
+const state: AppCamera = {camera: null, cameraFetchStatus: LoadingStatus.Default};
 
 describe('reducer app-camera', () => {
-
-  const state = {camera: null, cameraFetchStatus: LoadingStatus.Default};
-
   it('without values should return initial values', () => {
-    expect(appCamera.reducer(void 0, {type: 'UNKNOWN_ACTION'}))
+    expect(appCamera.reducer(void 0, UNKNOWN_TYPE))
       .toEqual(state);
   });
 

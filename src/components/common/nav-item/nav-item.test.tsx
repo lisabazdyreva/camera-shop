@@ -1,11 +1,11 @@
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {NavItem} from '../common';
 import {ComponentName} from '../../../utils/const';
 
 const fakeName = 'Доставка';
 
-describe('navigation item test', () => {
-  it('renders correctly in header', () => {
+describe('navigation item component', () => {
+  it('should render correctly in header', () => {
     render (
       <NavItem
         name={fakeName}
@@ -13,14 +13,14 @@ describe('navigation item test', () => {
       />
     );
 
-    const headerContainer = document.querySelector('.main-nav__item');
-    const headerLink = document.querySelector('.main-nav__link');
+    const headerContainer = screen.getByRole('listitem').className;
+    const headerLink = screen.getByRole('link');
 
-    expect(headerContainer).toBeInTheDocument();
+    expect(headerContainer === 'main-nav__item').toBe(true);
     expect(headerLink).toBeInTheDocument();
   });
 
-  it('renders correctly in footer', () => {
+  it('should render correctly in footer', () => {
     render (
       <NavItem
         name={fakeName}
@@ -28,10 +28,10 @@ describe('navigation item test', () => {
       />
     );
 
-    const footerContainer = document.querySelector('.footer__item');
-    const footerLink = document.querySelector('.link');
+    const footerContainer = screen.getByRole('listitem').className;
+    const footerLink = screen.getByRole('link');
 
-    expect(footerContainer).toBeInTheDocument();
+    expect(footerContainer === 'footer__item').toBe(true);
     expect(footerLink).toBeInTheDocument();
   });
 });

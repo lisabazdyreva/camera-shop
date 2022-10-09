@@ -1,20 +1,14 @@
 import {render, screen} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {configureMockStore} from '@jedmao/redux-mock-store';
-import thunk from 'redux-thunk';
 
 import {CatalogContent} from '../components';
 
-import {makeFakeCamera} from '../../../../../utils/mocks';
+import {getFakeCameras, mockStore} from '../../../../../utils/mocks';
 import {LoadingStatus, NameSpace} from '../../../../../utils/const';
-import {createAPI} from '../../../../../services/api';
 
 
-const api = createAPI();
-const middlewares = [thunk.withExtraArgument(api)];
-const mockStore = configureMockStore(middlewares);
-const mockCameras = [makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera(), makeFakeCamera()];
+const mockCameras = getFakeCameras();
 
 const successStore = mockStore({
   [NameSpace.Cameras]: {
@@ -46,16 +40,16 @@ const errorStore = mockStore({
   },
 });
 
-describe('Render Catalog correctly', () => {
-  it('should render catalog with data', () => {
+describe('catalog content component', () => {
+  it('should render catalog content with data', () => {
     render (
       <Provider store={successStore}>
         <MemoryRouter>
-            <CatalogContent
-              handleAddModal={jest.fn()}
-              currentPageNumber={1}
-              setCurrentPageNumber={jest.fn()}
-            />
+          <CatalogContent
+            handleAddModal={jest.fn()}
+            currentPageNumber={1}
+            setCurrentPageNumber={jest.fn()}
+          />
         </MemoryRouter>
       </Provider>
     );
@@ -63,7 +57,7 @@ describe('Render Catalog correctly', () => {
     expect(screen.getByTestId('catalog-content')).toBeInTheDocument();
   });
 
-  it ('should render error-info message when it is error-info in data', () => {
+  it ('should render error message when it is error in data', () => {
     render (
       <Provider store={errorStore}>
         <MemoryRouter>

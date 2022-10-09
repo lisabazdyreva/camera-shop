@@ -12,12 +12,12 @@ interface ProductTabsProps {
 
 const ProductTabs = ({data}: ProductTabsProps):JSX.Element => {
   const params = useParams();
-  const {id, tab} = params;
-
   const navigation = useNavigate();
+
+  const {id, tab} = params;
   const {description, vendorCode, category, type, level} = data;
 
-  const handleTabButton = (tabType: typeof TabType[keyof typeof TabType]) => {
+  const handleTabButtonClick = (tabType: typeof TabType[keyof typeof TabType]) => {
     navigation(`${AppRoute.Product}/${id}/${tabType}`);
   };
 
@@ -33,7 +33,7 @@ const ProductTabs = ({data}: ProductTabsProps):JSX.Element => {
                 key={tabType}
                 className={buttonClasses}
                 type="button"
-                onClick={() => handleTabButton(tabType)}
+                onClick={() => handleTabButtonClick(tabType)}
               >
                 {name}
               </button>

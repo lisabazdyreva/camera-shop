@@ -16,9 +16,9 @@ interface SliderProps {
 
 const Slider = ({similarCameras, fetchStatus}: SliderProps):JSX.Element => {
   const dispatch = useAppDispatch();
-  const { items, handlePreviousClick, handleNextClick, disabling } = useSlider(similarCameras, Step.Slider);
+  const {items, handlePreviousClick, handleNextClick, disabling} = useSlider(similarCameras, Step.Slider);
 
-  const handleAddBasketButtonClick = (data: Camera) => {
+  const handleButtonAddToBasketClick = (data: Camera) => {
     dispatch(setBasket(data));
   };
 
@@ -36,7 +36,7 @@ const Slider = ({similarCameras, fetchStatus}: SliderProps):JSX.Element => {
             {
               items.map((similarCamera) => (
                 <ProductCard
-                  handleAddModal={handleAddBasketButtonClick}
+                  handleAddModal={handleButtonAddToBasketClick}
                   data={similarCamera}
                   key={similarCamera.id}
                   additionalClass={'is-active'}
@@ -51,6 +51,7 @@ const Slider = ({similarCameras, fetchStatus}: SliderProps):JSX.Element => {
             aria-label="Предыдущий слайд"
             onClick={handlePreviousClick}
             disabled={disabling.isFirst}
+            data-testid='button-slider-previous'
           >
             <svg width="7" height="12" aria-hidden="true">
               <use xlinkHref="#icon-arrow"></use>
@@ -62,6 +63,7 @@ const Slider = ({similarCameras, fetchStatus}: SliderProps):JSX.Element => {
             aria-label="Следующий слайд"
             onClick={handleNextClick}
             disabled={disabling.isLast}
+            data-testid='button-slider-next'
           >
             <svg width="7" height="12" aria-hidden="true">
               <use xlinkHref="#icon-arrow"></use>

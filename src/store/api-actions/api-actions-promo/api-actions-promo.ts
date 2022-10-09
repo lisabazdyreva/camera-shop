@@ -1,9 +1,9 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 
-import {Promo, Promos} from '../../types/promo';
-import {AppDispatch, State} from '../../types/state';
-import {UrlRoute} from '../../utils/const';
+import {Promo, Promos} from '../../../types/promo';
+import {AppDispatch, State} from '../../../types/state';
+import {UrlRoute} from '../../../utils/const';
 
 export const fetchPromosAction = createAsyncThunk<Promos, undefined, {
   dispatch: AppDispatch,

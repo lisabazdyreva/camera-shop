@@ -15,8 +15,8 @@ const store = mockStore({
   }
 });
 
-describe('test review form', () => {
-  it('renders correctly', () => {
+describe('test review form component', () => {
+  it('should render correctly', () => {
     render (
       <Provider store={store}>
         <MemoryRouter>
@@ -28,7 +28,7 @@ describe('test review form', () => {
     expect(screen.getByText(/Отправить отзыв/i)).toBeInTheDocument();
   });
 
-  it('renders correctly when inputs invalid', () => {
+  it('should render correctly when inputs invalid', () => {
     render (
       <Provider store={store}>
         <MemoryRouter>

@@ -2,8 +2,8 @@ import {render, screen} from '@testing-library/react';
 import NotFound from './not-found';
 import {MemoryRouter} from 'react-router-dom';
 
-describe('not found', () => {
-  it('renders correctly', () => {
+describe('not found page component', () => {
+  it('should render correctly', () => {
     render (
       <MemoryRouter>
         <NotFound />

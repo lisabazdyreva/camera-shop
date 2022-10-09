@@ -1,21 +1,17 @@
 import {render, screen} from '@testing-library/react';
 
 import {FeatureTab} from '../components';
-import {makeFakeProductFeatures} from '../../../../../utils/mocks';
+import {getFakeProductFeatures} from '../../../../../utils/mocks';
 
-const fakeFeatures = makeFakeProductFeatures();
+const fakeFeatures = getFakeProductFeatures();
 
-
-describe('feature tab test', () => {
-  it('renders correctly', () => {
+describe('feature tab component', () => {
+  it('should render correctly', () => {
     render(
       <FeatureTab data={fakeFeatures} />
     );
-
-    const featureItem = document.querySelectorAll('.item-list');
-    const featureItemsLength = featureItem && featureItem.length;
-
-    expect(featureItemsLength).toBe(4);
+    const items = screen.getAllByRole('listitem');
+    expect(items.length).toBe(4);
     expect(screen.getByText(/Артикул/i)).toBeInTheDocument();
   });
 });

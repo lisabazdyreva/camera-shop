@@ -1,11 +1,11 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 
-import {Camera, Cameras} from '../../types/camera';
-import {AppDispatch, State} from '../../types/state';
+import {Camera, Cameras} from '../../../types/camera';
+import {AppDispatch, State} from '../../../types/state';
 
-import {UrlRoute} from '../../utils/const';
-import {setCamerasTotalCount} from '../app-process/app-process';
+import {UrlRoute} from '../../../utils/const';
+import {setCamerasTotalCount} from '../../app-process/app-process';
 
 
 export const fetchCamerasAction = createAsyncThunk<Cameras, {

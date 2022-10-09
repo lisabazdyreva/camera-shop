@@ -18,20 +18,28 @@ import {
   ScrollSetting,
   TopCoordinate
 } from '../../../utils/const';
-import useProductSelectors from '../../../hooks/product-hooks/useProductSelectors';
-import {useAppDispatch} from '../../../hooks';
+import {useAppDispatch, useAppSelector} from '../../../hooks';
 
-import {fetchCameraAction, fetchSimilarCamerasAction} from '../../../store/api-actions/api-actions-cameras';
-import {fetchReviewsAction} from '../../../store/api-actions/api-actions-reviews';
+import {fetchCameraAction, fetchSimilarCamerasAction} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
+import {fetchReviewsAction} from '../../../store/api-actions/api-actions-reviews/api-actions-reviews';
+
+import {getCamera, getCameraFetchStatus} from '../../../store/app-camera/selectors';
+import {getSimilarCameras, getSimilarCamerasFetchStatus} from '../../../store/app-similar-cameras/selectors';
+import {getReviewsFetchStatus} from '../../../store/app-reviews/selectors';
 
 
 const Product = ():JSX.Element => {
+  const dispatch = useAppDispatch();
+
   const [isSuccessReviewModalOpen, setIsSuccessReviewModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
-  const {camera, similarCameras, cameraFetchStatus, similarCamerasFetchStatus, reviewsFetchStatus} = useProductSelectors();
+  const camera = useAppSelector(getCamera);
+  const similarCameras = useAppSelector(getSimilarCameras);
 
-  const dispatch = useAppDispatch();
+  const cameraFetchStatus = useAppSelector(getCameraFetchStatus);
+  const similarCamerasFetchStatus = useAppSelector(getSimilarCamerasFetchStatus);
+  const reviewsFetchStatus = useAppSelector(getReviewsFetchStatus);
 
   const params = useParams();
   const {id} = params;
@@ -44,7 +52,7 @@ const Product = ():JSX.Element => {
     window.scrollTo(ScrollSetting);
   };
 
-  const fetchData = () => {
+  const fetchData = () => { // TODO useCallback
     const numberId = Number(id);
     const data = {id: numberId};
 
@@ -57,7 +65,7 @@ const Product = ():JSX.Element => {
     if (id) {
       fetchData();
     }
-  }, [id]);
+  }, [id, fetchData]);
 
   useEffect(() => {
     window.scrollTo(TopCoordinate.X, TopCoordinate.Y);

@@ -1,11 +1,11 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 
-import { ReviewPost, Reviews} from '../../types/review';
-import {AppDispatch, State} from '../../types/state';
+import { ReviewPost, Reviews} from '../../../types/review';
+import {AppDispatch, State} from '../../../types/state';
 
-import {UrlRoute} from '../../utils/const';
-import {sortReviews} from '../../utils/utils';
+import {UrlRoute} from '../../../utils/const';
+import {sortReviews} from '../../../utils/utils';
 
 
 export const fetchReviewsAction = createAsyncThunk<Reviews, {id: number}, {

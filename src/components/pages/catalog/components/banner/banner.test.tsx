@@ -1,21 +1,16 @@
 import {render, screen} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
-import {configureMockStore} from '@jedmao/redux-mock-store';
 import {Provider} from 'react-redux';
-import thunk from 'redux-thunk';
 
 import {Banner} from '../components';
 
-import {makeFakeCamera, makeFakePromo} from '../../../../../utils/mocks';
+import {getFakeCamera, getFakePromo, mockStore} from '../../../../../utils/mocks';
 import {LOADER_NOTIFICATION, LoadingStatus, NameSpace} from '../../../../../utils/const';
-import {createAPI} from '../../../../../services/api';
 
-const mockPromos = [makeFakePromo()];
-const mockCamera = {...makeFakeCamera(), ...{id: mockPromos[0].id}};
 
-const api = createAPI();
-const middlewares = [thunk.withExtraArgument(api)];
-const mockStore = configureMockStore(middlewares);
+const mockPromos = [getFakePromo()];
+const mockCamera = {...getFakeCamera(), ...{id: mockPromos[0].id}};
+
 
 const storeSuccess = mockStore({
   [NameSpace.Promos]: {
@@ -37,7 +32,7 @@ const storeLoading = mockStore({
   }
 });
 
-const storeError= mockStore({
+const storeError = mockStore({
   [NameSpace.Promos]: {
     promos: [],
     promosFetchStatus: LoadingStatus.Error,
@@ -48,8 +43,7 @@ const storeError= mockStore({
 });
 
 
-
-describe('banner tests', () => {
+describe('banner component', () => {
   it('should render banner correctly when promo downloaded', () => {
     render (
       <Provider store={storeSuccess}>

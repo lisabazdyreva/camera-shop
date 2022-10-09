@@ -1,13 +1,13 @@
 import {render, screen} from '@testing-library/react';
 import {ReturnButton} from '../components';
 
-describe('test return button', () => {
-  it('renders correctly', () => {
+describe('return button component', () => {
+  it('should render correctly', () => {
     render (
       <ReturnButton />
     );
 
-    const button = document.querySelector('.modal__btn');
+    const button = screen.getByRole('button');
 
     expect(screen.getByText(/Вернуться к покупкам/i)).toBeInTheDocument();
     expect(button).toBeInTheDocument();

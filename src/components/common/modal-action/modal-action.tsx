@@ -53,7 +53,7 @@ const ModalAction = ({usingComponent, data, handleCloseModal, handleOpenSuccessM
     }
 
     escPressHandler(handleCloseModal);
-  }, [handleCloseModal]);
+  }, [handleCloseModal, dispatch, usingComponent]);
 
 
   useBodyBlock();

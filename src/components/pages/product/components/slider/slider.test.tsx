@@ -1,8 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
-import {configureMockStore} from '@jedmao/redux-mock-store';
 import {MemoryRouter} from 'react-router-dom';
-import thunk from 'redux-thunk';
 
 import {Slider} from '../components';
 
@@ -11,26 +9,16 @@ import {
   getFakeErrorStatus,
   getFakeLoadingStatus,
   getFakeSuccessStatus,
-  makeFakeCamera
+  getFakeCameras,
+  mockStore,
 } from '../../../../../utils/mocks';
-import {createAPI} from '../../../../../services/api';
 
-
-const api = createAPI();
-
-const middlewares = [thunk.withExtraArgument(api)];
-const mockStore = configureMockStore(middlewares);
 
 const fakeSuccessStatus = getFakeSuccessStatus();
 const fakeErrorStatus = getFakeErrorStatus();
 const fakeLoadingStatus = getFakeLoadingStatus();
 
-const fakeCameras = [
-  makeFakeCamera(), makeFakeCamera(),
-  makeFakeCamera(), makeFakeCamera(),
-  makeFakeCamera(), makeFakeCamera(),
-  makeFakeCamera(),
-];
+const fakeCameras = getFakeCameras();
 
 const store = mockStore({
   [NameSpace.SimilarCameras]: {
@@ -41,8 +29,8 @@ const store = mockStore({
   },
 });
 
-describe('slider test', () => {
-  it('slider render correctly when success status', () => {
+describe('slider component', () => {
+  it('should render correctly when success status', () => {
     render (
       <Provider store={store}>
         <MemoryRouter>
@@ -51,14 +39,11 @@ describe('slider test', () => {
       </Provider>
     );
 
-    const prevButton = document.querySelector('[aria-label="Предыдущий слайд"]');
-    const nextButton = document.querySelector('[aria-label="Следующий слайд"]');
-
-    expect(prevButton).toBeInTheDocument();
-    expect(nextButton).toBeInTheDocument();
+    expect(screen.getByTestId('button-slider-previous')).toBeInTheDocument();
+    expect(screen.getByTestId('button-slider-next')).toBeInTheDocument();
   });
 
-  it('slider render correctly when error-info status', () => {
+  it('should render correctly when error status', () => {
     render (
       <Provider store={store}>
         <MemoryRouter>
@@ -70,7 +55,7 @@ describe('slider test', () => {
     expect(screen.getByText(/Произошла ошибка при загрузке/i)).toBeInTheDocument();
   });
 
-  it('slider render correctly when loading status', () => {
+  it('should render correctly when loading status', () => {
     render (
       <Provider store={store}>
         <MemoryRouter>

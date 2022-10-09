@@ -1,26 +1,29 @@
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {Logo} from '../common';
 import {ComponentName} from '../../../utils/const';
 
-describe('logo test', () => {
-  it('renders correctly in header', () => {
+describe('logo component', () => {
+  it('should render correctly in header component', () => {
     render (
       <Logo usingComponent={ComponentName.Header} />
     );
 
-    const linkLabel = document.querySelector('[aria-label="Переход на главную"]')
-    expect(linkLabel).toBeInTheDocument();
-
-    const link = document.querySelector('.header__logo');
+    const link = screen.getByRole('link');
     expect(link).toBeInTheDocument();
+
+    const linkClass = link.className;
+    expect(linkClass === 'header__logo').toBe(true);
   });
 
-  it('renders correctly in footer', () => {
+  it('should render correctly in footer component', () => {
     render (
       <Logo usingComponent={ComponentName.Footer} />
     );
 
-    const link = document.querySelector('.footer__logo');
+    const link = screen.getByRole('link');
     expect(link).toBeInTheDocument();
+
+    const linkClass = link.className;
+    expect(linkClass === 'footer__logo').toBe(true);
   });
 });

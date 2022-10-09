@@ -5,17 +5,17 @@ import {ErrorInfo, Loader, Picture} from '../../../../common/common';
 import {AppRoute, CAMERA_ADJECTIVE_ENDING, ErrorData, LoadingStatus, TabType} from '../../../../../utils/const';
 import {useAppDispatch, useAppSelector} from '../../../../../hooks';
 
-import {fetchCameraAction} from '../../../../../store/api-actions/api-actions-cameras';
+import {fetchCameraAction} from '../../../../../store/api-actions/api-actions-cameras/api-actions-cameras';
 import {getCamera} from '../../../../../store/app-camera/selectors';
 import {getPromos, getPromosFetchStatus} from '../../../../../store/app-promos/selectors';
 
 
 const Banner = ():JSX.Element => {
+  const dispatch = useAppDispatch();
+
   const promos = useAppSelector(getPromos);
   const fetchStatus = useAppSelector(getPromosFetchStatus);
   const camera = useAppSelector(getCamera);
-
-  const dispatch = useAppDispatch();
 
   const isPromosLoaded = fetchStatus === LoadingStatus.Success;
   const isPromosLoading = fetchStatus === LoadingStatus.Loading;
@@ -28,10 +28,9 @@ const Banner = ():JSX.Element => {
 
   useEffect(() => {
     if (promo) {
-      const promoId = promo.id;
-      dispatch(fetchCameraAction({id: promoId}));
+      dispatch(fetchCameraAction({id: promo.id}));
     }
-  }, [fetchStatus]);
+  }, [fetchStatus, dispatch, promo]);
 
   return (
     <div className="banner">

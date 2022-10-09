@@ -1,15 +1,16 @@
 import {appCameras} from './app-cameras';
-import {LoadingStatus} from '../../utils/const';
-import {fetchCamerasAction} from '../api-actions/api-actions-cameras';
-import {makeFakeCamera} from '../../utils/mocks';
+import {fetchCamerasAction} from '../api-actions/api-actions-cameras/api-actions-cameras';
 
-const cameras = [makeFakeCamera(), makeFakeCamera(), makeFakeCamera()];
+import {LoadingStatus} from '../../utils/const';
+import {getFakeCameras, UNKNOWN_TYPE} from '../../utils/mocks';
+import {AppCameras} from '../../types/state';
+
+const cameras = getFakeCameras();
+const state: AppCameras = {cameras: [], camerasFetchStatus: LoadingStatus.Default};
 
 describe('reducer app-cameras', () => {
-  const state = {cameras: [], camerasFetchStatus: LoadingStatus.Default};
-
   it('without values should return initial values', () => {
-    expect(appCameras.reducer(void 0, {type: 'UNKNOWN_ACTION'}))
+    expect(appCameras.reducer(void 0, UNKNOWN_TYPE))
       .toEqual(state);
   });
 
@@ -27,5 +28,4 @@ describe('reducer app-cameras', () => {
     expect(appCameras.reducer(state, {type: fetchCamerasAction.rejected.type}))
       .toEqual({cameras: [], camerasFetchStatus: LoadingStatus.Error});
   });
-
 });

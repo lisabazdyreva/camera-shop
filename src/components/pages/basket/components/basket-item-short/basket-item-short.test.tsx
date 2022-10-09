@@ -1,11 +1,11 @@
 import {render, screen} from '@testing-library/react';
 import {BasketItemShort} from '../components';
-import {makeFakeCamera} from '../../../../../utils/mocks';
+import {getFakeCamera} from '../../../../../utils/mocks';
 
-const camera = makeFakeCamera();
+const camera = getFakeCamera();
 
-describe('basket item short', () => {
-  it('renders correctly', () => {
+describe('basket item short component', () => {
+  it('should render correctly', () => {
     render (
       <BasketItemShort data={camera} />
     );

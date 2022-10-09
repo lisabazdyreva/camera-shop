@@ -1,8 +1,8 @@
 import {render, screen} from '@testing-library/react';
 import {BasketRemoveButtons} from '../components';
 
-describe('test basket remove buttons',  () => {
-  it('renders correctly', () => {
+describe('basket remove buttons component', () => {
+  it('should render correctly', () => {
     render (
       <BasketRemoveButtons />
     );

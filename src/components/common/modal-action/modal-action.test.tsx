@@ -1,38 +1,29 @@
 import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
-import {configureMockStore} from '@jedmao/redux-mock-store';
-import {createMemoryHistory} from 'history';
 
-import {HistoryRoute, ModalAction} from '../common';
-import {ComponentName, DefaultValue, initialReview, NameSpace} from '../../../utils/const';
-import Catalog from '../../pages/catalog/catalog';
-import {getFakeSuccessStatus, makeFakeCamera, makeFakePromo} from '../../../utils/mocks';
-import {createAPI} from '../../../services/api';
-import thunk from 'redux-thunk';
-
-const api = createAPI();
-
-const middlewares = [thunk.withExtraArgument(api)];
-const mockStore = configureMockStore(middlewares);
+import {ModalAction} from '../common';
+import {ComponentName, initialReview, NameSpace} from '../../../utils/const';
+import {getFakeCamera, mockStore} from '../../../utils/mocks';
 
 const store = mockStore({
   [NameSpace.App]: {
     reviewFormData: initialReview,
   }
 });
-const fakeCamera = makeFakeCamera();
+const fakeCamera = getFakeCamera();
 
-describe('test modal action', () => {
-  it('renders correctly catalog modal', () => {
+
+describe('modal action component', () => {
+  it('should render correctly modal on catalog page', () => {
     window.scrollTo = jest.fn();
 
     render (
       <Provider store={store}>
-          <ModalAction
-            usingComponent={ComponentName.Catalog}
-            handleCloseModal={jest.fn()}
-            data={fakeCamera}
-          />
+        <ModalAction
+          usingComponent={ComponentName.Catalog}
+          handleCloseModal={jest.fn()}
+          data={fakeCamera}
+        />
       </Provider>
     );
     expect(screen.getByText(/Добавить в корзину/i)).toBeInTheDocument();
@@ -40,7 +31,7 @@ describe('test modal action', () => {
     expect(screen.getByText(/Артикул:/i)).toBeInTheDocument();
   });
 
-  it('renders correctly product modal', () => {
+  it('should render modal correctly on product page', () => {
     window.scrollTo = jest.fn();
 
     render (
@@ -52,13 +43,12 @@ describe('test modal action', () => {
         />
       </Provider>
     );
-    const form = document.querySelector('form');
 
-    expect(form).toBeInTheDocument();
+    expect(screen.getByTestId('modal-action')).toBeInTheDocument();
     expect(screen.getByText(/Оставить отзыв/i)).toBeInTheDocument();
   });
 
-  it('renders correctly basket modal', () => {
+  it('should render modal correctly on basket page', () => {
     window.scrollTo = jest.fn();
     render (
       <Provider store={store}>

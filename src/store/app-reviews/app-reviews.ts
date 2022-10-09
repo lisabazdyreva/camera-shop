@@ -3,7 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {AppReviews} from '../../types/state';
 import {LoadingStatus, NameSpace} from '../../utils/const';
 
-import {fetchReviewsAction, postReviewAction} from '../api-actions/api-actions-reviews';
+import {fetchReviewsAction, postReviewAction} from '../api-actions/api-actions-reviews/api-actions-reviews';
 
 const initialState: AppReviews = {
   reviews: [],

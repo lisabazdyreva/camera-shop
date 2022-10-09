@@ -3,8 +3,14 @@ import {Camera} from '../types/camera';
 import {Review} from '../types/review';
 import faker from 'faker';
 import {LoadingStatus} from './const';
+import {createAPI} from '../services/api';
+import MockAdapter from 'axios-mock-adapter';
+import thunk from 'redux-thunk';
+import {configureMockStore} from '@jedmao/redux-mock-store';
+import {State} from '../types/state';
+import {Action, ThunkDispatch} from '@reduxjs/toolkit';
 
-export const makeFakeCamera = (): Camera => ({
+export const getFakeCamera = (): Camera => ({
   id: faker.datatype.number(),
   name: faker.datatype.string(),
   vendorCode: faker.datatype.string(),
@@ -21,7 +27,7 @@ export const makeFakeCamera = (): Camera => ({
   reviewCount: faker.datatype.number(),
 });
 
-export const makeFakeReview = (): Review => ({
+export const getFakeReview = (): Review => ({
   id: faker.datatype.string(),
   userName: faker.datatype.string(),
   advantage: faker.datatype.string(),
@@ -32,7 +38,7 @@ export const makeFakeReview = (): Review => ({
   cameraId: faker.datatype.number(),
 });
 
-export const makeFakePromo = () : Promo => ({
+export const getFakePromo = () : Promo => ({
   id: faker.datatype.number(),
   name: faker.datatype.string(),
   previewImg: faker.datatype.string(),
@@ -41,27 +47,25 @@ export const makeFakePromo = () : Promo => ({
   previewImgWebp2x: faker.datatype.string(),
 });
 
-export const makeFakeLongDescription = () => faker.datatype.string() + '. ' + faker.datatype.string() + '. ' + faker.datatype.string() + '. ';
-export const makeFakeShortDescription = () => faker.datatype.string() + '. ' + faker.datatype.string() + '. ';
+export const getFakeLongDescription = () => `${faker.datatype.string() }. ${ faker.datatype.string() }. ${ faker.datatype.string() }. `;
+export const getFakeShortDescription = () => `${faker.datatype.string() }. `;
 
-export const makeFakeProductFeatures = () => ({
+export const getFakeProductFeatures = () => ({
   vendorCode: faker.datatype.string(),
   category: faker.datatype.string(),
   type: faker.datatype.string(),
   level: faker.datatype.string(),
 });
 
-export const makeFakeDataTabs = () => ({...makeFakeProductFeatures(), description: makeFakeLongDescription()});
+export const getFakeDataTabs = () => ({...getFakeProductFeatures(), description: getFakeLongDescription()});
 
 
 export const getFakeSuccessStatus = () => LoadingStatus.Success;
 export const getFakeErrorStatus = () => LoadingStatus.Error;
 export const getFakeLoadingStatus = () => LoadingStatus.Loading;
 
-export const makeFakeErrorText = () => faker.datatype.string();
-
-
-export const makeFakePicture = () => ({
+export const getFakeErrorText = () => faker.datatype.string();
+export const getFakePicture = () => ({
   width: faker.datatype.number(),
   height: faker.datatype.number(),
   alt: faker.datatype.string(),
@@ -69,3 +73,46 @@ export const makeFakePicture = () => ({
   srcSetImg: faker.datatype.string(),
   srcSetSource: [faker.datatype.string(), faker.datatype.string()],
 });
+
+export const getFakeCameras = () => [
+  getFakeCamera(),
+  getFakeCamera(),
+  getFakeCamera(),
+  getFakeCamera(),
+  getFakeCamera(),
+  getFakeCamera(),
+  getFakeCamera(),
+  getFakeCamera(),
+  getFakeCamera(),
+];
+
+export const getFakeReviews = () => [
+  getFakeReview(),
+  getFakeReview(),
+  getFakeReview(),
+  getFakeReview(),
+  getFakeReview(),
+  getFakeReview(),
+  getFakeReview(),
+  getFakeReview()
+];
+
+export const getFakePostReview = () => ({
+  userName: faker.datatype.string(),
+  advantage: faker.datatype.string(),
+  disadvantage: faker.datatype.string(),
+  rating: faker.datatype.number(),
+  review: faker.datatype.string(),
+  cameraId: faker.datatype.number(),
+});
+
+export const getFakeID = () => faker.datatype.number();
+
+
+export const api = createAPI();
+export const mockAPI = new MockAdapter(api);
+export const middlewares = [thunk.withExtraArgument(api)];
+
+export const mockStore = configureMockStore<State, Action, ThunkDispatch<State, typeof api, Action>>(middlewares);
+
+export const UNKNOWN_TYPE = {type: 'UNKNOWN_ACTION'};

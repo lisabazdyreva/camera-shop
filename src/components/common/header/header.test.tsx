@@ -3,17 +3,16 @@ import {MemoryRouter} from 'react-router-dom';
 
 import Header from './header';
 
-describe('test header',  () => {
-  it ('renders correctly', () => {
+describe('header component', () => {
+  it ('should render correctly', () => {
     render (
       <MemoryRouter>
         <Header/>
       </MemoryRouter>
     );
+    const listClasses = screen.getByTestId('header-list').className;
 
-    const navigationHeaderList = document.querySelector('.main-nav__list');
-
-    expect(navigationHeaderList).toBeInTheDocument();
+    expect(listClasses === 'main-nav__list').toBe(true);
     expect(screen.getByText(/О компании/i)).toBeInTheDocument();
     expect(screen.getByText(/Каталог/i)).toBeInTheDocument();
   });

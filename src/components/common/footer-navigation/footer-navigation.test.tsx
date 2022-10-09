@@ -2,19 +2,19 @@ import {render, screen} from '@testing-library/react';
 import {FooterNavigation} from '../common';
 import {MemoryRouter} from 'react-router-dom';
 
-describe('test footer navigation', () => {
-  it('renders correctly', () => {
+describe('footer navigation component', () => {
+  it('should render correctly', () => {
     render (
       <MemoryRouter>
         <FooterNavigation />
       </MemoryRouter>
     );
 
-    const footerNavigationItems = document.querySelectorAll('.footer__nav-item');
+    const footerNavigationListClass = screen.queryAllByRole('list')[0].className;
 
     expect(screen.getByText(/Навигация/i)).toBeInTheDocument();
     expect(screen.getByText(/Поддержка/i)).toBeInTheDocument();
 
-    expect(footerNavigationItems.length).toBe(3);
+    expect(footerNavigationListClass === 'footer__list').toBe(true);
   });
 });

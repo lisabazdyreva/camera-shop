@@ -1,6 +1,6 @@
 const Sorting = ():JSX.Element => (
   <div className="catalog-sort">
-    <form action="src/components/pages/catalog/components/sorting/sorting#">
+    <form action="src/components/pages/catalog/components/sorting/sorting#" data-testid='sorting-form'>
       <div className="catalog-sort__inner">
         <p className="title title--h5">Сортировать:</p>
         <div className="catalog-sort__type">

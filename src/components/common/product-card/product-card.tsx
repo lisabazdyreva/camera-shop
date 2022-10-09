@@ -21,7 +21,7 @@ const ProductCard = ({handleAddModal, data, additionalClass, withoutBasketImplem
 
   const [isAddedBasket, setIsAddedBasket] = useState('Not added to basket');// TODO next iteration
 
-  const handleButtonAddClick = () => {
+  const handleButtonAddToBasketClick = () => {
     handleAddModal(data);
     if (withoutBasketImplementation) {
       setIsAddedBasket('Added to basket');
@@ -48,7 +48,7 @@ const ProductCard = ({handleAddModal, data, additionalClass, withoutBasketImplem
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button" onClick={handleButtonAddClick}>Купить</button>
+        <button className="btn btn--purple product-card__btn" type="button" onClick={handleButtonAddToBasketClick}>Купить</button>
         <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}/${TabType.Features}`}>Подробнее</Link>
       </div>
     </div>

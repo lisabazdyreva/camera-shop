@@ -3,7 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {AppCameras} from '../../types/state';
 import {LoadingStatus, NameSpace} from '../../utils/const';
 
-import {fetchCamerasAction} from '../api-actions/api-actions-cameras';
+import {fetchCamerasAction} from '../api-actions/api-actions-cameras/api-actions-cameras';
 
 const initialState: AppCameras = {
   cameras: [],

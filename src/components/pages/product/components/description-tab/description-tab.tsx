@@ -25,7 +25,7 @@ const DescriptionTab = ({description}: DescriptionTabProps):JSX.Element => {
   }
 
   return (
-    <div className="product__tabs-text">
+    <div className="product__tabs-text" data-testid='product-tabs'>
       {
         (sentences.length === DescriptionLength.Medium || sentences.length === DescriptionLength.Short)
           ? paragraph

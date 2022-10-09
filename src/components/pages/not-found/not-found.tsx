@@ -4,7 +4,7 @@ import {AppRoute, DefaultValue, NOT_FOUND_NOTIFICATION, PaginationRoute} from '.
 const NotFound = ():JSX.Element => {
   const navigate = useNavigate();
 
-  const onButtonToMainClick = () => {
+  const handleButtonToMainClick = () => {
     navigate(`${AppRoute.Catalog}${PaginationRoute.Page}${DefaultValue.CatalogPageNumber}`);
   };
 
@@ -16,7 +16,7 @@ const NotFound = ():JSX.Element => {
             {NOT_FOUND_NOTIFICATION}
           </p>
           <div className='not-found__buttons'>
-            <button className='btn btn--purple' onClick={onButtonToMainClick}>На главную</button>
+            <button className='btn btn--purple' onClick={handleButtonToMainClick}>На главную</button>
           </div>
         </section>
       </div>
