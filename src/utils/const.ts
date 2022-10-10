@@ -1,4 +1,11 @@
 import {Camera as CameraType} from '../types/camera';
+import {ReviewPost} from '../types/review';
+
+export const CAMERA_ADJECTIVE_ENDING = 'ая';
+export const FORM_ID_TYPE = 'id';
+export const MAX_RATING = 5;
+export const NOT_FOUND_NOTIFICATION = 'Такой страницы не найдено.';
+export const LOADER_NOTIFICATION = 'Идёт загрузка...';
 
 export const MenuItem = {
   Catalog: 'Каталог',
@@ -55,23 +62,6 @@ export const LoadingStatus = {
   Error: 'error',
 } as const;
 
-export const initialCamera: CameraType = {
-  id: 0,
-  name: '',
-  vendorCode: '',
-  type: '',
-  category: '',
-  description: '',
-  level: '',
-  rating: 0,
-  price: 0,
-  previewImg: '',
-  previewImg2x: '',
-  previewImgWebp: '',
-  previewImgWebp2x: '',
-  reviewCount: 0,
-};
-
 export const UrlRoute = {
   Base: 'https://camera-shop.accelerator.pages.academy',
   Promo: '/promo',
@@ -93,6 +83,7 @@ export enum NameSpace {
 export const Step = {
   Pagination: 9,
   Slider: 3,
+  Reviews: 3,
 } as const;
 
 export const ComponentName = {
@@ -139,7 +130,6 @@ export const TabType = {
   Features: 'features',
   Description: 'description',
 } as const;
-
 
 export const TabDictionary = {
   Features: 'Характеристики',
@@ -196,8 +186,6 @@ export const ReviewItemsList = {
   Review: 'Комментарий',
 } as const;
 
-export const CAMERA_ADJECTIVE_ENDING = 'ая';
-
 export const InputName = {
   Name: 'user-name',
   Advantage: 'user-plus',
@@ -243,8 +231,6 @@ export const RatingDictionary = {
   Worse: 'Ужасно',
 } as const;
 
-export const MAX_RATING = 5;
-
 export const ErrorData = {
   Reviews: 'отзывов',
   Product: 'информации о камере',
@@ -252,31 +238,44 @@ export const ErrorData = {
   Banner: 'баннера',
 } as const;
 
-
-export const FORM_ID_TYPE = 'id';
+export const ReviewValidLength = {
+  Username: 2,
+  Advantage: 3,
+  Review: 5,
+} as const;
 
 export const TopCoordinate = {
   X: 0,
   Y: 0,
 } as const;
 
-
-export const NOT_FOUND_NOTIFICATION = 'Такой страницы не найдено.';
-export const LOADER_NOTIFICATION = 'Идёт загрузка...';
-
 export const ScrollSetting = {
   top: 0,
   behavior: 'smooth',
 } as const;
 
-export const REVIEWS_PER_TIME = 3;
-
-
-export const initialReview = {
+export const initialReview: ReviewPost = {
   cameraId: 0,
   userName: '',
   advantage: '',
   disadvantage: '',
   review: '',
   rating: 0,
+};
+
+export const initialCamera: CameraType = {
+  id: 0,
+  name: '',
+  vendorCode: '',
+  type: '',
+  category: '',
+  description: '',
+  level: '',
+  rating: 0,
+  price: 0,
+  previewImg: '',
+  previewImg2x: '',
+  previewImgWebp: '',
+  previewImgWebp2x: '',
+  reviewCount: 0,
 };

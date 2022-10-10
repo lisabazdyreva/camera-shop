@@ -1,4 +1,4 @@
-import {ratingItems as ratings} from '../../../utils/utils';
+import {Rating as RatingEnum} from '../../../utils/const';
 import {RatingClassType} from '../../../types/types';
 
 interface RatingProps {
@@ -12,7 +12,7 @@ interface RatingProps {
 const Rating = ({rating, reviewCount, id, isDetailed, additionalClass} :RatingProps):JSX.Element => (
   <div className={`rate ${additionalClass}`}>
     {
-      ratings.map((ratingItem) => {
+      Object.values(RatingEnum).map((ratingItem) => {
         const keyValue = `${id}_${ratingItem}`;
         const icon = rating >= ratingItem ? '#icon-full-star' : '#icon-star';
 

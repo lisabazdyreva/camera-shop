@@ -1,5 +1,6 @@
 import {useEffect} from 'react';
 import {createFocusTrap} from 'focus-trap';
+
 import {TopCoordinate} from '../utils/const';
 
 export const useBodyBlock = () => {

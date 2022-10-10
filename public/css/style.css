@@ -96,7 +96,6 @@ abbr[title] {
   text-decoration: underline;
   /* 2 */
   -webkit-text-decoration: underline dotted;
-  text-decoration: underline dotted;
   /* 2 */
   border-bottom: none;
   /* 1 */
@@ -527,17 +526,16 @@ input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
-/*TODO*/
+
 select,
-textarea
-/*input:matches([type="email"],*/
-/*[type="number"],*/
-/*[type="password"],*/
-/*[type="search"],*/
-/*[type="tel"],*/
-/*[type="text"],*/
-/*[type="url"]) */
-{
+textarea,
+input:is([type="email"],
+[type="number"],
+[type="password"],
+[type="search"],
+[type="tel"],
+[type="text"],
+[type="url"]) {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -551,7 +549,7 @@ button,
   -moz-appearance: none;
   appearance: none;
 }
-/*TODO*/
+
 .wrapper {
   position: relative;
   display: -webkit-box;
@@ -561,7 +559,6 @@ button,
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  min-height: 100vh;
   /* stylelint-disable-next-line */
   /*min-height: calc(100 * var(--vh, 1vh));*/
 }
@@ -611,7 +608,6 @@ button,
 }
 
 .no-transition {
-  /* stylelint-disable-next-line */
   -webkit-transition: none !important;
   -o-transition: none !important;
   transition: none !important;
@@ -639,7 +635,7 @@ button,
 .page-content .title--h3 {
   margin-bottom: 24px;
 }
-/*TODO*/
+
 .page-content__columns {
   display: -ms-grid;
   display: grid;
@@ -648,7 +644,6 @@ button,
   -ms-grid-columns: 236px 60px 1fr;
   grid-template-columns: 236px 1fr;
   -ms-grid-rows: min-content 1fr min-content;
-  /*grid-template-rows: -webkit-min-content 1fr -webkit-min-content;*/
   grid-template-rows: min-content 1fr min-content;
 }
 
@@ -838,7 +833,7 @@ button,
   line-height: 20px;
   color: #9a9ac6;
 }
-/*TODO*/
+
 .footer__nav {
   display: -ms-grid;
   display: grid;
@@ -848,7 +843,6 @@ button,
   -webkit-column-gap: 162px;
   -moz-column-gap: 162px;
   column-gap: 162px;
-  /*-ms-grid-columns: (150px)[3];*/
   grid-template-columns: repeat(3, 150px);
   grid-row-gap: 40px;
 }
@@ -1034,9 +1028,8 @@ button,
 .modal--narrow .modal__content {
   width: 320px;
 }
-/*TODO*/
+
 .btn {
-  /*display: -webkit-inline-box;*/
   display: -ms-inline-flexbox;
   display: inline-flex;
   -webkit-box-pack: center;
@@ -1541,8 +1534,7 @@ button,
 
 .form-search__input {
   width: 100%;
-  padding: 0;
-  padding-right: 30px;
+  padding: 0 30px 0 0;
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
@@ -2060,9 +2052,8 @@ button,
 .catalog-sort__btn--down {
   margin-left: 10px;
 }
-/*TODO*/
+
 .catalog-sort__btn label {
-  /*display: -webkit-inline-box;*/
   display: -ms-inline-flexbox;
   display: inline-flex;
   -webkit-box-pack: center;
@@ -2195,7 +2186,7 @@ button,
 .form-checkbox input:disabled:hover + label {
   pointer-events: none;
 }
-/*TODO*/
+
 .cards {
   display: -ms-grid;
   display: grid;
@@ -2203,7 +2194,6 @@ button,
   -moz-column-gap: 32px;
   column-gap: 32px;
   row-gap: 40px;
-  /*-ms-grid-columns: (1fr)[3];*/
   grid-template-columns: repeat(3, 1fr);
 }
 
@@ -2296,8 +2286,7 @@ button,
 }
 
 .rate__count {
-  margin: 0;
-  margin-left: 12px;
+  margin: 0 0 0 12px;
   color: #b4b4d7;
 }
 
@@ -2805,9 +2794,8 @@ button,
 .basket__promo .title--h4 {
   margin-bottom: 13px;
 }
-/*TODO*/
+
 .btn-icon {
-  /*display: -webkit-inline-box;*/
   display: -ms-inline-flexbox;
   display: inline-flex;
   -webkit-box-pack: center;
@@ -2929,7 +2917,7 @@ button,
   top: 3px;
 }
 
-.basket-form form .custom-input__sucess {
+.basket-form form .custom-input__success {
   top: 3px;
 }
 
@@ -3394,12 +3382,11 @@ button,
   width: 10px;
   height: 10px;
 }
-/*TODO*/
+
 .up-btn {
   position: absolute;
   right: 22px;
   bottom: 330px;
-  /*display: -webkit-inline-box;*/
   display: -ms-inline-flexbox;
   display: inline-flex;
   -webkit-box-pack: center;
@@ -3454,9 +3441,8 @@ button,
   width: 100%;
   margin-bottom: 25px;
 }
-/*TODO*/
+
 .tabs__control {
-  /*display: -webkit-inline-box;*/
   display: -ms-inline-flexbox;
   display: inline-flex;
   -webkit-box-pack: center;
@@ -3539,13 +3525,6 @@ button,
   opacity: 1;
 }
 
-/* @media (hover: hover), screen and (min-width: 0\0) {
-  &:hover,
-  &:focus {
-    color: $color-default-white;
-  }
-} */
-
 @media (hover: hover), screen and (min-width: 0\0) {
   .header__basket-link:hover,
   .header__basket-link:focus {
@@ -3626,7 +3605,6 @@ button,
   .slider-controls:active {
     color: #7575e2;
     background-color: #a2a2ff;
-    /*pointer-events: none;*/
   }
 
   .link:hover,

@@ -11,7 +11,7 @@ export const fetchPromosAction = createAsyncThunk<Promos, undefined, {
   extra: AxiosInstance,
 }>(
   'promos/fetchPromos',
-  async (_arg, {dispatch, extra: api}) => {
+  async (_arg, {extra: api}) => {
     const {data} = await api.get<Promos | Promo>(`${UrlRoute.Base}${UrlRoute.Promo}`);
 
     return Array.isArray(data) ? data : [data];

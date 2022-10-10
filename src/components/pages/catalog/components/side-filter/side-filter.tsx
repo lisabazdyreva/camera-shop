@@ -22,7 +22,7 @@ const SideFilter = ():JSX.Element => (
           <legend className="title title--h5">Категория</legend>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input type="checkbox" name="photocamera" /> {/*TODO checked*/}
+              <input type="checkbox" name="photocamera" />
               <span className="custom-checkbox__icon"></span>
               <span className="custom-checkbox__label">Фотокамера</span>
             </label>

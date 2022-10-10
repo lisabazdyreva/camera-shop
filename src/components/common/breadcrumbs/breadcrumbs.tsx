@@ -1,7 +1,6 @@
 import {Link} from 'react-router-dom';
 
-import {ComponentName, BreadcrumbsItem,} from '../../../utils/const';
-import {breadcrumbsLinks} from '../../../utils/utils';
+import {ComponentName, BreadcrumbsItem, BreadcrumbsLink,} from '../../../utils/const';
 import {useAppSelector} from '../../../hooks';
 import {
   ComponentNameType,
@@ -21,8 +20,6 @@ interface BreadcrumbsProps {
 }
 
 const Breadcrumbs = ({data, usingComponent, breadcrumbItems}: BreadcrumbsProps):JSX.Element => {
-  const breadcrumbs = Object.values(breadcrumbItems);
-
   const currentPage = useAppSelector(getCurrentPage);
 
   let name: string;
@@ -35,9 +32,9 @@ const Breadcrumbs = ({data, usingComponent, breadcrumbItems}: BreadcrumbsProps):
       <div className="container">
         <ul className="breadcrumbs__list">
           {
-            breadcrumbs.map((breadcrumb, index) => {
-              const catalogPageLink = breadcrumb === BreadcrumbsItem.Product.Catalog && usingComponent === ComponentName.Product && `${breadcrumbsLinks[index]}${currentPage}`;
-              const mainLink = breadcrumbsLinks[0];
+            Object.values(breadcrumbItems).map((breadcrumb, index) => {
+              const catalogPageLink = breadcrumb === BreadcrumbsItem.Product.Catalog && usingComponent === ComponentName.Product && `${Object.values(BreadcrumbsLink)[index]}${currentPage}`;
+              const mainLink = Object.values(BreadcrumbsLink)[0];
 
               const linkElement = (
                 <Link className="breadcrumbs__link" to={catalogPageLink || mainLink}>
@@ -52,7 +49,7 @@ const Breadcrumbs = ({data, usingComponent, breadcrumbItems}: BreadcrumbsProps):
 
               return (
                 <li className="breadcrumbs__item" key={breadcrumb}>
-                  {index === breadcrumbs.length - 1 ? textElement : linkElement}
+                  {index === Object.values(breadcrumbItems).length - 1 ? textElement : linkElement}
                 </li>
               );
             })

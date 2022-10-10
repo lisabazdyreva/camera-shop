@@ -5,7 +5,7 @@ import {LoadingStatusType} from '../../../../../types/types';
 import {ErrorData, LoadingStatus, Step} from '../../../../../utils/const';
 import {useAppDispatch} from '../../../../../hooks';
 
-import useSlider from '../../../../../hooks/product-hooks/useSlider';
+import useSlider from '../../../../../hooks/use-slider';
 import {setBasket} from '../../../../../store/app-process/app-process';
 
 

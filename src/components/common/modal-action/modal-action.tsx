@@ -1,33 +1,32 @@
-import {useEffect} from 'react';
-
 import {ReviewForm} from '../../pages/product/components/components';
 import {BasketItemShort} from '../../pages/basket/components/components';
 import {BasketAddButton, BasketRemoveButtons} from './components/components';
 
-import {escPressHandler, getTitle} from '../../../utils/utils';
+import {getTitle} from '../../../utils/utils';
 import {ComponentName, ModalContent} from '../../../utils/const';
-import {useBodyBlock} from '../../../hooks/useBodyBlock';
+import {useBodyBlock} from '../../../hooks/use-body-block';
 import {useAppDispatch} from '../../../hooks';
 
 import {ComponentNameType} from '../../../types/types';
 import {Camera} from '../../../types/camera';
 
 import {cleanForm} from '../../../store/app-process/app-process';
+import {useEscClose} from '../../../hooks/use-esc-close';
 
 
 interface ModalActionProps {
   usingComponent: ComponentNameType;
   data? : Camera;
-  handleCloseModal: (isOpen: boolean) => void;
-  handleOpenSuccessModal?: (isOpen: boolean) => void;
+  onModalClose: () => void;
+  onSuccessModalOpen?: () => void;
 }
 
-const ModalAction = ({usingComponent, data, handleCloseModal, handleOpenSuccessModal}: ModalActionProps):JSX.Element => {
+const ModalAction = ({usingComponent, data, onModalClose, onSuccessModalOpen}: ModalActionProps):JSX.Element => {
   const dispatch = useAppDispatch();
 
   const getDetails = () => {
-    if (usingComponent === ComponentName.Product && data) {
-      return <ReviewForm id={data.id} handleCloseModal={handleCloseModal} handleOpenSuccessModal={handleOpenSuccessModal}/>;
+    if (usingComponent === ComponentName.Product && data && onSuccessModalOpen) {
+      return <ReviewForm id={data.id} onModalClose={onModalClose} onSuccessModalOpen={onSuccessModalOpen}/>;
     }
 
     if (data) {
@@ -39,7 +38,7 @@ const ModalAction = ({usingComponent, data, handleCloseModal, handleOpenSuccessM
     if (usingComponent === ComponentName.Basket) {
       return <BasketRemoveButtons />;
     } else if (usingComponent === ComponentName.Catalog) {
-      return <BasketAddButton data={data} handleCloseModal={handleCloseModal} handleOpenSuccessModal={handleOpenSuccessModal}/>;
+      return <BasketAddButton data={data} handleCloseModal={onModalClose} handleOpenSuccessModal={onSuccessModalOpen}/>;
     }
   };
 
@@ -47,23 +46,15 @@ const ModalAction = ({usingComponent, data, handleCloseModal, handleOpenSuccessM
   const modalDetails = getDetails();
   const modalButtons = getButtons();
 
-  useEffect(() => {
-    if (usingComponent === ComponentName.Product) {
-      dispatch(cleanForm());
-    }
-
-    escPressHandler(handleCloseModal);
-  }, [handleCloseModal, dispatch, usingComponent]);
-
-
-  useBodyBlock();
-
   const handleModalClose = () => {
     if (usingComponent === ComponentName.Product) {
       dispatch(cleanForm());
     }
-    handleCloseModal(false);
+    onModalClose();
   };
+
+  useEscClose(onModalClose);
+  useBodyBlock();
 
   return (
     <div className="modal is-active" data-testid='modal-action'>

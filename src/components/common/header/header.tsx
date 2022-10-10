@@ -1,8 +1,6 @@
 import {Link} from 'react-router-dom';
 import {Logo, NavItem, Search} from '../common';
-
-import {menuItems} from '../../../utils/utils';
-import {AppRoute, ComponentName} from '../../../utils/const';
+import {AppRoute, ComponentName, MenuItem} from '../../../utils/const';
 
 
 const Header = ():JSX.Element => (
@@ -12,7 +10,7 @@ const Header = ():JSX.Element => (
       <nav className="main-nav header__main-nav">
         <ul className="main-nav__list" data-testid='header-list'>
           {
-            menuItems.map((menuItem) => <NavItem usingComponent={ComponentName.Header} name={menuItem} key={`${menuItem}_${menuItem.length}`} />)
+            Object.values(MenuItem).map((menuItem) => <NavItem usingComponent={ComponentName.Header} name={menuItem} key={`${menuItem}_${menuItem.length}`} />)
           }
         </ul>
       </nav>

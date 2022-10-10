@@ -2,9 +2,9 @@ import {useNavigate, useParams} from 'react-router-dom';
 
 import {DescriptionTab, FeatureTab} from '../components';
 
-import {AppRoute, TabType} from '../../../../../utils/const';
-import {tabTypes, tabNames} from '../../../../../utils/utils';
+import {AppRoute, TabDictionary, TabType} from '../../../../../utils/const';
 import {CameraFeatures} from '../../../../../types/camera';
+import {TabsType} from '../../../../../types/types';
 
 interface ProductTabsProps {
   data: CameraFeatures & {description: string};
@@ -17,7 +17,7 @@ const ProductTabs = ({data}: ProductTabsProps):JSX.Element => {
   const {id, tab} = params;
   const {description, vendorCode, category, type, level} = data;
 
-  const handleTabButtonClick = (tabType: typeof TabType[keyof typeof TabType]) => {
+  const handleTabButtonClick = (tabType: TabsType) => {
     navigation(`${AppRoute.Product}/${id}/${tabType}`);
   };
 
@@ -25,9 +25,9 @@ const ProductTabs = ({data}: ProductTabsProps):JSX.Element => {
     <div className="tabs product__tabs">
       <div className="tabs__controls product__tabs-controls">
         {
-          tabTypes.map((tabType, index) => {
+          Object.values(TabType).map((tabType, index) => {
             const buttonClasses = `tabs__control ${tab === tabType && 'is-active'}`;
-            const name = tabNames[index];
+            const name = Object.values(TabDictionary)[index];
             return (
               <button
                 key={tabType}

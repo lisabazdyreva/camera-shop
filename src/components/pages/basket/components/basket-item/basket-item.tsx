@@ -1,11 +1,10 @@
 import {Picture} from '../../../../common/common';
 
 interface BasketItemProps {
-  handleOpenModal: (isOpen: boolean) => void;
+  onModalOpen: () => void;
 }
 
-
-const BasketItem = ({handleOpenModal}: BasketItemProps):JSX.Element => (
+const BasketItem = ({onModalOpen}: BasketItemProps):JSX.Element => (
   <li className="basket-item">
     <div className="basket-item__img">
       <Picture
@@ -48,7 +47,7 @@ const BasketItem = ({handleOpenModal}: BasketItemProps):JSX.Element => (
     <div className="basket-item__total-price">
       <span className="visually-hidden">Общая цена:</span>37 940 ₽
     </div>
-    <button className="cross-btn" type="button" aria-label="Удалить товар" onClick={() => handleOpenModal(true)}>
+    <button className="cross-btn" type="button" aria-label="Удалить товар" onClick={onModalOpen}>
       <svg width="10" height="10" aria-hidden="true">
         <use xlinkHref="#icon-close"></use>
       </svg>

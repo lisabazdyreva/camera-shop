@@ -1,9 +1,9 @@
-import {socialNames} from '../../../utils/utils';
+import {SocialName} from '../../../utils/const';
 
 const Social = ():JSX.Element => (
   <ul className="social">
     {
-      socialNames.map((socialName) => {
+      Object.values(SocialName).map((socialName) => {
         const icon = `#icon-${socialName}`;
         return (
           <li className="social__item" key={socialName}>

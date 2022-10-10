@@ -1,21 +1,21 @@
-import {useEffect} from 'react';
-
 import {CatalogButtons, IconReview, IconSuccess, ReturnButton} from './components/components';
 
-import {getTitle, escPressHandler} from '../../../utils/utils';
+import {getTitle} from '../../../utils/utils';
 import {ComponentName, LoadingStatus, ModalContent} from '../../../utils/const';
 
 import {ComponentNameType} from '../../../types/types';
 
 import {getReviewPostStatus} from '../../../store/app-reviews/selectors';
-import {useBodyBlock} from '../../../hooks/useBodyBlock';
+import {useBodyBlock} from '../../../hooks/use-body-block';
 import {useAppSelector} from '../../../hooks';
+import {useEscClose} from '../../../hooks/use-esc-close';
 
 interface ModalInfoProps {
   usingComponent: ComponentNameType;
-  handleCloseModal: (isOpen: boolean) => void;
+  onModalClose: () => void;
 }
-const ModalInfo = ({usingComponent, handleCloseModal}: ModalInfoProps):JSX.Element => {
+
+const ModalInfo = ({usingComponent, onModalClose}: ModalInfoProps):JSX.Element => {
   const reviewPostStatus = useAppSelector(getReviewPostStatus);
 
   const title = usingComponent === ComponentName.Product
@@ -33,9 +33,9 @@ const ModalInfo = ({usingComponent, handleCloseModal}: ModalInfoProps):JSX.Eleme
     if (usingComponent === ComponentName.Basket) {
       return <ReturnButton />;
     } else if (usingComponent === ComponentName.Catalog) {
-      return <CatalogButtons handleCloseSuccessModal={handleCloseModal}/>;
+      return <CatalogButtons handleCloseSuccessModal={onModalClose}/>;
     } else if (usingComponent === ComponentName.Product) {
-      return <ReturnButton handleCloseSuccessModal={handleCloseModal}/>;
+      return <ReturnButton handleCloseSuccessModal={onModalClose}/>;
     }
   };
 
@@ -43,14 +43,11 @@ const ModalInfo = ({usingComponent, handleCloseModal}: ModalInfoProps):JSX.Eleme
   const modalButtons = getButtons();
 
 
-  useEffect(() => {
-    escPressHandler(handleCloseModal);
-  }, [handleCloseModal]);
-
+  useEscClose(onModalClose);
   useBodyBlock();
 
   return (
-    <div className="modal is-active modal--narrow" onClick={() => handleCloseModal(false)} data-testid='modal-info'>
+    <div className="modal is-active modal--narrow" onClick={onModalClose} data-testid='modal-info'>
       <div className="modal__wrapper">
         <div className="modal__overlay"></div>
         <div className="modal__content" onClick={(evt) => evt.stopPropagation()}>
@@ -59,7 +56,7 @@ const ModalInfo = ({usingComponent, handleCloseModal}: ModalInfoProps):JSX.Eleme
           <div className="modal__buttons">
             {modalButtons}
           </div>
-          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => handleCloseModal(false)}>
+          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={onModalClose}>
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg>

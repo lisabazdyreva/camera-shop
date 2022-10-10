@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Cameras} from '../../types/camera';
+import {Cameras} from '../types/camera';
 
 const useSlider = (items: Cameras, step: number) => {
   const [counter, setCount] = useState(0);

@@ -52,20 +52,16 @@ const Product = ():JSX.Element => {
     window.scrollTo(ScrollSetting);
   };
 
-  const fetchData = () => { // TODO useCallback
-    const numberId = Number(id);
-    const data = {id: numberId};
-
-    dispatch(fetchCameraAction(data));
-    dispatch(fetchReviewsAction(data));
-    dispatch(fetchSimilarCamerasAction(data));
-  };
-
   useEffect(() => {
     if (id) {
-      fetchData();
+      const numberId = Number(id);
+      const data = {id: numberId};
+
+      dispatch(fetchCameraAction(data));
+      dispatch(fetchReviewsAction(data));
+      dispatch(fetchSimilarCamerasAction(data));
     }
-  }, [id, fetchData]);
+  }, [id, dispatch]);
 
   useEffect(() => {
     window.scrollTo(TopCoordinate.X, TopCoordinate.Y);
@@ -101,8 +97,17 @@ const Product = ():JSX.Element => {
             </section>
           </div>
         </div>
-        { isReviewModalOpen && camera && <ModalAction data={camera} usingComponent={ComponentName.Product} handleOpenSuccessModal={setIsSuccessReviewModalOpen} handleCloseModal={setIsReviewModalOpen}/> }
-        { isSuccessReviewModalOpen && <ModalInfo usingComponent={ComponentName.Product} handleCloseModal={setIsSuccessReviewModalOpen}/> }
+        {isReviewModalOpen && camera
+          &&
+          <ModalAction
+            data={camera}
+            usingComponent={ComponentName.Product}
+            onSuccessModalOpen={() => setIsSuccessReviewModalOpen(true)}
+            onModalClose={() => setIsReviewModalOpen(false)}
+          />}
+        {isSuccessReviewModalOpen
+          &&
+          <ModalInfo usingComponent={ComponentName.Product} onModalClose={() => setIsSuccessReviewModalOpen(false)}/> }
       </main>
       <button className="up-btn" type='button' onClick={handleButtonToTopClick}>
         <svg width="12" height="18" aria-hidden="true">

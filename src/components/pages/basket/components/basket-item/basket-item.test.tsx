@@ -4,7 +4,7 @@ import {BasketItem} from '../components';
 describe('basket item component', () => {
   it('should render correctly', () => {
     render (
-      <BasketItem handleOpenModal={jest.fn()} />
+      <BasketItem onModalOpen={jest.fn()} />
     );
 
     expect(screen.getByText(/Общая цена:/i)).toBeInTheDocument();

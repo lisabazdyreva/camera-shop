@@ -4,7 +4,7 @@ import App from './components/app/app';
 import {Provider} from 'react-redux';
 import {HistoryRoute} from './components/common/common';
 import browserHistory from './browser-history';
-import {store} from './store';
+import {store} from './store/store';
 
 
 const root = ReactDOM.createRoot(

@@ -25,14 +25,14 @@ const Basket = ():JSX.Element => {
           <div className="container">
             <h1 className="title title--h2">Корзина</h1>
             <ul className="basket__list">
-              <BasketItem handleOpenModal={setIsRemoveModalOpen} />
+              <BasketItem onModalOpen={() => setIsRemoveModalOpen(true)} />
             </ul>
             <BasketSummary />
           </div>
         </section>
       </div>
-      { isSuccessModalOpen && <ModalInfo usingComponent={ComponentName.Basket} handleCloseModal={setIsSuccessModalOpen}/> }
-      { isRemoveModalOpen && <ModalAction usingComponent={ComponentName.Basket} handleCloseModal={setIsRemoveModalOpen}/> }
+      {isSuccessModalOpen && <ModalInfo usingComponent={ComponentName.Basket} onModalClose={() => setIsSuccessModalOpen(false)}/> }
+      {isRemoveModalOpen && <ModalAction usingComponent={ComponentName.Basket} onModalClose={() => setIsRemoveModalOpen(false)}/> }
     </main>
   );
 };

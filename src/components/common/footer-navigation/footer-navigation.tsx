@@ -1,12 +1,10 @@
 import {NavItem} from '../common';
-
-import {ComponentName} from '../../../utils/const';
-import {footerNavs} from '../../../utils/utils';
+import {ComponentName, FooterNavigation as FooterNavigationEnum} from '../../../utils/const';
 
 const FooterNavigation = ():JSX.Element => (
   <>
     {
-      footerNavs.map((footerNav) => {
+      Object.values(FooterNavigationEnum).map((footerNav) => {
         const title = footerNav.Translation;
 
         return (

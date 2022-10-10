@@ -36,19 +36,16 @@ const Catalog = ():JSX.Element => {
     setSelectedCameraData(data);
   };
 
-  const fetchCameras = (page: number) => {
-    const startIndex = (page - 1) * Step.Pagination;
-    dispatch(fetchCamerasAction({limit: Step.Pagination, startIndex}));
-  };
-
   useEffect(() => {
     dispatch(fetchPromosAction());
   });
 
   useEffect(() => {
-    handlePageNumberClick(pageNumberUrl);
-    fetchCameras(pageNumberUrl);
-  }, [currentPageNumber]); //TODO dependecies
+    dispatch(setCurrentPage(pageNumberUrl));
+
+    const startIndex = (pageNumberUrl - 1) * Step.Pagination;
+    dispatch(fetchCamerasAction({limit: Step.Pagination, startIndex}));
+  }, [currentPageNumber, dispatch, pageNumberUrl]);
 
   return (
     <main>
@@ -69,17 +66,15 @@ const Catalog = ():JSX.Element => {
           </div>
         </section>
       </div>
-      {
-        isModalAddOpen
+      {isModalAddOpen
         &&
         <ModalAction
           data={selectedCameraData}
           usingComponent={ComponentName.Catalog}
-          handleCloseModal={setIsModalAddOpen}
-          handleOpenSuccessModal={setIsModalSuccessOpen}
-        />
-      }
-      {isModalSuccessOpen && <ModalInfo usingComponent={ComponentName.Catalog} handleCloseModal={setIsModalSuccessOpen}/>}
+          onModalClose={() => setIsModalAddOpen(false)}
+          onSuccessModalOpen={() => setIsModalSuccessOpen(true)}
+        />}
+      {isModalSuccessOpen && <ModalInfo usingComponent={ComponentName.Catalog} onModalClose={() => setIsModalSuccessOpen(false)}/>}
     </main>
   );
 };

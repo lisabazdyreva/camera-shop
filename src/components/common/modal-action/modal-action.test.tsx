@@ -21,7 +21,7 @@ describe('modal action component', () => {
       <Provider store={store}>
         <ModalAction
           usingComponent={ComponentName.Catalog}
-          handleCloseModal={jest.fn()}
+          onModalClose={jest.fn()}
           data={fakeCamera}
         />
       </Provider>
@@ -38,7 +38,7 @@ describe('modal action component', () => {
       <Provider store={store}>
         <ModalAction
           usingComponent={ComponentName.Product}
-          handleCloseModal={jest.fn()}
+          onModalClose={jest.fn()}
           data={fakeCamera}
         />
       </Provider>
@@ -54,7 +54,7 @@ describe('modal action component', () => {
       <Provider store={store}>
         <ModalAction
           usingComponent={ComponentName.Basket}
-          handleCloseModal={jest.fn()}
+          onModalClose={jest.fn()}
         />
       </Provider>
     );

@@ -19,7 +19,7 @@ const ProductCard = ({handleAddModal, data, additionalClass, withoutBasketImplem
   const {name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price, id, reviewCount, rating} = data;
   const formattedPrice = getFormattedPrice(price);
 
-  const [isAddedBasket, setIsAddedBasket] = useState('Not added to basket');// TODO next iteration
+  const [, setIsAddedBasket] = useState('Not added to basket');// TODO next iteration
 
   const handleButtonAddToBasketClick = () => {
     handleAddModal(data);
@@ -30,7 +30,6 @@ const ProductCard = ({handleAddModal, data, additionalClass, withoutBasketImplem
 
   return (
     <div className={`product-card ${additionalClass}`} data-testid='card'>
-      {withoutBasketImplementation && isAddedBasket}
       <div className="product-card__img">
         <Picture
           width={280}

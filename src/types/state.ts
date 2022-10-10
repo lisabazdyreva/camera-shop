@@ -1,7 +1,7 @@
 import {Promos} from './promo';
 import {Cameras, Camera} from './camera';
 import {ReviewPost, Reviews} from './review';
-import {store} from '../store';
+import {store} from '../store/store';
 import {LoadingStatusType} from './types';
 
 

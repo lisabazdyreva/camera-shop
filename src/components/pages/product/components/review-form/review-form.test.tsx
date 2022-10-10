@@ -5,8 +5,9 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 
 import {ReviewForm} from '../components';
 import {initialReview, NameSpace} from '../../../../../utils/const';
+import {getFakeID} from '../../../../../utils/mocks';
 
-const FAKE_ID = 2;
+const fakeID = getFakeID();
 
 const mockStore = configureMockStore();
 const store = mockStore({
@@ -20,23 +21,14 @@ describe('test review form component', () => {
     render (
       <Provider store={store}>
         <MemoryRouter>
-          <ReviewForm handleCloseModal={jest.fn()} id={FAKE_ID} />
+          <ReviewForm onModalClose={jest.fn()} onSuccessModalOpen={jest.fn()} id={fakeID} />
         </MemoryRouter>
       </Provider>
     );
     expect(screen.getByText(/Ваше имя/i)).toBeInTheDocument();
     expect(screen.getByText(/Отправить отзыв/i)).toBeInTheDocument();
-  });
 
-  it('should render correctly when inputs invalid', () => {
-    render (
-      <Provider store={store}>
-        <MemoryRouter>
-          <ReviewForm handleCloseModal={jest.fn()} id={FAKE_ID} />
-        </MemoryRouter>
-      </Provider>
-    );
-    //TODO
+    expect(screen.getByTestId('name')).toBeInTheDocument();
+    expect(screen.getByTestId('plus')).toBeInTheDocument();
   });
-
 });

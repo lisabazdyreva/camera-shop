@@ -1,7 +1,6 @@
 import {ChangeEvent, FormEvent, Fragment} from 'react';
 
-import {ratings, ratingValues} from '../../../../../utils/utils';
-import {InputName, InputTitle, MAX_RATING} from '../../../../../utils/const';
+import {InputName, InputTitle, MAX_RATING, RatingDictionary, RatingValue} from '../../../../../utils/const';
 import {useAppDispatch} from '../../../../../hooks';
 
 import {setReviewFormData} from '../../../../../store/app-process/app-process';
@@ -16,8 +15,8 @@ const ReviewFormRateBar = ({selectedRating, isValid, handleInputInvalid}: Review
   const dispatch = useAppDispatch();
 
   const handleInputChange = (evt: ChangeEvent, index: number) => {
-    dispatch(setReviewFormData({type: InputName.Rating, value: ratingValues[index]}));
-    handleInputInvalid(evt, ratingValues[index]);
+    dispatch(setReviewFormData({type: InputName.Rating, value: Object.values(RatingValue)[index]}));
+    handleInputInvalid(evt, Object.values(RatingValue)[index]);
   };
 
   return (
@@ -30,8 +29,8 @@ const ReviewFormRateBar = ({selectedRating, isValid, handleInputInvalid}: Review
       <div className="rate__bar">
         <div className="rate__group">
           {
-            ratings.map((rating, index) => {
-              const idRating = `star-${ratingValues[index]}`;
+            Object.values(RatingDictionary).map((rating, index) => {
+              const idRating = `star-${Object.values(RatingValue)[index]}`;
               return (
                 <Fragment key={rating}>
                   <input
@@ -42,7 +41,7 @@ const ReviewFormRateBar = ({selectedRating, isValid, handleInputInvalid}: Review
                     id={idRating}
                     name="rate"
                     type="radio"
-                    value={ratingValues[index]}
+                    value={Object.values(RatingValue)[index]}
                   />
                   <label className="rate__label" htmlFor={idRating} title={rating}></label>
                 </Fragment>

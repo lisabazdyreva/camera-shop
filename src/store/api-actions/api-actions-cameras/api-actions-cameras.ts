@@ -34,7 +34,7 @@ export const fetchCameraAction = createAsyncThunk<Camera, {id: number}, {
   extra: AxiosInstance
 }>(
   'camera/fetchCamera',
-  async ({id}, {dispatch, extra: api}) => {
+  async ({id}, {extra: api}) => {
     const {data} = await api.get<Camera>(`${UrlRoute.Base}${UrlRoute.Cameras}/${id}`);
     return data;
   },
@@ -47,7 +47,7 @@ export const fetchSimilarCamerasAction = createAsyncThunk<Cameras, {id: number},
   extra: AxiosInstance
 }>(
   'similarCameras/fetchSimilarCameras',
-  async ({id}, {dispatch, extra: api}) => {
+  async ({id}, {extra: api}) => {
     const {data} = await api.get<Cameras>(`${UrlRoute.Base}${UrlRoute.Cameras}/${id}${UrlRoute.Similar}`);
     return data;
   },

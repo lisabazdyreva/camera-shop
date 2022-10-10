@@ -5,7 +5,7 @@ import {
   MenuItem,
   ModalContent,
   RatingClass,
-  SourceItem, SupportItem
+  SourceItem, SupportItem, TabType
 } from '../utils/const';
 
 export type ModalType = typeof ModalContent[keyof typeof ModalContent];
@@ -15,6 +15,7 @@ export type BreadcrumbsItemCatalogType = typeof BreadcrumbsItem.Catalog;
 export type BreadcrumbsItemProductType = typeof BreadcrumbsItem.Product;
 export type RatingClassType = typeof RatingClass[keyof typeof RatingClass];
 export type LoadingStatusType = typeof LoadingStatus[keyof typeof LoadingStatus];
+export type TabsType = typeof TabType[keyof typeof TabType];
 
 export type MenuItemsType = typeof MenuItem[keyof typeof MenuItem];
 export type SourceItemsType = typeof SourceItem[keyof typeof SourceItem];

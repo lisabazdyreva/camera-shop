@@ -25,7 +25,7 @@ describe('modal info component', () => {
     render(
       <Provider store={storeSuccess}>
         <MemoryRouter>
-          <ModalInfo usingComponent={ComponentName.Catalog} handleCloseModal={jest.fn()} />
+          <ModalInfo usingComponent={ComponentName.Catalog} onModalClose={jest.fn()} />
         </MemoryRouter>
       </Provider>
     );
@@ -40,7 +40,7 @@ describe('modal info component', () => {
     render(
       <Provider store={storeSuccess}>
         <MemoryRouter>
-          <ModalInfo usingComponent={ComponentName.Product} handleCloseModal={jest.fn()} />
+          <ModalInfo usingComponent={ComponentName.Product} onModalClose={jest.fn()} />
         </MemoryRouter>
       </Provider>
     );
@@ -55,7 +55,7 @@ describe('modal info component', () => {
     render(
       <Provider store={storeError}>
         <MemoryRouter>
-          <ModalInfo usingComponent={ComponentName.Product} handleCloseModal={jest.fn()} />
+          <ModalInfo usingComponent={ComponentName.Product} onModalClose={jest.fn()} />
         </MemoryRouter>
       </Provider>
     );
@@ -69,7 +69,7 @@ describe('modal info component', () => {
     render(
       <Provider store={storeSuccess}>
         <MemoryRouter>
-          <ModalInfo usingComponent={ComponentName.Basket} handleCloseModal={jest.fn()} />
+          <ModalInfo usingComponent={ComponentName.Basket} onModalClose={jest.fn()} />
         </MemoryRouter>
       </Provider>
     );

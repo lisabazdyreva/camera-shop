@@ -1,21 +1,13 @@
 import {
-  BreadcrumbsLink,
-  ComponentName,
-  FooterNavigation,
-  MenuItem,
+  CAMERA_ADJECTIVE_ENDING,
+  ComponentName, InputName,
   ModalContent,
   ModalMessage,
-  Rating,
-  SocialName,
-  TabDictionary,
-  TabType,
-  TabsList,
-  ReviewItemsList,
-  RatingDictionary,
-  RatingValue, Step
+  ReviewValidLength, Step
 } from './const';
 import {Reviews} from '../types/review';
 import {ComponentNameType, ModalType} from '../types/types';
+import {Camera} from '../types/camera';
 
 export const getTitle = (component: ComponentNameType, modalType: ModalType, isReviewError?: boolean) => {
   const isModalAction = modalType === ModalContent.Action;
@@ -31,36 +23,17 @@ export const getTitle = (component: ComponentNameType, modalType: ModalType, isR
   }
 };
 
-export const menuItems = Object.values(MenuItem);
-
-export const ratingItems = Object.values(Rating);
-
-export const tabTypes = Object.values(TabType);
-
-export const tabNames = Object.values(TabDictionary);
-
-export const footerNavs = Object.values(FooterNavigation);
-
-export const socialNames = Object.values(SocialName);
-
-export const tabsListNames = Object.values(TabsList);
-
-export const reviewItems = Object.values(ReviewItemsList);
-export const reviewNames = Object.keys(ReviewItemsList);
-
-export const getDateTime = (isoDate: string) => isoDate.slice(0, 10); //TODO придумать способ получше
+export const getDateTime = (isoDate: string) => isoDate.slice(0, 10);
 
 export const getDateValue = (isoDate: string) => new Date(isoDate)
   .toLocaleString('ru', {month: 'long', day: 'numeric'});
-
-export const breadcrumbsLinks = Object.values(BreadcrumbsLink);
 
 export const getFormattedPrice = (price: number): string => {
   const numbers = String(price).split('');
   numbers.reverse();
 
   const step = 3;
-  const tens = numbers.slice(0, step); //TODO как назвать
+  const tens = numbers.slice(0, step);
   const hundreds = numbers.slice(step, step * 2);
 
   tens.reverse();
@@ -76,44 +49,39 @@ export const sortReviews = (reviews: Reviews) => reviews.sort((reviewA, reviewB)
   return b - a;
 });
 
-export const ratings = Object.values(RatingDictionary);
-export const ratingValues = Object.values(RatingValue);
-
-export const checkIsLength = (value: string) => value.trim().length !== 0;
-
 export const checkIsValid = (target: HTMLInputElement | HTMLTextAreaElement): boolean => {
   switch (target.name) {
-    case 'user-name': {
-      if (target.value.length === 0) {
+    case InputName.Name: {
+      if (target.value.trim().length === 0) {
         target.setCustomValidity('Введите имя');
         return false;
-      } else if (target.value.length < 2) {
-        target.setCustomValidity('Минимальная длина имени: 2');
+      } else if (target.value.trim().length < ReviewValidLength.Username) {
+        target.setCustomValidity(`Минимальная длина имени: ${ReviewValidLength.Username}`);
         return false;
       } else {
         target.setCustomValidity('');
         return true;
       }
     }
-    case 'user-plus':
-    case 'user-minus': {
-      if (target.value.length === 0) {
+    case InputName.Advantage:
+    case InputName.Disadvantage: {
+      if (target.value.trim().length === 0) {
         target.setCustomValidity('Заполните поле');
         return false;
-      } else if (target.value.length < 3) {
-        target.setCustomValidity('Введите минимум 3 символа');
+      } else if (target.value.trim().length < ReviewValidLength.Advantage) {
+        target.setCustomValidity(`Введите минимум ${ReviewValidLength.Advantage} символа`);
         return false;
       } else {
         target.setCustomValidity('');
         return true;
       }
     }
-    case 'user-comment': {
-      if (target.value.length === 0) {
+    case InputName.Review: {
+      if (target.value.trim().length === 0) {
         target.setCustomValidity('Добавьте комментарий');
         return false;
-      } else if (target.value.length < 5) {
-        target.setCustomValidity('Минимальная длина комментария: 5');
+      } else if (target.value.trim().length < ReviewValidLength.Review) {
+        target.setCustomValidity(`Минимальная длина комментария: ${ReviewValidLength.Review}`);
         return false;
       } else {
         target.setCustomValidity('');
@@ -127,25 +95,6 @@ export const checkIsValid = (target: HTMLInputElement | HTMLTextAreaElement): bo
 
 export const isEsc = (code: string) => code === 'Escape' || code === 'Esc';
 
-export const escPressHandler = (handler: (isOpen: boolean) => void) => { //TODO change name
-  let isMounted = true;
-
-  const handleEscapeKeyPress = (evt: KeyboardEvent) => {
-    if (isEsc(evt.code)) {
-      handler(false);
-    }
-  };
-
-  if (isMounted) {
-    document.addEventListener('keydown', handleEscapeKeyPress);
-  }
-
-  return () => {
-    document.removeEventListener('keydown', handleEscapeKeyPress);
-    isMounted = false;
-  };
-};
-
 export const getPages = (totalCount: number) => {
   const pagesAmount = Math.ceil( totalCount / Step.Pagination);
 
@@ -156,3 +105,4 @@ export const getPages = (totalCount: number) => {
   return pagesNumbers;
 };
 
+export const getPromoLevel = (camera: Camera) => camera.level.slice(0, -2) + CAMERA_ADJECTIVE_ENDING;

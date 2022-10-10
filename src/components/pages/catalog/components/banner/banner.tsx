@@ -2,8 +2,9 @@ import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 
 import {ErrorInfo, Loader, Picture} from '../../../../common/common';
-import {AppRoute, CAMERA_ADJECTIVE_ENDING, ErrorData, LoadingStatus, TabType} from '../../../../../utils/const';
+import {AppRoute, ErrorData, LoadingStatus, TabType} from '../../../../../utils/const';
 import {useAppDispatch, useAppSelector} from '../../../../../hooks';
+import {getPromoLevel} from '../../../../../utils/utils';
 
 import {fetchCameraAction} from '../../../../../store/api-actions/api-actions-cameras/api-actions-cameras';
 import {getCamera} from '../../../../../store/app-camera/selectors';
@@ -23,8 +24,7 @@ const Banner = ():JSX.Element => {
 
   const promo = isPromosLoaded && promos[0];
 
-  const getPromoLevel = () => camera ? camera.level.slice(0, -2) + CAMERA_ADJECTIVE_ENDING : '';
-  const levelText = getPromoLevel();
+  const levelText = camera ? getPromoLevel(camera) : '';
 
   useEffect(() => {
     if (promo) {

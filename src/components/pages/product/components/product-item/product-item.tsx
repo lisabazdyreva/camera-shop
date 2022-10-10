@@ -17,7 +17,7 @@ interface ProductItemProps {
 
 const ProductItem = ({data}: ProductItemProps):JSX.Element => {
   const dispatch = useAppDispatch();
-  const [isAddedBasket, setIsAddedBasket] = useState('Not added to basket');// TODO next iteration
+  const [, setIsAddedBasket] = useState('Not added to basket');// TODO next iteration
 
   const {
     name, previewImg,
@@ -62,7 +62,6 @@ const ProductItem = ({data}: ProductItemProps):JSX.Element => {
             </svg>
             Добавить в корзину
           </button>
-          {isAddedBasket}
           <ProductTabs data={{vendorCode, category, type, level, description}}/>
         </div>
       </div>

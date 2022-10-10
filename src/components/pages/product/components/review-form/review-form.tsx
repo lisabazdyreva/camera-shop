@@ -6,9 +6,9 @@ import {FORM_ID_TYPE, InputErrorMessage, InputName, InputPlaceholder, InputTitle
 import {checkIsValid} from '../../../../../utils/utils';
 import {useAppDispatch, useAppSelector} from '../../../../../hooks';
 
-import {cleanForm, setReviewFormData} from '../../../../../store/app-process/app-process';
+import {setReviewFormData} from '../../../../../store/app-process/app-process';
 import {getReviewFormData} from '../../../../../store/app-process/selectors';
-import {fetchReviewsAction, postReviewAction} from '../../../../../store/api-actions/api-actions-reviews/api-actions-reviews';
+import {postReviewAction} from '../../../../../store/api-actions/api-actions-reviews/api-actions-reviews';
 
 
 type isValidState = {
@@ -28,12 +28,12 @@ const initialIsValidState = {
 };
 
 interface ReviewFormProps {
-  handleCloseModal: (isOpen: boolean) => void;
-  handleOpenSuccessModal?: (isOpen: boolean) => void;
+  onModalClose: () => void;
+  onSuccessModalOpen: () => void;
   id: number;
 }
 
-const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormProps):JSX.Element => {
+const ReviewForm = ({onModalClose, onSuccessModalOpen, id}: ReviewFormProps):JSX.Element => {
   const dispatch = useAppDispatch();
   const formData = useAppSelector(getReviewFormData);
 
@@ -41,17 +41,10 @@ const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormPr
 
   const handleFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
-    handleCloseModal(false);
+    onModalClose();
 
     dispatch(postReviewAction(formData))
-      .then(() => {
-        dispatch(fetchReviewsAction({id}));
-        dispatch(cleanForm());
-      });
-
-    if (handleOpenSuccessModal) {
-      handleOpenSuccessModal(true);
-    }
+      .then(() => onSuccessModalOpen());
   };
 
   const handleInputInvalid = (evt: FormEvent, rating?: number) => {
@@ -153,7 +146,6 @@ const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormPr
                 {icon}
               </span>
               <input
-                data-testid='minus'
                 autoComplete='off'
                 type="text"
                 name='user-minus'
@@ -174,7 +166,6 @@ const ReviewForm = ({handleCloseModal, handleOpenSuccessModal, id}: ReviewFormPr
                 {icon}
               </span>
               <textarea
-                data-testid='review'
                 name="user-comment"
                 minLength={5}
                 placeholder={InputPlaceholder.Review}
