@@ -5,7 +5,7 @@ const Sorting = ():JSX.Element => (
         <p className="title title--h5">Сортировать:</p>
         <div className="catalog-sort__type">
           <div className="catalog-sort__btn-text">
-            <input type="radio" id="sortPrice" name="sort" disabled/> {/*TODO checked*/}
+            <input type="radio" id="sortPrice" name="sort" disabled/>
             <label htmlFor="sortPrice">по цене</label>
           </div>
           <div className="catalog-sort__btn-text">
@@ -15,7 +15,7 @@ const Sorting = ():JSX.Element => (
         </div>
         <div className="catalog-sort__order">
           <div className="catalog-sort__btn catalog-sort__btn--up">
-            <input type="radio" id="up" name="sort-icon" aria-label="По возрастанию" disabled/> {/*TODO checked*/}
+            <input type="radio" id="up" name="sort-icon" aria-label="По возрастанию" disabled/>
             <label htmlFor="up">
               <svg width="16" height="14" aria-hidden="true">
                 <use xlinkHref="#icon-sort"></use>

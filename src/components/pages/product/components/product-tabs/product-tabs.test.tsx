@@ -17,6 +17,6 @@ describe('product tabs component', () => {
 
     expect(screen.getByText(/Характеристики/i)).toBeInTheDocument();
     expect(screen.getByText(/Описание/i)).toBeInTheDocument();
-    expect(screen.getByText(/Артикул/i)).toBeInTheDocument(); //TODO click case?
+    expect(screen.getByText(/Артикул/i)).toBeInTheDocument();
   });
 });

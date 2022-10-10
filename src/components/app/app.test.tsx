@@ -65,6 +65,8 @@ const fakeApp = (
 );
 
 describe('Application Routing', () => {
+  window.scrollTo = jest.fn();
+
   it('should render "NotFound" when user navigate to non-existent route', () => {
     history.push('/non-existent-route');
     render(fakeApp);
@@ -102,4 +104,5 @@ describe('Application Routing', () => {
 
     expect(screen.getByText(/Общая цена/i)).toBeInTheDocument();
   });
+
 });

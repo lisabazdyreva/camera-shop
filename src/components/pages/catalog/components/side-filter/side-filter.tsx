@@ -39,7 +39,7 @@ const SideFilter = ():JSX.Element => (
           <legend className="title title--h5">Тип камеры</legend>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input type="checkbox" name="digital" />{/*TODO checked*/}
+              <input type="checkbox" name="digital" />
               <span className="custom-checkbox__icon"></span>
               <span className="custom-checkbox__label">Цифровая</span>
             </label>
@@ -60,7 +60,7 @@ const SideFilter = ():JSX.Element => (
           </div>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input type="checkbox" name="collection" disabled />{/*TODO checked*/}
+              <input type="checkbox" name="collection" disabled />
               <span className="custom-checkbox__icon"></span>
               <span className="custom-checkbox__label">Коллекционная</span>
             </label>
@@ -70,7 +70,7 @@ const SideFilter = ():JSX.Element => (
           <legend className="title title--h5">Уровень</legend>
           <div className="custom-checkbox catalog-filter__item">
             <label>
-              <input type="checkbox" name="zero" />{/*TODO checked*/}
+              <input type="checkbox" name="zero" />
               <span className="custom-checkbox__icon"></span>
               <span className="custom-checkbox__label">Нулевой</span>
             </label>

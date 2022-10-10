@@ -37,7 +37,7 @@ const BasketItem = ({onModalOpen}: BasketItemProps):JSX.Element => (
         </svg>
       </button>
       <label className="visually-hidden" htmlFor="counter1"></label>
-      <input type="number" id="counter1" min="1" max="99" aria-label="количество товара" /> {/*TODO value="2" */}
+      <input type="number" id="counter1" min="1" max="99" aria-label="количество товара" />
       <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара">
         <svg width="7" height="12" aria-hidden="true">
           <use xlinkHref="#icon-arrow"></use>

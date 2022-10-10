@@ -16,7 +16,7 @@ const NotFound = ():JSX.Element => {
             {NOT_FOUND_NOTIFICATION}
           </p>
           <div className='not-found__buttons'>
-            <button className='btn btn--purple' onClick={handleButtonToMainClick}>На главную</button>
+            <button className='btn btn--purple' onClick={handleButtonToMainClick}>Каталог</button>
           </div>
         </section>
       </div>
