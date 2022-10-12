@@ -16,7 +16,10 @@ interface ReviewFormRateBarProps {
 const ReviewFormRateBar = ({selectedRating, isValid, handleInputInvalid}: ReviewFormRateBarProps):JSX.Element => {
   const dispatch = useAppDispatch();
 
-  const handleInputChange = (evt: ChangeEvent, index: number) => {
+  const handleInputChange = (evt: ChangeEvent) => {
+    const target = evt.target as HTMLInputElement;
+    const index = Number(target.dataset.value);
+
     dispatch(setReviewFormData({type: InputName.Rating, value: Object.values(RatingValue)[index]}));
     handleInputInvalid(evt, Object.values(RatingValue)[index]);
   };
@@ -39,7 +42,8 @@ const ReviewFormRateBar = ({selectedRating, isValid, handleInputInvalid}: Review
                     className="visually-hidden"
                     required
                     onInvalid={handleInputInvalid}
-                    onChange={(evt) => handleInputChange(evt, index)}
+                    onChange={handleInputChange}
+                    data-value={index}
                     id={idRating}
                     name="rate"
                     type="radio"

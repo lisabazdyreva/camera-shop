@@ -33,6 +33,18 @@ const Catalog = ():JSX.Element => {
     dispatch(setCurrentPage(page));
   };
 
+  const handleModalClose = () => {
+    setIsModalAddOpen(false);
+  };
+
+  const handleSuccessModalClose = () => {
+    setIsModalSuccessOpen(false);
+  };
+
+  const handleSuccessModalOpen = () => {
+    setIsModalSuccessOpen(true);
+  };
+
   const handleModalShow = (data: Camera) => {
     setIsModalAddOpen(true);
     setSelectedCameraData(data);
@@ -73,10 +85,10 @@ const Catalog = ():JSX.Element => {
         <ModalAction
           data={selectedCameraData}
           usingComponent={ComponentName.Catalog}
-          onModalClose={() => setIsModalAddOpen(false)}
-          onSuccessModalOpen={() => setIsModalSuccessOpen(true)}
+          onModalClose={handleModalClose}
+          onSuccessModalOpen={handleSuccessModalOpen}
         />}
-      {isModalSuccessOpen && <ModalInfo usingComponent={ComponentName.Catalog} onModalClose={() => setIsModalSuccessOpen(false)}/>}
+      {isModalSuccessOpen && <ModalInfo usingComponent={ComponentName.Catalog} onModalClose={handleSuccessModalClose}/>}
     </main>
   );
 };

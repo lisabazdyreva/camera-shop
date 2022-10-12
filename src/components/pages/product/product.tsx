@@ -58,6 +58,18 @@ const Product = ():JSX.Element => {
     setIsReviewModalOpen(true);
   };
 
+  const handleModalClose = () => {
+    setIsReviewModalOpen(false);
+  };
+
+  const handleSuccessModalClose = () => {
+    setIsSuccessReviewModalOpen(false);
+  };
+
+  const handleSuccessModalOpen = () => {
+    setIsSuccessReviewModalOpen(true);
+  };
+
   useEffect(() => {
     if (id) {
       const numberId = Number(id);
@@ -108,12 +120,12 @@ const Product = ():JSX.Element => {
           <ModalAction
             data={camera}
             usingComponent={ComponentName.Product}
-            onSuccessModalOpen={() => setIsSuccessReviewModalOpen(true)}
-            onModalClose={() => setIsReviewModalOpen(false)}
+            onSuccessModalOpen={handleSuccessModalOpen}
+            onModalClose={handleModalClose}
           />}
         {isSuccessReviewModalOpen
           &&
-          <ModalInfo usingComponent={ComponentName.Product} onModalClose={() => setIsSuccessReviewModalOpen(false)}/> }
+          <ModalInfo usingComponent={ComponentName.Product} onModalClose={handleSuccessModalClose}/> }
       </main>
       <button className="up-btn" type='button' onClick={handleButtonToTopClick}>
         <svg width="12" height="18" aria-hidden="true">

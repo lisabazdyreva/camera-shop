@@ -15,6 +15,18 @@ const Basket = ():JSX.Element => {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
 
+  const handleModalOpen = () => {
+    setIsRemoveModalOpen(true);
+  };
+
+  const handleSuccessModalClose = () => {
+    setIsSuccessModalOpen(false);
+  };
+
+  const handleModalClose = () => {
+    setIsRemoveModalOpen(false);
+  };
+
   useEffect(() => {
     window.scrollTo(TopCoordinate.X, TopCoordinate.Y);
   }, []);
@@ -27,14 +39,14 @@ const Basket = ():JSX.Element => {
           <div className="container">
             <h1 className="title title--h2">Корзина</h1>
             <ul className="basket__list">
-              <BasketItem onModalOpen={() => setIsRemoveModalOpen(true)} />
+              <BasketItem onModalOpen={handleModalOpen} />
             </ul>
             <BasketSummary />
           </div>
         </section>
       </div>
-      {isSuccessModalOpen && <ModalInfo usingComponent={ComponentName.Basket} onModalClose={() => setIsSuccessModalOpen(false)}/> }
-      {isRemoveModalOpen && <ModalAction usingComponent={ComponentName.Basket} onModalClose={() => setIsRemoveModalOpen(false)}/> }
+      {isSuccessModalOpen && <ModalInfo usingComponent={ComponentName.Basket} onModalClose={handleSuccessModalClose}/> }
+      {isRemoveModalOpen && <ModalAction usingComponent={ComponentName.Basket} onModalClose={handleModalClose}/> }
     </main>
   );
 };

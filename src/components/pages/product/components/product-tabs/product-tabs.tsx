@@ -3,10 +3,10 @@ import './product-tabs.css';
 import {useNavigate, useParams} from 'react-router-dom';
 
 import {DescriptionTab, FeatureTab} from '../components';
-
 import {AppRoute, TabDictionary, TabType} from '../../../../../utils/const';
 import {CameraFeatures} from '../../../../../types/camera';
-import {TabsType} from '../../../../../types/types';
+
+import {SyntheticEvent} from 'react';
 
 interface ProductTabsProps {
   data: CameraFeatures & {description: string};
@@ -14,13 +14,15 @@ interface ProductTabsProps {
 
 const ProductTabs = ({data}: ProductTabsProps):JSX.Element => {
   const params = useParams();
+
   const navigation = useNavigate();
 
   const {id, tab} = params;
   const {description, vendorCode, category, type, level} = data;
 
-  const handleTabButtonClick = (tabType: TabsType) => {
-    navigation(`${AppRoute.Product}/${id}/${tabType}`);
+  const handleTabButtonClick = (evt: SyntheticEvent) => {
+    const target = evt.target as HTMLElement;
+    navigation(`${AppRoute.Product}/${id}/${target.dataset.tab}`);
   };
 
   return (
@@ -35,7 +37,8 @@ const ProductTabs = ({data}: ProductTabsProps):JSX.Element => {
                 key={tabType}
                 className={buttonClasses}
                 type="button"
-                onClick={() => handleTabButtonClick(tabType)}
+                onClick={handleTabButtonClick}
+                data-tab={tabType}
               >
                 {name}
               </button>
