@@ -1,3 +1,5 @@
+import './loader.css';
+
 import {LOADER_NOTIFICATION} from '../../../utils/const';
 
 const Loader = ():JSX.Element => (

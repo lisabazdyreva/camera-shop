@@ -6,7 +6,7 @@ import {AppDispatch, State} from '../../../types/state';
 
 import {UrlRoute} from '../../../utils/const';
 import {sortReviews} from '../../../utils/utils';
-import {cleanForm} from '../../app-process/app-process';
+import {cleanForm} from '../../process/process';
 
 
 export const fetchReviewsAction = createAsyncThunk<Reviews, {id: number}, {

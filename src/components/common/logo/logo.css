@@ -1,0 +1,13 @@
+.header__logo {
+  padding-top: 4px;
+}
+
+.header__logo svg,
+.footer__logo svg {
+  width: 100px;
+  height: 36px;
+}
+
+.footer__logo {
+  display: inline-block;
+}

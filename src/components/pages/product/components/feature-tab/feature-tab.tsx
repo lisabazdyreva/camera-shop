@@ -1,3 +1,5 @@
+import './feature-tab.css';
+
 import {CameraFeatures} from '../../../../../types/camera';
 import {TabsList} from '../../../../../utils/const';
 

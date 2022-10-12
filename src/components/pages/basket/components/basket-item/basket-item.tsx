@@ -1,3 +1,5 @@
+import './basket-item.css';
+
 import {Picture} from '../../../../common/common';
 
 interface BasketItemProps {

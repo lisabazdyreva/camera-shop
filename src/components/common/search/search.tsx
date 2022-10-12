@@ -1,3 +1,5 @@
+import './search.css';
+
 const Search = ():JSX.Element => (
   <div className="form-search" data-testid='form-search'>
     <form>

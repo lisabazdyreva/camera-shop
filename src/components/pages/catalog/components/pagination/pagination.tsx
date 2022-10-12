@@ -1,15 +1,35 @@
+import './pagination.css';
+
 import {Link} from 'react-router-dom';
 import {AppRoute, PaginationRoute} from '../../../../../utils/const';
+import {SyntheticEvent} from 'react';
 
 interface PaginationProps {
   currentPageNumber: number;
   setCurrentPageNumber: (page: number) => void;
-  pages: number[];
+  pagesAmount: number;
 }
 
-const Pagination = ({currentPageNumber, setCurrentPageNumber, pages}: PaginationProps):JSX.Element => {
+const Pagination = ({currentPageNumber, setCurrentPageNumber, pagesAmount}: PaginationProps):JSX.Element => {
+  const pages = Array.from({length: pagesAmount}).fill('').map((item, index) => index + 1);
+
   const isNotFirstPage = currentPageNumber !== 1;
   const isNotLastPage = currentPageNumber !== pages.length;
+
+  const handlePreviousLinkClick = () => {
+    setCurrentPageNumber(currentPageNumber - 1);
+  };
+
+  const handlePageClick = (evt: SyntheticEvent) => {
+    const target = evt.target as HTMLElement;
+    const pageNumber = Number(target.innerHTML);
+
+    setCurrentPageNumber(pageNumber);
+  };
+
+  const handleNextLinkClick = () => {
+    setCurrentPageNumber(currentPageNumber + 1);
+  };
 
   const previousRoute = `${AppRoute.Catalog}${PaginationRoute.Page}${currentPageNumber - 1}`;
   const nextRoute = `${AppRoute.Catalog}${PaginationRoute.Page}${currentPageNumber + 1}`;
@@ -21,7 +41,7 @@ const Pagination = ({currentPageNumber, setCurrentPageNumber, pages}: Pagination
           isNotFirstPage &&
           <li className="pagination__item">
             <Link
-              onClick={() => setCurrentPageNumber(currentPageNumber - 1)}
+              onClick={handlePreviousLinkClick}
               className="pagination__link pagination__link--text"
               to={previousRoute}
             >
@@ -36,7 +56,7 @@ const Pagination = ({currentPageNumber, setCurrentPageNumber, pages}: Pagination
             return (
               <li className="pagination__item" key={pageNum}>
                 <Link
-                  onClick={() => setCurrentPageNumber(pageNum)}
+                  onClick={handlePageClick}
                   className={classes}
                   to={route}
                 >
@@ -51,7 +71,7 @@ const Pagination = ({currentPageNumber, setCurrentPageNumber, pages}: Pagination
            &&
           <li className="pagination__item">
             <Link
-              onClick={() => setCurrentPageNumber(currentPageNumber + 1)}
+              onClick={handleNextLinkClick}
               className="pagination__link pagination__link--text"
               to={nextRoute}
             >

@@ -1,0 +1,140 @@
+.basket__summary {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 60px 180px;
+  background-color: #f4f4fc;
+  border-radius: 8px;
+}
+
+.basket__summary-order {
+  width: 100%;
+  max-width: 300px;
+}
+
+.basket__summary-order .btn {
+  width: 100%;
+  margin-top: 32px;
+}
+
+.basket__summary-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 0 0 16px;
+  font-size: 20px;
+  line-height: 32px;
+  color: #333333;
+}
+
+.basket__summary-item:last-of-type {
+  margin-bottom: 0;
+}
+
+.basket__summary-text--total {
+  font-weight: 700;
+}
+
+.basket__summary-value--bonus {
+  color: #ed6041;
+}
+
+.basket__promo {
+  width: 100%;
+  max-width: 440px;
+}
+
+.basket__promo .title--h4 {
+  margin-bottom: 13px;
+}
+
+.basket-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.basket-form .btn {
+  margin-top: 20px;
+}
+
+.basket-form form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  color: #333333;
+}
+
+.basket-form form .custom-input {
+  width: 308px;
+  margin-right: 10px;
+}
+
+.basket-form form .custom-input__error {
+  top: 3px;
+}
+
+.basket-form form .custom-input__success {
+  top: 3px;
+}
+
+.basket-form form label {
+  margin-bottom: 8px;
+  line-height: 20px;
+}
+
+.basket-form form input {
+  padding: 8px 20px;
+  background-color: #ffffff;
+  border: 2px solid #b4b4d7;
+  border-radius: 8px;
+  outline: #7575e2;
+}
+
+.basket-form form input::-webkit-input-placeholder {
+  font-weight: 600;
+  line-height: 24px;
+  color: #b4b4d7;
+}
+
+.basket-form form input::-moz-placeholder {
+  font-weight: 600;
+  line-height: 24px;
+  color: #b4b4d7;
+}
+
+.basket-form form input:-ms-input-placeholder {
+  font-weight: 600;
+  line-height: 24px;
+  color: #b4b4d7;
+}
+
+.basket-form form input::-ms-input-placeholder {
+  font-weight: 600;
+  line-height: 24px;
+  color: #b4b4d7;
+}
+
+.basket-form form input::placeholder {
+  font-weight: 600;
+  line-height: 24px;
+  color: #b4b4d7;
+}
+
+.basket-form form input:focus {
+  border-color: #7575e2;
+}

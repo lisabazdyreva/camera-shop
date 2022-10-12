@@ -10,7 +10,7 @@ const initialState: AppCameras = {
   camerasFetchStatus: LoadingStatus.Default,
 };
 
-export const appCameras = createSlice({
+export const cameras = createSlice({
   name: NameSpace.Cameras,
   initialState,
   reducers: {},

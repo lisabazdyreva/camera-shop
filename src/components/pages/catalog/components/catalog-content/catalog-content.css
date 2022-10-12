@@ -1,0 +1,22 @@
+.cards {
+  display: -ms-grid;
+  display: grid;
+  -webkit-column-gap: 32px;
+  -moz-column-gap: 32px;
+  column-gap: 32px;
+  row-gap: 40px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.catalog__content {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 2;
+  -ms-grid-column: 3;
+  grid-area: content;
+}
+
+.catalog__cards {
+  margin: 37px 0 0;
+  padding-bottom: 40px;
+  border-bottom: 2px solid #f4f4fc;
+}

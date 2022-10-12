@@ -1,3 +1,5 @@
+import './catalog.css';
+
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 
@@ -8,10 +10,10 @@ import {initialCamera, Step, ComponentName, BreadcrumbsItem} from '../../../util
 import {Camera} from '../../../types/camera';
 import {useAppDispatch, useAppSelector} from '../../../hooks';
 
-import {setCurrentPage} from '../../../store/app-process/app-process';
+import {setCurrentPage} from '../../../store/process/process';
 import {fetchCamerasAction} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
 import {fetchPromosAction} from '../../../store/api-actions/api-actions-promo/api-actions-promo';
-import {getCurrentPage} from '../../../store/app-process/selectors';
+import {getCurrentPage} from '../../../store/process/selectors';
 
 
 const Catalog = ():JSX.Element => {

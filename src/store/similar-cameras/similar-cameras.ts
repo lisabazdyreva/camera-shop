@@ -10,7 +10,7 @@ const initialState: AppSimilarCameras = {
   similarCamerasFetchStatus: LoadingStatus.Default,
 };
 
-export const appSimilarCameras = createSlice({
+export const similarCameras = createSlice({
   name: NameSpace.SimilarCameras,
   initialState,
   reducers: {},

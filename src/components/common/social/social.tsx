@@ -1,3 +1,5 @@
+import './social.css';
+
 import {SocialName} from '../../../utils/const';
 
 const Social = ():JSX.Element => (

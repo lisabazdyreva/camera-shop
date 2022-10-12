@@ -5,7 +5,7 @@ import {
   MenuItem,
   ModalContent,
   RatingClass,
-  SourceItem, SupportItem, TabType
+  SourceItem, SupportItem, TabType, ValidStatus
 } from '../utils/const';
 
 export type ModalType = typeof ModalContent[keyof typeof ModalContent];
@@ -20,4 +20,6 @@ export type TabsType = typeof TabType[keyof typeof TabType];
 export type MenuItemsType = typeof MenuItem[keyof typeof MenuItem];
 export type SourceItemsType = typeof SourceItem[keyof typeof SourceItem];
 export type SupportItemsType = typeof SupportItem[keyof typeof SupportItem];
+
+export type ValidStatusType = typeof ValidStatus[keyof typeof ValidStatus];
 

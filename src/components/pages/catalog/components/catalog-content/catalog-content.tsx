@@ -1,3 +1,5 @@
+import './catalog-content.css';
+
 import {useEffect, useState} from 'react';
 
 import {Pagination, Sorting} from '../components';
@@ -5,12 +7,11 @@ import {ErrorInfo, Loader, ProductCard} from '../../../../common/common';
 
 import {Camera} from '../../../../../types/camera';
 
-import {ErrorData, LoadingStatus} from '../../../../../utils/const';
-import {getPages} from '../../../../../utils/utils';
+import {ErrorData, LoadingStatus, Step} from '../../../../../utils/const';
 import {useAppSelector} from '../../../../../hooks';
 
-import {getCamerasTotalCount} from '../../../../../store/app-process/selectors';
-import {getCameras, getCamerasFetchStatus} from '../../../../../store/app-cameras/selectors';
+import {getCamerasTotalCount} from '../../../../../store/process/selectors';
+import {getCameras, getCamerasFetchStatus} from '../../../../../store/cameras/selectors';
 
 
 interface CatalogContentProps {
@@ -20,8 +21,7 @@ interface CatalogContentProps {
 }
 
 const CatalogContent = ({handleAddModal, currentPageNumber, setCurrentPageNumber}: CatalogContentProps):JSX.Element => {
-  const [pages, setPages] = useState<number[]>([]);
-
+  const [pagesAmount, setPagesAmount] = useState(0);
   const fetchStatus = useAppSelector(getCamerasFetchStatus);
   const camerasTotalCount = useAppSelector(getCamerasTotalCount);
   const cameras = useAppSelector(getCameras);
@@ -32,8 +32,7 @@ const CatalogContent = ({handleAddModal, currentPageNumber, setCurrentPageNumber
 
 
   useEffect(() => {
-    const pagesNumbers = getPages(camerasTotalCount);
-    setPages(pagesNumbers);
+    setPagesAmount(Math.ceil( camerasTotalCount / Step.Pagination));
   }, [camerasTotalCount]);
 
   return (
@@ -52,7 +51,7 @@ const CatalogContent = ({handleAddModal, currentPageNumber, setCurrentPageNumber
               />
             ))}
           </div>
-          {pages.length && <Pagination pages={pages} currentPageNumber={currentPageNumber} setCurrentPageNumber={setCurrentPageNumber}/>}
+          {pagesAmount && <Pagination pagesAmount={pagesAmount} currentPageNumber={currentPageNumber} setCurrentPageNumber={setCurrentPageNumber}/>}
         </>}
     </div>
   );

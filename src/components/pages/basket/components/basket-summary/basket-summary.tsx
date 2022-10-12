@@ -1,3 +1,5 @@
+import './basket-summary.css';
+
 const BasketSummary = ():JSX.Element => (
   <div className="basket__summary">
     <div className="basket__promo">

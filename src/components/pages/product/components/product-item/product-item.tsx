@@ -1,3 +1,5 @@
+import './product-item.css';
+
 import {useState} from 'react';
 
 import {Picture, Rating} from '../../../../common/common';
@@ -8,7 +10,7 @@ import {RatingClass} from '../../../../../utils/const';
 import {getFormattedPrice} from '../../../../../utils/utils';
 import {useAppDispatch} from '../../../../../hooks';
 
-import {setBasket} from '../../../../../store/app-process/app-process';
+import {setBasket} from '../../../../../store/process/process';
 
 
 interface ProductItemProps {

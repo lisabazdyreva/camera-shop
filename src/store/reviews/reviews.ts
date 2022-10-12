@@ -11,7 +11,7 @@ const initialState: AppReviews = {
   reviewPostStatus: LoadingStatus.Default,
 };
 
-export const appReviews = createSlice({
+export const reviews = createSlice({
   name: NameSpace.Reviews,
   initialState,
   reducers: {},

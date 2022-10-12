@@ -1,3 +1,5 @@
+import './description-tab.css';
+
 import {DescriptionLength} from '../../../../../utils/const';
 
 interface DescriptionTabProps {

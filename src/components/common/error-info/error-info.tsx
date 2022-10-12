@@ -1,3 +1,5 @@
+import './error-info.css';
+
 interface ErrorInfoProps {
   text: string;
 }

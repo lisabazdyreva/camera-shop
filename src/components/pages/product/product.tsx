@@ -1,3 +1,5 @@
+import './product.css';
+
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 
@@ -23,9 +25,9 @@ import {useAppDispatch, useAppSelector} from '../../../hooks';
 import {fetchCameraAction, fetchSimilarCamerasAction} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
 import {fetchReviewsAction} from '../../../store/api-actions/api-actions-reviews/api-actions-reviews';
 
-import {getCamera, getCameraFetchStatus} from '../../../store/app-camera/selectors';
-import {getSimilarCameras, getSimilarCamerasFetchStatus} from '../../../store/app-similar-cameras/selectors';
-import {getReviewsFetchStatus} from '../../../store/app-reviews/selectors';
+import {getCamera, getCameraFetchStatus} from '../../../store/camera/selectors';
+import {getSimilarCameras, getSimilarCamerasFetchStatus} from '../../../store/similar-cameras/selectors';
+import {getReviewsFetchStatus} from '../../../store/reviews/selectors';
 
 
 const Product = ():JSX.Element => {
@@ -50,6 +52,10 @@ const Product = ():JSX.Element => {
 
   const handleButtonToTopClick = () => {
     window.scrollTo(ScrollSetting);
+  };
+
+  const handleButtonAddReviewClick = () => {
+    setIsReviewModalOpen(true);
   };
 
   useEffect(() => {
@@ -90,7 +96,7 @@ const Product = ():JSX.Element => {
               <div className="container">
                 <div className="page-content__headed">
                   <h2 className="title title--h3">Отзывы</h2>
-                  <button className="btn" type="button" onClick={() => setIsReviewModalOpen(true)}>Оставить свой отзыв</button>
+                  <button className="btn" type="button" onClick={handleButtonAddReviewClick}>Оставить свой отзыв</button>
                 </div>
                 <ReviewListCard fetchStatus={reviewsFetchStatus}/>
               </div>

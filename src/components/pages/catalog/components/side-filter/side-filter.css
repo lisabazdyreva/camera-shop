@@ -1,0 +1,132 @@
+.catalog__aside {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 3;
+  -ms-grid-column: 1;
+  grid-area: aside;
+}
+
+.catalog-filter {
+  width: 100%;
+}
+
+.catalog-filter .title--h5 {
+  float: left;
+  margin-bottom: 16px;
+}
+
+.catalog-filter__block {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 16px 0;
+  border: none;
+}
+
+.catalog-filter__block:first-of-type {
+  padding-top: 8px;
+}
+
+.catalog-filter__item {
+  margin-bottom: 16px;
+}
+
+.catalog-filter__item:last-child {
+  margin-bottom: 0;
+}
+
+.catalog-filter__price-range {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.catalog-filter__price-range::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 2px;
+  margin-top: -2px;
+  background-color: #525288;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.catalog-filter__price-range input {
+  width: 108px;
+  height: 40px;
+  padding: 0 20px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #333333;
+  border: 2px solid #b4b4d7;
+  border-radius: 8px;
+  outline: #b4b4d7;
+  -webkit-transition: border-color 0.3s ease;
+  -o-transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease;
+}
+
+.catalog-filter__price-range input::-webkit-input-placeholder {
+  color: #b4b4d7;
+}
+
+.catalog-filter__price-range input::-moz-placeholder {
+  color: #b4b4d7;
+}
+
+.catalog-filter__price-range input:-ms-input-placeholder {
+  color: #b4b4d7;
+}
+
+.catalog-filter__price-range input::-ms-input-placeholder {
+  color: #b4b4d7;
+}
+
+.catalog-filter__price-range input::placeholder {
+  color: #b4b4d7;
+}
+
+.catalog-filter__price-range input:disabled {
+  background-color: #f8f8f8;
+  border-color: rgba(255, 255, 255, 0);
+}
+
+.catalog-filter__price-range input:disabled::-webkit-input-placeholder {
+  color: #dddddd;
+}
+
+.catalog-filter__price-range input:disabled::-moz-placeholder {
+  color: #dddddd;
+}
+
+.catalog-filter__price-range input:disabled:-ms-input-placeholder {
+  color: #dddddd;
+}
+
+.catalog-filter__price-range input:disabled::-ms-input-placeholder {
+  color: #dddddd;
+}
+
+.catalog-filter__price-range input:disabled::placeholder {
+  color: #dddddd;
+}
+
+.catalog-filter__reset-btn {
+  width: 100%;
+  margin-top: 24px;
+}

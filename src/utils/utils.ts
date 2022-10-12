@@ -3,22 +3,24 @@ import {
   ComponentName, InputName,
   ModalContent,
   ModalMessage,
-  ReviewValidLength, Step
+  ReviewValidLength,
+  ValidStatus
 } from './const';
 import {Reviews} from '../types/review';
-import {ComponentNameType, ModalType} from '../types/types';
+import {ComponentNameType, ModalType, ValidStatusType} from '../types/types';
 import {Camera} from '../types/camera';
 
 export const getTitle = (component: ComponentNameType, modalType: ModalType, isReviewError?: boolean) => {
   const isModalAction = modalType === ModalContent.Action;
-
   const productTitle = isReviewError ? ModalMessage.ProductError : ModalMessage.ProductSuccess;
 
   if (component === ComponentName.Basket) {
     return isModalAction ? ModalMessage.BasketRemove : ModalMessage.BasketSuccess;
-  } else if (component === ComponentName.Catalog) {
+  }
+  if (component === ComponentName.Catalog) {
     return isModalAction ? ModalMessage.CatalogAdd : ModalMessage.CatalogSuccess;
-  } else if (component === ComponentName.Product) {
+  }
+  if (component === ComponentName.Product) {
     return isModalAction ? ModalMessage.ProductReviewAdd : productTitle;
   }
 };
@@ -49,60 +51,59 @@ export const sortReviews = (reviews: Reviews) => reviews.sort((reviewA, reviewB)
   return b - a;
 });
 
-export const checkIsValid = (target: HTMLInputElement | HTMLTextAreaElement): boolean => {
+
+export const setValidationMessage = (target: HTMLInputElement | HTMLTextAreaElement, validityStatus: ValidStatusType) => {
+  if (validityStatus === ValidStatus.Ok) {
+    target.setCustomValidity('');
+    return;
+  }
+
+  if (validityStatus === ValidStatus.Empty) {
+    target.setCustomValidity('Заполните поле');
+    return;
+  }
+
   switch (target.name) {
     case InputName.Name: {
-      if (target.value.trim().length === 0) {
-        target.setCustomValidity('Введите имя');
-        return false;
-      } else if (target.value.trim().length < ReviewValidLength.Username) {
-        target.setCustomValidity(`Минимальная длина имени: ${ReviewValidLength.Username}`);
-        return false;
-      } else {
-        target.setCustomValidity('');
-        return true;
-      }
+      target.setCustomValidity(`Минимальная длина имени: ${ReviewValidLength.Username}`);
+      break;
     }
     case InputName.Advantage:
     case InputName.Disadvantage: {
-      if (target.value.trim().length === 0) {
-        target.setCustomValidity('Заполните поле');
-        return false;
-      } else if (target.value.trim().length < ReviewValidLength.Advantage) {
-        target.setCustomValidity(`Введите минимум ${ReviewValidLength.Advantage} символа`);
-        return false;
-      } else {
-        target.setCustomValidity('');
-        return true;
-      }
+      target.setCustomValidity(`Введите минимум ${ReviewValidLength.Advantage} символа`);
+      break;
     }
     case InputName.Review: {
-      if (target.value.trim().length === 0) {
-        target.setCustomValidity('Добавьте комментарий');
-        return false;
-      } else if (target.value.trim().length < ReviewValidLength.Review) {
-        target.setCustomValidity(`Минимальная длина комментария: ${ReviewValidLength.Review}`);
-        return false;
-      } else {
-        target.setCustomValidity('');
-        return true;
-      }
+      target.setCustomValidity(`Минимальная длина комментария: ${ReviewValidLength.Review}`);
     }
-    default:
-      return false;
   }
+};
+
+export const checkValidity = (target: HTMLInputElement | HTMLTextAreaElement): ValidStatusType => {
+  const value = target.value;
+
+  if (value.trim().length === 0) {
+    return ValidStatus.Empty;
+  }
+
+  let requiredLength;
+
+  switch (target.name) {
+    case InputName.Name:
+      requiredLength = ReviewValidLength.Username;
+      break;
+    case InputName.Advantage:
+    case InputName.Disadvantage:
+      requiredLength = ReviewValidLength.Advantage;
+      break;
+    case InputName.Review:
+      requiredLength = ReviewValidLength.Review;
+      break;
+  }
+
+  return requiredLength && value.trim().length > requiredLength ? ValidStatus.Ok : ValidStatus.Short;
 };
 
 export const isEsc = (code: string) => code === 'Escape' || code === 'Esc';
-
-export const getPages = (totalCount: number) => {
-  const pagesAmount = Math.ceil( totalCount / Step.Pagination);
-
-  const pagesNumbers = [];
-  for (let i = 1; i <= pagesAmount; i++) {
-    pagesNumbers.push(i);
-  }
-  return pagesNumbers;
-};
 
 export const getPromoLevel = (camera: Camera) => camera.level.slice(0, -2) + CAMERA_ADJECTIVE_ENDING;

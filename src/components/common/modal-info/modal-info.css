@@ -1,0 +1,10 @@
+.modal--narrow .modal__content {
+  width: 320px;
+}
+
+.modal__icon {
+  display: block;
+  width: 86px;
+  height: 80px;
+  margin: 0 auto 24px;
+}

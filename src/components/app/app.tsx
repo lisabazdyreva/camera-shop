@@ -1,3 +1,5 @@
+import './app.css';
+
 import {Route, Routes} from 'react-router-dom';
 
 import Catalog from '../pages/catalog/catalog';

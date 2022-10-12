@@ -13,7 +13,7 @@ const initialState: AppProcess = {
   reviewFormData: initialReview,
 };
 
-export const appProcess = createSlice({
+export const process = createSlice({
   name: NameSpace.App,
   initialState,
   reducers: {
@@ -61,6 +61,6 @@ export const {
   setCamerasTotalCount,
   setReviewFormData,
   cleanForm
-} = appProcess.actions;
+} = process.actions;
 
 

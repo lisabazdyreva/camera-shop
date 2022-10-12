@@ -1,3 +1,5 @@
+import './modal-info.css';
+
 import {CatalogButtons, IconReview, IconSuccess, ReturnButton} from './components/components';
 
 import {getTitle} from '../../../utils/utils';
@@ -5,10 +7,11 @@ import {ComponentName, LoadingStatus, ModalContent} from '../../../utils/const';
 
 import {ComponentNameType} from '../../../types/types';
 
-import {getReviewPostStatus} from '../../../store/app-reviews/selectors';
+import {getReviewPostStatus} from '../../../store/reviews/selectors';
 import {useBodyBlock} from '../../../hooks/use-body-block';
 import {useAppSelector} from '../../../hooks';
 import {useEscClose} from '../../../hooks/use-esc-close';
+import {SyntheticEvent} from 'react';
 
 interface ModalInfoProps {
   usingComponent: ComponentNameType;
@@ -32,9 +35,13 @@ const ModalInfo = ({usingComponent, onModalClose}: ModalInfoProps):JSX.Element =
   const getButtons = () => {
     if (usingComponent === ComponentName.Basket) {
       return <ReturnButton />;
-    } else if (usingComponent === ComponentName.Catalog) {
+    }
+
+    if (usingComponent === ComponentName.Catalog) {
       return <CatalogButtons handleCloseSuccessModal={onModalClose}/>;
-    } else if (usingComponent === ComponentName.Product) {
+    }
+
+    if (usingComponent === ComponentName.Product) {
       return <ReturnButton handleCloseSuccessModal={onModalClose}/>;
     }
   };
@@ -42,6 +49,9 @@ const ModalInfo = ({usingComponent, onModalClose}: ModalInfoProps):JSX.Element =
   const modalSvg = getSVG();
   const modalButtons = getButtons();
 
+  const handleOutsideModalClick = (evt: SyntheticEvent) => {
+    evt.stopPropagation();
+  };
 
   useEscClose(onModalClose);
   useBodyBlock();
@@ -50,7 +60,7 @@ const ModalInfo = ({usingComponent, onModalClose}: ModalInfoProps):JSX.Element =
     <div className="modal is-active modal--narrow" onClick={onModalClose} data-testid='modal-info'>
       <div className="modal__wrapper">
         <div className="modal__overlay"></div>
-        <div className="modal__content" onClick={(evt) => evt.stopPropagation()}>
+        <div className="modal__content" onClick={handleOutsideModalClick}>
           <p className="title title--h4">{title}</p>
           {modalSvg}
           <div className="modal__buttons">

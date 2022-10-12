@@ -1,0 +1,30 @@
+.rate__count {
+  margin: 0 0 0 12px;
+  color: #b4b4d7;
+}
+
+.product-card__rate {
+  width: 100%;
+}
+
+.product__rate {
+  margin-bottom: 18px;
+}
+
+.product__rate svg,
+.review-card__rate svg,
+.product-card__rate svg {
+  width: 17px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+.product__rate svg:last-of-type,
+.review-card__rate svg:last-of-type,
+.product-card__rate svg:last-of-type {
+  margin-right: 0;
+}
+
+.review-card__rate {
+  margin-bottom: 20px;
+}

@@ -1,0 +1,12 @@
+.basket {
+  color: #333333;
+}
+
+.basket__list {
+  display: -ms-grid;
+  display: grid;
+  margin: 0 0 60px;
+  padding: 0;
+  list-style: none;
+  grid-row-gap: 32px;
+}

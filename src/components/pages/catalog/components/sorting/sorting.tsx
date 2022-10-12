@@ -1,3 +1,5 @@
+import './sorting.css';
+
 const Sorting = ():JSX.Element => (
   <div className="catalog-sort">
     <form action="src/components/pages/catalog/components/sorting/sorting#" data-testid='sorting-form'>

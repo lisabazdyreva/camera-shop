@@ -1,3 +1,5 @@
+import './basket.css';
+
 import {Breadcrumbs} from '../../common/common';
 import {
   BasketSummary,

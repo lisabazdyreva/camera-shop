@@ -6,7 +6,7 @@ import {
 } from '../../../utils/mocks';
 import {UrlRoute} from '../../../utils/const';
 import {fetchCameraAction, fetchCamerasAction, fetchSimilarCamerasAction} from './api-actions-cameras';
-import {setCamerasTotalCount} from '../../app-process/app-process';
+import {setCamerasTotalCount} from '../../process/process';
 
 
 const fakeCameras = getFakeCameras();

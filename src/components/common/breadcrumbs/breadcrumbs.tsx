@@ -1,3 +1,5 @@
+import './breadcrumbs.css';
+
 import {Link} from 'react-router-dom';
 
 import {ComponentName, BreadcrumbsItem, BreadcrumbsLink,} from '../../../utils/const';
@@ -10,7 +12,7 @@ import {
 } from '../../../types/types';
 import {Camera} from '../../../types/camera';
 
-import {getCurrentPage} from '../../../store/app-process/selectors';
+import {getCurrentPage} from '../../../store/process/selectors';
 
 
 interface BreadcrumbsProps {

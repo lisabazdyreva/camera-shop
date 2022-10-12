@@ -1,0 +1,39 @@
+.main-nav__link {
+  display: block;
+  padding: 22px 20px;
+  font-weight: 600;
+  color: #7575e2;
+  cursor: pointer;
+  -webkit-transition: background-color 0.3s ease;
+  -o-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
+}
+
+.main-nav__link--active {
+  color: #7575e2;
+  background-color: #a2a2ff;
+}
+
+.main-nav__link:active {
+  color: #7575e2;
+  background-color: #a2a2ff;
+}
+
+.main-nav__toggle {
+  display: none;
+}
+
+.footer__item {
+  margin-bottom: 8px;
+}
+
+.footer__item:last-child {
+  margin-bottom: 0;
+}
+
+@media (hover: hover), screen and (min-width: 0\0) {
+  .main-nav__link:hover,
+  .main-nav__link:focus {
+    background-color: #e8e8fa;
+  }
+}

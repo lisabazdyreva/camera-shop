@@ -279,3 +279,9 @@ export const initialCamera: CameraType = {
   previewImgWebp2x: '',
   reviewCount: 0,
 };
+
+export const ValidStatus = {
+  Ok: 'Ok',
+  Empty: 'Empty',
+  Short: 'Short',
+} as const;

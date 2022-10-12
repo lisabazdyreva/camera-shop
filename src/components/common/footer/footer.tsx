@@ -1,3 +1,5 @@
+import './footer.css';
+
 import {Logo, Social, FooterNavigation} from '../common';
 import {ComponentName} from '../../../utils/const';
 

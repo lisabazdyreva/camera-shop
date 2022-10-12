@@ -1,0 +1,9 @@
+.review-block__list {
+  display: -ms-grid;
+  display: grid;
+  margin: 0 0 40px;
+  padding: 0 0 13px;
+  list-style: none;
+  border-bottom: 2px solid #f4f4fc;
+  grid-row-gap: 12px;
+}

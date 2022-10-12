@@ -1,9 +1,11 @@
+import './review-form-rate-bar.css';
+
 import {ChangeEvent, FormEvent, Fragment} from 'react';
 
 import {InputName, InputTitle, MAX_RATING, RatingDictionary, RatingValue} from '../../../../../utils/const';
 import {useAppDispatch} from '../../../../../hooks';
 
-import {setReviewFormData} from '../../../../../store/app-process/app-process';
+import {setReviewFormData} from '../../../../../store/process/process';
 
 interface ReviewFormRateBarProps {
   selectedRating: number;
@@ -49,7 +51,8 @@ const ReviewFormRateBar = ({selectedRating, isValid, handleInputInvalid}: Review
             })
           }
         </div>
-        <div className="rate__progress"><span className="rate__stars">{selectedRating}</span>
+        <div className="rate__progress">
+          <span className="rate__stars">{selectedRating}</span>
           <span>/</span>
           <span className="rate__all-stars">{MAX_RATING}</span>
         </div>

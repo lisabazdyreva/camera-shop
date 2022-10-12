@@ -1,0 +1,14 @@
+.catalog {
+  color: #333333;
+}
+
+.page-content__columns {
+  display: -ms-grid;
+  display: grid;
+  grid-column-gap: 60px;
+  grid-template-areas: "aside content" "aside content" "aside pagination";
+  -ms-grid-columns: 236px 60px 1fr;
+  grid-template-columns: 236px 1fr;
+  -ms-grid-rows: min-content 1fr min-content;
+  grid-template-rows: min-content 1fr min-content;
+}

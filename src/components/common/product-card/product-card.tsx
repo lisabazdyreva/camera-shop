@@ -1,8 +1,9 @@
+import './product-card.css';
+
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import {Picture, Rating} from '../common';
-
 import {Camera} from '../../../types/camera';
 
 import {AppRoute, RatingClass, TabType} from '../../../utils/const';

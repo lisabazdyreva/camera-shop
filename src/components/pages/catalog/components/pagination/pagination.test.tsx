@@ -9,7 +9,7 @@ describe('pagination component', () => {
         <Pagination
           currentPageNumber={2}
           setCurrentPageNumber={jest.fn()}
-          pages={[1, 2, 3]}
+          pagesAmount={3}
         />
       </MemoryRouter>
     );
@@ -26,7 +26,7 @@ describe('pagination component', () => {
         <Pagination
           currentPageNumber={1}
           setCurrentPageNumber={jest.fn()}
-          pages={[1, 2, 3]}
+          pagesAmount={3}
         />
       </MemoryRouter>
     );
@@ -39,7 +39,7 @@ describe('pagination component', () => {
         <Pagination
           currentPageNumber={3}
           setCurrentPageNumber={jest.fn()}
-          pages={[1, 2, 3]}
+          pagesAmount={3}
         />
       </MemoryRouter>
     );

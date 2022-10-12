@@ -1,3 +1,5 @@
+import './footer-navigation.css';
+
 import {NavItem} from '../common';
 import {ComponentName, FooterNavigation as FooterNavigationEnum} from '../../../utils/const';
 

@@ -1,3 +1,5 @@
+import './side-filter.css';
+
 const SideFilter = ():JSX.Element => (
   <div className="catalog__aside" data-testid='filter'>
     <div className="catalog-filter">

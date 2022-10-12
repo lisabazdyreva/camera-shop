@@ -1,5 +1,5 @@
 import {Camera} from '../../../../../types/camera';
-import {setBasket} from '../../../../../store/app-process/app-process';
+import {setBasket} from '../../../../../store/process/process';
 import {useAppDispatch} from '../../../../../hooks';
 
 interface BasketAddButtonProps {

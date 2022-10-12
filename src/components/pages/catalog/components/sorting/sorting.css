@@ -1,0 +1,194 @@
+.catalog-sort {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.catalog-sort form {
+  width: 100%;
+}
+
+.catalog-sort__inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+}
+
+.catalog-sort .title--h5 {
+  margin-right: 20px;
+}
+
+.catalog-sort__type {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.catalog-sort__order {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: auto;
+}
+
+.catalog-sort__btn-text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  /* Checked */
+  /* Disabled */
+  /* Checked + Disabled */
+}
+
+.catalog-sort__btn-text input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.catalog-sort__btn-text label {
+  padding: 8px 22px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: #7575e2;
+  background-color: #f4f4fc;
+  border-radius: 20px;
+  cursor: pointer;
+  -webkit-transition: color 0.3s ease, background-color 0.3s ease;
+  -o-transition: color 0.3s ease, background-color 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.catalog-sort__btn-text:not(:last-child) {
+  margin-right: 7px;
+}
+
+.catalog-sort__btn-text input[type="radio"]:checked + label {
+  color: #ffffff;
+  background-color: #7575e2;
+  pointer-events: none;
+}
+
+.catalog-sort__btn-text input[type="radio"]:disabled + label {
+  color: #dddddd;
+  background-color: #f8f8f8;
+  pointer-events: none;
+}
+
+.catalog-sort__btn-text input[type="radio"]:checked:disabled + label {
+  color: #f8f8f8;
+  background-color: #dddddd;
+}
+
+.catalog-sort__btn-text input[type="radio"]:focus + label {
+  color: #7575e2;
+  background-color: #e8e8fa;
+}
+
+.catalog-sort__btn {
+  /* Checked */
+  /* Disabled */
+  /* Checked + Disabled */
+}
+
+.catalog-sort__btn--up svg {
+  -webkit-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+
+.catalog-sort__btn--down {
+  margin-left: 10px;
+}
+
+.catalog-sort__btn label {
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  /*padding: 0 size(12px);*/
+  font-weight: 600;
+  color: #7575e2;
+  background-color: #f4f4fc;
+  border-radius: 50%;
+  cursor: pointer;
+  -webkit-transition: background-color 0.3s ease;
+  -o-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.catalog-sort__btn label svg {
+  width: 16px;
+  height: 14px;
+}
+
+.catalog-sort__btn input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.catalog-sort__btn input[type="radio"]:checked + label {
+  color: #ffffff;
+  background-color: #7575e2;
+  pointer-events: none;
+}
+
+.catalog-sort__btn input[type="radio"]:disabled + label {
+  color: #dddddd;
+  background-color: #f8f8f8;
+  pointer-events: none;
+}
+
+.catalog-sort__btn input[type="radio"]:checked:disabled + label {
+  color: #f8f8f8;
+  background-color: #dddddd;
+  pointer-events: none;
+}
+
+.catalog-sort__btn input[type="radio"]:focus + label {
+  color: #7575e2;
+  background-color: #e8e8fa;
+}
+
+@media (hover: hover), screen and (min-width: 0\0) {
+  .catalog-sort__btn-text label:hover,
+  .catalog-sort__btn-text label:focus {
+    background-color: #e8e8fa;
+  }
+
+  .catalog-sort__btn label:hover,
+  .catalog-sort__btn label:focus {
+    background-color: #e8e8fa;
+  }
+}

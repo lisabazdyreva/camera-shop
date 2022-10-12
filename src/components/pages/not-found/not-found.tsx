@@ -1,3 +1,5 @@
+import './not-found.css';
+
 import {useNavigate} from 'react-router-dom';
 import {AppRoute, DefaultValue, NOT_FOUND_NOTIFICATION, PaginationRoute} from '../../../utils/const';
 

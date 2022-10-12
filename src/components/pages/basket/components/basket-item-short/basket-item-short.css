@@ -1,0 +1,38 @@
+.basket-item--short {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  grid-column-gap: 0;
+  padding-bottom: 20px;
+  border-bottom: none;
+}
+
+.basket-item--short .basket-item__description {
+  margin-right: 34px;
+  margin-left: 34px;
+}
+
+.basket-item--short .basket-item__title {
+  margin: 0 0 8px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.basket-item--short .basket-item__list {
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  line-height: 20px;
+  color: #9a9ac6;
+}
+
+.basket-item--short .basket-item__price {
+  margin: 0;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 32px;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}

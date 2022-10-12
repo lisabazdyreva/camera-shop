@@ -1,3 +1,5 @@
+import './product-tabs.css';
+
 import {useNavigate, useParams} from 'react-router-dom';
 
 import {DescriptionTab, FeatureTab} from '../components';

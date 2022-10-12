@@ -1,3 +1,5 @@
+import './nav-item.css';
+
 import {Link} from 'react-router-dom';
 
 import {AppRoute, ComponentName, DefaultValue, PaginationRoute, MenuItem} from '../../../utils/const';

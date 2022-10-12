@@ -1,13 +1,22 @@
+import './review-form.css';
+
 import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 
 import {ReviewFormRateBar} from '../components';
 
-import {FORM_ID_TYPE, InputErrorMessage, InputName, InputPlaceholder, InputTitle} from '../../../../../utils/const';
-import {checkIsValid} from '../../../../../utils/utils';
+import {
+  FORM_ID_TYPE,
+  InputErrorMessage,
+  InputName,
+  InputPlaceholder,
+  InputTitle,
+  ValidStatus
+} from '../../../../../utils/const';
+import {checkValidity, setValidationMessage} from '../../../../../utils/utils';
 import {useAppDispatch, useAppSelector} from '../../../../../hooks';
 
-import {setReviewFormData} from '../../../../../store/app-process/app-process';
-import {getReviewFormData} from '../../../../../store/app-process/selectors';
+import {setReviewFormData} from '../../../../../store/process/process';
+import {getReviewFormData} from '../../../../../store/process/selectors';
 import {postReviewAction} from '../../../../../store/api-actions/api-actions-reviews/api-actions-reviews';
 
 
@@ -19,7 +28,7 @@ type isValidState = {
   rating: boolean | null
 };
 
-const initialIsValidState = {
+const initialValiditiesState = {
   userName: null,
   advantage: null,
   disadvantage: null,
@@ -37,7 +46,7 @@ const ReviewForm = ({onModalClose, onSuccessModalOpen, id}: ReviewFormProps):JSX
   const dispatch = useAppDispatch();
   const formData = useAppSelector(getReviewFormData);
 
-  const [validity, setValidity] = useState<isValidState>(initialIsValidState);
+  const [validities, setValidities] = useState<isValidState>(initialValiditiesState);
 
   const handleFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
@@ -49,7 +58,10 @@ const ReviewForm = ({onModalClose, onSuccessModalOpen, id}: ReviewFormProps):JSX
 
   const handleInputInvalid = (evt: FormEvent, rating?: number) => {
     const target = evt.target as HTMLInputElement | HTMLTextAreaElement;
-    const isValid = checkIsValid(target);
+    const validity = checkValidity(target);
+
+    setValidationMessage(target, validity);
+    const isValid = validity === ValidStatus.Ok;
 
     let validityItem;
     switch (target.name) {
@@ -69,7 +81,7 @@ const ReviewForm = ({onModalClose, onSuccessModalOpen, id}: ReviewFormProps):JSX
         validityItem = {rating: rating !== 0 && rating !== undefined};
         break;
     }
-    setValidity({...validity, ...validityItem});
+    setValidities({...validities, ...validityItem});
   };
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -97,10 +109,10 @@ const ReviewForm = ({onModalClose, onSuccessModalOpen, id}: ReviewFormProps):JSX
         <div className="form-review__rate">
           <ReviewFormRateBar
             selectedRating={formData.rating}
-            isValid={validity.rating}
+            isValid={validities.rating}
             handleInputInvalid={handleInputInvalid}
           />
-          <div className={getBlockClasses(validity.userName)}>
+          <div className={getBlockClasses(validities.userName)}>
             <label>
               <span className="custom-input__label">{InputTitle.Name}
                 {icon}
@@ -120,7 +132,7 @@ const ReviewForm = ({onModalClose, onSuccessModalOpen, id}: ReviewFormProps):JSX
             <p className="custom-input__error">{InputErrorMessage.Name}</p>
           </div>
 
-          <div className={getBlockClasses(validity.advantage)}>
+          <div className={getBlockClasses(validities.advantage)}>
             <label>
               <span className="custom-input__label">{InputTitle.Advantage}
                 {icon}
@@ -140,7 +152,7 @@ const ReviewForm = ({onModalClose, onSuccessModalOpen, id}: ReviewFormProps):JSX
             <p className="custom-input__error">{InputErrorMessage.Advantage}</p>
           </div>
 
-          <div className={getBlockClasses(validity.disadvantage)}>
+          <div className={getBlockClasses(validities.disadvantage)}>
             <label>
               <span className="custom-input__label">{InputTitle.Disadvantage}
                 {icon}
@@ -159,7 +171,7 @@ const ReviewForm = ({onModalClose, onSuccessModalOpen, id}: ReviewFormProps):JSX
             <p className="custom-input__error">{InputErrorMessage.Disadvantage}</p>
           </div>
 
-          <div className={`custom-textarea form-review__item ${validity.review === false && 'is-invalid'}`}>
+          <div className={`custom-textarea form-review__item ${validities.review === false && 'is-invalid'}`}>
             <label>
               <span className="custom-textarea__label">
                 {InputTitle.Review}

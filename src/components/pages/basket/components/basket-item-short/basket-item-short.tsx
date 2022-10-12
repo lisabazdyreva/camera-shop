@@ -1,3 +1,6 @@
+import '../basket-item/basket-item.css';
+import './basket-item-short.css';
+
 import {Camera} from '../../../../../types/camera';
 import {getFormattedPrice} from '../../../../../utils/utils';
 import {Picture} from '../../../../common/common';

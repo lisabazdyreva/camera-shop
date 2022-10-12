@@ -1,3 +1,5 @@
+import './banner.css';
+
 import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 
@@ -7,8 +9,8 @@ import {useAppDispatch, useAppSelector} from '../../../../../hooks';
 import {getPromoLevel} from '../../../../../utils/utils';
 
 import {fetchCameraAction} from '../../../../../store/api-actions/api-actions-cameras/api-actions-cameras';
-import {getCamera} from '../../../../../store/app-camera/selectors';
-import {getPromos, getPromosFetchStatus} from '../../../../../store/app-promos/selectors';
+import {getCamera} from '../../../../../store/camera/selectors';
+import {getPromos, getPromosFetchStatus} from '../../../../../store/promos/selectors';
 
 
 const Banner = ():JSX.Element => {

@@ -1,0 +1,114 @@
+.tabs {
+  max-width: 100%;
+  margin-top: 30px;
+}
+
+.tabs__controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.tabs__control {
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  min-width: 157px;
+  padding: 8px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: #333333;
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  -webkit-transition: background-color 0.3s ease;
+  -o-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
+}
+
+.tabs__control:disabled {
+  color: #dddddd;
+  pointer-events: none;
+}
+
+.tabs__control.disabled {
+  color: #dddddd;
+  pointer-events: none;
+}
+
+.tabs__control.is-active {
+  background-color: #e8e8fa;
+  pointer-events: none;
+  outline: none;
+}
+
+.tabs__control.is-active:focus {
+  background-color: #e8e8fa;
+}
+
+.tabs__control:disabled.is-active {
+  color: #dddddd;
+  background-color: #f8f8f8;
+  pointer-events: none;
+}
+
+.tabs__control.disabled.is-active {
+  color: #dddddd;
+  background-color: #f8f8f8;
+  pointer-events: none;
+}
+
+.tabs__content {
+  position: relative;
+  margin-bottom: 40px;
+  padding-top: 20px;
+  border-top: 2px solid #f4f4fc;
+  -webkit-transition: height 0.3s;
+  -o-transition: height 0.3s;
+  transition: height 0.3s;
+}
+
+.tabs__element {
+  position: absolute;
+  width: 100%;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s ease, visibility 0.3s ease;
+  -o-transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.tabs__element.is-active {
+  z-index: 1;
+  width: 100%;
+  visibility: visible;
+  opacity: 1;
+}
+
+.product__tabs-controls {
+  max-width: 516px;
+  margin-left: 24px;
+}
+
+@media (hover: hover), screen and (min-width: 0\0) {
+  .tabs__control:hover,
+  .tabs__control:focus {
+    background-color: #f4f4fc;
+  }
+
+  .tabs__control:active {
+    background-color: #f4f4fc;
+  }
+}

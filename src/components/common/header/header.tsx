@@ -1,3 +1,5 @@
+import './header.css';
+
 import {Link} from 'react-router-dom';
 import {Logo, NavItem, Search} from '../common';
 import {AppRoute, ComponentName, MenuItem} from '../../../utils/const';

@@ -1,3 +1,5 @@
+import './logo.css';
+
 import {AppRoute, ComponentName, DefaultValue, TabType} from '../../../utils/const';
 import {ComponentNameType} from '../../../types/types';
 

@@ -10,8 +10,9 @@ import {useAppDispatch} from '../../../hooks';
 import {ComponentNameType} from '../../../types/types';
 import {Camera} from '../../../types/camera';
 
-import {cleanForm} from '../../../store/app-process/app-process';
+import {cleanForm} from '../../../store/process/process';
 import {useEscClose} from '../../../hooks/use-esc-close';
+import {SyntheticEvent} from 'react';
 
 
 interface ModalActionProps {
@@ -53,6 +54,10 @@ const ModalAction = ({usingComponent, data, onModalClose, onSuccessModalOpen}: M
     onModalClose();
   };
 
+  const handleOutsideModalClick = (evt: SyntheticEvent) => {
+    evt.stopPropagation();
+  };
+
   useEscClose(onModalClose);
   useBodyBlock();
 
@@ -60,7 +65,7 @@ const ModalAction = ({usingComponent, data, onModalClose, onSuccessModalOpen}: M
     <div className="modal is-active" data-testid='modal-action'>
       <div className="modal__wrapper" onClick={handleModalClose}>
         <div className="modal__overlay"></div>
-        <div className="modal__content" onClick={(evt) => evt.stopPropagation()}>
+        <div className="modal__content" onClick={handleOutsideModalClick}>
           <p className="title title--h4">{title}</p>
           {modalDetails}
           <div className="modal__buttons">

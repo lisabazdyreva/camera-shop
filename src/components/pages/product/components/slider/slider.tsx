@@ -1,3 +1,5 @@
+import './slider.css';
+
 import {ErrorInfo, Loader, ProductCard} from '../../../../common/common';
 
 import {Camera, Cameras} from '../../../../../types/camera';
@@ -6,7 +8,7 @@ import {ErrorData, LoadingStatus, Step} from '../../../../../utils/const';
 import {useAppDispatch} from '../../../../../hooks';
 
 import useSlider from '../../../../../hooks/use-slider';
-import {setBasket} from '../../../../../store/app-process/app-process';
+import {setBasket} from '../../../../../store/process/process';
 
 
 interface SliderProps {

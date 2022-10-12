@@ -1,3 +1,5 @@
+import './review-list-card.css';
+
 import React, {useEffect, useState} from 'react';
 
 import {ErrorInfo, Loader} from '../../../../common/common';
@@ -7,7 +9,7 @@ import {LoadingStatusType} from '../../../../../types/types';
 import {LoadingStatus, ErrorData, Step} from '../../../../../utils/const';
 import {useAppSelector} from '../../../../../hooks';
 
-import {getReviews} from '../../../../../store/app-reviews/selectors';
+import {getReviews} from '../../../../../store/reviews/selectors';
 
 
 interface ReviewListCardProps {

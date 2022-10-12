@@ -1,3 +1,5 @@
+import './review-card.css';
+
 import {Rating} from '../../../../common/common';
 
 import {Review} from '../../../../../types/review';

@@ -1,0 +1,7 @@
+.product__tabs-text p {
+  margin: 0 0 10px;
+}
+
+.product__tabs-text p:last-child {
+  margin-bottom: 0;
+}

@@ -1,0 +1,12 @@
+.not-found {
+  height: 60vh;
+}
+
+.not-found__text {
+  text-align: center;
+  padding-top: 20vh;
+}
+
+.not-found__buttons {
+  text-align: center;
+}

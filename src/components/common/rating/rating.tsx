@@ -1,3 +1,5 @@
+import './rating.css';
+
 import {Rating as RatingEnum} from '../../../utils/const';
 import {RatingClassType} from '../../../types/types';
 

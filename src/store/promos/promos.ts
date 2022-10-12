@@ -11,7 +11,7 @@ const initialState: AppPromos = {
   promosFetchStatus: LoadingStatus.Default,
 };
 
-export const appPromos = createSlice({
+export const promos = createSlice({
   name: NameSpace.Promos,
   initialState,
   reducers: {},
