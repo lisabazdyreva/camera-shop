@@ -8,6 +8,8 @@ import {LoadingStatusType} from './types';
 export type AppCameras = {
   cameras: Cameras,
   camerasFetchStatus: LoadingStatusType,
+  searchedCameras: Cameras,
+  searchedCamerasFetchStatus: LoadingStatusType,
 }
 
 export type AppCamera = {

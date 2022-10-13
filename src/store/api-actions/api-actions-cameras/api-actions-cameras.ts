@@ -52,3 +52,16 @@ export const fetchSimilarCamerasAction = createAsyncThunk<Cameras, {id: number},
     return data;
   },
 );
+
+
+export const fetchSearchCamerasAction = createAsyncThunk<Cameras, string, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'searchCameras/fetchSearchCameras',
+  async (substring, {extra: api}) => {
+    const {data} = await api.get<Cameras>(`${UrlRoute.Base}/cameras?name_like=${substring}`);
+    return data;
+  },
+);

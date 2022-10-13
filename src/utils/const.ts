@@ -6,6 +6,9 @@ export const FORM_ID_TYPE = 'id';
 export const MAX_RATING = 5;
 export const NOT_FOUND_NOTIFICATION = 'Такой страницы не найдено.';
 export const LOADER_NOTIFICATION = 'Идёт загрузка...';
+export const SEARCH_NOT_FOUND_NOTIFICATION = 'По вашему запросу ничего не найдено';
+export const SEARCH_ERROR_NOTIFICATION = 'При загрузке произошла ошибка. Попробуйте позже';
+export const DEBOUNCE_DELAY = 100;
 
 export const MenuItem = {
   Catalog: 'Каталог',
