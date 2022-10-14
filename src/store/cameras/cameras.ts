@@ -3,13 +3,18 @@ import {createSlice} from '@reduxjs/toolkit';
 import {AppCameras} from '../../types/state';
 import {LoadingStatus, NameSpace} from '../../utils/const';
 
-import {fetchCamerasAction, fetchSearchCamerasAction} from '../api-actions/api-actions-cameras/api-actions-cameras';
+import {
+  fetchCamerasAction,
+  fetchSearchCamerasAction,
+  fetchSortingCamerasAction
+} from '../api-actions/api-actions-cameras/api-actions-cameras';
 
 const initialState: AppCameras = {
   cameras: [],
   camerasFetchStatus: LoadingStatus.Default,
   searchedCameras: [],
   searchedCamerasFetchStatus: LoadingStatus.Default,
+  sortingCameras: [],
 };
 
 export const cameras = createSlice({
@@ -41,6 +46,9 @@ export const cameras = createSlice({
       })
       .addCase(fetchSearchCamerasAction.rejected, (state) => {
         state.searchedCamerasFetchStatus = LoadingStatus.Error;
+      })
+      .addCase(fetchSortingCamerasAction.fulfilled, (state, action) => {
+        state.sortingCameras = action.payload;
       });
   },
 });

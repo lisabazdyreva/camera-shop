@@ -11,9 +11,13 @@ import {Camera} from '../../../types/camera';
 import {useAppDispatch, useAppSelector} from '../../../hooks';
 
 import {setCurrentPage} from '../../../store/process/process';
-import {fetchCamerasAction} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
+import {
+  fetchCamerasAction,
+  fetchSortingCamerasAction
+} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
 import {fetchPromosAction} from '../../../store/api-actions/api-actions-promo/api-actions-promo';
-import {getCurrentPage} from '../../../store/process/selectors';
+import {getCurrentPage, getCurrentSortingOrder, getCurrentSortingType} from '../../../store/process/selectors';
+import {SortingData} from '../../../types/types';
 
 
 const Catalog = ():JSX.Element => {
@@ -24,6 +28,8 @@ const Catalog = ():JSX.Element => {
   const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
 
   const currentPageNumber = useAppSelector(getCurrentPage);
+  const currentSortingType = useAppSelector(getCurrentSortingType);
+  const currentSortingOrder = useAppSelector(getCurrentSortingOrder);
 
   const params = useParams();
   const {pageNumber} = params;
@@ -56,10 +62,21 @@ const Catalog = ():JSX.Element => {
 
   useEffect(() => {
     dispatch(setCurrentPage(pageNumberUrl));
-
     const startIndex = (pageNumberUrl - 1) * Step.Pagination;
-    dispatch(fetchCamerasAction({limit: Step.Pagination, startIndex}));
-  }, [currentPageNumber, dispatch, pageNumberUrl]);
+
+    if (currentSortingType) {
+      const sortingData: SortingData = {
+        limit: Step.Pagination,
+        startIndex,
+        sortingType: currentSortingType,
+        sortingOrder: currentSortingOrder,
+      };
+      dispatch(fetchSortingCamerasAction(sortingData));
+    } else {
+      dispatch(fetchCamerasAction({limit: Step.Pagination, startIndex}));
+    }
+
+  }, [currentPageNumber, dispatch, pageNumberUrl, currentSortingType, currentSortingOrder]);
 
   return (
     <main>

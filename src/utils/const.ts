@@ -71,6 +71,10 @@ export const UrlRoute = {
   Cameras: '/cameras',
   Similar: '/similar',
   Reviews: '/reviews',
+  Sorting: '_sort',
+  Order: '_order',
+  Start: '_start',
+  Limit: '_limit',
 } as const;
 
 
@@ -287,4 +291,14 @@ export const ValidStatus = {
   Ok: 'Ok',
   Empty: 'Empty',
   Short: 'Short',
+} as const;
+
+export const SortingType = {
+  Price: 'price',
+  Rating: 'rating',
+} as const;
+
+export const SortingOrder = {
+  Ascending: 'asc',
+  Descending: 'desc',
 } as const;

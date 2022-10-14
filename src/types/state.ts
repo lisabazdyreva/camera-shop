@@ -2,7 +2,7 @@ import {Promos} from './promo';
 import {Cameras, Camera} from './camera';
 import {ReviewPost, Reviews} from './review';
 import {store} from '../store/store';
-import {LoadingStatusType} from './types';
+import {LoadingStatusType, SortingOrderType, SortingType} from './types';
 
 
 export type AppCameras = {
@@ -10,6 +10,7 @@ export type AppCameras = {
   camerasFetchStatus: LoadingStatusType,
   searchedCameras: Cameras,
   searchedCamerasFetchStatus: LoadingStatusType,
+  sortingCameras: Cameras,
 }
 
 export type AppCamera = {
@@ -38,6 +39,8 @@ export type AppProcess = {
   currentCatalogPage: number;
   camerasTotalCount: number;
   reviewFormData: ReviewPost;
+  currentSortingType: null | SortingType;
+  currentSortingOrder: SortingOrderType;
 }
 
 export type State = ReturnType<typeof store.getState>;

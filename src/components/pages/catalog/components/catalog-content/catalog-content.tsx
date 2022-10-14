@@ -11,7 +11,7 @@ import {ErrorData, LoadingStatus, Step} from '../../../../../utils/const';
 import {useAppSelector} from '../../../../../hooks';
 
 import {getCamerasTotalCount} from '../../../../../store/process/selectors';
-import {getCameras, getCamerasFetchStatus} from '../../../../../store/cameras/selectors';
+import {getCameras, getCamerasFetchStatus, getSortingCameras} from '../../../../../store/cameras/selectors';
 
 
 interface CatalogContentProps {
@@ -22,9 +22,11 @@ interface CatalogContentProps {
 
 const CatalogContent = ({handleAddModal, currentPageNumber, setCurrentPageNumber}: CatalogContentProps):JSX.Element => {
   const [pagesAmount, setPagesAmount] = useState(0);
+
   const fetchStatus = useAppSelector(getCamerasFetchStatus);
   const camerasTotalCount = useAppSelector(getCamerasTotalCount);
-  const cameras = useAppSelector(getCameras);
+  const camerasInitial = useAppSelector(getCameras);
+  const sortingCameras = useAppSelector(getSortingCameras);
 
   const isCamerasLoaded = fetchStatus === LoadingStatus.Success;
   const isCamerasLoading = fetchStatus === LoadingStatus.Loading;
@@ -34,6 +36,8 @@ const CatalogContent = ({handleAddModal, currentPageNumber, setCurrentPageNumber
   useEffect(() => {
     setPagesAmount(Math.ceil( camerasTotalCount / Step.Pagination));
   }, [camerasTotalCount]);
+
+  const cameras = !sortingCameras.length ? camerasInitial : sortingCameras;
 
   return (
     <div className="catalog__content" data-testid='catalog-content'>

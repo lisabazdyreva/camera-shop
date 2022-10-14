@@ -1,6 +1,6 @@
 import {process, cleanForm, setBasket, setCamerasTotalCount, setCurrentPage, setReviewFormData} from './process';
 
-import {DefaultValue, FORM_ID_TYPE, initialReview, InputName} from '../../utils/const';
+import {DefaultValue, FORM_ID_TYPE, initialReview, InputName, SortingOrder} from '../../utils/const';
 import {getFakeCamera, getFakePostReview, UNKNOWN_TYPE} from '../../utils/mocks';
 import {AppProcess} from '../../types/state';
 
@@ -10,6 +10,8 @@ const state: AppProcess = {
   currentCatalogPage: DefaultValue.CatalogPageNumber,
   camerasTotalCount: 0,
   reviewFormData: initialReview,
+  currentSortingType: null, //TODO
+  currentSortingOrder: SortingOrder.Ascending,
 };
 const fakeCameraOne = getFakeCamera();
 const fakeCameraTwo = getFakeCamera();
