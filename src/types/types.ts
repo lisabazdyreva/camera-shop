@@ -1,6 +1,7 @@
 import {
   BreadcrumbsItem,
   ComponentName,
+  FilterCameraCategoryDictionary,
   LoadingStatus,
   MenuItem,
   ModalContent,
@@ -38,4 +39,6 @@ export type SortingData = {
   sortingType: SortingType,
   sortingOrder: SortingOrderType,
 };
+
+export type CameraCategoryType = typeof FilterCameraCategoryDictionary[keyof typeof FilterCameraCategoryDictionary];
 

@@ -5,6 +5,8 @@ import {setCurrentSortingOrder, setCurrentSortingType} from '../../../../../stor
 import {useAppDispatch, useAppSelector} from '../../../../../hooks';
 import {getCurrentSortingOrder, getCurrentSortingType} from '../../../../../store/process/selectors';
 
+//TODO URL for sorting
+//TODO change handler names to change
 const Sorting = ():JSX.Element => {
   const dispatch = useAppDispatch();
   const currentSortingType = useAppSelector(getCurrentSortingType);

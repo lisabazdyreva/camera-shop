@@ -85,6 +85,7 @@ export enum NameSpace {
   Promos = 'PROMOS',
   SimilarCameras = 'SIMILAR_CAMERAS',
   Reviews = 'REVIEWS',
+  FilterCameras = 'FILTER_CAMERAS',
 }
 
 export const Step = {
@@ -302,3 +303,41 @@ export const SortingOrder = {
   Ascending: 'asc',
   Descending: 'desc',
 } as const;
+
+export const FilterCameraCategory = {
+  Photocamera: 'photocamera',
+  Videocamera: 'videocamera',
+} as const;
+
+export const FilterCameraCategoryDictionary = {
+  Photocamera: 'Фотоаппарат',
+  Videocamera: 'Видеокамера',
+} as const;
+
+export const FilterCameraType = {
+  Digital: 'digital',
+  Film: 'film',
+  Snapshot: 'snapshot',
+  Collection: 'collection',
+} as const;
+
+export const FilterCameraTypeDictionary = {
+  Digital: 'Цифровая',
+  Film: 'Плёночная',
+  Snapshot: 'Моментальная',
+  Collection: 'Коллекционная',
+} as const;
+
+export const FilterCameraLevel = {
+  Zero: 'zero',
+  'Non-professional': 'non-professional',
+  Professional: 'professional',
+} as const;
+
+export const FilterCameraLevelDictionary = {
+  Zero: 'Нулевой',
+  'Non-professional': 'Любительский',
+  Professional: 'Профессиональный',
+} as const;
+
+

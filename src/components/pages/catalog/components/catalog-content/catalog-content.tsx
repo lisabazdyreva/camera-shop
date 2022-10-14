@@ -12,6 +12,7 @@ import {useAppSelector} from '../../../../../hooks';
 
 import {getCamerasTotalCount} from '../../../../../store/process/selectors';
 import {getCameras, getCamerasFetchStatus, getSortingCameras} from '../../../../../store/cameras/selectors';
+import {getFilterCameras} from '../../../../../store/filter-cameras/selectors';
 
 
 interface CatalogContentProps {
@@ -26,19 +27,33 @@ const CatalogContent = ({handleAddModal, currentPageNumber, setCurrentPageNumber
   const fetchStatus = useAppSelector(getCamerasFetchStatus);
   const camerasTotalCount = useAppSelector(getCamerasTotalCount);
   const camerasInitial = useAppSelector(getCameras);
+
   const sortingCameras = useAppSelector(getSortingCameras);
+  const filterCameras = useAppSelector(getFilterCameras);
 
   const isCamerasLoaded = fetchStatus === LoadingStatus.Success;
   const isCamerasLoading = fetchStatus === LoadingStatus.Loading;
   const isCamerasError = fetchStatus === LoadingStatus.Error;
 
-
   useEffect(() => {
     setPagesAmount(Math.ceil( camerasTotalCount / Step.Pagination));
   }, [camerasTotalCount]);
 
-  const cameras = !sortingCameras.length ? camerasInitial : sortingCameras;
+  const chooseCameras = () => {
+    if (sortingCameras.length) {
+      return sortingCameras;
+    }
 
+    if (filterCameras.length) {
+      return filterCameras;
+    }
+
+    return camerasInitial;
+  };
+
+  const cameras = chooseCameras();
+  //eslint-disable-next-line
+  // console.log(cameras);
   return (
     <div className="catalog__content" data-testid='catalog-content'>
       <Sorting />

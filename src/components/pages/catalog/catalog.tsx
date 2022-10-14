@@ -16,8 +16,16 @@ import {
   fetchSortingCamerasAction
 } from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
 import {fetchPromosAction} from '../../../store/api-actions/api-actions-promo/api-actions-promo';
-import {getCurrentPage, getCurrentSortingOrder, getCurrentSortingType} from '../../../store/process/selectors';
+import {
+  getCurrentPage,
+  getCurrentSortingOrder,
+  getCurrentSortingType,
+} from '../../../store/process/selectors';
+import {
+  getCurrentFilterCategory, getCurrentFilterLevel, getCurrentFilterType, getFilters
+} from '../../../store/filter-cameras/selectors';
 import {SortingData} from '../../../types/types';
+import {fetchCategoryCameraAction} from '../../../store/api-actions/api-actions-filters/api-actions-filters';
 
 
 const Catalog = ():JSX.Element => {
@@ -30,6 +38,10 @@ const Catalog = ():JSX.Element => {
   const currentPageNumber = useAppSelector(getCurrentPage);
   const currentSortingType = useAppSelector(getCurrentSortingType);
   const currentSortingOrder = useAppSelector(getCurrentSortingOrder);
+  const currentFilterCategory = useAppSelector(getCurrentFilterCategory);
+  const currentFilterType = useAppSelector(getCurrentFilterType);
+  const currentFilterLevel = useAppSelector(getCurrentFilterLevel);
+  const filters = useAppSelector(getFilters);
 
   const params = useParams();
   const {pageNumber} = params;
@@ -72,11 +84,13 @@ const Catalog = ():JSX.Element => {
         sortingOrder: currentSortingOrder,
       };
       dispatch(fetchSortingCamerasAction(sortingData));
+    } else if(currentFilterType.length || currentFilterCategory.length || currentFilterLevel.length) {
+      dispatch(fetchCategoryCameraAction({limit: Step.Pagination, startIndex, filters}));
     } else {
       dispatch(fetchCamerasAction({limit: Step.Pagination, startIndex}));
     }
 
-  }, [currentPageNumber, dispatch, pageNumberUrl, currentSortingType, currentSortingOrder]);
+  }, [currentPageNumber, dispatch, pageNumberUrl, currentSortingType, currentSortingOrder, currentFilterCategory, currentFilterType, filters]);
 
   return (
     <main>

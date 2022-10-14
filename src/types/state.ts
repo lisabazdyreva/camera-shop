@@ -43,5 +43,13 @@ export type AppProcess = {
   currentSortingOrder: SortingOrderType;
 }
 
+export type AppFilterCameras = {
+  categoryCameras: [] | Cameras,
+  currentFilterCategory: [] | string[];
+  currentFilterType: string[] | [];
+  currentFilterLevel: string[]| [];
+  filters: any; //TODO
+};
+
 export type State = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

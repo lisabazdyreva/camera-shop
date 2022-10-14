@@ -10,4 +10,3 @@ export const getReviewFormData = (state: State): ReviewPost => state[NameSpace.A
 
 export const getCurrentSortingType = (state: State): SortingType | null => state[NameSpace.App].currentSortingType;
 export const getCurrentSortingOrder = (state: State): SortingOrderType => state[NameSpace.App].currentSortingOrder;
-
