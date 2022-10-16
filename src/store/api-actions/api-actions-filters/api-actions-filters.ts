@@ -4,46 +4,49 @@ import {AxiosInstance} from 'axios';
 import {Cameras} from '../../../types/camera';
 import {AppDispatch, State} from '../../../types/state';
 import {UrlRoute} from '../../../utils/const';
-import {setCamerasTotalCount} from '../../process/process';
 
-export const fetchCategoryCameraAction = createAsyncThunk<Cameras, {
-  limit: number,
-  startIndex: number,
-  filters: any,//TODO
-}, {
+
+export const fetchPricesAction = createAsyncThunk<{lowPrice: number, highPrice: number}, undefined, {
   dispatch: AppDispatch,
   state: State,
-  extra: AxiosInstance
+  extra: AxiosInstance,
 }>(
-  'filterCameras/fetchCategoryCameras',
-  async ({limit, startIndex, filters}, {dispatch, extra: api}) => {
-    const filterUrl = filters.map(({filterName, values}: any) => values.map((value: any, index: any) => {
-      if (index === 0) {
-        return `${filterName}=${value}`;
-      }
-      return `&${filterName}=${value}`;
-    }).join('')).join('&');
+  'filterCameras/fetchPrices',
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<Cameras>(`${UrlRoute.Base}${UrlRoute.Cameras}?_sort=price`);
 
-    const url = `${UrlRoute.Base}${UrlRoute.Cameras}?${filterUrl}&${UrlRoute.Start}=${startIndex}&${UrlRoute.Limit}=${limit}`;
-
-    const response = await api.get<Cameras>(url);
-    const camerasTotalCount = response.headers['x-total-count'];
-    const data = response.data;
-
-    dispatch(setCamerasTotalCount(Number(camerasTotalCount)));
-    return data;
+    const lowPrice = data[0].price;
+    const highPrice = data[data.length - 1].price;
+    return {lowPrice, highPrice};
   },
 );
 
+export const fetchLowPriceAction = createAsyncThunk<{lowPrice: number}, {value: number, min: number}, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance,
+}>(
+  'filterCameras/fetchLowPrice',
+  async ({value, min}, {extra: api}) => {
+    const baseUrl = `${UrlRoute.Base}${UrlRoute.Cameras}?_sort=price&_order=desc`;
+    const url = `&price_gte=${min}&price_lte=${value}`;
+    const {data} = await api.get<Cameras>(`${baseUrl}${url}`);
+    const lowPrice = data[0].price;
+    return {lowPrice};
+  },
+);
 
-// export const fetchCategoryCameraAction = createAsyncThunk<Cameras, {
-//   limit: number,
-//   startIndex: number,
-//   category: string,
-//   filterType: string,
-// }, {
-//   dispatch: AppDispatch,
-//   state: State,
-//   extra: AxiosInstance
-// }>(
-//   'filterCameras/fetchTypeAndCategoryCameras',
+export const fetchHighPriceAction = createAsyncThunk<{highPrice: number}, {value: number, max: number}, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance,
+}>(
+  'filterCameras/fetchHighPrice',
+  async ({value, max}, {extra: api}) => {
+    const baseUrl = `${UrlRoute.Base}${UrlRoute.Cameras}?_sort=price&_order=asc&`;
+    const url = `price_gte=${value}&price_lte=${max}`;
+    const {data} = await api.get<Cameras>(`${baseUrl}${url}`);
+    const highPrice = data[0].price;
+    return {highPrice};
+  },
+);

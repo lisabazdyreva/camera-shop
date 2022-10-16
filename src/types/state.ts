@@ -10,7 +10,9 @@ export type AppCameras = {
   camerasFetchStatus: LoadingStatusType,
   searchedCameras: Cameras,
   searchedCamerasFetchStatus: LoadingStatusType,
-  sortingCameras: Cameras,
+  // sortingCameras: Cameras,
+  // isSorting: boolean;
+  // url: string;
 }
 
 export type AppCamera = {
@@ -41,14 +43,16 @@ export type AppProcess = {
   reviewFormData: ReviewPost;
   currentSortingType: null | SortingType;
   currentSortingOrder: SortingOrderType;
+  sortingUrl: string;
 }
 
 export type AppFilterCameras = {
-  categoryCameras: [] | Cameras,
-  currentFilterCategory: [] | string[];
-  currentFilterType: string[] | [];
-  currentFilterLevel: string[]| [];
-  filters: any; //TODO
+  filters: {filterName: string, values: string[]}[]; //TODO
+  minPrice: number,
+  maxPrice: number,
+  highPrice: number,
+  lowPrice: number,
+  filterUrl: string,
 };
 
 export type State = ReturnType<typeof store.getState>;

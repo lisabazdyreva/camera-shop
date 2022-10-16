@@ -1,30 +1,35 @@
 import './sorting.css';
 import {ChangeEvent} from 'react';
 import {SortingOrder, SortingType} from '../../../../../utils/const';
-import {setCurrentSortingOrder, setCurrentSortingType} from '../../../../../store/process/process';
+import {setCurrentSortingOrder, setCurrentSortingType, setSortingUrl} from '../../../../../store/process/process';
 import {useAppDispatch, useAppSelector} from '../../../../../hooks';
 import {getCurrentSortingOrder, getCurrentSortingType} from '../../../../../store/process/selectors';
 
 //TODO URL for sorting
 //TODO change handler names to change
+//TODO sorting не сбрасывается получается больше
 const Sorting = ():JSX.Element => {
   const dispatch = useAppDispatch();
+
   const currentSortingType = useAppSelector(getCurrentSortingType);
   const currentSortingOrder = useAppSelector(getCurrentSortingOrder);
 
-  const handleSortingTypeClick = (evt: ChangeEvent) => {
+  const handleSortingTypeChange = (evt: ChangeEvent) => {
     const target = evt.target as HTMLInputElement;
     dispatch(setCurrentSortingType(target.dataset.value));
+    dispatch(setSortingUrl());
   };
 
-  const handleSortingOrderClick = (evt: ChangeEvent) => {
+  const handleSortingOrderChange = (evt: ChangeEvent) => {
     const target = evt.target as HTMLInputElement;
-    dispatch(setCurrentSortingOrder(target.dataset.value));
 
     if (!currentSortingType) {
       dispatch(setCurrentSortingType(SortingType.Price));
     }
-  }; //не работает
+
+    dispatch(setCurrentSortingOrder(target.dataset.value));
+    dispatch(setSortingUrl());
+  };
 
   return (
     <div className="catalog-sort">
@@ -39,7 +44,7 @@ const Sorting = ():JSX.Element => {
                 name="sort"
                 checked={currentSortingType === SortingType.Price}
                 data-value={SortingType.Price}
-                onChange={handleSortingTypeClick}
+                onChange={handleSortingTypeChange}
               />
               <label htmlFor="sortPrice">по цене</label>
             </div>
@@ -50,7 +55,7 @@ const Sorting = ():JSX.Element => {
                 name="sort"
                 checked={currentSortingType === SortingType.Rating}
                 data-value={SortingType.Rating}
-                onChange={handleSortingTypeClick}
+                onChange={handleSortingTypeChange}
               />
               <label htmlFor="sortPopular">по популярности</label>
             </div>
@@ -64,7 +69,7 @@ const Sorting = ():JSX.Element => {
                 aria-label="По возрастанию"
                 checked={currentSortingOrder === SortingOrder.Ascending}
                 data-value={SortingOrder.Ascending}
-                onChange={handleSortingOrderClick}
+                onChange={handleSortingOrderChange}
               />
               <label htmlFor="up">
                 <svg width="16" height="14" aria-hidden="true">
@@ -80,7 +85,7 @@ const Sorting = ():JSX.Element => {
                 aria-label="По убыванию"
                 checked={currentSortingOrder === SortingOrder.Descending}
                 data-value={SortingOrder.Descending}
-                onChange={handleSortingOrderClick}
+                onChange={handleSortingOrderChange}
               />
               <label htmlFor="down">
                 <svg width="16" height="14" aria-hidden="true">

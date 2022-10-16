@@ -11,8 +11,7 @@ import {ErrorData, LoadingStatus, Step} from '../../../../../utils/const';
 import {useAppSelector} from '../../../../../hooks';
 
 import {getCamerasTotalCount} from '../../../../../store/process/selectors';
-import {getCameras, getCamerasFetchStatus, getSortingCameras} from '../../../../../store/cameras/selectors';
-import {getFilterCameras} from '../../../../../store/filter-cameras/selectors';
+import {getCameras, getCamerasFetchStatus} from '../../../../../store/cameras/selectors';
 
 
 interface CatalogContentProps {
@@ -26,10 +25,7 @@ const CatalogContent = ({handleAddModal, currentPageNumber, setCurrentPageNumber
 
   const fetchStatus = useAppSelector(getCamerasFetchStatus);
   const camerasTotalCount = useAppSelector(getCamerasTotalCount);
-  const camerasInitial = useAppSelector(getCameras);
-
-  const sortingCameras = useAppSelector(getSortingCameras);
-  const filterCameras = useAppSelector(getFilterCameras);
+  const cameras = useAppSelector(getCameras);
 
   const isCamerasLoaded = fetchStatus === LoadingStatus.Success;
   const isCamerasLoading = fetchStatus === LoadingStatus.Loading;
@@ -39,27 +35,12 @@ const CatalogContent = ({handleAddModal, currentPageNumber, setCurrentPageNumber
     setPagesAmount(Math.ceil( camerasTotalCount / Step.Pagination));
   }, [camerasTotalCount]);
 
-  const chooseCameras = () => {
-    if (sortingCameras.length) {
-      return sortingCameras;
-    }
-
-    if (filterCameras.length) {
-      return filterCameras;
-    }
-
-    return camerasInitial;
-  };
-
-  const cameras = chooseCameras();
-  //eslint-disable-next-line
-  // console.log(cameras);
   return (
     <div className="catalog__content" data-testid='catalog-content'>
       <Sorting />
       {isCamerasError && <ErrorInfo text={ErrorData.Catalog} />}
       {isCamerasLoading && <Loader />}
-      {isCamerasLoaded &&
+      {isCamerasLoaded && cameras.length &&
         <>
           <div className="cards catalog__cards">
             {cameras.map((camera) => (
@@ -72,6 +53,7 @@ const CatalogContent = ({handleAddModal, currentPageNumber, setCurrentPageNumber
           </div>
           {pagesAmount && <Pagination pagesAmount={pagesAmount} currentPageNumber={currentPageNumber} setCurrentPageNumber={setCurrentPageNumber}/>}
         </>}
+      {isCamerasLoaded && !cameras.length && <div>Такого товара нет</div>}
     </div>
   );
 };

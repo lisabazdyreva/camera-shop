@@ -1,90 +1,96 @@
 import {AppFilterCameras} from '../../types/state';
 import {createSlice} from '@reduxjs/toolkit';
-import {NameSpace} from '../../utils/const';
-import {fetchCategoryCameraAction} from '../api-actions/api-actions-filters/api-actions-filters';
+import {FilterName, NameSpace} from '../../utils/const';
+import {
+  fetchHighPriceAction,
+  fetchLowPriceAction,
+  fetchPricesAction
+} from '../api-actions/api-actions-filters/api-actions-filters';
 
 const initialState: AppFilterCameras = {
-  categoryCameras: [],
-  currentFilterCategory: [],
-  currentFilterType: [],
-  currentFilterLevel: [],
   filters: [],
+  minPrice: 0,
+  maxPrice: 0,
+  lowPrice: 0,
+  highPrice: 0,
+  filterUrl: '',
 };
 
 export const filterCameras = createSlice({
   name: NameSpace.FilterCameras,
   initialState,
   reducers: {
-    cleanCategoryCameras: (state) => {
-      state.categoryCameras = [];
+    resetPrices: (state) => {
+      state.lowPrice = 0;
+      state.highPrice = 0;
+    },
+    resetFilters: (state) => {
+      state.filters = [];
+      state.filterUrl = '';
+    },
+    setUrl: (state) => {
+      state.filterUrl = state.filters.map(({filterName, values}) => values.map((value, index) => {
+        if (index === 0) {
+          return `${filterName}=${value}`;
+        }
+        return `&${filterName}=${value}`;
+      }).join('')).join('&');
     },
     setCurrentFilter: (state, action) => {
+      let values;
       const index = state.filters.findIndex(({filterName}: {filterName: string}) => filterName === action.payload.filter);
 
-      const updateFilters = (values: string[]) => {
-        if (index === -1) {
-          state.filters = [...state.filters, {filterName: action.payload.filter, values}];
-        } else {
-          state.filters = [...state.filters.slice(0, index), {filterName: action.payload.filter, values}, ...state.filters.slice(index + 1)];
-        }
-      };
-
       switch (action.payload.filter) {
-        case('category'): {
-          state.currentFilterCategory = [...state.currentFilterCategory, action.payload.value];
-          updateFilters(state.currentFilterCategory);
+        case FilterName.HighPrice:
+          values = action.payload.filter === FilterName.HighPrice && [state.highPrice];
           break;
-        }
-        case ('type'): {
-          state.currentFilterType = [...state.currentFilterType, action.payload.value];
-          updateFilters(state.currentFilterType);
+        case FilterName.LowPrice:
+          values = action.payload.filter === FilterName.LowPrice && [state.lowPrice];
           break;
-        }
-        case ('level'): {
-          state.currentFilterLevel = [...state.currentFilterLevel, action.payload.value];
-          updateFilters(state.currentFilterLevel);
-          break;
-        }
       }
 
+      if (index === -1) {
+        const newFilter = {filterName: action.payload.filter, values: values || [action.payload.value]};
+        state.filters = [...state.filters, newFilter];
+      } else {
+        const updatedItem = {
+          filterName: action.payload.filter,
+          values: values || [...state.filters[index].values, action.payload.value]
+        };
+        state.filters = [...state.filters.slice(0, index), updatedItem, ...state.filters.slice(index + 1)];
+      }
     },
     removeCurrentFilter: (state, action) => {
       const index = state.filters.findIndex(({filterName}: {filterName: string}) => filterName === action.payload.filter);
+      const newValue = state.filters[index].values.filter((value: string) => value !== action.payload.value);
 
-      const updateFilters = (values: string[]) => {
-        if (values.length) {
-          state.filters = [...state.filters.slice(0, index), {filterName: action.payload.filter, values}, ...state.filters.slice(index + 1)];
-        } else {
-          state.filters = [...state.filters.slice(0, index), ...state.filters.slice(index + 1)];
-        }
-      };
-
-      switch (action.payload.filter) {
-        case ('category'): {
-          state.currentFilterCategory = state.currentFilterCategory.filter((category) => category !== action.payload.value);
-          updateFilters(state.currentFilterCategory);
-          break;
-        }
-        case ('type'): {
-          state.currentFilterType = state.currentFilterType.filter((type) => type !== action.payload.value);
-          updateFilters(state.currentFilterType);
-          break;
-        }
-        case ('level'): {
-          state.currentFilterLevel = state.currentFilterLevel.filter((level) => level !== action.payload.value);
-          updateFilters(state.currentFilterLevel);
-          break;
-        }
+      if (newValue.length) {
+        state.filters = [
+          ...state.filters.slice(0, index),
+          {filterName: action.payload.filter, values: newValue},
+          ...state.filters.slice(index + 1)
+        ];
+      } else {
+        state.filters = [...state.filters.slice(0, index), ...state.filters.slice(index + 1)];
       }
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchCategoryCameraAction.fulfilled, (state, action) => {
-        state.categoryCameras = action.payload;
+      .addCase(fetchPricesAction.fulfilled, (state, action) => {
+        state.minPrice = action.payload.lowPrice;
+        state.maxPrice = action.payload.highPrice;
+        state.highPrice = state.maxPrice;
+        state.lowPrice = state.minPrice;
+      })
+      .addCase(fetchLowPriceAction.fulfilled, (state, action) => {
+        state.lowPrice = action.payload.lowPrice;
+      })
+      .addCase(fetchHighPriceAction.fulfilled, (state, action) => {
+        state.highPrice = action.payload.highPrice;
       });
   },
 });
 
 
-export const {cleanCategoryCameras, setCurrentFilter, removeCurrentFilter} = filterCameras.actions;
+export const {setCurrentFilter, removeCurrentFilter, resetFilters, resetPrices, setUrl} = filterCameras.actions;

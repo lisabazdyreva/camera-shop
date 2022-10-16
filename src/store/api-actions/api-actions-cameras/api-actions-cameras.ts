@@ -6,22 +6,31 @@ import {AppDispatch, State} from '../../../types/state';
 
 import {UrlRoute} from '../../../utils/const';
 import {setCamerasTotalCount} from '../../process/process';
-import {SortingData} from '../../../types/types';
 
 
 export const fetchCamerasAction = createAsyncThunk<Cameras, {
   limit: number,
   startIndex: number, //TODO вынести
+  url?: string,
+  //TODO передавать url
 }, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
   'cameras/fetchCameras',
-  async ({limit, startIndex }, {dispatch, extra: api}) => {
-    const url = `${UrlRoute.Base}${UrlRoute.Cameras}?${UrlRoute.Start}=${startIndex}&${UrlRoute.Limit}=${limit}`;
+  async ({limit, startIndex, url }, {dispatch, extra: api}) => {
+    let finishUrl;
+    const baseUrl = `${UrlRoute.Base}${UrlRoute.Cameras}?`;//TODO naming
+    const limitUrl = `${UrlRoute.Start}=${startIndex}&${UrlRoute.Limit}=${limit}`;
 
-    const response = await api.get<Cameras>(url);
+    if (url) {
+      finishUrl = `${baseUrl}${url}&${limitUrl}`;
+    } else {
+      finishUrl = `${baseUrl}${limitUrl}`;
+    }
+
+    const response = await api.get<Cameras>(finishUrl);
     const data = response.data;
 
     const camerasTotalCount = response.headers['x-total-count'];
@@ -65,21 +74,6 @@ export const fetchSearchCamerasAction = createAsyncThunk<Cameras, string, {
   'searchCameras/fetchSearchCameras',
   async (substring, {extra: api}) => {
     const {data} = await api.get<Cameras>(`${UrlRoute.Base}${UrlRoute.Cameras}?name_like=${substring}`);
-    return data;
-  },
-);
-
-export const fetchSortingCamerasAction = createAsyncThunk<Cameras, SortingData, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
-}>(
-  'sortCameras/fetchSortingCameras',
-  async ({limit, startIndex, sortingType, sortingOrder},
-    {extra: api}) => {
-    const url = `${UrlRoute.Base}${UrlRoute.Cameras}?${UrlRoute.Sorting}=${sortingType}&${UrlRoute.Order}=${sortingOrder}&${UrlRoute.Start}=${startIndex}&${UrlRoute.Limit}=${limit}`;
-    const {data} = await api.get<Cameras>(url);
-
     return data;
   },
 );

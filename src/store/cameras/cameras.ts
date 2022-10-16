@@ -5,8 +5,7 @@ import {LoadingStatus, NameSpace} from '../../utils/const';
 
 import {
   fetchCamerasAction,
-  fetchSearchCamerasAction,
-  fetchSortingCamerasAction
+  fetchSearchCamerasAction
 } from '../api-actions/api-actions-cameras/api-actions-cameras';
 
 const initialState: AppCameras = {
@@ -14,17 +13,12 @@ const initialState: AppCameras = {
   camerasFetchStatus: LoadingStatus.Default,
   searchedCameras: [],
   searchedCamerasFetchStatus: LoadingStatus.Default,
-  sortingCameras: [],
 };
 
 export const cameras = createSlice({
   name: NameSpace.Cameras,
   initialState,
-  reducers: {
-    cleanSearchedCameras: (state) => {
-      state.searchedCameras = []; //TODO спросить и удалить мб
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchCamerasAction.pending, (state) => {
@@ -46,9 +40,6 @@ export const cameras = createSlice({
       })
       .addCase(fetchSearchCamerasAction.rejected, (state) => {
         state.searchedCamerasFetchStatus = LoadingStatus.Error;
-      })
-      .addCase(fetchSortingCamerasAction.fulfilled, (state, action) => {
-        state.sortingCameras = action.payload;
       });
   },
 });

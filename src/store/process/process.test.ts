@@ -12,6 +12,7 @@ const state: AppProcess = {
   reviewFormData: initialReview,
   currentSortingType: null, //TODO
   currentSortingOrder: SortingOrder.Ascending,
+  sortingUrl: '',
 };
 const fakeCameraOne = getFakeCamera();
 const fakeCameraTwo = getFakeCamera();

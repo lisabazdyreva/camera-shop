@@ -11,37 +11,25 @@ import {Camera} from '../../../types/camera';
 import {useAppDispatch, useAppSelector} from '../../../hooks';
 
 import {setCurrentPage} from '../../../store/process/process';
-import {
-  fetchCamerasAction,
-  fetchSortingCamerasAction
-} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
+
+import {fetchCamerasAction} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
 import {fetchPromosAction} from '../../../store/api-actions/api-actions-promo/api-actions-promo';
-import {
-  getCurrentPage,
-  getCurrentSortingOrder,
-  getCurrentSortingType,
-} from '../../../store/process/selectors';
-import {
-  getCurrentFilterCategory, getCurrentFilterLevel, getCurrentFilterType, getFilters
-} from '../../../store/filter-cameras/selectors';
-import {SortingData} from '../../../types/types';
-import {fetchCategoryCameraAction} from '../../../store/api-actions/api-actions-filters/api-actions-filters';
+import {getCurrentPage, getSortingUrl} from '../../../store/process/selectors';
+import {getFilterUrl} from '../../../store/filter-cameras/selectors';
+import {fetchPricesAction} from '../../../store/api-actions/api-actions-filters/api-actions-filters';
 
 
 const Catalog = ():JSX.Element => {
   const dispatch = useAppDispatch();
 
   const [selectedCameraData, setSelectedCameraData] = useState(initialCamera);
+
   const [isModalAddOpen, setIsModalAddOpen] = useState(false);
   const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
 
   const currentPageNumber = useAppSelector(getCurrentPage);
-  const currentSortingType = useAppSelector(getCurrentSortingType);
-  const currentSortingOrder = useAppSelector(getCurrentSortingOrder);
-  const currentFilterCategory = useAppSelector(getCurrentFilterCategory);
-  const currentFilterType = useAppSelector(getCurrentFilterType);
-  const currentFilterLevel = useAppSelector(getCurrentFilterLevel);
-  const filters = useAppSelector(getFilters);
+  const filterUrl = useAppSelector(getFilterUrl);
+  const sortingUrl = useAppSelector(getSortingUrl);
 
   const params = useParams();
   const {pageNumber} = params;
@@ -76,21 +64,27 @@ const Catalog = ():JSX.Element => {
     dispatch(setCurrentPage(pageNumberUrl));
     const startIndex = (pageNumberUrl - 1) * Step.Pagination;
 
-    if (currentSortingType) {
-      const sortingData: SortingData = {
-        limit: Step.Pagination,
-        startIndex,
-        sortingType: currentSortingType,
-        sortingOrder: currentSortingOrder,
-      };
-      dispatch(fetchSortingCamerasAction(sortingData));
-    } else if(currentFilterType.length || currentFilterCategory.length || currentFilterLevel.length) {
-      dispatch(fetchCategoryCameraAction({limit: Step.Pagination, startIndex, filters}));
-    } else {
-      dispatch(fetchCamerasAction({limit: Step.Pagination, startIndex}));
+    if (sortingUrl && filterUrl) {
+      dispatch(fetchCamerasAction({limit: Step.Pagination, startIndex, url: `${sortingUrl}&${filterUrl}`}));
+      return;
     }
 
-  }, [currentPageNumber, dispatch, pageNumberUrl, currentSortingType, currentSortingOrder, currentFilterCategory, currentFilterType, filters]);
+    if (filterUrl) {
+      dispatch(fetchCamerasAction({limit: Step.Pagination, startIndex, url: filterUrl}));
+      return;
+    }
+    if (sortingUrl) {
+      dispatch(fetchCamerasAction({limit: Step.Pagination, startIndex, url: sortingUrl}));
+      return;
+    }
+
+    dispatch(fetchCamerasAction({limit: Step.Pagination, startIndex}));
+
+  }, [currentPageNumber, dispatch, filterUrl, sortingUrl, pageNumberUrl]);
+
+  useEffect(() => {
+    dispatch(fetchPricesAction());
+  }, [dispatch]);
 
   return (
     <main>

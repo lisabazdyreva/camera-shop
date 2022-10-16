@@ -340,4 +340,11 @@ export const FilterCameraLevelDictionary = {
   Professional: 'Профессиональный',
 } as const;
 
+export const FilterName = {
+  Category: 'category',
+  Type: 'type',
+  Level: 'level',
+  HighPrice: 'price_lte',
+  LowPrice: 'price_gte',
+} as const;
 

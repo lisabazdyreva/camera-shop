@@ -3,7 +3,15 @@ import {createSlice} from '@reduxjs/toolkit';
 import {AppProcess} from '../../types/state';
 import {Camera} from '../../types/camera';
 
-import {DefaultValue, FORM_ID_TYPE, initialReview, InputName, NameSpace, SortingOrder} from '../../utils/const';
+import {
+  DefaultValue,
+  FORM_ID_TYPE,
+  initialReview,
+  InputName,
+  NameSpace,
+  SortingOrder,
+  UrlRoute
+} from '../../utils/const';
 
 
 const initialState: AppProcess = {
@@ -13,6 +21,7 @@ const initialState: AppProcess = {
   reviewFormData: initialReview,
   currentSortingType: null,
   currentSortingOrder: SortingOrder.Ascending,
+  sortingUrl: '',
 };
 
 export const process = createSlice({
@@ -59,7 +68,10 @@ export const process = createSlice({
     },
     cleanForm: (state) => {
       state.reviewFormData = initialState.reviewFormData;
-    }
+    },
+    setSortingUrl: (state) => {
+      state.sortingUrl = `${UrlRoute.Sorting}=${state.currentSortingType}&${UrlRoute.Order}=${state.currentSortingOrder}`;
+    },
   },
 });
 
@@ -70,6 +82,7 @@ export const {
   setCurrentSortingOrder,
   setCamerasTotalCount,
   setReviewFormData,
+  setSortingUrl,
   cleanForm
 } = process.actions;
 
