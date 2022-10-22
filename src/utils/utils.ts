@@ -107,3 +107,21 @@ export const checkValidity = (target: HTMLInputElement | HTMLTextAreaElement): V
 export const isEsc = (code: string) => code === 'Escape' || code === 'Esc';
 
 export const getPromoLevel = (camera: Camera) => camera.level.slice(0, -2) + CAMERA_ADJECTIVE_ENDING;
+
+export const filterParams = (params: URLSearchParams, exceptions: (string | undefined)[]) => {
+  const [exceptionFirst, exceptionSecond] = exceptions;
+
+  const filteredParams = Array.from(params.entries())
+    .filter(([, valueParam]) => {
+      if (exceptionFirst && exceptionSecond) {
+        return valueParam !== exceptionFirst && valueParam !== exceptionSecond;
+      }
+
+      if (exceptionFirst) {
+        return valueParam !== exceptionFirst;
+      }
+
+    });
+
+  return new URLSearchParams(filteredParams);
+};

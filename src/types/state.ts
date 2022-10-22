@@ -42,17 +42,20 @@ export type AppProcess = {
   camerasTotalCount: number;
   reviewFormData: ReviewPost;
   currentSortingType: null | SortingType;
-  currentSortingOrder: SortingOrderType;
-  sortingUrl: string;
+  currentSortingOrder: SortingOrderType | null;
+  allSorting: string[];
+  currentPath: string;
 }
 
 export type AppFilterCameras = {
-  filters: {filterName: string, values: string[]}[]; //TODO
+  currentFilterCategory: string[],
+  currentFilterType: string[],
+  currentFilterLevel: string[],
   minPrice: number,
   maxPrice: number,
-  highPrice: number,
-  lowPrice: number,
-  filterUrl: string,
+  highPrice: number | '',
+  lowPrice: number | string,
+  allFilters: (string | number)[],
 };
 
 export type State = ReturnType<typeof store.getState>;

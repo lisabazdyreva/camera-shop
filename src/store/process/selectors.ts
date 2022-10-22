@@ -9,6 +9,7 @@ export const getCamerasTotalCount = (state: State): number => state[NameSpace.Ap
 export const getReviewFormData = (state: State): ReviewPost => state[NameSpace.App].reviewFormData;
 
 export const getCurrentSortingType = (state: State): SortingType | null => state[NameSpace.App].currentSortingType;
-export const getCurrentSortingOrder = (state: State): SortingOrderType => state[NameSpace.App].currentSortingOrder;
+export const getCurrentSortingOrder = (state: State): SortingOrderType | null => state[NameSpace.App].currentSortingOrder;
 
-export const getSortingUrl = (state: State): string => state[NameSpace.App].sortingUrl;
+export const getAllSorting = (state: State): string[] => state[NameSpace.App].allSorting;
+export const getCurrentPath = (state: State): string => state[NameSpace.App].currentPath;

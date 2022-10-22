@@ -8,9 +8,7 @@ import {
   FORM_ID_TYPE,
   initialReview,
   InputName,
-  NameSpace,
-  SortingOrder,
-  UrlRoute
+  NameSpace
 } from '../../utils/const';
 
 
@@ -20,8 +18,9 @@ const initialState: AppProcess = {
   camerasTotalCount: 0,
   reviewFormData: initialReview,
   currentSortingType: null,
-  currentSortingOrder: SortingOrder.Ascending,
-  sortingUrl: '',
+  currentSortingOrder: null,
+  allSorting: [],
+  currentPath: '',
 };
 
 export const process = createSlice({
@@ -35,14 +34,30 @@ export const process = createSlice({
     setCurrentPage: (state, action) => {
       state.currentCatalogPage = action.payload;
     },
+    setCurrentPath: (state, action) => {
+      state.currentPath = action.payload;
+    },
     setCamerasTotalCount: (state, action) => {
       state.camerasTotalCount = action.payload;
     },
+    resetSorting: (state) => {
+      state.currentSortingType = null;
+      state.currentSortingOrder = null;
+      state.allSorting = [];
+    },
     setCurrentSortingType: (state, action) => {
+      state.allSorting = state.allSorting.filter((sorting) => sorting !== state.currentSortingType);
       state.currentSortingType = action.payload;
+      if (state.currentSortingType) {
+        state.allSorting.push(state.currentSortingType);
+      }
     },
     setCurrentSortingOrder: (state, action) => {
+      state.allSorting = state.allSorting.filter((sorting) => sorting !== state.currentSortingOrder);
       state.currentSortingOrder = action.payload;
+      if (state.currentSortingOrder) {
+        state.allSorting.push(state.currentSortingOrder);
+      }
     },
     setReviewFormData: (state, action) => {
       switch (action.payload.type) {
@@ -69,9 +84,6 @@ export const process = createSlice({
     cleanForm: (state) => {
       state.reviewFormData = initialState.reviewFormData;
     },
-    setSortingUrl: (state) => {
-      state.sortingUrl = `${UrlRoute.Sorting}=${state.currentSortingType}&${UrlRoute.Order}=${state.currentSortingOrder}`;
-    },
   },
 });
 
@@ -82,8 +94,9 @@ export const {
   setCurrentSortingOrder,
   setCamerasTotalCount,
   setReviewFormData,
-  setSortingUrl,
-  cleanForm
+  cleanForm,
+  resetSorting,
+  setCurrentPath,
 } = process.actions;
 
 

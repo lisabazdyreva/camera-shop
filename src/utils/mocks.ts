@@ -108,7 +108,7 @@ export const getFakePostReview = () => ({
 
 export const getFakeID = () => faker.datatype.number();
 
-
+export const fakeText = faker.datatype.string();
 export const api = createAPI();
 export const mockAPI = new MockAdapter(api);
 export const middlewares = [thunk.withExtraArgument(api)];

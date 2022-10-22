@@ -1,26 +1,30 @@
 import './catalog.css';
 
 import {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, useSearchParams} from 'react-router-dom';
 
 import {Breadcrumbs, ModalInfo, ModalAction} from '../../common/common';
 import {Banner, SideFilter, CatalogContent} from './components/components';
 
 import {initialCamera, Step, ComponentName, BreadcrumbsItem} from '../../../utils/const';
 import {Camera} from '../../../types/camera';
-import {useAppDispatch, useAppSelector} from '../../../hooks';
 
-import {setCurrentPage} from '../../../store/process/process';
+import {useAppDispatch, useAppSelector} from '../../../hooks';
+import useQueryParams from '../../../hooks/use-query-params';
+
 
 import {fetchCamerasAction} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
 import {fetchPromosAction} from '../../../store/api-actions/api-actions-promo/api-actions-promo';
-import {getCurrentPage, getSortingUrl} from '../../../store/process/selectors';
-import {getFilterUrl} from '../../../store/filter-cameras/selectors';
 import {fetchPricesAction} from '../../../store/api-actions/api-actions-filters/api-actions-filters';
+
+import {setCurrentPage, setCurrentPath} from '../../../store/process/process';
+import {getAllSorting, getCurrentPage} from '../../../store/process/selectors';
+import {getAllFilters} from '../../../store/filter-cameras/selectors';
 
 
 const Catalog = ():JSX.Element => {
   const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
 
   const [selectedCameraData, setSelectedCameraData] = useState(initialCamera);
 
@@ -28,8 +32,8 @@ const Catalog = ():JSX.Element => {
   const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
 
   const currentPageNumber = useAppSelector(getCurrentPage);
-  const filterUrl = useAppSelector(getFilterUrl);
-  const sortingUrl = useAppSelector(getSortingUrl);
+  const allFilters = useAppSelector(getAllFilters);
+  const allSorting = useAppSelector(getAllSorting);
 
   const params = useParams();
   const {pageNumber} = params;
@@ -56,35 +60,23 @@ const Catalog = ():JSX.Element => {
     setSelectedCameraData(data);
   };
 
+  useQueryParams();
+
   useEffect(() => {
     dispatch(fetchPromosAction());
-  });
+  }, []);
 
   useEffect(() => {
     dispatch(setCurrentPage(pageNumberUrl));
+    dispatch(setCurrentPath(searchParams.toString()));
+
     const startIndex = (pageNumberUrl - 1) * Step.Pagination;
-
-    if (sortingUrl && filterUrl) {
-      dispatch(fetchCamerasAction({limit: Step.Pagination, startIndex, url: `${sortingUrl}&${filterUrl}`}));
-      return;
-    }
-
-    if (filterUrl) {
-      dispatch(fetchCamerasAction({limit: Step.Pagination, startIndex, url: filterUrl}));
-      return;
-    }
-    if (sortingUrl) {
-      dispatch(fetchCamerasAction({limit: Step.Pagination, startIndex, url: sortingUrl}));
-      return;
-    }
-
-    dispatch(fetchCamerasAction({limit: Step.Pagination, startIndex}));
-
-  }, [currentPageNumber, dispatch, filterUrl, sortingUrl, pageNumberUrl]);
+    dispatch(fetchCamerasAction({startIndex}));
+  }, [allFilters, allSorting, dispatch, currentPageNumber, pageNumberUrl]);
 
   useEffect(() => {
     dispatch(fetchPricesAction());
-  }, [dispatch]);
+  }, [allFilters]);
 
   return (
     <main>

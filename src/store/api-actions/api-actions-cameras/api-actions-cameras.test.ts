@@ -27,7 +27,7 @@ describe('async cameras actions', () => {
       });
 
     const store = mockStore();
-    await store.dispatch(fetchCamerasAction({limit: FAKE_LIMIT, startIndex: FAKE_INDEX}));
+    await store.dispatch(fetchCamerasAction({startIndex: FAKE_INDEX}));
 
     const actions = store.getActions().map(({type}) => type);
 
@@ -45,7 +45,7 @@ describe('async cameras actions', () => {
       .reply(400);
 
     const store = mockStore();
-    await store.dispatch(fetchCamerasAction({limit: FAKE_LIMIT, startIndex: FAKE_INDEX}));
+    await store.dispatch(fetchCamerasAction({startIndex: FAKE_INDEX}));
 
     const actions = store.getActions().map(({type}) => type);
 

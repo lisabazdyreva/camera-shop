@@ -9,6 +9,7 @@ export const LOADER_NOTIFICATION = 'Идёт загрузка...';
 export const SEARCH_NOT_FOUND_NOTIFICATION = 'По вашему запросу ничего не найдено';
 export const SEARCH_ERROR_NOTIFICATION = 'При загрузке произошла ошибка. Попробуйте позже';
 export const DEBOUNCE_DELAY = 100;
+export const FILTER_WARNING = 'По таким фильтрам ничего не найдено.';
 
 export const MenuItem = {
   Catalog: 'Каталог',
@@ -73,8 +74,6 @@ export const UrlRoute = {
   Reviews: '/reviews',
   Sorting: '_sort',
   Order: '_order',
-  Start: '_start',
-  Limit: '_limit',
 } as const;
 
 
@@ -304,6 +303,11 @@ export const SortingOrder = {
   Descending: 'desc',
 } as const;
 
+export const SortingDictionary = {
+  Ascending: 'По возрастанию',
+  Descending: 'По убыванию',
+} as const;
+
 export const FilterCameraCategory = {
   Photocamera: 'photocamera',
   Videocamera: 'videocamera',
@@ -314,13 +318,6 @@ export const FilterCameraCategoryDictionary = {
   Videocamera: 'Видеокамера',
 } as const;
 
-export const FilterCameraType = {
-  Digital: 'digital',
-  Film: 'film',
-  Snapshot: 'snapshot',
-  Collection: 'collection',
-} as const;
-
 export const FilterCameraTypeDictionary = {
   Digital: 'Цифровая',
   Film: 'Плёночная',
@@ -328,11 +325,7 @@ export const FilterCameraTypeDictionary = {
   Collection: 'Коллекционная',
 } as const;
 
-export const FilterCameraLevel = {
-  Zero: 'zero',
-  'Non-professional': 'non-professional',
-  Professional: 'professional',
-} as const;
+//TODO посмотреть, что здесь нужно
 
 export const FilterCameraLevelDictionary = {
   Zero: 'Нулевой',
@@ -340,11 +333,14 @@ export const FilterCameraLevelDictionary = {
   Professional: 'Профессиональный',
 } as const;
 
-export const FilterName = {
-  Category: 'category',
+export const QueryRoute = {
+  Sort: '_sort',
+  Order: '_order',
   Type: 'type',
   Level: 'level',
-  HighPrice: 'price_lte',
+  Category: 'category',
   LowPrice: 'price_gte',
+  HighPrice: 'price_lte',
+  Start: '_start',
+  Limit: '_limit',
 } as const;
-

@@ -3,6 +3,8 @@ import './pagination.css';
 import {Link} from 'react-router-dom';
 import {AppRoute, PaginationRoute} from '../../../../../utils/const';
 import {SyntheticEvent} from 'react';
+import {useAppSelector} from '../../../../../hooks';
+import {getCurrentPath} from '../../../../../store/process/selectors';
 
 interface PaginationProps {
   currentPageNumber: number;
@@ -11,6 +13,8 @@ interface PaginationProps {
 }
 
 const Pagination = ({currentPageNumber, setCurrentPageNumber, pagesAmount}: PaginationProps):JSX.Element => {
+
+  const currentPath = useAppSelector(getCurrentPath);
   const pages = Array.from({length: pagesAmount}).fill('').map((item, index) => index + 1);
 
   const isNotFirstPage = currentPageNumber !== 1;
@@ -31,8 +35,9 @@ const Pagination = ({currentPageNumber, setCurrentPageNumber, pagesAmount}: Pagi
     setCurrentPageNumber(currentPageNumber + 1);
   };
 
-  const previousRoute = `${AppRoute.Catalog}${PaginationRoute.Page}${currentPageNumber - 1}`;
-  const nextRoute = `${AppRoute.Catalog}${PaginationRoute.Page}${currentPageNumber + 1}`;
+  const currentPathUrl = `/?${currentPath}`;
+  const previousRoute = `${AppRoute.Catalog}${PaginationRoute.Page}${currentPageNumber - 1}${currentPath && currentPathUrl}`;
+  const nextRoute = `${AppRoute.Catalog}${PaginationRoute.Page}${currentPageNumber + 1}${currentPath && currentPathUrl}`;
 
   return (
     <div className="pagination">
@@ -51,7 +56,8 @@ const Pagination = ({currentPageNumber, setCurrentPageNumber, pagesAmount}: Pagi
         }
         {
           pages.map((pageNum: number) => {
-            const route = `${AppRoute.Catalog}${PaginationRoute.Page}${pageNum}`;
+
+            const route = `${AppRoute.Catalog}${PaginationRoute.Page}${pageNum}${currentPath && currentPathUrl}`;
             const classes = `pagination__link ${ pageNum === currentPageNumber && 'pagination__link--active'}`;
             return (
               <li className="pagination__item" key={pageNum}>

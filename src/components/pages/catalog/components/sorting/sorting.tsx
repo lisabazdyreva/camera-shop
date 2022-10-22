@@ -1,35 +1,71 @@
 import './sorting.css';
-import {ChangeEvent} from 'react';
-import {SortingOrder, SortingType} from '../../../../../utils/const';
-import {setCurrentSortingOrder, setCurrentSortingType, setSortingUrl} from '../../../../../store/process/process';
-import {useAppDispatch, useAppSelector} from '../../../../../hooks';
-import {getCurrentSortingOrder, getCurrentSortingType} from '../../../../../store/process/selectors';
 
-//TODO URL for sorting
-//TODO change handler names to change
-//TODO sorting не сбрасывается получается больше
+import {useNavigate, useSearchParams} from 'react-router-dom';
+import {ChangeEvent, useEffect} from 'react';
+
+import {
+  AppRoute,
+  PaginationRoute,
+  QueryRoute,
+  SortingDictionary,
+  SortingOrder,
+  SortingType
+} from '../../../../../utils/const';
+import {useAppDispatch, useAppSelector} from '../../../../../hooks';
+
+import {getCurrentSortingOrder, getCurrentSortingType} from '../../../../../store/process/selectors';
+import {resetSorting} from '../../../../../store/process/process';
+
+
 const Sorting = ():JSX.Element => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const currentSortingType = useAppSelector(getCurrentSortingType);
   const currentSortingOrder = useAppSelector(getCurrentSortingOrder);
 
+  //TODO вынести МБ?
+  const updateSearchParams = ([sortParam, orderParam]: [string, string][]) => {
+    searchParams.delete(QueryRoute.Sort);
+    searchParams.delete(QueryRoute.Order);
+
+    searchParams.set(...sortParam);
+    searchParams.set(...orderParam);
+
+    setSearchParams(searchParams);
+    navigate(`${AppRoute.Catalog}${PaginationRoute.Page}1?${searchParams.toString()}`);
+  };
+
   const handleSortingTypeChange = (evt: ChangeEvent) => {
     const target = evt.target as HTMLInputElement;
-    dispatch(setCurrentSortingType(target.dataset.value));
-    dispatch(setSortingUrl());
+    const value = target.dataset.value;
+
+    if (!currentSortingOrder && value) {
+      updateSearchParams([[QueryRoute.Sort, value], [QueryRoute.Order, SortingOrder.Ascending]]);
+    }
+    if (value && currentSortingOrder) {
+      updateSearchParams([[QueryRoute.Sort, value], [QueryRoute.Order, currentSortingOrder]]);
+    }
   };
 
   const handleSortingOrderChange = (evt: ChangeEvent) => {
     const target = evt.target as HTMLInputElement;
+    const value = target.dataset.value;
 
-    if (!currentSortingType) {
-      dispatch(setCurrentSortingType(SortingType.Price));
+    if (!currentSortingType && value) {
+      updateSearchParams([[QueryRoute.Sort, SortingType.Price], [QueryRoute.Order, value]]);
     }
-
-    dispatch(setCurrentSortingOrder(target.dataset.value));
-    dispatch(setSortingUrl());
+    if (value && currentSortingType) {
+      updateSearchParams([[QueryRoute.Sort, currentSortingType], [QueryRoute.Order, value]]);
+    }
   };
+
+  useEffect(() => () => {
+    dispatch(resetSorting());
+    searchParams.delete(QueryRoute.Sort);
+    searchParams.delete(QueryRoute.Order);
+  }, []);
 
   return (
     <div className="catalog-sort">
@@ -37,62 +73,49 @@ const Sorting = ():JSX.Element => {
         <div className="catalog-sort__inner">
           <p className="title title--h5">Сортировать:</p>
           <div className="catalog-sort__type">
-            <div className="catalog-sort__btn-text">
-              <input
-                type="radio"
-                id="sortPrice"
-                name="sort"
-                checked={currentSortingType === SortingType.Price}
-                data-value={SortingType.Price}
-                onChange={handleSortingTypeChange}
-              />
-              <label htmlFor="sortPrice">по цене</label>
-            </div>
-            <div className="catalog-sort__btn-text">
-              <input
-                type="radio"
-                id="sortPopular"
-                name="sort"
-                checked={currentSortingType === SortingType.Rating}
-                data-value={SortingType.Rating}
-                onChange={handleSortingTypeChange}
-              />
-              <label htmlFor="sortPopular">по популярности</label>
-            </div>
+            {
+              Object.values(SortingType).map((type) => {
+                const id = `sort${type[0].toUpperCase() + type.slice(1)}`;
+                return (
+                  <div className="catalog-sort__btn-text" key={type}>
+                    <input
+                      type="radio"
+                      id={id}
+                      name="sort"
+                      checked={currentSortingType === type}
+                      data-value={type}
+                      onChange={handleSortingTypeChange}
+                    />
+                    <label htmlFor={id}>{type === SortingType.Price ? 'по цене' : 'по популярности'}</label> {/*TODO в константы*/}
+                  </div>
+                );
+              })
+            }
           </div>
           <div className="catalog-sort__order">
-            <div className="catalog-sort__btn catalog-sort__btn--up">
-              <input
-                type="radio"
-                id="up"
-                name="sort-icon"
-                aria-label="По возрастанию"
-                checked={currentSortingOrder === SortingOrder.Ascending}
-                data-value={SortingOrder.Ascending}
-                onChange={handleSortingOrderChange}
-              />
-              <label htmlFor="up">
-                <svg width="16" height="14" aria-hidden="true">
-                  <use xlinkHref="#icon-sort"></use>
-                </svg>
-              </label>
-            </div>
-            <div className="catalog-sort__btn catalog-sort__btn--down">
-              <input
-                type="radio"
-                id="down"
-                name="sort-icon"
-                aria-label="По убыванию"
-                checked={currentSortingOrder === SortingOrder.Descending}
-                data-value={SortingOrder.Descending}
-                onChange={handleSortingOrderChange}
-              />
-              <label htmlFor="down">
-                <svg width="16" height="14" aria-hidden="true">
-                  <use xlinkHref="#icon-sort"></use>
-                </svg>
-              </label>
-            </div>
+            {
+              Object.values(SortingOrder).map((order) => (
+                <div
+                  className={`catalog-sort__btn catalog-sort__btn--${order === SortingOrder.Ascending ? 'up' : 'down'}`}
+                  key={order}
+                >
+                  <input
+                    type="radio"
+                    id={order}
+                    name="sort-icon"
+                    aria-label={order === SortingOrder.Ascending ? SortingDictionary.Ascending : SortingDictionary.Descending}
+                    checked={currentSortingOrder === order}
+                    data-value={order}
+                    onChange={handleSortingOrderChange}
+                  />
+                  <label htmlFor={order}>
+                    <svg width="16" height="14" aria-hidden="true">
+                      <use xlinkHref="#icon-sort"></use>
+                    </svg>
+                  </label>
+                </div>
+              ))
+            }
           </div>
         </div>
       </form>

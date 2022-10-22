@@ -3,15 +3,16 @@ import './catalog-content.css';
 import {useEffect, useState} from 'react';
 
 import {Pagination, Sorting} from '../components';
-import {ErrorInfo, Loader, ProductCard} from '../../../../common/common';
+import {ErrorInfo, Loader, ProductCard, WarningInfo} from '../../../../common/common';
 
 import {Camera} from '../../../../../types/camera';
 
-import {ErrorData, LoadingStatus, Step} from '../../../../../utils/const';
+import {ErrorData, FILTER_WARNING, LoadingStatus, Step} from '../../../../../utils/const';
 import {useAppSelector} from '../../../../../hooks';
 
 import {getCamerasTotalCount} from '../../../../../store/process/selectors';
 import {getCameras, getCamerasFetchStatus} from '../../../../../store/cameras/selectors';
+import {getAllFilters} from '../../../../../store/filter-cameras/selectors';
 
 
 interface CatalogContentProps {
@@ -26,6 +27,7 @@ const CatalogContent = ({handleAddModal, currentPageNumber, setCurrentPageNumber
   const fetchStatus = useAppSelector(getCamerasFetchStatus);
   const camerasTotalCount = useAppSelector(getCamerasTotalCount);
   const cameras = useAppSelector(getCameras);
+  const filters = useAppSelector(getAllFilters);
 
   const isCamerasLoaded = fetchStatus === LoadingStatus.Success;
   const isCamerasLoading = fetchStatus === LoadingStatus.Loading;
@@ -40,7 +42,8 @@ const CatalogContent = ({handleAddModal, currentPageNumber, setCurrentPageNumber
       <Sorting />
       {isCamerasError && <ErrorInfo text={ErrorData.Catalog} />}
       {isCamerasLoading && <Loader />}
-      {isCamerasLoaded && cameras.length &&
+      {isCamerasLoaded && !cameras.length && filters.length && <WarningInfo text={FILTER_WARNING}/>}
+      {isCamerasLoaded &&
         <>
           <div className="cards catalog__cards">
             {cameras.map((camera) => (
@@ -51,9 +54,8 @@ const CatalogContent = ({handleAddModal, currentPageNumber, setCurrentPageNumber
               />
             ))}
           </div>
-          {pagesAmount && <Pagination pagesAmount={pagesAmount} currentPageNumber={currentPageNumber} setCurrentPageNumber={setCurrentPageNumber}/>}
+          {pagesAmount > 1 && <Pagination pagesAmount={pagesAmount} currentPageNumber={currentPageNumber} setCurrentPageNumber={setCurrentPageNumber}/>}
         </>}
-      {isCamerasLoaded && !cameras.length && <div>Такого товара нет</div>}
     </div>
   );
 };

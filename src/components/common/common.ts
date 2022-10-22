@@ -15,3 +15,4 @@ export { default as Picture } from './picture/picture';
 export { default as Loader } from './loader/loader';
 export { default as ErrorInfo} from './error-info/error-info';
 export {default as HistoryRoute} from './history-route/history-route';
+export {default as WarningInfo} from './warning-info/warning-info';

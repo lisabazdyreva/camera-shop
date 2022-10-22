@@ -1,60 +1,124 @@
 import './side-filter.css';
 
-import {SyntheticEvent, useRef, useState} from 'react';
+import {SyntheticEvent, useEffect, useState} from 'react';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 
-import {useAppDispatch} from '../../../../../hooks';
-import {
-  FilterCameraCategoryDictionary,
-  FilterCameraLevelDictionary,
-  FilterCameraTypeDictionary, FilterName
-} from '../../../../../utils/const';
-import {
-  removeCurrentFilter, resetFilters, resetPrices,
-  setCurrentFilter, setUrl,
-} from '../../../../../store/filter-cameras/filter-cameras';
 import FilterPrice from './components/filter-price/filter-price';
 
-//TODO менять url
+import {useAppDispatch, useAppSelector} from '../../../../../hooks';
+import {filterParams} from '../../../../../utils/utils';
+import {
+  AppRoute, FilterCameraCategory,
+  FilterCameraCategoryDictionary,
+  FilterCameraLevelDictionary,
+  FilterCameraTypeDictionary,
+  PaginationRoute, QueryRoute,
+} from '../../../../../utils/const';
+
+import {removeCurrentFilter, resetFilters} from '../../../../../store/filter-cameras/filter-cameras';
+import {getCurrentFilterCategory, getCurrentFilterLevel, getCurrentFilterType} from '../../../../../store/filter-cameras/selectors';
+
+
 const SideFilter = ():JSX.Element => {
   const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const [lowPriceValue, setLowPriceValue] = useState<number | string>('');
   const [highPriceValue, setHighPriceValue] = useState<string | number>('');
 
-  const inputFilmElement = useRef<null | HTMLInputElement>(null);
-  const inputSnapshotElement = useRef<null | HTMLInputElement>(null);
+  const currentCategories = useAppSelector(getCurrentFilterCategory);
+  const currentTypes = useAppSelector(getCurrentFilterType);
+  const currentLevels = useAppSelector(getCurrentFilterLevel);
 
-  const handleFieldsetChange = (evt: SyntheticEvent) => {
+  const checkDisabled = (categories: string[]) => {
+    const isVideocamera = categories.find((item: string) => FilterCameraCategoryDictionary.Videocamera === item);
+    return Boolean(isVideocamera);
+  };
+
+  const isChecked = (value: string, values: string[]) => {
+    const checked = values.find((item) => item === value);
+    if (value === FilterCameraTypeDictionary.Film || value === FilterCameraTypeDictionary.Snapshot) {
+      const isDisabled = checkDisabled(currentCategories);
+
+      if (isDisabled) {
+        return false;
+      }
+    }
+    return Boolean(checked);
+  };
+
+  const handleVideocameraChanged = (value: string, filter: string) => {
+    const filmValue = FilterCameraTypeDictionary.Film;
+    const snapshotValue = FilterCameraTypeDictionary.Snapshot;
+    const filterType = QueryRoute.Type;
+
+    dispatch(removeCurrentFilter({value: filmValue, filter: filterType}));
+    dispatch(removeCurrentFilter({value: snapshotValue, filter: filterType}));
+
+    const newSearchParams = filterParams(searchParams, [filmValue, snapshotValue]);
+    newSearchParams.set(filter, value);
+    setSearchParams(newSearchParams);
+    navigate(`${AppRoute.Catalog}${PaginationRoute.Page}1?${newSearchParams.toString()}`);
+  };
+
+  const handleCheckboxChecked = (value: string, filter: string) => {
+    if (value === FilterCameraCategoryDictionary.Videocamera) {
+      handleVideocameraChanged(value, filter);
+      return;
+    }
+
+    const newSearchParams = new URLSearchParams([...searchParams.entries(), [filter, value]]);
+    setSearchParams(newSearchParams);
+    navigate(`${AppRoute.Catalog}${PaginationRoute.Page}1?${newSearchParams.toString()}`);
+  };
+
+  const handleCheckboxUnchecked = (value: string, filter: string) => {
+    dispatch(removeCurrentFilter({value, filter}));
+
+    const newSearchParams = filterParams(searchParams, [value]);
+    setSearchParams(newSearchParams);
+    navigate(`${AppRoute.Catalog}${PaginationRoute.Page}1?${newSearchParams.toString()}`);
+  };
+
+  const handleCheckboxChange = (evt: SyntheticEvent) => {
     const target = evt.target as HTMLInputElement;
     const currentTarget = evt.currentTarget as HTMLElement;
 
     const value = target.dataset.value;
-
-    if (value === FilterCameraCategoryDictionary.Videocamera) {
-      if (inputFilmElement.current && inputSnapshotElement.current) {
-        inputFilmElement.current.disabled = !inputFilmElement.current.disabled;
-        inputSnapshotElement.current.disabled = !inputSnapshotElement.current.disabled;
-      }
-    }
+    const filter = String(currentTarget.dataset.filter);
 
     if (target.checked && value) {
-      dispatch(setCurrentFilter({value, filter: currentTarget.dataset.filter}));
+      handleCheckboxChecked(value, filter);
     }
 
-    if (!target.checked) {
-      dispatch(removeCurrentFilter({value, filter: currentTarget.dataset.filter}));
+    if (!target.checked && value) {
+      handleCheckboxUnchecked(value, filter);
     }
+  };
 
-    dispatch(setUrl());
+  const resetSearchParams = () => {
+    Object.values(QueryRoute).forEach((param) => {
+      if (param === QueryRoute.Sort || param === QueryRoute.Order) {
+        return;
+      }
+      searchParams.delete(param);
+    });
   };
 
   const handleFiltersReset = () => {
     dispatch(resetFilters());
-    dispatch(resetPrices());
+    resetSearchParams();
+    setSearchParams(searchParams);
 
     setLowPriceValue('');
     setHighPriceValue('');
   };
+
+  useEffect(() => () => {
+    dispatch(resetFilters());
+    resetSearchParams();
+  }, []);
 
   return (
     <div className="catalog__aside" data-testid='filter'>
@@ -67,115 +131,86 @@ const SideFilter = ():JSX.Element => {
             highPriceValue={highPriceValue}
             onHighPriceChange={setHighPriceValue}
           />
-          <fieldset className="catalog-filter__block" data-filter={FilterName.Category} onChange={handleFieldsetChange}>
+          <fieldset className="catalog-filter__block">
             <legend className="title title--h5">Категория</legend>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input
-                  type="checkbox"
-                  name="photocamera"
-                  data-value={FilterCameraCategoryDictionary.Photocamera}
-                />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Фотокамера</span>
-              </label>
-            </div>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input
-                  type="checkbox"
-                  name="videocamera"
-                  data-value={FilterCameraCategoryDictionary.Videocamera}
-                />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Видеокамера</span>
-              </label>
-            </div>
+            {
+              Object.entries(FilterCameraCategoryDictionary).map(([categoryName, category]) => {
+                const inputName = category === FilterCameraCategoryDictionary.Photocamera
+                  ? FilterCameraCategory.Photocamera
+                  : FilterCameraCategory.Videocamera;
+
+                const spanLabel = category === FilterCameraCategoryDictionary.Photocamera
+                  ? 'Фотокамера'
+                  : FilterCameraCategoryDictionary.Videocamera;
+
+                return (
+                  <div className="custom-checkbox catalog-filter__item" key={categoryName}>
+                    <label>
+                      <input
+                        type="checkbox"
+                        name={inputName}
+                        data-value={category}
+                        data-filter={QueryRoute.Category}
+                        onChange={handleCheckboxChange}
+                        checked={isChecked(category, currentCategories)}
+                      />
+                      <span className="custom-checkbox__icon"></span>
+                      <span className="custom-checkbox__label">{spanLabel}</span>
+                    </label>
+                  </div>
+                );
+              })
+            }
           </fieldset>
-          <fieldset className="catalog-filter__block" data-filter={FilterName.Type} onChange={handleFieldsetChange}>
+          <fieldset className="catalog-filter__block">
             <legend className="title title--h5">Тип камеры</legend>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input
-                  type="checkbox"
-                  name="digital"
-                  data-value={FilterCameraTypeDictionary.Digital}
-                />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Цифровая</span>
-              </label>
-            </div>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input
-                  type="checkbox"
-                  name="film"
-                  ref={inputFilmElement}
-                  data-value={FilterCameraTypeDictionary.Film}
-                />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Плёночная</span>
-              </label>
-            </div>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input
-                  type="checkbox"
-                  name="snapshot"
-                  ref={inputSnapshotElement}
-                  data-value={FilterCameraTypeDictionary.Snapshot}
-                />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Моментальная</span>
-              </label>
-            </div>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input
-                  type="checkbox"
-                  name="collection"
-                  data-value={FilterCameraTypeDictionary.Collection}
-                />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Коллекционная</span>
-              </label>
-            </div>
+            {
+              Object.entries(FilterCameraTypeDictionary).map(([nameType, type]) => {
+                const isDisabled = (type === FilterCameraTypeDictionary.Snapshot || type === FilterCameraTypeDictionary.Film)
+                  && checkDisabled(currentCategories);
+
+                const name = nameType[0].toLowerCase() + nameType.slice(1);
+
+                return (
+                  <div className="custom-checkbox catalog-filter__item" key={nameType}>
+                    <label>
+                      <input
+                        type="checkbox"
+                        name={name}
+                        data-value={type}
+                        data-filter={QueryRoute.Type}
+                        onChange={handleCheckboxChange}
+                        checked={isChecked(type, currentTypes)}
+                        disabled={isDisabled}
+                      />
+                      <span className="custom-checkbox__icon"></span>
+                      <span className="custom-checkbox__label">{type}</span>
+                    </label>
+                  </div>
+                );
+              })
+            }
           </fieldset>
-          <fieldset className="catalog-filter__block" data-filter={FilterName.Level} onChange={handleFieldsetChange}>
+          <fieldset className="catalog-filter__block">
             <legend className="title title--h5">Уровень</legend>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input
-                  type="checkbox"
-                  name="zero"
-                  data-value={FilterCameraLevelDictionary.Zero}
-                />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Нулевой</span>
-              </label>
-            </div>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input
-                  type="checkbox"
-                  name="non-professional"
-                  data-value={FilterCameraLevelDictionary['Non-professional']}
-                />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Любительский</span>
-              </label>
-            </div>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input
-                  type="checkbox"
-                  name="professional"
-                  data-value={FilterCameraLevelDictionary.Professional}
-                />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Профессиональный</span>
-              </label>
-            </div>
+            {
+              Object.entries(FilterCameraLevelDictionary).map(([levelName, level]) => (
+                <div className="custom-checkbox catalog-filter__item" key={levelName}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      name={levelName[0].toLowerCase() + levelName.slice(1)}
+                      data-value={level}
+                      data-filter={QueryRoute.Level}
+                      onChange={handleCheckboxChange}
+                      checked={isChecked(level, currentLevels)}
+                    />
+                    <span className="custom-checkbox__icon"></span>
+                    <span className="custom-checkbox__label">{level}</span>
+                  </label>
+                </div>
+              ))
+            }
           </fieldset>
           <button className="btn catalog-filter__reset-btn" type="reset">Сбросить фильтры</button>
         </form>
