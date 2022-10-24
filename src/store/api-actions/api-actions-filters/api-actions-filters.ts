@@ -33,8 +33,8 @@ export const fetchLowPriceAction = createAsyncThunk<{lowPrice: number | ''}, {va
 }>(
   'filterCameras/fetchLowPrice',
   async ({value}, {getState, extra: api}) => {
-    if (value === '') {
-      return {lowPrice: value};
+    if (value === '' || value === 0) {
+      return {lowPrice: ''};
     }
 
     const params = {
@@ -57,8 +57,8 @@ export const fetchHighPriceAction = createAsyncThunk<{highPrice: number | ''}, {
 }>(
   'filterCameras/fetchHighPrice',
   async ({value}, {getState, extra: api}) => {
-    if (value === '') {
-      return {highPrice: value};
+    if (value === '' || value === 0) {
+      return {highPrice: ''};
     }
 
     const params = {
