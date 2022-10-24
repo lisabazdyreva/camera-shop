@@ -5,56 +5,18 @@ import {generatePath} from 'react-router-dom';
 
 import App from './app';
 
-import {
-  AppRoute,
-  DefaultValue,
-  initialReview,
-  NameSpace,
-  PaginationRoute,
-  TabType
-} from '../../utils/const';
+import {AppRoute, PaginationRoute, TabType} from '../../utils/const';
 import {HistoryRoute} from '../common/common';
-import {getFakeSuccessStatus, getFakeCameras, getFakeCamera, getFakePromo, getFakeReviews, mockStore} from '../../utils/mocks';
+import {getFakeCamera, mockStore, getMockState} from '../../utils/mocks';
 
 
 const history = createMemoryHistory();
 
 const mockCamera = getFakeCamera();
 const mockId = mockCamera.id;
-const mockCameras = getFakeCameras();
-const mockSimilarCameras = getFakeCameras();
-const mockReviews = getFakeReviews();
-const mockPromos = [getFakePromo()];
 
-const store = mockStore({
-  [NameSpace.Cameras]: {
-    cameras: mockCameras,
-    camerasFetchStatus: getFakeSuccessStatus(),
-  },
-  [NameSpace.Camera]: {
-    camera: mockCamera,
-    cameraFetchStatus: getFakeSuccessStatus(),
-  },
-  [NameSpace.SimilarCameras]: {
-    similarCameras: mockSimilarCameras,
-    similarCamerasFetchStatus: getFakeSuccessStatus(),
-  },
-  [NameSpace.Reviews]: {
-    reviews: mockReviews,
-    reviewsFetchStatus: getFakeSuccessStatus(),
-    reviewPostStatus: getFakeSuccessStatus(),
-  },
-  [NameSpace.Promos]: {
-    promos: mockPromos,
-    promosFetchStatus: getFakeSuccessStatus(),
-  },
-  [NameSpace.App]: {
-    basket: [],
-    currentCatalogPage: DefaultValue.CatalogPageNumber,
-    camerasTotalCount: 10,
-    reviewFormData: initialReview,
-  },
-});
+const mockState = getMockState();
+const store = mockStore(mockState);
 
 const fakeApp = (
   <Provider store={store}>
@@ -89,7 +51,6 @@ describe('Application Routing', () => {
 
     render(fakeApp);
 
-    expect(screen.getByText(/Характеристики/i)).toBeInTheDocument();
     expect(screen.getByText(/Отзывы/i)).toBeInTheDocument();
   });
 

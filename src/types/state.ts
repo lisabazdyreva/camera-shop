@@ -2,7 +2,7 @@ import {Promos} from './promo';
 import {Cameras, Camera} from './camera';
 import {ReviewPost, Reviews} from './review';
 import {store} from '../store/store';
-import {LoadingStatusType, SortingOrderType, SortingType} from './types';
+import {LoadingStatusType, SortingOrderType, SortingTypesType} from './types';
 
 
 export type AppCameras = {
@@ -10,9 +10,6 @@ export type AppCameras = {
   camerasFetchStatus: LoadingStatusType,
   searchedCameras: Cameras,
   searchedCamerasFetchStatus: LoadingStatusType,
-  // sortingCameras: Cameras,
-  // isSorting: boolean;
-  // url: string;
 }
 
 export type AppCamera = {
@@ -41,7 +38,7 @@ export type AppProcess = {
   currentCatalogPage: number;
   camerasTotalCount: number;
   reviewFormData: ReviewPost;
-  currentSortingType: null | SortingType;
+  currentSortingType: null | SortingTypesType;
   currentSortingOrder: SortingOrderType | null;
   allSorting: string[];
   currentPath: string;

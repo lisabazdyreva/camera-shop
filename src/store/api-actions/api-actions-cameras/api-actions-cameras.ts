@@ -4,8 +4,9 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {Camera, Cameras} from '../../../types/camera';
 import {AppDispatch, State} from '../../../types/state';
 
-import {QueryRoute, Step, UrlRoute} from '../../../utils/const';
+import {QueryRoute, UrlRoute} from '../../../utils/const';
 import {setCamerasTotalCount} from '../../process/process';
+import {getParams} from '../../../utils/utils';
 
 
 export const fetchCamerasAction = createAsyncThunk<Cameras, {startIndex: number}, {
@@ -16,23 +17,12 @@ export const fetchCamerasAction = createAsyncThunk<Cameras, {startIndex: number}
   'cameras/fetchCameras',
   async ({startIndex }, {getState, dispatch, extra: api}) => {
     const state = getState();
-
-    const params = {
-      [QueryRoute.Start]: startIndex,
-      [QueryRoute.Limit]: Step.Pagination,
-      [QueryRoute.Sort]: state.APP.currentSortingType,
-      [QueryRoute.Order]: state.APP.currentSortingOrder,
-      [QueryRoute.Type]: state.FILTER_CAMERAS.currentFilterType,
-      [QueryRoute.Level]: state.FILTER_CAMERAS.currentFilterLevel,
-      [QueryRoute.Category]: state.FILTER_CAMERAS.currentFilterCategory,
-      [QueryRoute.LowPrice]: state.FILTER_CAMERAS.lowPrice === '' || state.FILTER_CAMERAS.lowPrice === 0 ? null : state.FILTER_CAMERAS.lowPrice, // TODO check нужно ли
-      [QueryRoute.HighPrice]: state.FILTER_CAMERAS.highPrice === '' || state.FILTER_CAMERAS.highPrice === 0 ? null : state.FILTER_CAMERAS.highPrice, // || state.FILTER_CAMERAS.maxPrice
-    };
-
-    const response = await api.get<Cameras>(`${UrlRoute.Base}${UrlRoute.Cameras}?`, {params});
+    const params = getParams(state, startIndex);
+    const response = await api.get<Cameras>(`${UrlRoute.Base}${UrlRoute.Cameras}`, {params});
 
     const data = response.data;
     const camerasTotalCount = response.headers['x-total-count'];
+
     dispatch(setCamerasTotalCount(Number(camerasTotalCount)));
     return data;
   },
@@ -72,9 +62,8 @@ export const fetchSearchCamerasAction = createAsyncThunk<Cameras, string, {
 }>(
   'searchCameras/fetchSearchCameras',
   async (substring, {extra: api}) => {
-    const {data} = await api.get<Cameras>(`${UrlRoute.Base}${UrlRoute.Cameras}?name_like=${substring}`);
+    const params = {[QueryRoute.NameLike]: substring};
+    const {data} = await api.get<Cameras>(`${UrlRoute.Base}${UrlRoute.Cameras}`, {params});
     return data;
   },
 );
-
-//getSTATE todo

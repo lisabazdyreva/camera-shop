@@ -7,7 +7,7 @@ import {ErrorInfo, Loader, ProductCard, WarningInfo} from '../../../../common/co
 
 import {Camera} from '../../../../../types/camera';
 
-import {ErrorData, FILTER_WARNING, LoadingStatus, Step} from '../../../../../utils/const';
+import {ErrorData, LoadingStatus, Step, WarningNotification} from '../../../../../utils/const';
 import {useAppSelector} from '../../../../../hooks';
 
 import {getCamerasTotalCount} from '../../../../../store/process/selectors';
@@ -42,7 +42,7 @@ const CatalogContent = ({handleAddModal, currentPageNumber, setCurrentPageNumber
       <Sorting />
       {isCamerasError && <ErrorInfo text={ErrorData.Catalog} />}
       {isCamerasLoading && <Loader />}
-      {isCamerasLoaded && !cameras.length && filters.length && <WarningInfo text={FILTER_WARNING}/>}
+      {isCamerasLoaded && !cameras.length && filters.length && <WarningInfo text={WarningNotification.Filter}/>}
       {isCamerasLoaded &&
         <>
           <div className="cards catalog__cards">

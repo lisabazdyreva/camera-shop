@@ -15,7 +15,6 @@ import useQueryParams from '../../../hooks/use-query-params';
 
 import {fetchCamerasAction} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
 import {fetchPromosAction} from '../../../store/api-actions/api-actions-promo/api-actions-promo';
-import {fetchPricesAction} from '../../../store/api-actions/api-actions-filters/api-actions-filters';
 
 import {setCurrentPage, setCurrentPath} from '../../../store/process/process';
 import {getAllSorting, getCurrentPage} from '../../../store/process/selectors';
@@ -64,7 +63,7 @@ const Catalog = ():JSX.Element => {
 
   useEffect(() => {
     dispatch(fetchPromosAction());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(setCurrentPage(pageNumberUrl));
@@ -72,11 +71,7 @@ const Catalog = ():JSX.Element => {
 
     const startIndex = (pageNumberUrl - 1) * Step.Pagination;
     dispatch(fetchCamerasAction({startIndex}));
-  }, [allFilters, allSorting, dispatch, currentPageNumber, pageNumberUrl]);
-
-  useEffect(() => {
-    dispatch(fetchPricesAction());
-  }, [allFilters]);
+  }, [allFilters, allSorting, dispatch, currentPageNumber, pageNumberUrl, searchParams]);
 
   return (
     <main>

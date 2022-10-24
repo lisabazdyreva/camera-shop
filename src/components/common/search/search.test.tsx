@@ -1,9 +1,11 @@
 import {render, screen} from '@testing-library/react';
-import {Search} from '../common';
+import {MemoryRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
+
+import {Search} from '../common';
 import {mockStore} from '../../../utils/mocks';
 import {LoadingStatus, NameSpace} from '../../../utils/const';
-import {MemoryRouter} from 'react-router-dom';
+
 
 const store = mockStore({
   [NameSpace.Cameras]: {
@@ -38,9 +40,6 @@ describe('search component', () => {
 
     expect(screen.getByText(/Сбросить поиск/i)).toBeInTheDocument();
     expect(screen.getByTestId('form-search')).toBeInTheDocument();
-
-    // const input = screen.getByTestId('search-input'); //TODO how to test with state
-
   });
 
   it('should render correctly when loading status is error', () => {

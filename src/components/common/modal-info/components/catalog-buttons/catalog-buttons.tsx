@@ -20,7 +20,7 @@ const CatalogButtons = ({handleCloseSuccessModal}: CatalogButtonsProps):JSX.Elem
 
   return (
     <>
-      <button className="btn btn--transparent modal__btn" onClick={handleButtonCloseClick}>Продолжить покупки</button>{/*CHANGED*/}
+      <button className="btn btn--transparent modal__btn" onClick={handleButtonCloseClick}>Продолжить покупки</button>
       <button className="btn btn--purple modal__btn modal__btn--fit-width" onClick={handleButtonToBasketClick}>Перейти в корзину</button>
     </>
   );

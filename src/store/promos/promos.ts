@@ -6,14 +6,14 @@ import {LoadingStatus, NameSpace} from '../../utils/const';
 import {fetchPromosAction} from '../api-actions/api-actions-promo/api-actions-promo';
 
 
-const initialState: AppPromos = {
+export const initialStatePromos: AppPromos = {
   promos: [],
   promosFetchStatus: LoadingStatus.Default,
 };
 
 export const promos = createSlice({
   name: NameSpace.Promos,
-  initialState,
+  initialState: initialStatePromos,
   reducers: {},
   extraReducers(builder) {
     builder

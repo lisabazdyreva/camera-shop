@@ -31,6 +31,16 @@ const store = mockStore({
   [NameSpace.Reviews]: {
     reviewPostStatus: LoadingStatus.Default,
   },
+  [NameSpace.FilterCameras]: {
+    allFilters: [],
+    currentFilterCategory: [],
+    currentFilterType: [],
+    currentFilterLevel: [],
+    minPrice: 0,
+    maxPrice: 0,
+    lowPrice: '',
+    highPrice: '',
+  },
 });
 
 describe('catalog page component', () => {

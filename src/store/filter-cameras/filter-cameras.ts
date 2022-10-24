@@ -2,14 +2,9 @@ import {createSlice} from '@reduxjs/toolkit';
 import {AppFilterCameras} from '../../types/state';
 
 import {QueryRoute, NameSpace} from '../../utils/const';
-import {
-  fetchHighPriceAction,
-  fetchLowPriceAction,
-  fetchPricesAction
-} from '../api-actions/api-actions-filters/api-actions-filters';
+import {fetchHighPriceAction, fetchLowPriceAction, fetchPricesAction} from '../api-actions/api-actions-filters/api-actions-filters';
 
-
-const initialState: AppFilterCameras = {
+export const initialStateFilters: AppFilterCameras = {
   currentFilterCategory: [],
   currentFilterType: [],
   currentFilterLevel: [],
@@ -20,10 +15,9 @@ const initialState: AppFilterCameras = {
   highPrice: '',
 };
 
-
 export const filterCameras = createSlice({
   name: NameSpace.FilterCameras,
-  initialState,
+  initialState: initialStateFilters,
   reducers: {
     resetFilters: (state) => {
       state.allFilters = [];
@@ -73,12 +67,12 @@ export const filterCameras = createSlice({
     },
     setLowPrice: (state, action) => {
       state.allFilters = state.allFilters.filter((item) => item !== state.lowPrice);
-      state.lowPrice = Number(action.payload.value);
+      state.lowPrice = action.payload.value === '' ? action.payload.value : Number(action.payload.value);
       state.allFilters.push(state.lowPrice);
     },
     setHighPrice: (state, action) => {
       state.allFilters = state.allFilters.filter((item) => item !== state.highPrice);
-      state.highPrice = Number(action.payload.value);
+      state.highPrice = action.payload.value === '' ? action.payload.value : Number(action.payload.value);
       state.allFilters.push(state.highPrice);
     },
   },

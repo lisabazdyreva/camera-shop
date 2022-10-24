@@ -8,6 +8,6 @@ describe('warning ifo component', () => {
     render(
       <WarningInfo text={fakeText} />
     );
-    expect(screen.getByText(fakeText));
+    expect(screen.getByText(fakeText)).toBeInTheDocument();
   });
 });

@@ -4,12 +4,17 @@ import {ReviewPost} from '../types/review';
 export const CAMERA_ADJECTIVE_ENDING = 'ая';
 export const FORM_ID_TYPE = 'id';
 export const MAX_RATING = 5;
-export const NOT_FOUND_NOTIFICATION = 'Такой страницы не найдено.';
 export const LOADER_NOTIFICATION = 'Идёт загрузка...';
-export const SEARCH_NOT_FOUND_NOTIFICATION = 'По вашему запросу ничего не найдено';
+
 export const SEARCH_ERROR_NOTIFICATION = 'При загрузке произошла ошибка. Попробуйте позже';
 export const DEBOUNCE_DELAY = 100;
-export const FILTER_WARNING = 'По таким фильтрам ничего не найдено.';
+
+export const ServerAdaptValue = {
+  Photocamera: 'Фотоаппарат',
+  Popular: 'rating',
+  OrderUp: 'asc',
+  OrderDown: 'desc',
+} as const;
 
 export const MenuItem = {
   Catalog: 'Каталог',
@@ -30,6 +35,7 @@ export const SupportItem = {
 } as const;
 
 export const AppRoute = {
+  Home: '/',
   Catalog: '/catalog',
   Basket: '/basket',
   Product: '/product',
@@ -295,26 +301,26 @@ export const ValidStatus = {
 
 export const SortingType = {
   Price: 'price',
-  Rating: 'rating',
+  Popular: 'popular',
+} as const;
+
+export const SortingTypeDictionary = {
+  Price: 'по цене',
+  Popular: 'по популярности',
 } as const;
 
 export const SortingOrder = {
-  Ascending: 'asc',
-  Descending: 'desc',
+  Ascending: 'up',
+  Descending: 'down',
 } as const;
 
-export const SortingDictionary = {
+export const SortingOrderDictionary = {
   Ascending: 'По возрастанию',
   Descending: 'По убыванию',
 } as const;
 
-export const FilterCameraCategory = {
-  Photocamera: 'photocamera',
-  Videocamera: 'videocamera',
-} as const;
-
 export const FilterCameraCategoryDictionary = {
-  Photocamera: 'Фотоаппарат',
+  Photocamera: 'Фотокамера',
   Videocamera: 'Видеокамера',
 } as const;
 
@@ -324,8 +330,6 @@ export const FilterCameraTypeDictionary = {
   Snapshot: 'Моментальная',
   Collection: 'Коллекционная',
 } as const;
-
-//TODO посмотреть, что здесь нужно
 
 export const FilterCameraLevelDictionary = {
   Zero: 'Нулевой',
@@ -343,4 +347,11 @@ export const QueryRoute = {
   HighPrice: 'price_lte',
   Start: '_start',
   Limit: '_limit',
+  NameLike: 'name_like',
+} as const;
+
+export const WarningNotification = {
+  Search: 'По вашему запросу ничего не найдено.',
+  Filter: 'По таким фильтрам ничего не найдено.',
+  Page: 'Такой страницы не найдено.',
 } as const;

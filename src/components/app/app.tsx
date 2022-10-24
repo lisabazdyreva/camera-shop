@@ -17,6 +17,7 @@ const App = ():JSX.Element => (
     <div className="wrapper">
       <Header />
       <Routes>
+        <Route path={AppRoute.Home} element={<Catalog />}/>
         <Route path={`${AppRoute.Catalog}${PaginationRoute.Page}:pageNumber`} element={<Catalog />} />
         <Route path={AppRoute.Basket} element={<Basket/>} />
         <Route path={`${AppRoute.Product}/:id/:tab`} element={<Product />} />

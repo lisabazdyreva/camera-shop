@@ -3,7 +3,8 @@ import {AxiosInstance} from 'axios';
 
 import {Cameras} from '../../../types/camera';
 import {AppDispatch, State} from '../../../types/state';
-import {QueryRoute, UrlRoute} from '../../../utils/const';
+import {QueryRoute, ServerAdaptValue, SortingType, UrlRoute} from '../../../utils/const';
+import {getParams} from '../../../utils/utils';
 
 
 export const fetchPricesAction = createAsyncThunk<{minPrice: number, maxPrice: number}, undefined, {
@@ -15,15 +16,8 @@ export const fetchPricesAction = createAsyncThunk<{minPrice: number, maxPrice: n
   async (_arg, {getState, extra: api}) => {
     const state = getState();
 
-    const params = {
-      [QueryRoute.Sort]: 'price',
-      [QueryRoute.Type]: state.FILTER_CAMERAS.currentFilterType,
-      [QueryRoute.Level]: state.FILTER_CAMERAS.currentFilterLevel,
-      [QueryRoute.Category]: state.FILTER_CAMERAS.currentFilterCategory,
-      [QueryRoute.LowPrice]: state.FILTER_CAMERAS.lowPrice === '' || state.FILTER_CAMERAS.lowPrice === 0 ? null : state.FILTER_CAMERAS.lowPrice, // TODO check нужно ли
-      [QueryRoute.HighPrice]: state.FILTER_CAMERAS.highPrice === '' || state.FILTER_CAMERAS.highPrice === 0 ? null : state.FILTER_CAMERAS.highPrice, // || state.FILTER_CAMERAS.maxPrice
-    };
-    const response = await api.get<Cameras>(`${UrlRoute.Base}${UrlRoute.Cameras}?`, {params});
+    const params = getParams(state, undefined, true);
+    const response = await api.get<Cameras>(`${UrlRoute.Base}${UrlRoute.Cameras}`, {params: params});
     const cameras = response.data;
 
     const minPrice = cameras[0].price;
@@ -42,11 +36,15 @@ export const fetchLowPriceAction = createAsyncThunk<{lowPrice: number | ''}, {va
     if (value === '') {
       return {lowPrice: value};
     }
-    const min = getState().FILTER_CAMERAS.minPrice;
 
-    const baseUrl = `${UrlRoute.Base}${UrlRoute.Cameras}?_sort=price&_order=desc`;
-    const url = `&price_gte=${min}&price_lte=${value}`;
-    const {data} = await api.get<Cameras>(`${baseUrl}${url}`);
+    const params = {
+      [QueryRoute.Sort]: SortingType.Price,
+      [QueryRoute.Order]: ServerAdaptValue.OrderDown,
+      [QueryRoute.LowPrice]: getState().FILTER_CAMERAS.minPrice,
+      [QueryRoute.HighPrice]: value,
+    };
+
+    const {data} = await api.get<Cameras>(`${UrlRoute.Base}${UrlRoute.Cameras}`, {params});
     const lowPrice = data[0].price;
     return {lowPrice};
   },
@@ -62,11 +60,15 @@ export const fetchHighPriceAction = createAsyncThunk<{highPrice: number | ''}, {
     if (value === '') {
       return {highPrice: value};
     }
-    const max = getState().FILTER_CAMERAS.maxPrice;
 
-    const baseUrl = `${UrlRoute.Base}${UrlRoute.Cameras}?_sort=price&_order=asc&`;
-    const url = `price_gte=${value}&price_lte=${max}`;
-    const {data} = await api.get<Cameras>(`${baseUrl}${url}`);
+    const params = {
+      [QueryRoute.Sort]: SortingType.Price,
+      [QueryRoute.Order]: ServerAdaptValue.OrderUp,
+      [QueryRoute.LowPrice]: value,
+      [QueryRoute.HighPrice]: getState().FILTER_CAMERAS.maxPrice,
+    };
+
+    const {data} = await api.get<Cameras>(`${UrlRoute.Base}${UrlRoute.Cameras}`, {params});
     const highPrice = data[0].price;
     return {highPrice};
   },

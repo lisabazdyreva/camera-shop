@@ -6,14 +6,14 @@ import {LoadingStatus, NameSpace} from '../../utils/const';
 import {fetchCameraAction} from '../api-actions/api-actions-cameras/api-actions-cameras';
 
 
-const initialState: AppCamera = {
+export const initialStateCamera: AppCamera = {
   camera: null,
   cameraFetchStatus: LoadingStatus.Default,
 };
 
 export const camera = createSlice({
   name: NameSpace.Camera,
-  initialState,
+  initialState: initialStateCamera,
   reducers: {},
   extraReducers(builder) {
     builder

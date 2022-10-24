@@ -67,6 +67,6 @@ const useQueryParams = () => {
       const value = searchParams.get(QueryRoute.LowPrice);
       dispatch(setLowPrice({value}));
     }
-  }, [dispatch, searchParams]);
+  }, [dispatch, searchParams, filterCategory, filterLevel, filterType]);
 };
 export default useQueryParams;

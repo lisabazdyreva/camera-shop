@@ -1,4 +1,5 @@
 import './search.css';
+
 import {ChangeEvent, SyntheticEvent, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
@@ -6,18 +7,9 @@ import {useAppDispatch, useAppSelector} from '../../../hooks';
 import {useFocus} from '../../../hooks/use-focus';
 import {useDebounce} from '../../../hooks/use-debounce';
 
-import {
-  fetchCameraAction,
-  fetchSearchCamerasAction
-} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
+import {fetchCameraAction, fetchSearchCamerasAction} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
 import {getSearchedCameras, getSearchedCamerasFetchStatus} from '../../../store/cameras/selectors';
-import {
-  AppRoute,
-  LoadingStatus,
-  SEARCH_ERROR_NOTIFICATION,
-  SEARCH_NOT_FOUND_NOTIFICATION,
-  TabType
-} from '../../../utils/const';
+import {AppRoute, LoadingStatus, SEARCH_ERROR_NOTIFICATION, WarningNotification, TabType} from '../../../utils/const';
 import {Loader} from '../common';
 
 
@@ -38,7 +30,6 @@ const Search = ():JSX.Element => {
     if (!isListOpened) {
       setIsListOpened(true);
     }
-
     setSearchValue(evt.target.value);
   };
 
@@ -65,7 +56,7 @@ const Search = ():JSX.Element => {
       dispatch(fetchSearchCamerasAction(debouncedValue));
     }
   }, [debouncedValue, dispatch]);
-  //TODO подумать про лоудер по дебаунсу ? мб если знаечение уже не найдено, то забивать?
+
   return (
     <div className={`form-search ${isListOpened && 'list-opened'}`} data-testid='form-search'>
       <form>
@@ -87,8 +78,8 @@ const Search = ():JSX.Element => {
         <ul className="form-search__select-list">
           {fetchStatus === LoadingStatus.Error && <li className="form-search__select-item">{SEARCH_ERROR_NOTIFICATION}</li>}
           {fetchStatus === LoadingStatus.Loading && <Loader />}
-          {fetchStatus === LoadingStatus.Success && !searchedCameras.length && searchValue !== '' && //TODO спросить
-            <li className="form-search__select-item" tabIndex={0}>{SEARCH_NOT_FOUND_NOTIFICATION}</li>}
+          {fetchStatus === LoadingStatus.Success && !searchedCameras.length && searchValue !== '' &&
+            <li className="form-search__select-item" tabIndex={0}>{WarningNotification.Search}</li>}
           {
             searchedCameras.map((camera) => (
               <li

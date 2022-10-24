@@ -1,14 +1,15 @@
 import {
   CAMERA_ADJECTIVE_ENDING,
-  ComponentName, InputName,
+  ComponentName, FilterCameraCategoryDictionary, InputName,
   ModalContent,
-  ModalMessage,
-  ReviewValidLength,
+  ModalMessage, QueryRoute,
+  ReviewValidLength, ServerAdaptValue, SortingOrder, SortingType, Step,
   ValidStatus
 } from './const';
 import {Reviews} from '../types/review';
 import {ComponentNameType, ModalType, ValidStatusType} from '../types/types';
 import {Camera} from '../types/camera';
+import {State} from '../types/state';
 
 export const getTitle = (component: ComponentNameType, modalType: ModalType, isReviewError?: boolean) => {
   const isModalAction = modalType === ModalContent.Action;
@@ -121,7 +122,56 @@ export const filterParams = (params: URLSearchParams, exceptions: (string | unde
         return valueParam !== exceptionFirst;
       }
 
+      return valueParam;
     });
 
   return new URLSearchParams(filteredParams);
+};
+
+
+export const getParams = (state: State, index?: number, isFetchPrices?: boolean) => {
+  const categories = state.FILTER_CAMERAS.currentFilterCategory.map((category) => {
+    if (category === FilterCameraCategoryDictionary.Photocamera) {
+      return ServerAdaptValue.Photocamera;
+    }
+    return category;
+  });
+
+  const getPrice = (price: string | number) => price === '' ? null : price;
+
+  const sort = state.APP.currentSortingType === SortingType.Popular ? ServerAdaptValue.Popular : state.APP.currentSortingType;
+  const order = () => {
+    if (state.APP.currentSortingOrder === SortingOrder.Ascending) {
+      return ServerAdaptValue.OrderUp;
+    }
+
+    if (state.APP.currentSortingOrder === SortingOrder.Descending) {
+      return ServerAdaptValue.OrderDown;
+    }
+
+    return null;
+  };
+
+  const params = {
+    [QueryRoute.Type]: state.FILTER_CAMERAS.currentFilterType,
+    [QueryRoute.Level]: state.FILTER_CAMERAS.currentFilterLevel,
+    [QueryRoute.Category]: categories,
+  };
+
+  if (isFetchPrices) {
+    return ({
+      ...params,
+      [QueryRoute.Sort]: SortingType.Price,
+    });
+  }
+
+  return ({
+    ...params,
+    [QueryRoute.Start]: index,
+    [QueryRoute.Limit]: Step.Pagination,
+    [QueryRoute.Sort]: sort,
+    [QueryRoute.Order]: order(),
+    [QueryRoute.LowPrice]: getPrice(state.FILTER_CAMERAS.lowPrice),
+    [QueryRoute.HighPrice]: getPrice(state.FILTER_CAMERAS.highPrice),
+  });
 };

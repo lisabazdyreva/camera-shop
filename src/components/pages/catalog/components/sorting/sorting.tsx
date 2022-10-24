@@ -7,9 +7,9 @@ import {
   AppRoute,
   PaginationRoute,
   QueryRoute,
-  SortingDictionary,
+  SortingOrderDictionary,
   SortingOrder,
-  SortingType
+  SortingType, SortingTypeDictionary
 } from '../../../../../utils/const';
 import {useAppDispatch, useAppSelector} from '../../../../../hooks';
 
@@ -25,7 +25,6 @@ const Sorting = ():JSX.Element => {
   const currentSortingType = useAppSelector(getCurrentSortingType);
   const currentSortingOrder = useAppSelector(getCurrentSortingOrder);
 
-  //TODO вынести МБ?
   const updateSearchParams = ([sortParam, orderParam]: [string, string][]) => {
     searchParams.delete(QueryRoute.Sort);
     searchParams.delete(QueryRoute.Order);
@@ -65,7 +64,7 @@ const Sorting = ():JSX.Element => {
     dispatch(resetSorting());
     searchParams.delete(QueryRoute.Sort);
     searchParams.delete(QueryRoute.Order);
-  }, []);
+  }, [dispatch, searchParams]);
 
   return (
     <div className="catalog-sort">
@@ -86,7 +85,7 @@ const Sorting = ():JSX.Element => {
                       data-value={type}
                       onChange={handleSortingTypeChange}
                     />
-                    <label htmlFor={id}>{type === SortingType.Price ? 'по цене' : 'по популярности'}</label> {/*TODO в константы*/}
+                    <label htmlFor={id}>{type === SortingType.Price ? SortingTypeDictionary.Price : SortingTypeDictionary.Popular}</label>
                   </div>
                 );
               })
@@ -103,7 +102,7 @@ const Sorting = ():JSX.Element => {
                     type="radio"
                     id={order}
                     name="sort-icon"
-                    aria-label={order === SortingOrder.Ascending ? SortingDictionary.Ascending : SortingDictionary.Descending}
+                    aria-label={order === SortingOrder.Ascending ? SortingOrderDictionary.Ascending : SortingOrderDictionary.Descending}
                     checked={currentSortingOrder === order}
                     data-value={order}
                     onChange={handleSortingOrderChange}

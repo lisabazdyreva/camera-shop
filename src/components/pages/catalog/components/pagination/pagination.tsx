@@ -1,8 +1,9 @@
 import './pagination.css';
 
 import {Link} from 'react-router-dom';
-import {AppRoute, PaginationRoute} from '../../../../../utils/const';
 import {SyntheticEvent} from 'react';
+
+import {AppRoute, PaginationRoute} from '../../../../../utils/const';
 import {useAppSelector} from '../../../../../hooks';
 import {getCurrentPath} from '../../../../../store/process/selectors';
 

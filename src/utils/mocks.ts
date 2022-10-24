@@ -2,13 +2,20 @@ import {Promo} from '../types/promo';
 import {Camera} from '../types/camera';
 import {Review} from '../types/review';
 import faker from 'faker';
-import {LoadingStatus} from './const';
+import {LoadingStatus, NameSpace} from './const';
 import {createAPI} from '../services/api';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import {State} from '../types/state';
 import {Action, ThunkDispatch} from '@reduxjs/toolkit';
+import {initialStateApp} from '../store/process/process';
+import {initialStateCameras} from '../store/cameras/cameras';
+import {initialStateCamera} from '../store/camera/camera';
+import {initialStateFilters} from '../store/filter-cameras/filter-cameras';
+import {initialStateReviews} from '../store/reviews/reviews';
+import {initialStatePromos} from '../store/promos/promos';
+import {initialStateSimilarCameras} from '../store/similar-cameras/similar-cameras';
 
 export const getFakeCamera = (): Camera => ({
   id: faker.datatype.number(),
@@ -116,3 +123,15 @@ export const middlewares = [thunk.withExtraArgument(api)];
 export const mockStore = configureMockStore<State, Action, ThunkDispatch<State, typeof api, Action>>(middlewares);
 
 export const UNKNOWN_TYPE = {type: 'UNKNOWN_ACTION'};
+
+export const getMockState = () => ({
+  [NameSpace.App]: {...initialStateApp},
+  [NameSpace.Cameras]: {...initialStateCameras},
+  [NameSpace.Camera]: {...initialStateCamera},
+  [NameSpace.FilterCameras]: {...initialStateFilters},
+  [NameSpace.Reviews]: {...initialStateReviews},
+  [NameSpace.Promos]: {...initialStatePromos},
+  [NameSpace.SimilarCameras]: {...initialStateSimilarCameras},
+});
+
+export const fakeType = faker.datatype.string();

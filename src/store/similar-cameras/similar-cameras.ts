@@ -5,14 +5,14 @@ import {LoadingStatus, NameSpace} from '../../utils/const';
 
 import {fetchSimilarCamerasAction} from '../api-actions/api-actions-cameras/api-actions-cameras';
 
-const initialState: AppSimilarCameras = {
+export const initialStateSimilarCameras: AppSimilarCameras = {
   similarCameras: [],
   similarCamerasFetchStatus: LoadingStatus.Default,
 };
 
 export const similarCameras = createSlice({
   name: NameSpace.SimilarCameras,
-  initialState,
+  initialState: initialStateSimilarCameras,
   reducers: {},
   extraReducers(builder) {
     builder

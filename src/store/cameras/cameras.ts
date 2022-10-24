@@ -3,12 +3,9 @@ import {createSlice} from '@reduxjs/toolkit';
 import {AppCameras} from '../../types/state';
 import {LoadingStatus, NameSpace} from '../../utils/const';
 
-import {
-  fetchCamerasAction,
-  fetchSearchCamerasAction
-} from '../api-actions/api-actions-cameras/api-actions-cameras';
+import {fetchCamerasAction, fetchSearchCamerasAction} from '../api-actions/api-actions-cameras/api-actions-cameras';
 
-const initialState: AppCameras = {
+export const initialStateCameras: AppCameras = {
   cameras: [],
   camerasFetchStatus: LoadingStatus.Default,
   searchedCameras: [],
@@ -17,7 +14,7 @@ const initialState: AppCameras = {
 
 export const cameras = createSlice({
   name: NameSpace.Cameras,
-  initialState,
+  initialState: initialStateCameras,
   reducers: {},
   extraReducers(builder) {
     builder

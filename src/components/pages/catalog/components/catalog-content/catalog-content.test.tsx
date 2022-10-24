@@ -18,6 +18,9 @@ const successStore = mockStore({
   [NameSpace.App]: {
     camerasTotalCount: mockCameras.length,
   },
+  [NameSpace.FilterCameras]: {
+    allFilters: []
+  },
 });
 
 const loadingStore = mockStore({
@@ -28,6 +31,9 @@ const loadingStore = mockStore({
   [NameSpace.App]: {
     camerasTotalCount: 0,
   },
+  [NameSpace.FilterCameras]: {
+    allFilters: []
+  },
 });
 
 const errorStore = mockStore({
@@ -37,6 +43,9 @@ const errorStore = mockStore({
   },
   [NameSpace.App]: {
     camerasTotalCount: 0,
+  },
+  [NameSpace.FilterCameras]: {
+    allFilters: []
   },
 });
 

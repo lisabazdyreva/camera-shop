@@ -1,7 +1,10 @@
-import {process, cleanForm, setBasket, setCamerasTotalCount, setCurrentPage, setReviewFormData} from './process';
+import {
+  process, cleanForm, setBasket, setCamerasTotalCount, setCurrentPage,
+  setReviewFormData, setCurrentSortingType, setCurrentSortingOrder, setCurrentPath
+} from './process';
 
-import {DefaultValue, FORM_ID_TYPE, initialReview, InputName, SortingOrder} from '../../utils/const';
-import {getFakeCamera, getFakePostReview, UNKNOWN_TYPE} from '../../utils/mocks';
+import {DefaultValue, FORM_ID_TYPE, initialReview, InputName} from '../../utils/const';
+import {getFakeCamera, getFakePostReview, UNKNOWN_TYPE, fakeType} from '../../utils/mocks';
 import {AppProcess} from '../../types/state';
 
 
@@ -10,8 +13,8 @@ const state: AppProcess = {
   currentCatalogPage: DefaultValue.CatalogPageNumber,
   camerasTotalCount: 0,
   reviewFormData: initialReview,
-  currentSortingType: null, //TODO
-  currentSortingOrder: SortingOrder.Ascending,
+  currentSortingType: null,
+  currentSortingOrder: null,
   allSorting: [],
   currentPath: '',
 };
@@ -90,5 +93,20 @@ describe('reducer process', () => {
 
     expect(process.reducer(stateWithReviewForm, cleanForm()))
       .toEqual(state);
+  });
+
+  it('should set current sorting type', () => {
+    expect(process.reducer(state, setCurrentSortingType(fakeType)))
+      .toEqual({...state, currentSortingType: fakeType, allSorting: [fakeType]});
+  });
+
+  it ('should set current sorting order', () => {
+    expect(process.reducer(state, setCurrentSortingOrder(fakeType)))
+      .toEqual({...state, currentSortingOrder: fakeType, allSorting: [fakeType]});
+  });
+
+  it ('should set current path', () => {
+    expect(process.reducer(state, setCurrentPath(fakeType)))
+      .toEqual({...state, currentPath: fakeType});
   });
 });

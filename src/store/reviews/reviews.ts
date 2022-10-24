@@ -5,7 +5,7 @@ import {LoadingStatus, NameSpace} from '../../utils/const';
 
 import {fetchReviewsAction, postReviewAction} from '../api-actions/api-actions-reviews/api-actions-reviews';
 
-const initialState: AppReviews = {
+export const initialStateReviews: AppReviews = {
   reviews: [],
   reviewsFetchStatus: LoadingStatus.Default,
   reviewPostStatus: LoadingStatus.Default,
@@ -13,7 +13,7 @@ const initialState: AppReviews = {
 
 export const reviews = createSlice({
   name: NameSpace.Reviews,
-  initialState,
+  initialState: initialStateReviews,
   reducers: {},
   extraReducers(builder) {
     builder

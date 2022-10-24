@@ -8,15 +8,13 @@ import FilterPrice from './components/filter-price/filter-price';
 import {useAppDispatch, useAppSelector} from '../../../../../hooks';
 import {filterParams} from '../../../../../utils/utils';
 import {
-  AppRoute, FilterCameraCategory,
-  FilterCameraCategoryDictionary,
-  FilterCameraLevelDictionary,
-  FilterCameraTypeDictionary,
-  PaginationRoute, QueryRoute,
+  AppRoute, FilterCameraCategoryDictionary, FilterCameraLevelDictionary,
+  FilterCameraTypeDictionary, PaginationRoute, QueryRoute,
 } from '../../../../../utils/const';
 
 import {removeCurrentFilter, resetFilters} from '../../../../../store/filter-cameras/filter-cameras';
 import {getCurrentFilterCategory, getCurrentFilterLevel, getCurrentFilterType} from '../../../../../store/filter-cameras/selectors';
+import {fetchPricesAction} from '../../../../../store/api-actions/api-actions-filters/api-actions-filters';
 
 
 const SideFilter = ():JSX.Element => {
@@ -48,7 +46,7 @@ const SideFilter = ():JSX.Element => {
     return Boolean(checked);
   };
 
-  const handleVideocameraChanged = (value: string, filter: string) => {
+  const getVideocameraParams = (value: string, filter: string) => {
     const filmValue = FilterCameraTypeDictionary.Film;
     const snapshotValue = FilterCameraTypeDictionary.Snapshot;
     const filterType = QueryRoute.Type;
@@ -57,28 +55,21 @@ const SideFilter = ():JSX.Element => {
     dispatch(removeCurrentFilter({value: snapshotValue, filter: filterType}));
 
     const newSearchParams = filterParams(searchParams, [filmValue, snapshotValue]);
-    newSearchParams.set(filter, value);
-    setSearchParams(newSearchParams);
-    navigate(`${AppRoute.Catalog}${PaginationRoute.Page}1?${newSearchParams.toString()}`);
+    newSearchParams.append(filter, value);
+    return newSearchParams;
   };
 
-  const handleCheckboxChecked = (value: string, filter: string) => {
+  const getParams = (value: string, filter: string) => {
     if (value === FilterCameraCategoryDictionary.Videocamera) {
-      handleVideocameraChanged(value, filter);
-      return;
+      return getVideocameraParams(value, filter);
     }
 
-    const newSearchParams = new URLSearchParams([...searchParams.entries(), [filter, value]]);
-    setSearchParams(newSearchParams);
-    navigate(`${AppRoute.Catalog}${PaginationRoute.Page}1?${newSearchParams.toString()}`);
+    return new URLSearchParams([...searchParams.entries(), [filter, value]]);
   };
 
-  const handleCheckboxUnchecked = (value: string, filter: string) => {
+  const getCheckedParams = (value: string, filter: string) => {
     dispatch(removeCurrentFilter({value, filter}));
-
-    const newSearchParams = filterParams(searchParams, [value]);
-    setSearchParams(newSearchParams);
-    navigate(`${AppRoute.Catalog}${PaginationRoute.Page}1?${newSearchParams.toString()}`);
+    return(filterParams(searchParams, [value]));
   };
 
   const handleCheckboxChange = (evt: SyntheticEvent) => {
@@ -88,12 +79,19 @@ const SideFilter = ():JSX.Element => {
     const value = target.dataset.value;
     const filter = String(currentTarget.dataset.filter);
 
+    let newSearchParams;
+
     if (target.checked && value) {
-      handleCheckboxChecked(value, filter);
+      newSearchParams = getParams(value, filter);
     }
 
     if (!target.checked && value) {
-      handleCheckboxUnchecked(value, filter);
+      newSearchParams = getCheckedParams(value, filter);
+    }
+
+    if (newSearchParams) {
+      setSearchParams(newSearchParams);
+      navigate(`${AppRoute.Catalog}${PaginationRoute.Page}1?${newSearchParams.toString()}`);
     }
   };
 
@@ -115,10 +113,11 @@ const SideFilter = ():JSX.Element => {
     setHighPriceValue('');
   };
 
-  useEffect(() => () => {
-    dispatch(resetFilters());
-    resetSearchParams();
-  }, []);
+  useEffect(() => {
+    dispatch(fetchPricesAction());
+  }, [currentCategories, currentTypes, currentLevels, dispatch]);
+
+  useEffect(() => () => {dispatch(resetFilters());}, [dispatch]);
 
   return (
     <div className="catalog__aside" data-testid='filter'>
@@ -134,32 +133,22 @@ const SideFilter = ():JSX.Element => {
           <fieldset className="catalog-filter__block">
             <legend className="title title--h5">Категория</legend>
             {
-              Object.entries(FilterCameraCategoryDictionary).map(([categoryName, category]) => {
-                const inputName = category === FilterCameraCategoryDictionary.Photocamera
-                  ? FilterCameraCategory.Photocamera
-                  : FilterCameraCategory.Videocamera;
-
-                const spanLabel = category === FilterCameraCategoryDictionary.Photocamera
-                  ? 'Фотокамера'
-                  : FilterCameraCategoryDictionary.Videocamera;
-
-                return (
-                  <div className="custom-checkbox catalog-filter__item" key={categoryName}>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name={inputName}
-                        data-value={category}
-                        data-filter={QueryRoute.Category}
-                        onChange={handleCheckboxChange}
-                        checked={isChecked(category, currentCategories)}
-                      />
-                      <span className="custom-checkbox__icon"></span>
-                      <span className="custom-checkbox__label">{spanLabel}</span>
-                    </label>
-                  </div>
-                );
-              })
+              Object.entries(FilterCameraCategoryDictionary).map(([categoryName, category]) => (
+                <div className="custom-checkbox catalog-filter__item" key={categoryName}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      name={categoryName[0].toLowerCase() + categoryName.slice(1)}
+                      data-value={category}
+                      data-filter={QueryRoute.Category}
+                      onChange={handleCheckboxChange}
+                      checked={isChecked(category, currentCategories)}
+                    />
+                    <span className="custom-checkbox__icon"></span>
+                    <span className="custom-checkbox__label">{category}</span>
+                  </label>
+                </div>
+              ))
             }
           </fieldset>
           <fieldset className="catalog-filter__block">

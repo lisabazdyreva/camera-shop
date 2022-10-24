@@ -1,4 +1,4 @@
-import React, {ChangeEvent, SyntheticEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, SyntheticEvent, useCallback, useEffect, useState} from 'react';
 import {useNavigate, useSearchParams} from 'react-router-dom';
 
 import {fetchHighPriceAction, fetchLowPriceAction} from '../../../../../../../store/api-actions/api-actions-filters/api-actions-filters';
@@ -10,7 +10,7 @@ import {AppRoute, PaginationRoute, QueryRoute} from '../../../../../../../utils/
 
 import {setHighPrice, setLowPrice} from '../../../../../../../store/filter-cameras/filter-cameras';
 
-interface IFilterPrice {
+interface FilterPriceProps {
   lowPriceValue: number | string;
   onLowPriceChange: (value: number | string) => void;
   highPriceValue: number | string;
@@ -18,7 +18,7 @@ interface IFilterPrice {
 }
 
 
-const FilterPrice = ({lowPriceValue, onLowPriceChange, highPriceValue, onHighPriceChange}: IFilterPrice): JSX.Element => {
+const FilterPrice = ({lowPriceValue, onLowPriceChange, highPriceValue, onHighPriceChange}: FilterPriceProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -32,6 +32,9 @@ const FilterPrice = ({lowPriceValue, onLowPriceChange, highPriceValue, onHighPri
 
   const [isLowPriceInvalid, setIsLowPriceInvalid] = useState(false);
   const [isHighPriceInvalid, setIsHighPriceInvalid] = useState(false);
+
+  const [fixedLowPrice, setFixedLowPrice] = useState<string | number>(0);
+  const [fixedHighPrice, setFixedHighPrice] = useState<string | number>(0);
 
   const handlePriceChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
@@ -77,6 +80,7 @@ const FilterPrice = ({lowPriceValue, onLowPriceChange, highPriceValue, onHighPri
 
     switch (filter) {
       case QueryRoute.HighPrice: {
+        setIsHighPriceInvalid(false);
         if (highPriceValue === '') {
           dispatch(setHighPrice({value: ''}));
           return;
@@ -99,15 +103,11 @@ const FilterPrice = ({lowPriceValue, onLowPriceChange, highPriceValue, onHighPri
 
         };
         const price = getPrice();
-        // if (price === highPriceStore) {
-        //   onHighPriceChange(highPriceStore); // если то же самое вводим
-        //   return; TODO mb useCallback
-        // }
-        dispatch(setHighPrice({value: price}));
-        setIsHighPriceInvalid(false);
+        setFixedHighPrice(price);
         break;
       }
       case QueryRoute.LowPrice: {
+        setIsLowPriceInvalid(false);
         if (lowPriceValue === '') {
           dispatch(setLowPrice({value: ''}));
           return;
@@ -130,47 +130,44 @@ const FilterPrice = ({lowPriceValue, onLowPriceChange, highPriceValue, onHighPri
         };
 
         const price = getPrice();
-        // if (price === lowPriceStore) {
-        //   onLowPriceChange(lowPriceStore);
-        //   return;
-        // }
-        dispatch(setLowPrice({value: price}));
-        setIsLowPriceInvalid(false);
+        setFixedLowPrice(price);
         break;
       }
     }
   };
 
-  const updateParams = (route: string, value: number | string) => {
-
-    if (searchParams.has(route)) {
-      searchParams.delete(route);
+  const updateParams = useCallback((value: string | number, filter: string) => {
+    if (searchParams.has(filter)) {
+      searchParams.delete(filter);
     }
-    searchParams.set(route, String(value));
+    if (value) {
+      searchParams.set(filter, String(value));
+    }
+
     setSearchParams(searchParams);
-  };
-
-
-  useEffect(() => {
-    if (highPriceStore) {
-      dispatch(fetchHighPriceAction({value: Number(highPriceStore)}));
-      onHighPriceChange(highPriceStore);
-      updateParams(QueryRoute.HighPrice, highPriceStore);
-      navigate(`${AppRoute.Catalog}${PaginationRoute.Page}${1}/?${searchParams.toString()}`);
-    }
-  }, [highPriceStore]);
+    navigate(`${AppRoute.Catalog}${PaginationRoute.Page}${1}/?${searchParams.toString()}`);
+  }, [navigate, searchParams, setSearchParams]);
 
   useEffect(() => {
-    if (lowPriceStore) {
-      dispatch(fetchLowPriceAction({value: Number(lowPriceStore)}));
-      onLowPriceChange(lowPriceStore);
-      updateParams(QueryRoute.LowPrice, lowPriceStore);
-      navigate(`${AppRoute.Catalog}${PaginationRoute.Page}${1}/?${searchParams.toString()}`);
-    }
-  }, [lowPriceStore]);
+    dispatch(fetchHighPriceAction({value: Number(fixedHighPrice)}));
+  }, [fixedHighPrice, dispatch]);
+
+  useEffect(() => {
+    onHighPriceChange(highPriceStore);
+    updateParams(highPriceStore, QueryRoute.HighPrice);
+  }, [highPriceStore, onHighPriceChange, updateParams]);
+
+  useEffect(() => {
+    dispatch(fetchLowPriceAction({value: Number(fixedLowPrice)}));
+  }, [fixedLowPrice, dispatch]);
+
+  useEffect(() => {
+    onLowPriceChange(lowPriceStore);
+    updateParams(lowPriceStore, QueryRoute.LowPrice);
+  }, [lowPriceStore, onLowPriceChange, updateParams]);
 
   return (
-    <fieldset className="catalog-filter__block">
+    <fieldset className="catalog-filter__block" data-testid='price-filter'>
       <legend className="title title--h5">Цена, ₽</legend>
       <div className="catalog-filter__price-range">
         <div className={`custom-input ${isLowPriceInvalid && 'is-invalid'}`}>

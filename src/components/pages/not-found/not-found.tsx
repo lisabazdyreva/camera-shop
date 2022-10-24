@@ -1,7 +1,7 @@
 import './not-found.css';
 
 import {useNavigate} from 'react-router-dom';
-import {AppRoute, DefaultValue, NOT_FOUND_NOTIFICATION, PaginationRoute} from '../../../utils/const';
+import {AppRoute, DefaultValue, WarningNotification, PaginationRoute} from '../../../utils/const';
 
 const NotFound = ():JSX.Element => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const NotFound = ():JSX.Element => {
       <div className='page-content__section'>
         <section className='not-found'>
           <p className='not-found__text'>
-            {NOT_FOUND_NOTIFICATION}
+            {WarningNotification.Page}
           </p>
           <div className='not-found__buttons'>
             <button className='btn btn--purple' onClick={handleButtonToMainClick}>Каталог</button>

@@ -11,8 +11,6 @@ const state: AppCameras = {
   camerasFetchStatus: LoadingStatus.Default,
   searchedCameras: [],
   searchedCamerasFetchStatus: LoadingStatus.Default,
-  // sortingCameras: [], //TODO tests
-  // isSorting: false,
 };
 
 describe('reducer cameras', () => {
