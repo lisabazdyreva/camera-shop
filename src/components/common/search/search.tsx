@@ -1,6 +1,6 @@
 import './search.css';
 
-import {ChangeEvent, SyntheticEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, SyntheticEvent, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {useAppDispatch, useAppSelector} from '../../../hooks';
@@ -33,7 +33,7 @@ const Search = ():JSX.Element => {
     setSearchValue(evt.target.value);
   };
 
-  const handleListItemClick = (evt: SyntheticEvent) => {
+  const navigateToProduct = (evt: React.KeyboardEvent | SyntheticEvent) => {
     const target = evt.target as HTMLLIElement;
     const id = Number(target.dataset.id);
 
@@ -43,6 +43,16 @@ const Search = ():JSX.Element => {
         setIsListOpened(false);
         setSearchValue('');
       });
+  };
+
+  const handleListItemKeydown = (evt: React.KeyboardEvent) => {
+    if (evt.code === 'Enter') {
+      navigateToProduct(evt);
+    }
+  };
+
+  const handleListItemClick = (evt: SyntheticEvent) => {
+    navigateToProduct(evt);
   };
 
   const handleButtonResetClick = () => {
@@ -56,6 +66,23 @@ const Search = ():JSX.Element => {
       dispatch(fetchSearchCamerasAction(debouncedValue));
     }
   }, [debouncedValue, dispatch]);
+
+  useEffect(() => {
+    const handleClick = (evt: MouseEvent) => {
+      const target = evt.target as HTMLElement;
+      if (target.dataset.testid !== 'search-input' || target.className !== 'form-search__select-list') {
+        setIsListOpened(false);
+      }
+
+    };
+    if (isListOpened) {
+      document.addEventListener('click', handleClick);
+    } else {
+      document.removeEventListener('click', handleClick);
+    }
+
+    return () => document.removeEventListener('click', handleClick);
+  }, [isListOpened]);
 
   return (
     <div className={`form-search ${isListOpened && 'list-opened'}`} data-testid='form-search'>
@@ -75,7 +102,7 @@ const Search = ():JSX.Element => {
             data-testid='search-input'
           />
         </label>
-        <ul className="form-search__select-list">
+        <ul className="form-search__select-list scroller">
           {fetchStatus === LoadingStatus.Error && <li className="form-search__select-item">{SEARCH_ERROR_NOTIFICATION}</li>}
           {fetchStatus === LoadingStatus.Loading && <Loader />}
           {fetchStatus === LoadingStatus.Success && !searchedCameras.length && searchValue !== '' &&
@@ -88,6 +115,7 @@ const Search = ():JSX.Element => {
                 tabIndex={0}
                 onClick={handleListItemClick}
                 data-id={camera.id}
+                onKeyDown={handleListItemKeydown}
               >
                 {camera.name}
               </li>

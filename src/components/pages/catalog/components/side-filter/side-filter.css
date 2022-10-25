@@ -81,6 +81,10 @@
   transition: border-color 0.3s ease;
 }
 
+.catalog-filter__price-range .custom-input label input {
+  padding: 0 10px;
+}
+
 .catalog-filter__price-range input::-webkit-input-placeholder {
   color: #b4b4d7;
 }
