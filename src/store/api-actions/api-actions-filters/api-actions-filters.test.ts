@@ -3,20 +3,15 @@ import {QueryRoute, ServerAdaptValue, SortingType, UrlRoute} from '../../../util
 import {fetchHighPriceAction, fetchLowPriceAction, fetchPricesAction} from './api-actions-filters';
 
 const fakeCameras = getFakeCameras();
-
 const mockState = getMockState();
 
 describe('async filters actions', () => {
   it ('should dispatch Fetch Prices', async () => {
-    const fakeLowPrice = null;
-    const fakeHighPrice = null;
     mockAPI
       .onGet(`${UrlRoute.Base}${UrlRoute.Cameras}`, {params: {
         [QueryRoute.Type]: [],
         [QueryRoute.Level]: [],
         [QueryRoute.Category]: [],
-        [QueryRoute.LowPrice]: fakeLowPrice,
-        [QueryRoute.HighPrice]: fakeHighPrice,
         [QueryRoute.Sort]: SortingType.Price,
       }})
       .reply(200, fakeCameras);
@@ -33,15 +28,11 @@ describe('async filters actions', () => {
   });
 
   it ('should react when dispatch Fetch Prices error', async () => {
-    const fakeLowPrice = null;
-    const fakeHighPrice = null;
     mockAPI
       .onGet(`${UrlRoute.Base}${UrlRoute.Cameras}`, {params: {
         [QueryRoute.Type]: [],
         [QueryRoute.Level]: [],
         [QueryRoute.Category]: [],
-        [QueryRoute.LowPrice]: fakeLowPrice,
-        [QueryRoute.HighPrice]: fakeHighPrice,
         [QueryRoute.Sort]: SortingType.Price,
       }})
       .reply(400);
@@ -125,7 +116,7 @@ describe('async filters actions', () => {
 
   it ('should react when dispatch Fetch High Price error', async () => {
     const fakeLowPrice = 0;
-    const fakeHighPrice = 0;
+    const fakeHighPrice = 10;
 
     mockAPI
       .onGet(`${UrlRoute.Base}${UrlRoute.Cameras}`, {params: {
