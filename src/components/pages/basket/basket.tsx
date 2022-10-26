@@ -1,5 +1,7 @@
 import './basket.css';
 
+import {useState, useEffect} from 'react';
+
 import {Breadcrumbs} from '../../common/common';
 import {
   BasketSummary,
@@ -7,13 +9,16 @@ import {
 } from './components/components';
 
 import {ModalInfo, ModalAction} from '../../common/common';
-import {useState, useEffect} from 'react';
 import {ComponentName, BreadcrumbsItem, TopCoordinate} from '../../../utils/const';
+import {useAppSelector} from '../../../hooks';
+import {getBasket} from '../../../store/process/selectors';
 
 
 const Basket = ():JSX.Element => {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
+
+  const cameras = useAppSelector(getBasket);
 
   const handleModalOpen = () => {
     setIsRemoveModalOpen(true);
@@ -39,7 +44,7 @@ const Basket = ():JSX.Element => {
           <div className="container">
             <h1 className="title title--h2">Корзина</h1>
             <ul className="basket__list">
-              <BasketItem onModalOpen={handleModalOpen} />
+              {cameras.map((camera) => <BasketItem camera={camera} key={camera.id} onModalOpen={handleModalOpen} />)}
             </ul>
             <BasketSummary />
           </div>

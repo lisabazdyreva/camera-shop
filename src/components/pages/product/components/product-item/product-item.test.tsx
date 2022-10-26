@@ -17,7 +17,7 @@ describe('product item component', () => {
     render (
       <Provider store={store} >
         <MemoryRouter>
-          <ProductItem data={fakeCamera} />
+          <ProductItem data={fakeCamera} handleAddCameraModalShow={jest.fn}/>
         </MemoryRouter>
       </Provider>
     );

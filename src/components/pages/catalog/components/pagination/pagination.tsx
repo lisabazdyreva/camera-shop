@@ -14,7 +14,6 @@ interface PaginationProps {
 }
 
 const Pagination = ({currentPageNumber, setCurrentPageNumber, pagesAmount}: PaginationProps):JSX.Element => {
-
   const currentPath = useAppSelector(getCurrentPath);
   const pages = Array.from({length: pagesAmount}).fill('').map((item, index) => index + 1);
 

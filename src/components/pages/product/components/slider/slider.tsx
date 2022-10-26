@@ -5,23 +5,25 @@ import {ErrorInfo, Loader, ProductCard} from '../../../../common/common';
 import {Camera, Cameras} from '../../../../../types/camera';
 import {LoadingStatusType} from '../../../../../types/types';
 import {ErrorData, LoadingStatus, Step} from '../../../../../utils/const';
-import {useAppDispatch} from '../../../../../hooks';
+// import {useAppDispatch} from '../../../../../hooks';
 
 import useSlider from '../../../../../hooks/use-slider';
-import {setBasket} from '../../../../../store/process/process';
+// import {setBasket} from '../../../../../store/process/process';
 
 
 interface SliderProps {
   similarCameras: Cameras;
   fetchStatus: LoadingStatusType;
+  handleAddCameraModalShow: (data: Camera) => void;
 }
 
-const Slider = ({similarCameras, fetchStatus}: SliderProps):JSX.Element => {
-  const dispatch = useAppDispatch();
+const Slider = ({similarCameras, fetchStatus, handleAddCameraModalShow}: SliderProps):JSX.Element => {
+  // const dispatch = useAppDispatch();
   const {items, handlePreviousClick, handleNextClick, disabling} = useSlider(similarCameras, Step.Slider);
 
   const handleButtonAddToBasketClick = (data: Camera) => {
-    dispatch(setBasket(data));
+    // dispatch(setBasket(data));
+    handleAddCameraModalShow(data);
   };
 
   const isSimilarCamerasLoaded = fetchStatus === LoadingStatus.Success;

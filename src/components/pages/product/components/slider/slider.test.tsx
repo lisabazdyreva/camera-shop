@@ -34,7 +34,7 @@ describe('slider component', () => {
     render (
       <Provider store={store}>
         <MemoryRouter>
-          <Slider similarCameras={fakeCameras} fetchStatus={fakeSuccessStatus} />
+          <Slider similarCameras={fakeCameras} fetchStatus={fakeSuccessStatus} handleAddCameraModalShow={jest.fn}/>
         </MemoryRouter>
       </Provider>
     );
@@ -47,7 +47,7 @@ describe('slider component', () => {
     render (
       <Provider store={store}>
         <MemoryRouter>
-          <Slider similarCameras={[]} fetchStatus={fakeErrorStatus} />
+          <Slider similarCameras={[]} fetchStatus={fakeErrorStatus} handleAddCameraModalShow={jest.fn}/>
         </MemoryRouter>
       </Provider>
     );
@@ -59,7 +59,7 @@ describe('slider component', () => {
     render (
       <Provider store={store}>
         <MemoryRouter>
-          <Slider similarCameras={[]} fetchStatus={fakeLoadingStatus} />
+          <Slider similarCameras={[]} fetchStatus={fakeLoadingStatus} handleAddCameraModalShow={jest.fn}/>
         </MemoryRouter>
       </Provider>
     );

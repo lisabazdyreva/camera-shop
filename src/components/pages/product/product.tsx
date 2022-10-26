@@ -18,7 +18,8 @@ import {
   LoadingStatus,
   ErrorData,
   ScrollSetting,
-  TopCoordinate
+  TopCoordinate,
+  initialCamera
 } from '../../../utils/const';
 import {useAppDispatch, useAppSelector} from '../../../hooks';
 
@@ -28,6 +29,7 @@ import {fetchReviewsAction} from '../../../store/api-actions/api-actions-reviews
 import {getCamera, getCameraFetchStatus} from '../../../store/camera/selectors';
 import {getSimilarCameras, getSimilarCamerasFetchStatus} from '../../../store/similar-cameras/selectors';
 import {getReviewsFetchStatus} from '../../../store/reviews/selectors';
+import {Camera} from '../../../types/camera';
 
 
 const Product = ():JSX.Element => {
@@ -35,6 +37,11 @@ const Product = ():JSX.Element => {
 
   const [isSuccessReviewModalOpen, setIsSuccessReviewModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+
+  const [isAddCameraModalOpen, setAddCameraModalOpen] = useState(false);
+  const [isSuccessAddCameraModalOpen, setSuccessAddCameraModalOpen] = useState(false);
+
+  const [selectedCamera, setSelectedCamera] = useState(initialCamera);
 
   const camera = useAppSelector(getCamera);
   const similarCameras = useAppSelector(getSimilarCameras);
@@ -70,6 +77,28 @@ const Product = ():JSX.Element => {
     setIsSuccessReviewModalOpen(true);
   };
 
+  const handleAddModalHide = () => {
+    setAddCameraModalOpen(false);
+  };
+
+  const handleSuccessModalShow = () => {
+    setSuccessAddCameraModalOpen(true);
+  };
+
+  const handleSuccessModalHide = () => {
+    setSuccessAddCameraModalOpen(false);
+  };
+
+  const handleSliderCameraSelect = (data: Camera) => { //TODO naming
+    setSelectedCamera(data);
+    setAddCameraModalOpen(true);
+  };
+
+  const handleProductCameraSelect = (data: Camera) => { //TODO naming
+    setSelectedCamera(data);
+    setAddCameraModalOpen(true);
+  };
+
   useEffect(() => {
     if (id) {
       const numberId = Number(id);
@@ -93,13 +122,13 @@ const Product = ():JSX.Element => {
           <div className="page-content__section">
             {isCameraError && <ErrorInfo text={ErrorData.Product} />}
             {isCameraLoading && <Loader />}
-            {isCameraLoaded && camera && <ProductItem data={camera}/>}
+            {isCameraLoaded && camera && <ProductItem data={camera} handleAddCameraModalShow={handleProductCameraSelect}/>}
           </div>
           <div className="page-content__section">
             <section className="product-similar">
               <div className="container">
                 <h2 className="title title--h3">Похожие товары</h2>
-                <Slider fetchStatus={similarCamerasFetchStatus} similarCameras={similarCameras} />
+                <Slider fetchStatus={similarCamerasFetchStatus} similarCameras={similarCameras} handleAddCameraModalShow={handleSliderCameraSelect}/>
               </div>
             </section>
           </div>
@@ -126,6 +155,14 @@ const Product = ():JSX.Element => {
         {isSuccessReviewModalOpen
           &&
           <ModalInfo usingComponent={ComponentName.Product} onModalClose={handleSuccessModalClose}/> }
+        {isAddCameraModalOpen && camera &&
+          <ModalAction
+            data={selectedCamera}
+            usingComponent={ComponentName.Catalog}
+            onModalClose={handleAddModalHide}
+            onSuccessModalOpen={handleSuccessModalShow}
+          />} {/*TODO naming и отправлять камеру в зависимости от жмяка*/}
+        {isSuccessAddCameraModalOpen && <ModalInfo usingComponent={ComponentName.Catalog} onModalClose={handleSuccessModalHide}/>}
       </main>
       <button className="up-btn" type='button' onClick={handleButtonToTopClick}>
         <svg width="12" height="18" aria-hidden="true">

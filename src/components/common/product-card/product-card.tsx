@@ -1,6 +1,6 @@
 import './product-card.css';
 
-import {useState} from 'react';
+// import {useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import {Picture, Rating} from '../common';
@@ -8,6 +8,8 @@ import {Camera} from '../../../types/camera';
 
 import {AppRoute, RatingClass, TabType} from '../../../utils/const';
 import {getFormattedPrice} from '../../../utils/utils';
+import {useAppSelector} from '../../../hooks';
+import {getBasket} from '../../../store/process/selectors';
 
 interface ProductCardProps {
   handleAddModal: (data: Camera) => void;
@@ -20,14 +22,16 @@ const ProductCard = ({handleAddModal, data, additionalClass, withoutBasketImplem
   const {name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price, id, reviewCount, rating} = data;
   const formattedPrice = getFormattedPrice(price);
 
-  const [, setIsAddedBasket] = useState('Not added to basket');// TODO next iteration
+  // const [, setIsAddedBasket] = useState('Not added to basket');// TODO next iteration
 
   const handleButtonAddToBasketClick = () => {
     handleAddModal(data);
-    if (withoutBasketImplementation) {
-      setIsAddedBasket('Added to basket');
-    }
+    // if (withoutBasketImplementation) {
+    //   setIsAddedBasket('Added to basket');
+    // }
   };
+  const basket = useAppSelector(getBasket);
+  const buttonText = basket.some((camera) => camera.name === name) ? 'В корзине' : 'Купить';
 
   return (
     <div className={`product-card ${additionalClass}`} data-testid='card'>
@@ -44,11 +48,10 @@ const ProductCard = ({handleAddModal, data, additionalClass, withoutBasketImplem
       <div className="product-card__info">
         <Rating additionalClass={RatingClass.Catalog} rating={rating} reviewCount={reviewCount} id={id} isDetailed/>
         <p className="product-card__title">{name}</p>
-        <p className="product-card__price"><span className="visually-hidden">Цена:</span>{formattedPrice}
-        </p>
+        <p className="product-card__price"><span className="visually-hidden">Цена:</span>{formattedPrice}</p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button" onClick={handleButtonAddToBasketClick}>Купить</button>
+        <button className="btn btn--purple product-card__btn" type="button" onClick={handleButtonAddToBasketClick}>{buttonText}</button>
         <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}/${TabType.Features}`}>Подробнее</Link>
       </div>
     </div>

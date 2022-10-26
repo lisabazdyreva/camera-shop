@@ -1,26 +1,19 @@
 import './product-item.css';
 
-import {useState} from 'react';
-
 import {Picture, Rating} from '../../../../common/common';
 import {ProductTabs} from '../components';
 
 import {Camera} from '../../../../../types/camera';
 import {RatingClass} from '../../../../../utils/const';
 import {getFormattedPrice} from '../../../../../utils/utils';
-import {useAppDispatch} from '../../../../../hooks';
-
-import {setBasket} from '../../../../../store/process/process';
 
 
 interface ProductItemProps {
   data: Camera;
+  handleAddCameraModalShow: (data: Camera) => void;
 }
 
-const ProductItem = ({data}: ProductItemProps):JSX.Element => {
-  const dispatch = useAppDispatch();
-  const [, setIsAddedBasket] = useState('Not added to basket');// TODO next iteration
-
+const ProductItem = ({data, handleAddCameraModalShow}: ProductItemProps):JSX.Element => {
   const {
     name, previewImg,
     previewImg2x, previewImgWebp,
@@ -34,8 +27,7 @@ const ProductItem = ({data}: ProductItemProps):JSX.Element => {
   const formattedPrice = getFormattedPrice(price);
 
   const handleButtonAddToBasketClick = () => {
-    dispatch(setBasket(data));
-    setIsAddedBasket('Added to basket');
+    handleAddCameraModalShow(data);
   };
 
   return (

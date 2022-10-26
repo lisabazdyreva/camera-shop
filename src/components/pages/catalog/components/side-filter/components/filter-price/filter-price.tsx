@@ -1,12 +1,12 @@
 import React, {ChangeEvent, SyntheticEvent, useCallback, useEffect, useState} from 'react';
-import {useNavigate, useSearchParams} from 'react-router-dom';
+import {useSearchParams} from 'react-router-dom';
 
 import {fetchHighPriceAction, fetchLowPriceAction} from '../../../../../../../store/api-actions/api-actions-filters/api-actions-filters';
 import {useAppDispatch, useAppSelector} from '../../../../../../../hooks';
 import {getHighPrice, getLowPrice} from '../../../../../../../store/filter-cameras/selectors';
 import {getMaxPrice, getMinPrice} from '../../../../../../../store/filter-cameras/selectors';
 
-import {AppRoute, PaginationRoute, QueryRoute} from '../../../../../../../utils/const';
+import {QueryRoute} from '../../../../../../../utils/const';
 
 import {setHighPrice, setLowPrice} from '../../../../../../../store/filter-cameras/filter-cameras';
 
@@ -20,7 +20,6 @@ interface FilterPriceProps {
 
 const FilterPrice = ({lowPriceValue, onLowPriceChange, highPriceValue, onHighPriceChange}: FilterPriceProps): JSX.Element => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -145,8 +144,7 @@ const FilterPrice = ({lowPriceValue, onLowPriceChange, highPriceValue, onHighPri
     }
 
     setSearchParams(searchParams);
-    navigate(`${AppRoute.Catalog}${PaginationRoute.Page}${1}/?${searchParams.toString()}`);
-  }, [navigate, searchParams, setSearchParams]);
+  }, [searchParams, setSearchParams]);
 
   useEffect(() => {
     dispatch(fetchHighPriceAction({value: Number(fixedHighPrice)}));
