@@ -1,5 +1,5 @@
 import {
-  process, cleanForm, setBasket, setCamerasTotalCount, setCurrentPage,
+  process, cleanForm, setBasketItem, setCamerasTotalCount, setCurrentPage,
   setReviewFormData, setCurrentSortingType, setCurrentSortingOrder, setCurrentPath
 } from './process';
 
@@ -35,10 +35,10 @@ describe('reducer process', () => {
 
     const stateWithCamera = {...state, basket: basketWithOneCamera};
 
-    expect(process.reducer(state, setBasket(fakeCameraOne)))
+    expect(process.reducer(state, setBasketItem(fakeCameraOne)))
       .toEqual(stateWithCamera);
 
-    expect(process.reducer(stateWithCamera, setBasket(fakeCameraTwo)))
+    expect(process.reducer(stateWithCamera, setBasketItem(fakeCameraTwo)))
       .toEqual({...stateWithCamera, basket: basketWithTwoCameras});
   });
 

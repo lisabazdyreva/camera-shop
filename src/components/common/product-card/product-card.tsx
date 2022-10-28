@@ -17,7 +17,7 @@ interface ProductCardProps {
   additionalClass?: 'is-active';
   withoutBasketImplementation?: boolean;
 }
-
+//TODO - CART, а не BASKET
 const ProductCard = ({handleAddModal, data, additionalClass, withoutBasketImplementation}: ProductCardProps):JSX.Element => {
   const {name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price, id, reviewCount, rating} = data;
   const formattedPrice = getFormattedPrice(price);

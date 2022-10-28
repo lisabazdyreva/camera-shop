@@ -36,8 +36,8 @@ const ModalAction = ({usingComponent, data, onModalClose, onSuccessModalOpen}: M
   };
 
   const getButtons = () => {
-    if (usingComponent === ComponentName.Basket) {
-      return <BasketRemoveButtons />;
+    if (usingComponent === ComponentName.Basket && data) {
+      return <BasketRemoveButtons id={data.id} handleCloseModal={onModalClose}/>;
     }
 
     if (usingComponent === ComponentName.Catalog) {

@@ -1,5 +1,5 @@
 import {Camera} from '../../../../../types/camera';
-import {setBasket} from '../../../../../store/process/process';
+import {setBasketItem} from '../../../../../store/process/process';
 import {useAppDispatch} from '../../../../../hooks';
 
 interface BasketAddButtonProps {
@@ -13,7 +13,7 @@ const BasketAddButton = ({data, handleOpenSuccessModal, handleCloseModal}: Baske
 
   const handleButtonAddToBasketClick = () => {
     if (data && handleOpenSuccessModal) {
-      dispatch(setBasket(data));
+      dispatch(setBasketItem(data));
       handleCloseModal(false);
       handleOpenSuccessModal(true);
     }

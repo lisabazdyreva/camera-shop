@@ -8,6 +8,7 @@ import {promos} from './promos/promos';
 import {reviews} from './reviews/reviews';
 import {similarCameras} from './similar-cameras/similar-cameras';
 import {filterCameras} from './filter-cameras/filter-cameras';
+import {order} from './order/order';
 
 
 export const rootReducer = combineReducers({
@@ -18,4 +19,5 @@ export const rootReducer = combineReducers({
   [NameSpace.Reviews]: reviews.reducer,
   [NameSpace.SimilarCameras]: similarCameras.reducer,
   [NameSpace.FilterCameras]: filterCameras.reducer,
+  [NameSpace.Order]: order.reducer,
 });

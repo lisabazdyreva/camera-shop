@@ -78,6 +78,8 @@ export const UrlRoute = {
   Cameras: '/cameras',
   Similar: '/similar',
   Reviews: '/reviews',
+  Orders: '/orders', // TODO заказ и порядок одно и то же слово
+  Coupons: '/coupons',
   Sorting: '_sort',
   Order: '_order',
 } as const;
@@ -91,6 +93,7 @@ export enum NameSpace {
   SimilarCameras = 'SIMILAR_CAMERAS',
   Reviews = 'REVIEWS',
   FilterCameras = 'FILTER_CAMERAS',
+  Order = 'ORDER',
 }
 
 export const Step = {

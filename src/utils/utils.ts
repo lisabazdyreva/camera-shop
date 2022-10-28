@@ -38,9 +38,15 @@ export const getFormattedPrice = (price: number): string => {
   const step = 3;
   const tens = numbers.slice(0, step);
   const hundreds = numbers.slice(step, step * 2);
+  const thousands = numbers.slice(step * 2, step * 3); // TODO переделать
 
   tens.reverse();
   hundreds.reverse();
+  thousands.reverse();
+
+  if (thousands) {
+    return (`${thousands.join('')} ${hundreds.join('')} ${tens.join('')} ₽`);
+  }
 
   return (`${hundreds.join('')} ${tens.join('')} ₽`);
 };

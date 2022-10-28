@@ -55,5 +55,11 @@ export type AppFilterCameras = {
   allFilters: (string | number)[],
 };
 
+export type AppOrder = {
+  orderPostStatus: LoadingStatusType;
+  discount: number | null;
+  couponPostStatus: LoadingStatusType;
+};
+
 export type State = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
