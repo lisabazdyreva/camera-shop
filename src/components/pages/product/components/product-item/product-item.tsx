@@ -10,24 +10,17 @@ import {getFormattedPrice} from '../../../../../utils/utils';
 
 interface ProductItemProps {
   data: Camera;
-  handleAddCameraModalShow: (data: Camera) => void;
+  onCameraAddToBasket: (data: Camera) => void;
 }
 
-const ProductItem = ({data, handleAddCameraModalShow}: ProductItemProps):JSX.Element => {
-  const {
-    name, previewImg,
-    previewImg2x, previewImgWebp,
-    previewImgWebp2x, rating,
-    reviewCount, id,
-    price, vendorCode,
-    category, type,
-    level, description
-  } = data;
+const ProductItem = ({data, onCameraAddToBasket}: ProductItemProps):JSX.Element => {
+  const {name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, rating, reviewCount, id, price, vendorCode,
+    category, type, level, description} = data;
 
   const formattedPrice = getFormattedPrice(price);
 
-  const handleButtonAddToBasketClick = () => {
-    handleAddCameraModalShow(data);
+  const handleAddToBasketButtonClick = () => {
+    onCameraAddToBasket(data);
   };
 
   return (
@@ -50,7 +43,7 @@ const ProductItem = ({data, handleAddCameraModalShow}: ProductItemProps):JSX.Ele
             <span className="visually-hidden">Цена:</span>
             {formattedPrice}
           </p>
-          <button className="btn btn--purple" type="button" onClick={handleButtonAddToBasketClick}>
+          <button className="btn btn--purple" type="button" onClick={handleAddToBasketButtonClick}>
             <svg width="24" height="16" aria-hidden="true">
               <use xlinkHref="#icon-add-basket"></use>
             </svg>

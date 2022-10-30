@@ -7,10 +7,7 @@ import FilterPrice from './components/filter-price/filter-price';
 
 import {useAppDispatch, useAppSelector} from '../../../../../hooks';
 import {filterParams} from '../../../../../utils/utils';
-import {
-  AppRoute, FilterCameraCategoryDictionary, FilterCameraLevelDictionary,
-  FilterCameraTypeDictionary, PaginationRoute, QueryRoute,
-} from '../../../../../utils/const';
+import {AppRoute, FilterCameraCategoryDictionary, FilterCameraLevelDictionary, FilterCameraTypeDictionary, QueryRoute} from '../../../../../utils/const';
 
 import {removeCurrentFilter, resetFilters} from '../../../../../store/filter-cameras/filter-cameras';
 import {getCurrentFilterCategory, getCurrentFilterLevel, getCurrentFilterType} from '../../../../../store/filter-cameras/selectors';
@@ -91,7 +88,7 @@ const SideFilter = ():JSX.Element => {
 
     if (newSearchParams) {
       setSearchParams(newSearchParams);
-      navigate(`${AppRoute.Catalog}${PaginationRoute.Page}1?${newSearchParams.toString()}`);
+      navigate(`${AppRoute.Catalog}${AppRoute.Page}1?${newSearchParams.toString()}`);
     }
   };
 
@@ -104,7 +101,7 @@ const SideFilter = ():JSX.Element => {
     });
   };
 
-  const handleFiltersReset = () => {
+  const handleFiltersFormReset = () => {
     dispatch(resetFilters());
     resetSearchParams();
     setSearchParams(searchParams);
@@ -122,7 +119,7 @@ const SideFilter = ():JSX.Element => {
   return (
     <div className="catalog__aside" data-testid='filter'>
       <div className="catalog-filter">
-        <form action="src/components/pages/catalog/components/side-filter/side-filter#" onReset={handleFiltersReset}>
+        <form onReset={handleFiltersFormReset}>
           <h2 className="visually-hidden">Фильтр</h2>
           <FilterPrice
             lowPriceValue={lowPriceValue}

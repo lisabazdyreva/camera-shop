@@ -1,37 +1,45 @@
 import './product-card.css';
 
-// import {useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import {Picture, Rating} from '../common';
 import {Camera} from '../../../types/camera';
 
-import {AppRoute, RatingClass, TabType} from '../../../utils/const';
+import {
+  ACTIVE_CLASS,
+  AppRoute,
+  BasketButtonText,
+  RatingClass,
+  TabType
+} from '../../../utils/const';
 import {getFormattedPrice} from '../../../utils/utils';
 import {useAppSelector} from '../../../hooks';
-import {getBasket} from '../../../store/process/selectors';
+import {getBasket} from '../../../store/order/selectors';
 
 interface ProductCardProps {
   handleAddModal: (data: Camera) => void;
   data: Camera;
-  additionalClass?: 'is-active';
-  withoutBasketImplementation?: boolean;
+  additionalClass?: typeof ACTIVE_CLASS;
 }
-//TODO - CART, а не BASKET
-const ProductCard = ({handleAddModal, data, additionalClass, withoutBasketImplementation}: ProductCardProps):JSX.Element => {
+
+const ButtonClass = {
+  Purple: 'btn--purple',
+  White: 'product-card__btn--in-cart btn--purple-border',
+} as const;
+
+const ProductCard = ({handleAddModal, data, additionalClass}: ProductCardProps) :JSX.Element => {
   const {name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price, id, reviewCount, rating} = data;
   const formattedPrice = getFormattedPrice(price);
 
-  // const [, setIsAddedBasket] = useState('Not added to basket');// TODO next iteration
-
-  const handleButtonAddToBasketClick = () => {
-    handleAddModal(data);
-    // if (withoutBasketImplementation) {
-    //   setIsAddedBasket('Added to basket');
-    // }
-  };
   const basket = useAppSelector(getBasket);
-  const buttonText = basket.some((camera) => camera.name === name) ? 'В корзине' : 'Купить';
+  const isAlreadyInBasket = basket.some((camera) => camera.name === name);
+
+  const buttonText = isAlreadyInBasket ? BasketButtonText.InBasket : BasketButtonText.Buy;
+  const buttonClasses = isAlreadyInBasket ? ButtonClass.White : ButtonClass.Purple;
+
+  const handleAddToBasketButtonClick = () => {
+    handleAddModal(data);
+  };
 
   return (
     <div className={`product-card ${additionalClass}`} data-testid='card'>
@@ -51,7 +59,9 @@ const ProductCard = ({handleAddModal, data, additionalClass, withoutBasketImplem
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{formattedPrice}</p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button" onClick={handleButtonAddToBasketClick}>{buttonText}</button>
+        <button className={`btn product-card__btn ${buttonClasses}`} type="button" onClick={handleAddToBasketButtonClick}>
+          {buttonText}
+        </button>
         <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}/${TabType.Features}`}>Подробнее</Link>
       </div>
     </div>

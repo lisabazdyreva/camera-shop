@@ -1,11 +1,11 @@
 import {LoadingStatus} from '../../utils/const';
 import {fetchSimilarCamerasAction} from '../api-actions/api-actions-cameras/api-actions-cameras';
-import {similarCameras} from './similar-cameras';
+import {initialStateSimilarCameras, similarCameras} from './similar-cameras';
 import {getFakeCameras, UNKNOWN_TYPE} from '../../utils/mocks';
 import {AppSimilarCameras} from '../../types/state';
 
 const fakeSimilarCameras = getFakeCameras();
-const state: AppSimilarCameras = {similarCameras: [], similarCamerasFetchStatus: LoadingStatus.Default};
+const state: AppSimilarCameras = initialStateSimilarCameras;
 
 describe('reducer similar-cameras', () => {
   it('without values should return initial values', () => {

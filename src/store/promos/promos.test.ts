@@ -1,11 +1,11 @@
 import {LoadingStatus} from '../../utils/const';
 import {getFakePromo, UNKNOWN_TYPE} from '../../utils/mocks';
-import {promos} from './promos';
+import {initialStatePromos, promos} from './promos';
 import {fetchPromosAction} from '../api-actions/api-actions-promo/api-actions-promo';
 import {AppPromos} from '../../types/state';
 
 const fakePromos = [getFakePromo()];
-const state: AppPromos = {promos: [], promosFetchStatus: LoadingStatus.Default};
+const state: AppPromos = initialStatePromos;
 
 describe('reducer promos', () => {
   it('without values should return initial values', () => {

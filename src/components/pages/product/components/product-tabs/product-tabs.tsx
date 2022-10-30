@@ -1,12 +1,12 @@
 import './product-tabs.css';
 
+import {SyntheticEvent} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 
 import {DescriptionTab, FeatureTab} from '../components';
-import {AppRoute, TabDictionary, TabType} from '../../../../../utils/const';
+import {ACTIVE_CLASS, AppRoute, TabDictionary, TabType} from '../../../../../utils/const';
 import {CameraFeatures} from '../../../../../types/camera';
 
-import {SyntheticEvent} from 'react';
 
 interface ProductTabsProps {
   data: CameraFeatures & {description: string};
@@ -30,7 +30,7 @@ const ProductTabs = ({data}: ProductTabsProps):JSX.Element => {
       <div className="tabs__controls product__tabs-controls">
         {
           Object.values(TabType).map((tabType, index) => {
-            const buttonClasses = `tabs__control ${tab === tabType && 'is-active'}`;
+            const buttonClasses = `tabs__control ${tab === tabType && ACTIVE_CLASS}`;
             const name = Object.values(TabDictionary)[index];
             return (
               <button
@@ -48,11 +48,7 @@ const ProductTabs = ({data}: ProductTabsProps):JSX.Element => {
       </div>
       <div className="tabs__content">
         <div className="tabs__element is-active">
-          {
-            tab === TabType.Description
-              ? <DescriptionTab description={description} />
-              : <FeatureTab data={{vendorCode, category, type, level}} />
-          }
+          {tab === TabType.Description ? <DescriptionTab description={description} /> : <FeatureTab data={{vendorCode, category, type, level}} />}
         </div>
       </div>
     </div>

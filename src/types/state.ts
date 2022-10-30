@@ -34,7 +34,6 @@ export type AppReviews = {
 }
 
 export type AppProcess = {
-  basket: [] | Cameras;
   currentCatalogPage: number;
   camerasTotalCount: number;
   reviewFormData: ReviewPost;
@@ -56,6 +55,7 @@ export type AppFilterCameras = {
 };
 
 export type AppOrder = {
+  basket: [] | Cameras;
   orderPostStatus: LoadingStatusType;
   discount: number | null;
   couponPostStatus: LoadingStatusType;

@@ -3,7 +3,7 @@ import './footer.css';
 import {Logo, Social, FooterNavigation} from '../common';
 import {ComponentName} from '../../../utils/const';
 
-const Footer = ():JSX.Element => (
+const Footer = () :JSX.Element => (
   <footer className="footer">
     <div className="container">
       <div className="footer__info">

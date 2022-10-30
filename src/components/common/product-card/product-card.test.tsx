@@ -1,20 +1,31 @@
-import {getFakeCamera} from '../../../utils/mocks';
+import {getFakeCamera, mockStore} from '../../../utils/mocks';
 import {render, screen} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
-import {ProductCard} from '../common';
 import userEvent from '@testing-library/user-event';
 
+import {ProductCard} from '../common';
+import {Provider} from 'react-redux';
+import {NameSpace} from '../../../utils/const';
+
+
 const mockCamera = getFakeCamera();
+const store = mockStore({
+  [NameSpace.Order]: {
+    basket: [],
+  },
+});
 
 describe('product card component', () => {
   it('should render product card with data for catalog correctly', () => {
     render(
-      <MemoryRouter>
-        <ProductCard
-          handleAddModal={jest.fn()}
-          data={mockCamera}
-        />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <ProductCard
+            handleAddModal={jest.fn()}
+            data={mockCamera}
+          />
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(screen.getByText(/Купить/i)).toBeInTheDocument();
@@ -25,12 +36,14 @@ describe('product card component', () => {
     const onClick = jest.fn();
 
     render (
-      <MemoryRouter>
-        <ProductCard
-          handleAddModal={onClick}
-          data={mockCamera}
-        />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <ProductCard
+            handleAddModal={onClick}
+            data={mockCamera}
+          />
+        </MemoryRouter>
+      </Provider>
     );
 
     const button = screen.getByRole('button');

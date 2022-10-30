@@ -5,7 +5,7 @@ import {generatePath} from 'react-router-dom';
 
 import App from './app';
 
-import {AppRoute, PaginationRoute, TabType} from '../../utils/const';
+import {AppRoute, DefaultValue, TabType} from '../../utils/const';
 import {HistoryRoute} from '../common/common';
 import {getFakeCamera, mockStore, getMockState} from '../../utils/mocks';
 
@@ -37,7 +37,16 @@ describe('Application Routing', () => {
   });
 
   it('should render "Catalog" from page 1 when user navigate to catalog', () => {
-    const path = generatePath(`${AppRoute.Catalog}${PaginationRoute.DefaultPage}`);
+    const path = generatePath(`${AppRoute.Catalog}${AppRoute.Page}${DefaultValue.CatalogPageNumber}`);
+
+    history.push(path);
+
+    render(fakeApp);
+    expect(screen.getByText(/Каталог фото- и видеотехники/i)).toBeInTheDocument();
+  });
+
+  it('should render "Catalog" from page 1 when user navigate to home', () => {
+    const path = generatePath(`${AppRoute.Home}`);
 
     history.push(path);
 
@@ -63,7 +72,7 @@ describe('Application Routing', () => {
     const element = screen.getByRole('heading', {level: 1});
     expect(element.innerHTML).toBe('Корзина');
 
-    expect(screen.getByText(/Общая цена/i)).toBeInTheDocument();
+    expect(screen.getByText(/К оплате:/i)).toBeInTheDocument();
   });
 
 });

@@ -7,3 +7,4 @@ export { default as DescriptionTab} from './description-tab/description-tab';
 export { default as Slider } from './slider/slider';
 export { default as ReviewFormRateBar } from './review-form-rate-bar/review-form-rate-bar';
 export { default as ReviewListCard } from './review-list-card/review-list-card';
+export { default as ProductContent} from './product-content/product-content';

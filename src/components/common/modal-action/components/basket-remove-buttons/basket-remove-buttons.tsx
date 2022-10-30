@@ -1,4 +1,4 @@
-import {removeBasketItems} from '../../../../../store/process/process';
+import {removeBasketItems} from '../../../../../store/order/order';
 import {useAppDispatch} from '../../../../../hooks';
 
 interface BasketRemoveButtonsProps {
@@ -10,7 +10,7 @@ const BasketRemoveButtons = ({id, handleCloseModal}: BasketRemoveButtonsProps):J
 
   const handleRemoveButtonClicked = () => {
     dispatch(removeBasketItems(id));
-    handleCloseModal(); //TODO modal товар удален мб
+    handleCloseModal();
   };
 
   return (

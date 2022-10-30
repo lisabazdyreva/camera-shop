@@ -1,11 +1,11 @@
 import {getFakeReviews, UNKNOWN_TYPE} from '../../utils/mocks';
 import {LoadingStatus} from '../../utils/const';
-import {reviews} from './reviews';
+import {initialStateReviews, reviews} from './reviews';
 import {fetchReviewsAction, postReviewAction} from '../api-actions/api-actions-reviews/api-actions-reviews';
 import {AppReviews} from '../../types/state';
 
 const fakeReviews = getFakeReviews();
-const state: AppReviews = {reviews: [], reviewsFetchStatus: LoadingStatus.Default, reviewPostStatus: LoadingStatus.Default};
+const state: AppReviews = initialStateReviews;
 
 describe('reducer reviews', () => {
   it('without values should return initial values', () => {

@@ -2,13 +2,7 @@ import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
 
 import {ReviewListCard} from '../components';
-import {
-  getFakeErrorStatus,
-  getFakeLoadingStatus,
-  getFakeReviews,
-  getFakeSuccessStatus,
-  mockStore,
-} from '../../../../../utils/mocks';
+import {getFakeErrorStatus, getFakeLoadingStatus, getFakeReviews, getFakeSuccessStatus, mockStore} from '../../../../../utils/mocks';
 import {NameSpace} from '../../../../../utils/const';
 
 const fakeSuccessStatus = getFakeSuccessStatus();

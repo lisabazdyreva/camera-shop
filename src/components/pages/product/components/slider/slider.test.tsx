@@ -4,37 +4,31 @@ import {MemoryRouter} from 'react-router-dom';
 
 import {Slider} from '../components';
 
-import { NameSpace} from '../../../../../utils/const';
-import {
-  getFakeErrorStatus,
-  getFakeLoadingStatus,
-  getFakeSuccessStatus,
-  getFakeCameras,
-  mockStore,
-} from '../../../../../utils/mocks';
+import {NameSpace} from '../../../../../utils/const';
+import {getFakeErrorStatus, getFakeLoadingStatus, getFakeSuccessStatus, getFakeCameras, mockStore} from '../../../../../utils/mocks';
 
 
 const fakeSuccessStatus = getFakeSuccessStatus();
 const fakeErrorStatus = getFakeErrorStatus();
 const fakeLoadingStatus = getFakeLoadingStatus();
-
 const fakeCameras = getFakeCameras();
 
 const store = mockStore({
   [NameSpace.SimilarCameras]: {
     similarCameras: fakeCameras,
   },
-  [NameSpace.App]: {
+  [NameSpace.Order]: {
     basket: [],
   },
 });
+
 
 describe('slider component', () => {
   it('should render correctly when success status', () => {
     render (
       <Provider store={store}>
         <MemoryRouter>
-          <Slider similarCameras={fakeCameras} fetchStatus={fakeSuccessStatus} handleAddCameraModalShow={jest.fn}/>
+          <Slider similarCameras={fakeCameras} fetchStatus={fakeSuccessStatus} onCameraAddToBasket={jest.fn}/>
         </MemoryRouter>
       </Provider>
     );
@@ -47,7 +41,7 @@ describe('slider component', () => {
     render (
       <Provider store={store}>
         <MemoryRouter>
-          <Slider similarCameras={[]} fetchStatus={fakeErrorStatus} handleAddCameraModalShow={jest.fn}/>
+          <Slider similarCameras={[]} fetchStatus={fakeErrorStatus} onCameraAddToBasket={jest.fn}/>
         </MemoryRouter>
       </Provider>
     );
@@ -59,7 +53,7 @@ describe('slider component', () => {
     render (
       <Provider store={store}>
         <MemoryRouter>
-          <Slider similarCameras={[]} fetchStatus={fakeLoadingStatus} handleAddCameraModalShow={jest.fn}/>
+          <Slider similarCameras={[]} fetchStatus={fakeLoadingStatus} onCameraAddToBasket={jest.fn}/>
         </MemoryRouter>
       </Provider>
     );

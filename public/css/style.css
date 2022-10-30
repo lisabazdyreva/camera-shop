@@ -521,12 +521,6 @@ input::-webkit-inner-spin-button {
   appearance: none;
 }
 
-input[type="number"] {
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
-  appearance: textfield;
-}
-
 select,
 textarea,
 input:is([type="email"],
@@ -539,6 +533,12 @@ input:is([type="email"],
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+}
+
+input[type="number"] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 button,

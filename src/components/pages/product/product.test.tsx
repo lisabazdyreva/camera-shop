@@ -3,33 +3,11 @@ import {Provider} from 'react-redux';
 import {MemoryRouter} from 'react-router-dom';
 
 import Product from './product';
+import {getMockState, mockStore} from '../../../utils/mocks';
 
-import {DefaultValue, initialReview, LoadingStatus, NameSpace} from '../../../utils/const';
-import {getFakeCamera, getFakeCameras, getFakeReviews, mockStore} from '../../../utils/mocks';
 
-const mockCamera = getFakeCamera();
-const mockReviews = getFakeReviews();
-const mockSimilarCameras = getFakeCameras();
-
-const store = mockStore({
-  [NameSpace.Camera]: {
-    camera: mockCamera,
-    cameraFetchStatus: LoadingStatus.Success,
-  },
-  [NameSpace.Reviews]: {
-    reviews: mockReviews,
-    reviewsFetchStatus: LoadingStatus.Default,
-    reviewPostStatus: LoadingStatus.Default,
-  },
-  [NameSpace.SimilarCameras]: {
-    similarCameras: mockSimilarCameras,
-    similarCamerasFetchStatus: LoadingStatus.Default,
-  },
-  [NameSpace.App]: {
-    currentCatalogPage: DefaultValue.CatalogPageNumber,
-    reviewFormData: initialReview,
-  },
-});
+const mockState = getMockState();
+const store = mockStore(mockState);
 
 
 describe('product page component', () => {

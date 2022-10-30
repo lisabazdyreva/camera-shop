@@ -16,6 +16,7 @@ import {initialStateFilters} from '../store/filter-cameras/filter-cameras';
 import {initialStateReviews} from '../store/reviews/reviews';
 import {initialStatePromos} from '../store/promos/promos';
 import {initialStateSimilarCameras} from '../store/similar-cameras/similar-cameras';
+import {initialStateOrder} from '../store/order/order';
 
 export const getFakeCamera = (): Camera => ({
   id: faker.datatype.number(),
@@ -132,6 +133,7 @@ export const getMockState = () => ({
   [NameSpace.Reviews]: {...initialStateReviews},
   [NameSpace.Promos]: {...initialStatePromos},
   [NameSpace.SimilarCameras]: {...initialStateSimilarCameras},
+  [NameSpace.Order]: {...initialStateOrder},
 });
 
 export const fakeType = faker.datatype.string();

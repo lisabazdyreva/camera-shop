@@ -3,100 +3,68 @@ import './product.css';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 
-import {ProductItem, ReviewListCard, Slider} from './components/components';
-import {
-  ModalInfo,
-  ModalAction,
-  Breadcrumbs,
-  Loader,
-  ErrorInfo
-} from '../../common/common';
+import {ProductContent} from './components/components';
+import {ModalInfo, ModalAction} from '../../common/common';
 
-import {
-  ComponentName,
-  BreadcrumbsItem,
-  LoadingStatus,
-  ErrorData,
-  ScrollSetting,
-  TopCoordinate,
-  initialCamera
-} from '../../../utils/const';
+import {ScrollSetting, TopCoordinate, initialCamera, ModalActionName, ModalInfoName} from '../../../utils/const';
 import {useAppDispatch, useAppSelector} from '../../../hooks';
+import {Camera} from '../../../types/camera';
 
 import {fetchCameraAction, fetchSimilarCamerasAction} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
 import {fetchReviewsAction} from '../../../store/api-actions/api-actions-reviews/api-actions-reviews';
-
-import {getCamera, getCameraFetchStatus} from '../../../store/camera/selectors';
-import {getSimilarCameras, getSimilarCamerasFetchStatus} from '../../../store/similar-cameras/selectors';
-import {getReviewsFetchStatus} from '../../../store/reviews/selectors';
-import {Camera} from '../../../types/camera';
+import {getCamera} from '../../../store/camera/selectors';
 
 
 const Product = ():JSX.Element => {
   const dispatch = useAppDispatch();
 
-  const [isSuccessReviewModalOpen, setIsSuccessReviewModalOpen] = useState(false);
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isReviewEditModalOpen, setIsReviewEditModalOpen] = useState(false);
+  const [isPostReviewModalOpen, setIsPostReviewModalOpen] = useState(false);
 
-  const [isAddCameraModalOpen, setAddCameraModalOpen] = useState(false);
-  const [isSuccessAddCameraModalOpen, setSuccessAddCameraModalOpen] = useState(false);
+  const [isCameraAddModalOpen, setIsCameraAddModalOpen] = useState(false);
+  const [isCameraAddedSuccessModalOpen, setIsCameraAddedSuccessModalOpen] = useState(false);
 
   const [selectedCamera, setSelectedCamera] = useState(initialCamera);
 
-  const camera = useAppSelector(getCamera);
-  const similarCameras = useAppSelector(getSimilarCameras);
-
-  const cameraFetchStatus = useAppSelector(getCameraFetchStatus);
-  const similarCamerasFetchStatus = useAppSelector(getSimilarCamerasFetchStatus);
-  const reviewsFetchStatus = useAppSelector(getReviewsFetchStatus);
-
   const params = useParams();
   const {id} = params;
+  const camera = useAppSelector(getCamera);
 
-  const isCameraLoaded = cameraFetchStatus === LoadingStatus.Success;
-  const isCameraLoading = cameraFetchStatus === LoadingStatus.Loading;
-  const isCameraError = cameraFetchStatus === LoadingStatus.Error;
-
-  const handleButtonToTopClick = () => {
+  const handleToTopButtonClick = () => {
     window.scrollTo(ScrollSetting);
   };
 
-  const handleButtonAddReviewClick = () => {
-    setIsReviewModalOpen(true);
+  const handleEditReviewModalOpen = () => {
+    setIsReviewEditModalOpen(true);
   };
 
-  const handleModalClose = () => {
-    setIsReviewModalOpen(false);
+  const handleEditReviewModalClose = () => {
+    setIsReviewEditModalOpen(false);
   };
 
-  const handleSuccessModalClose = () => {
-    setIsSuccessReviewModalOpen(false);
+  const handlePostReviewModalOpen = () => {
+    setIsPostReviewModalOpen(true);
   };
 
-  const handleSuccessModalOpen = () => {
-    setIsSuccessReviewModalOpen(true);
+  const handlePostReviewModalClose = () => {
+    setIsPostReviewModalOpen(false);
   };
 
-  const handleAddModalHide = () => {
-    setAddCameraModalOpen(false);
+  const handleAddToBasketModalClose = () => {
+    setIsCameraAddModalOpen(false);
   };
 
-  const handleSuccessModalShow = () => {
-    setSuccessAddCameraModalOpen(true);
+  const handleCameraAddedSuccessModalOpen = () => {
+    setIsCameraAddedSuccessModalOpen(true);
   };
 
-  const handleSuccessModalHide = () => {
-    setSuccessAddCameraModalOpen(false);
+  const handleCameraAddedSuccessModalClose = () => {
+    setIsCameraAddedSuccessModalOpen(false);
   };
 
-  const handleSliderCameraSelect = (data: Camera) => { //TODO naming
+  const handleCameraAddToBasket = (data: Camera) => {
     setSelectedCamera(data);
-    setAddCameraModalOpen(true);
-  };
-
-  const handleProductCameraSelect = (data: Camera) => { //TODO naming
-    setSelectedCamera(data);
-    setAddCameraModalOpen(true);
+    setIsCameraAddModalOpen(true);
   };
 
   useEffect(() => {
@@ -117,54 +85,29 @@ const Product = ():JSX.Element => {
   return (
     <>
       <main>
-        <div className="page-content">
-          <Breadcrumbs breadcrumbItems={BreadcrumbsItem.Product} data={camera} usingComponent={ComponentName.Product}/>
-          <div className="page-content__section">
-            {isCameraError && <ErrorInfo text={ErrorData.Product} />}
-            {isCameraLoading && <Loader />}
-            {isCameraLoaded && camera && <ProductItem data={camera} handleAddCameraModalShow={handleProductCameraSelect}/>}
-          </div>
-          <div className="page-content__section">
-            <section className="product-similar">
-              <div className="container">
-                <h2 className="title title--h3">Похожие товары</h2>
-                <Slider fetchStatus={similarCamerasFetchStatus} similarCameras={similarCameras} handleAddCameraModalShow={handleSliderCameraSelect}/>
-              </div>
-            </section>
-          </div>
-          <div className="page-content__section">
-            <section className="review-block">
-              <div className="container">
-                <div className="page-content__headed">
-                  <h2 className="title title--h3">Отзывы</h2>
-                  <button className="btn" type="button" onClick={handleButtonAddReviewClick}>Оставить свой отзыв</button>
-                </div>
-                <ReviewListCard fetchStatus={reviewsFetchStatus}/>
-              </div>
-            </section>
-          </div>
-        </div>
-        {isReviewModalOpen && camera
+        <ProductContent camera={camera} onCameraAddToBasket={handleCameraAddToBasket} onButtonAddReviewClick={handleEditReviewModalOpen}/>
+
+        {isReviewEditModalOpen && camera
           &&
           <ModalAction
             data={camera}
-            usingComponent={ComponentName.Product}
-            onSuccessModalOpen={handleSuccessModalOpen}
-            onModalClose={handleModalClose}
+            onInfoModalOpen={handlePostReviewModalOpen}
+            onActionModalClose={handleEditReviewModalClose}
+            modalActionType={ModalActionName.AddReview}
           />}
-        {isSuccessReviewModalOpen
-          &&
-          <ModalInfo usingComponent={ComponentName.Product} onModalClose={handleSuccessModalClose}/> }
-        {isAddCameraModalOpen && camera &&
+        {isPostReviewModalOpen && <ModalInfo modalInfoType={ModalInfoName.ReviewPost} onInfoModalClose={handlePostReviewModalClose}/>}
+
+        {isCameraAddModalOpen && camera &&
           <ModalAction
             data={selectedCamera}
-            usingComponent={ComponentName.Catalog}
-            onModalClose={handleAddModalHide}
-            onSuccessModalOpen={handleSuccessModalShow}
-          />} {/*TODO naming и отправлять камеру в зависимости от жмяка*/}
-        {isSuccessAddCameraModalOpen && <ModalInfo usingComponent={ComponentName.Catalog} onModalClose={handleSuccessModalHide}/>}
+            onActionModalClose={handleAddToBasketModalClose}
+            onInfoModalOpen={handleCameraAddedSuccessModalOpen}
+            modalActionType={ModalActionName.AddToBasket}
+          />}
+        {isCameraAddedSuccessModalOpen && <ModalInfo modalInfoType={ModalInfoName.AddedToBasket} onInfoModalClose={handleCameraAddedSuccessModalClose}/>}
+
       </main>
-      <button className="up-btn" type='button' onClick={handleButtonToTopClick}>
+      <button className="up-btn" type='button' onClick={handleToTopButtonClick}>
         <svg width="12" height="18" aria-hidden="true">
           <use xlinkHref="#icon-arrow2"></use>
         </svg>

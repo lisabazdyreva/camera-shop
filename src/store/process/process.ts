@@ -1,12 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 import {AppProcess} from '../../types/state';
-import {Camera} from '../../types/camera';
 import {DefaultValue, FORM_ID_TYPE, initialReview, InputName, NameSpace} from '../../utils/const';
 
 
 export const initialStateApp: AppProcess = {
-  basket: [],
   currentCatalogPage: DefaultValue.CatalogPageNumber,
   camerasTotalCount: 0,
   reviewFormData: initialReview,
@@ -20,28 +18,6 @@ export const process = createSlice({
   name: NameSpace.App,
   initialState: initialStateApp,
   reducers: {
-    setBasketItem: (state, action) => {
-      const camera: Camera = action.payload;
-      state.basket = [...state.basket, camera];
-      state.basket = state.basket.sort((cameraA, cameraB) => cameraA.id - cameraB.id);
-    },
-    setBasketItems: (state, action) => {
-      const item = state.basket.find((camera) => camera.id === action.payload.id);
-      state.basket = state.basket.filter((camera) => camera.id !== action.payload.id);
-
-      const newItems = new Array(action.payload.amount).fill(item);
-      state.basket.push(...newItems);
-    },
-    removeBasketItem: (state, action) => {
-      const index = state.basket.findIndex((camera) => camera.id === action.payload);
-      state.basket = [...state.basket.slice(0, index), ...state.basket.slice(index + 1)];
-    },
-    removeBasketItems: (state, action) => {
-      state.basket = state.basket.filter((camera) => camera.id !== action.payload);
-    },
-    cleanBasket: (state) => {
-      state.basket = [];
-    },
     setCurrentPage: (state, action) => {
       state.currentCatalogPage = action.payload;
     },
@@ -99,11 +75,6 @@ export const process = createSlice({
 });
 
 export const {
-  setBasketItem,
-  setBasketItems,
-  removeBasketItem,
-  removeBasketItems,
-  cleanBasket,
   setCurrentPage,
   setCurrentSortingType,
   setCurrentSortingOrder,

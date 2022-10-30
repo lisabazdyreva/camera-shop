@@ -2,37 +2,43 @@ import './basket.css';
 
 import {useState, useEffect} from 'react';
 
-import {Breadcrumbs} from '../../common/common';
+import {Breadcrumbs, WarningInfo, ModalInfo, ModalAction} from '../../common/common';
 import {BasketSummary, BasketItem} from './components/components';
+import {ReturnButton} from '../../common/modal-info/components/components';
 
-import {ModalInfo, ModalAction} from '../../common/common';
-import {ComponentName, BreadcrumbsItem, TopCoordinate, initialCamera} from '../../../utils/const';
+import {ComponentName, BreadcrumbsItem, TopCoordinate, initialCamera, ModalActionName, ModalInfoName, WarningNotification} from '../../../utils/const';
 import {useAppSelector} from '../../../hooks';
-import {getBasket} from '../../../store/process/selectors';
+import {getBasket} from '../../../store/order/selectors';
 
-//TODO basket to cart
+
 const Basket = () :JSX.Element => {
   const [removingCamera, setRemovingCamera] = useState(initialCamera);
 
-  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-  const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
+  const [isCameraRemoveModalOpen, setIsCameraRemoveModalOpen] = useState(false);
+  const [isPostOrderModalOpen, setIsPostOrderModalOpen] = useState(false);
 
   const cameras = useAppSelector(getBasket);
 
-  const handleModalOpen = (id: number) => {
+  const emptyBasketWarning = <><WarningInfo text={WarningNotification.Basket}/><ReturnButton /></>;
+
+  const handleCameraRemoveModalOpen = (id: number) => {
     const camera = cameras.find((item) => item.id === id);
     if (camera) {
       setRemovingCamera(camera);
     }
-    setIsRemoveModalOpen(true);
+    setIsCameraRemoveModalOpen(true);
   };
 
-  const handleSuccessModalClose = () => {
-    setIsSuccessModalOpen(false);
+  const handleCameraRemoveModalClose = () => {
+    setIsCameraRemoveModalOpen(false);
   };
 
-  const handleModalClose = () => {
-    setIsRemoveModalOpen(false);
+  const handlePostOrderModalClose = () => {
+    setIsPostOrderModalOpen(false);
+  };
+
+  const handlePostOrderModalOpen = () => {
+    setIsPostOrderModalOpen(true);
   };
 
   useEffect(() => {
@@ -48,29 +54,25 @@ const Basket = () :JSX.Element => {
             <h1 className="title title--h2">Корзина</h1>
             <ul className="basket__list">
               {
-                cameras
-                  .map((camera, index) => {
-                    if (index !== 0) {
-                      const previousId = cameras[index - 1].id;
-                      if (camera.id === previousId) {
-                        return;
-                      }
+                cameras.map((camera, index) => {
+                  if (index !== 0) {
+                    const previousId = cameras[index - 1].id;
+                    if (camera.id === previousId) {
+                      return; // TODO eslint ругается
                     }
-                    return <BasketItem camera={camera} key={camera.id} onModalOpen={handleModalOpen} />;
-                  })
+                  }
+                  return <BasketItem camera={camera} key={camera.id} onCameraRemoveModalOpen={handleCameraRemoveModalOpen}/>;
+                })
               }
+              {!cameras.length && emptyBasketWarning}
             </ul>
-            <BasketSummary />
+            <BasketSummary onPostOrderModalOpen={handlePostOrderModalOpen}/>
           </div>
         </section>
       </div>
-      {isSuccessModalOpen && <ModalInfo usingComponent={ComponentName.Basket} onModalClose={handleSuccessModalClose}/> }
-      {isRemoveModalOpen &&
-        <ModalAction
-          data={removingCamera}
-          usingComponent={ComponentName.Basket}
-          onModalClose={handleModalClose}
-        />}
+      {isPostOrderModalOpen && <ModalInfo modalInfoType={ModalInfoName.OrderPost} onInfoModalClose={handlePostOrderModalClose}/> }
+      {isCameraRemoveModalOpen &&
+        <ModalAction data={removingCamera} onActionModalClose={handleCameraRemoveModalClose} modalActionType={ModalActionName.RemoveFromBasket}/>}
     </main>
   );
 };

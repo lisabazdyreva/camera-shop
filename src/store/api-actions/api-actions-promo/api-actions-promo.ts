@@ -13,7 +13,6 @@ export const fetchPromosAction = createAsyncThunk<Promos, undefined, {
   'promos/fetchPromos',
   async (_arg, {extra: api}) => {
     const {data} = await api.get<Promos | Promo>(`${UrlRoute.Base}${UrlRoute.Promo}`);
-
     return Array.isArray(data) ? data : [data];
   },
 );

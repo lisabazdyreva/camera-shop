@@ -1,4 +1,4 @@
-import {camera} from './camera';
+import {camera, initialStateCamera} from './camera';
 import {fetchCameraAction} from '../api-actions/api-actions-cameras/api-actions-cameras';
 
 import {LoadingStatus} from '../../utils/const';
@@ -7,7 +7,7 @@ import {AppCamera} from '../../types/state';
 
 
 const fakeCamera = getFakeCamera();
-const state: AppCamera = {camera: null, cameraFetchStatus: LoadingStatus.Default};
+const state: AppCamera = initialStateCamera;
 
 describe('reducer camera', () => {
   it('without values should return initial values', () => {

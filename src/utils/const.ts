@@ -7,7 +7,15 @@ export const MAX_RATING = 5;
 export const LOADER_NOTIFICATION = 'Идёт загрузка...';
 
 export const SEARCH_ERROR_NOTIFICATION = 'При загрузке произошла ошибка. Попробуйте позже';
+export const PROMO_ERROR_NOTIFICATION = 'Ошибка при отправке.';
+export const PROMO_WARNING_NOTIFICATION = 'Промокод неверный'; //TODO mb const
 export const DEBOUNCE_DELAY = 100;
+
+export const NOT_FOUND_ERROR_STATUS = 400;
+
+export const RU_FORMAT = 'ru';
+
+export const ACTIVE_CLASS = 'is-active';
 
 export const ServerAdaptValue = {
   Photocamera: 'Фотоаппарат',
@@ -40,11 +48,7 @@ export const AppRoute = {
   Basket: '/basket',
   Product: '/product',
   NotFound: '*',
-} as const;
-
-export const PaginationRoute = {
   Page: '/page_',
-  DefaultPage: '/page_1',
 } as const;
 
 export const Rating = {
@@ -57,6 +61,7 @@ export const Rating = {
 
 export const ModalMessage = {
   BasketSuccess: 'Спасибо за покупку',
+  BasketError: 'Произошла ошибка при отправке',
   BasketRemove: 'Удалить этот товар?',
   CatalogSuccess: 'Товар успешно добавлен в корзину',
   CatalogAdd: 'Добавить товар в корзину',
@@ -78,7 +83,7 @@ export const UrlRoute = {
   Cameras: '/cameras',
   Similar: '/similar',
   Reviews: '/reviews',
-  Orders: '/orders', // TODO заказ и порядок одно и то же слово
+  Orders: '/orders',
   Coupons: '/coupons',
   Sorting: '_sort',
   Order: '_order',
@@ -357,4 +362,55 @@ export const WarningNotification = {
   Search: 'По вашему запросу ничего не найдено.',
   Filter: 'По таким фильтрам ничего не найдено.',
   Page: 'Такой страницы не найдено.',
+  Basket: 'Добавьте товары в корзину.',
+} as const;
+
+
+export const BasketButtonText = {
+  Buy: 'Купить',
+  InBasket: 'В корзине',
+} as const;
+
+export const CamerasAmount = {
+  Max: 99,
+  Min: 1,
+} as const;
+
+export const CouponValidityStatus = {
+  Valid: 'valid',
+  Invalid: 'invalid',
+  Default: 'default',
+} as const;
+
+export const ModalActionName = {
+  AddReview: 'addReview',
+  AddToBasket: 'addToBasket',
+  RemoveFromBasket: 'removeFromBasket',
+} as const;
+
+export const ModalInfoName = {
+  AddedToBasket: 'addedToBasket',
+  ReviewPost: 'reviewPost',
+  OrderPost: 'orderPost',
+} as const;
+
+export const DateOption = {month: 'long', day: 'numeric'} as const;
+export const PriceOption = {style: 'currency', currency: 'RUB', minimumFractionDigits: 0} as const;
+
+export const EscCode = {
+  Escape: 'Escape',
+  Esc: 'Esc',
+} as const;
+
+export const ValidationMessage = {
+  EmptyField: 'Заполните поле',
+  NameMin: 'Минимальная длина имени:',
+  ReviewMin: 'Минимальная длина комментария:',
+  DefaultMin: 'Минимальная длина:',
+  Valid: '',
+} as const;
+
+export const ValidClass = {
+  Valid: 'is-valid',
+  Invalid: 'is-invalid',
 } as const;

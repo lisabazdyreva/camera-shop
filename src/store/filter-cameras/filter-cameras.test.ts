@@ -1,20 +1,19 @@
 import {AppFilterCameras} from '../../types/state';
-import {filterCameras, removeCurrentFilter, resetFilters, setCurrentFilter, setHighPrice, setLowPrice} from './filter-cameras';
+import {
+  filterCameras,
+  initialStateFilters,
+  removeCurrentFilter,
+  resetFilters,
+  setCurrentFilter,
+  setHighPrice,
+  setLowPrice
+} from './filter-cameras';
 import {UNKNOWN_TYPE} from '../../utils/mocks';
 import {QueryRoute} from '../../utils/const';
 import faker from 'faker';
 import {fetchHighPriceAction, fetchLowPriceAction, fetchPricesAction} from '../api-actions/api-actions-filters/api-actions-filters';
 
-const state: AppFilterCameras = {
-  currentFilterCategory: [],
-  currentFilterType: [],
-  currentFilterLevel: [],
-  allFilters: [],
-  minPrice: 0,
-  maxPrice: 0,
-  lowPrice: '',
-  highPrice: '',
-};
+const state: AppFilterCameras = initialStateFilters;
 
 describe('reducer filter cameras', () => {
   it('without values should return initial values', () => {

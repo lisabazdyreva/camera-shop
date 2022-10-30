@@ -5,7 +5,7 @@ interface IconReviewProps {
   status: LoadingStatusType;
 }
 
-const IconReview = ({status}: IconReviewProps):JSX.Element => {
+const IconThumb = ({status}: IconReviewProps):JSX.Element => {
   const isSuccess = status === LoadingStatus.Success;
   const isError = status === LoadingStatus.Error;
 
@@ -23,4 +23,4 @@ const IconReview = ({status}: IconReviewProps):JSX.Element => {
   );
 };
 
-export default IconReview;
+export default IconThumb;

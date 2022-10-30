@@ -1,49 +1,60 @@
 import './modal-info.css';
 
-import {CatalogButtons, IconReview, IconSuccess, ReturnButton} from './components/components';
-
-import {getTitle} from '../../../utils/utils';
-import {ComponentName, LoadingStatus, ModalContent} from '../../../utils/const';
-
-import {ComponentNameType} from '../../../types/types';
-
-import {getReviewPostStatus} from '../../../store/reviews/selectors';
-import {useBodyBlock} from '../../../hooks/use-body-block';
-import {useAppSelector} from '../../../hooks';
-import {useEscClose} from '../../../hooks/use-esc-close';
 import {SyntheticEvent} from 'react';
 
+import {CatalogButtons, IconThumb, IconSuccess, ReturnButton} from './components/components';
+import {LoadingStatus, ModalInfoName, ModalMessage} from '../../../utils/const';
+import {ModalInfoNameType} from '../../../types/types';
+
+import {useBodyBlock} from '../../../hooks/use-body-block';
+import {useEscClose} from '../../../hooks/use-esc-close';
+import {useAppSelector} from '../../../hooks';
+
+import {getReviewPostStatus} from '../../../store/reviews/selectors';
+import {getOrderPostStatus} from '../../../store/order/selectors';
+
+
 interface ModalInfoProps {
-  usingComponent: ComponentNameType;
-  onModalClose: () => void;
+  onInfoModalClose: () => void;
+  modalInfoType: ModalInfoNameType,
 }
 
-const ModalInfo = ({usingComponent, onModalClose}: ModalInfoProps):JSX.Element => {
+
+const ModalInfo = ({onInfoModalClose, modalInfoType}: ModalInfoProps):JSX.Element => {
   const reviewPostStatus = useAppSelector(getReviewPostStatus);
+  const postOrderPostStatus = useAppSelector(getOrderPostStatus);
 
-  const title = usingComponent === ComponentName.Product
-    ? getTitle(usingComponent, ModalContent.Info, reviewPostStatus === LoadingStatus.Error)
-    : getTitle(usingComponent, ModalContent.Info);
-
-  const getSVG = () => {
-    if (usingComponent === ComponentName.Catalog) {
-      return <IconSuccess/>;
+  const setTitle = () => {
+    switch (modalInfoType) {
+      case ModalInfoName.ReviewPost: {
+        return reviewPostStatus === LoadingStatus.Error ? ModalMessage.ProductError : ModalMessage.ProductSuccess;
+      }
+      case ModalInfoName.OrderPost: {
+        return postOrderPostStatus === LoadingStatus.Error ? ModalMessage.BasketError : ModalMessage.BasketSuccess;
+      }
+      case ModalInfoName.AddedToBasket:
+        return ModalMessage.CatalogSuccess;
     }
-    return <IconReview status={reviewPostStatus}/>;
+  };
+
+  const title = setTitle();
+  const getSVG = () => {
+    switch (modalInfoType) {
+      case ModalInfoName.AddedToBasket:
+        return <IconSuccess />;
+      case ModalInfoName.OrderPost:
+        return <IconThumb status={postOrderPostStatus}/>;
+      case ModalInfoName.ReviewPost:
+        return <IconThumb status={reviewPostStatus}/>;
+    }
   };
 
   const getButtons = () => {
-    if (usingComponent === ComponentName.Basket) {
-      return <ReturnButton />;
+    if (modalInfoType === ModalInfoName.AddedToBasket) {
+      return <CatalogButtons handleCloseSuccessModal={onInfoModalClose}/>;
     }
 
-    if (usingComponent === ComponentName.Catalog) {
-      return <CatalogButtons handleCloseSuccessModal={onModalClose}/>;
-    }
-
-    if (usingComponent === ComponentName.Product) {
-      return <ReturnButton handleCloseSuccessModal={onModalClose}/>;
-    }
+    return <ReturnButton handleCloseSuccessModal={onInfoModalClose} modalInfoType={modalInfoType}/>;
   };
 
   const modalSvg = getSVG();
@@ -53,11 +64,11 @@ const ModalInfo = ({usingComponent, onModalClose}: ModalInfoProps):JSX.Element =
     evt.stopPropagation();
   };
 
-  useEscClose(onModalClose);
+  useEscClose(onInfoModalClose);
   useBodyBlock();
 
   return (
-    <div className="modal is-active modal--narrow" onClick={onModalClose} data-testid='modal-info'>
+    <div className="modal is-active modal--narrow" onClick={onInfoModalClose} data-testid='modal-info'>
       <div className="modal__wrapper">
         <div className="modal__overlay"></div>
         <div className="modal__content" onClick={handleOutsideModalClick}>
@@ -66,7 +77,7 @@ const ModalInfo = ({usingComponent, onModalClose}: ModalInfoProps):JSX.Element =
           <div className="modal__buttons">
             {modalButtons}
           </div>
-          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={onModalClose}>
+          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={onInfoModalClose}>
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg>

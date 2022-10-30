@@ -19,7 +19,10 @@ const successStore = mockStore({
     camerasTotalCount: mockCameras.length,
   },
   [NameSpace.FilterCameras]: {
-    allFilters: []
+    allFilters: [],
+  },
+  [NameSpace.Order]: {
+    basket: [],
   },
 });
 

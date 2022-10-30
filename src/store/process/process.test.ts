@@ -1,25 +1,16 @@
 import {
-  process, cleanForm, setBasketItem, setCamerasTotalCount, setCurrentPage,
-  setReviewFormData, setCurrentSortingType, setCurrentSortingOrder, setCurrentPath
+  process, cleanForm, setCamerasTotalCount, setCurrentPage,
+  setReviewFormData, setCurrentSortingType, setCurrentSortingOrder, setCurrentPath, initialStateApp
 } from './process';
 
-import {DefaultValue, FORM_ID_TYPE, initialReview, InputName} from '../../utils/const';
-import {getFakeCamera, getFakePostReview, UNKNOWN_TYPE, fakeType} from '../../utils/mocks';
+
+import {FORM_ID_TYPE, InputName} from '../../utils/const';
+import {getFakePostReview, UNKNOWN_TYPE, fakeType} from '../../utils/mocks';
 import {AppProcess} from '../../types/state';
 
 
-const state: AppProcess = {
-  basket: [],
-  currentCatalogPage: DefaultValue.CatalogPageNumber,
-  camerasTotalCount: 0,
-  reviewFormData: initialReview,
-  currentSortingType: null,
-  currentSortingOrder: null,
-  allSorting: [],
-  currentPath: '',
-};
-const fakeCameraOne = getFakeCamera();
-const fakeCameraTwo = getFakeCamera();
+const state: AppProcess = initialStateApp;
+
 const fakePostReview = getFakePostReview();
 
 
@@ -27,19 +18,6 @@ describe('reducer process', () => {
   it('without values should return initial values', () => {
     expect(process.reducer(void 0, UNKNOWN_TYPE))
       .toEqual(state);
-  });
-
-  it('should add camera to basket', () => {
-    const basketWithOneCamera = [...state.basket, fakeCameraOne];
-    const basketWithTwoCameras = [...basketWithOneCamera, fakeCameraTwo];
-
-    const stateWithCamera = {...state, basket: basketWithOneCamera};
-
-    expect(process.reducer(state, setBasketItem(fakeCameraOne)))
-      .toEqual(stateWithCamera);
-
-    expect(process.reducer(stateWithCamera, setBasketItem(fakeCameraTwo)))
-      .toEqual({...stateWithCamera, basket: basketWithTwoCameras});
   });
 
   it('should set current catalog page', () => {

@@ -3,7 +3,7 @@ import './description-tab.css';
 import {DescriptionLength} from '../../../../../utils/const';
 
 interface DescriptionTabProps {
-  description: string,
+  description: string;
 }
 
 const DescriptionTab = ({description}: DescriptionTabProps):JSX.Element => {
@@ -26,18 +26,11 @@ const DescriptionTab = ({description}: DescriptionTabProps):JSX.Element => {
       break;
   }
 
+  const isLong = sentences.length !== DescriptionLength.Medium && sentences.length !== DescriptionLength.Short;
+
   return (
     <div className="product__tabs-text" data-testid='product-tabs'>
-      {
-        (sentences.length === DescriptionLength.Medium || sentences.length === DescriptionLength.Short)
-          ? paragraph
-          : (
-            <>
-              {firstParagraph}
-              {secondParagraph}
-            </>
-          )
-      }
+      { isLong ? (<>{firstParagraph}{secondParagraph}</>) : paragraph}
     </div>
   );
 };

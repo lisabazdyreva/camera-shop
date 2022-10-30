@@ -1,9 +1,9 @@
 import './pagination.css';
 
-import {Link} from 'react-router-dom';
 import {SyntheticEvent} from 'react';
+import {Link} from 'react-router-dom';
 
-import {AppRoute, PaginationRoute} from '../../../../../utils/const';
+import {AppRoute} from '../../../../../utils/const';
 import {useAppSelector} from '../../../../../hooks';
 import {getCurrentPath} from '../../../../../store/process/selectors';
 
@@ -24,7 +24,7 @@ const Pagination = ({currentPageNumber, setCurrentPageNumber, pagesAmount}: Pagi
     setCurrentPageNumber(currentPageNumber - 1);
   };
 
-  const handlePageClick = (evt: SyntheticEvent) => {
+  const handlePageLinkClick = (evt: SyntheticEvent) => {
     const target = evt.target as HTMLElement;
     const pageNumber = Number(target.innerHTML);
 
@@ -36,8 +36,8 @@ const Pagination = ({currentPageNumber, setCurrentPageNumber, pagesAmount}: Pagi
   };
 
   const currentPathUrl = `/?${currentPath}`;
-  const previousRoute = `${AppRoute.Catalog}${PaginationRoute.Page}${currentPageNumber - 1}${currentPath && currentPathUrl}`;
-  const nextRoute = `${AppRoute.Catalog}${PaginationRoute.Page}${currentPageNumber + 1}${currentPath && currentPathUrl}`;
+  const previousRoute = `${AppRoute.Catalog}${AppRoute.Page}${currentPageNumber - 1}${currentPath && currentPathUrl}`;
+  const nextRoute = `${AppRoute.Catalog}${AppRoute.Page}${currentPageNumber + 1}${currentPath && currentPathUrl}`;
 
   return (
     <div className="pagination">
@@ -45,11 +45,7 @@ const Pagination = ({currentPageNumber, setCurrentPageNumber, pagesAmount}: Pagi
         {
           isNotFirstPage &&
           <li className="pagination__item">
-            <Link
-              onClick={handlePreviousLinkClick}
-              className="pagination__link pagination__link--text"
-              to={previousRoute}
-            >
+            <Link onClick={handlePreviousLinkClick} className="pagination__link pagination__link--text" to={previousRoute}>
               Назад
             </Link>
           </li>
@@ -57,15 +53,11 @@ const Pagination = ({currentPageNumber, setCurrentPageNumber, pagesAmount}: Pagi
         {
           pages.map((pageNum: number) => {
 
-            const route = `${AppRoute.Catalog}${PaginationRoute.Page}${pageNum}${currentPath && currentPathUrl}`;
-            const classes = `pagination__link ${ pageNum === currentPageNumber && 'pagination__link--active'}`;
+            const route = `${AppRoute.Catalog}${AppRoute.Page}${pageNum}${currentPath && currentPathUrl}`;
+            const classes = `pagination__link ${pageNum === currentPageNumber && 'pagination__link--active'}`;
             return (
               <li className="pagination__item" key={pageNum}>
-                <Link
-                  onClick={handlePageClick}
-                  className={classes}
-                  to={route}
-                >
+                <Link onClick={handlePageLinkClick} className={classes} to={route}>
                   {pageNum}
                 </Link>
               </li>
@@ -76,11 +68,7 @@ const Pagination = ({currentPageNumber, setCurrentPageNumber, pagesAmount}: Pagi
           isNotLastPage
            &&
           <li className="pagination__item">
-            <Link
-              onClick={handleNextLinkClick}
-              className="pagination__link pagination__link--text"
-              to={nextRoute}
-            >
+            <Link onClick={handleNextLinkClick} className="pagination__link pagination__link--text" to={nextRoute}>
               Далее
             </Link>
           </li>

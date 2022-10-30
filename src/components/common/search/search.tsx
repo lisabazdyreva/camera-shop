@@ -3,14 +3,15 @@ import './search.css';
 import React, {ChangeEvent, SyntheticEvent, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
+import {Loader} from '../common';
+import {AppRoute, LoadingStatus, SEARCH_ERROR_NOTIFICATION, WarningNotification, TabType} from '../../../utils/const';
+
 import {useAppDispatch, useAppSelector} from '../../../hooks';
 import {useFocus} from '../../../hooks/use-focus';
 import {useDebounce} from '../../../hooks/use-debounce';
 
 import {fetchCameraAction, fetchSearchCamerasAction} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
 import {getSearchedCameras, getSearchedCamerasFetchStatus} from '../../../store/cameras/selectors';
-import {AppRoute, LoadingStatus, SEARCH_ERROR_NOTIFICATION, WarningNotification, TabType} from '../../../utils/const';
-import {Loader} from '../common';
 
 
 const Search = ():JSX.Element => {
@@ -55,7 +56,7 @@ const Search = ():JSX.Element => {
     navigateToProduct(evt);
   };
 
-  const handleButtonResetClick = () => {
+  const handleResetButtonClick = () => {
     setSearchValue('');
     setIsListOpened(false);
     setFocus();
@@ -68,20 +69,20 @@ const Search = ():JSX.Element => {
   }, [debouncedValue, dispatch]);
 
   useEffect(() => {
-    const handleClick = (evt: MouseEvent) => {
+    const outsideClickHandler = (evt: MouseEvent) => {
       const target = evt.target as HTMLElement;
       if (target.dataset.testid !== 'search-input' || target.className !== 'form-search__select-list') {
         setIsListOpened(false);
       }
-
     };
+
     if (isListOpened) {
-      document.addEventListener('click', handleClick);
+      document.addEventListener('click', outsideClickHandler);
     } else {
-      document.removeEventListener('click', handleClick);
+      document.removeEventListener('click', outsideClickHandler);
     }
 
-    return () => document.removeEventListener('click', handleClick);
+    return () => document.removeEventListener('click', outsideClickHandler);
   }, [isListOpened]);
 
   return (
@@ -123,7 +124,7 @@ const Search = ():JSX.Element => {
           }
         </ul>
       </form>
-      <button className="form-search__reset" type="reset" onClick={handleButtonResetClick}>
+      <button className="form-search__reset" type="reset" onClick={handleResetButtonClick}>
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>
         </svg>

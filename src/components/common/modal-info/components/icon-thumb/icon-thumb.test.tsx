@@ -1,5 +1,5 @@
 import {render, screen} from '@testing-library/react';
-import {IconReview} from '../components';
+import {IconThumb} from '../components';
 import {getFakeErrorStatus, getFakeSuccessStatus} from '../../../../../utils/mocks';
 
 const successStatus = getFakeSuccessStatus();
@@ -8,7 +8,7 @@ const errorStatus = getFakeErrorStatus();
 describe('icon review component', () => {
   it('should render correctly when success', () => {
     render (
-      <IconReview status={successStatus} />
+      <IconThumb status={successStatus} />
     );
 
     const iconSVGSuccess = screen.getByTestId('review-icon-svg-success');
@@ -20,7 +20,7 @@ describe('icon review component', () => {
 
   it('should render correctly when error', () => {
     render (
-      <IconReview status={errorStatus} />
+      <IconThumb status={errorStatus} />
     );
 
     const iconSVGError = screen.getByTestId('review-icon-svg-error');

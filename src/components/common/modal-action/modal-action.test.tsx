@@ -2,7 +2,7 @@ import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
 
 import {ModalAction} from '../common';
-import {ComponentName, initialReview, NameSpace} from '../../../utils/const';
+import {initialReview, ModalActionName, NameSpace} from '../../../utils/const';
 import {getFakeCamera, mockStore} from '../../../utils/mocks';
 
 const store = mockStore({
@@ -14,14 +14,14 @@ const fakeCamera = getFakeCamera();
 
 
 describe('modal action component', () => {
-  it('should render correctly modal on catalog page', () => {
+  it('should render correctly modal add to basket', () => {
     window.scrollTo = jest.fn();
-
     render (
       <Provider store={store}>
         <ModalAction
-          usingComponent={ComponentName.Catalog}
-          onModalClose={jest.fn()}
+          modalActionType={ModalActionName.AddToBasket}
+          onActionModalClose={jest.fn}
+          onInfoModalOpen={jest.fn}
           data={fakeCamera}
         />
       </Provider>
@@ -31,14 +31,15 @@ describe('modal action component', () => {
     expect(screen.getByText(/Артикул:/i)).toBeInTheDocument();
   });
 
-  it('should render modal correctly on product page', () => {
+  it('should render correctly modal add review', () => {
     window.scrollTo = jest.fn();
 
     render (
       <Provider store={store}>
         <ModalAction
-          usingComponent={ComponentName.Product}
-          onModalClose={jest.fn()}
+          modalActionType={ModalActionName.AddReview}
+          onActionModalClose={jest.fn}
+          onInfoModalOpen={jest.fn}
           data={fakeCamera}
         />
       </Provider>
@@ -48,18 +49,17 @@ describe('modal action component', () => {
     expect(screen.getByText(/Оставить отзыв/i)).toBeInTheDocument();
   });
 
-  it('should render modal correctly on basket page', () => {
+  it('should render correctly modal remove from basket', () => {
     window.scrollTo = jest.fn();
     render (
       <Provider store={store}>
         <ModalAction
-          usingComponent={ComponentName.Basket}
-          onModalClose={jest.fn()}
+          modalActionType={ModalActionName.RemoveFromBasket}
+          onActionModalClose={jest.fn}
+          onInfoModalOpen={jest.fn}
         />
       </Provider>
     );
-
-    expect(screen.getByText(/Продолжить покупки/i)).toBeInTheDocument();
     expect(screen.getByText(/Удалить этот товар?/i)).toBeInTheDocument();
   });
 

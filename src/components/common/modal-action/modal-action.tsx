@@ -1,33 +1,33 @@
+import {SyntheticEvent} from 'react';
+
 import {ReviewForm} from '../../pages/product/components/components';
 import {BasketItemShort} from '../../pages/basket/components/components';
 import {BasketAddButton, BasketRemoveButtons} from './components/components';
 
-import {getTitle} from '../../../utils/utils';
-import {ComponentName, ModalContent} from '../../../utils/const';
+import {ModalActionName, ModalMessage} from '../../../utils/const';
 import {useBodyBlock} from '../../../hooks/use-body-block';
 import {useAppDispatch} from '../../../hooks';
 
-import {ComponentNameType} from '../../../types/types';
+import {ModalActionNameType} from '../../../types/types';
 import {Camera} from '../../../types/camera';
 
 import {cleanForm} from '../../../store/process/process';
 import {useEscClose} from '../../../hooks/use-esc-close';
-import {SyntheticEvent} from 'react';
 
 
 interface ModalActionProps {
-  usingComponent: ComponentNameType;
-  data? : Camera;
-  onModalClose: () => void;
-  onSuccessModalOpen?: () => void;
+  data?: Camera;
+  onActionModalClose: () => void;
+  onInfoModalOpen?: () => void;
+  modalActionType: ModalActionNameType,
 }
 
-const ModalAction = ({usingComponent, data, onModalClose, onSuccessModalOpen}: ModalActionProps):JSX.Element => {
+const ModalAction = ({data, onActionModalClose, onInfoModalOpen, modalActionType}: ModalActionProps):JSX.Element => {
   const dispatch = useAppDispatch();
-
+  //TODO посмотреть на тему ретернов упрощение
   const getDetails = () => {
-    if (usingComponent === ComponentName.Product && data && onSuccessModalOpen) {
-      return <ReviewForm id={data.id} onModalClose={onModalClose} onSuccessModalOpen={onSuccessModalOpen}/>;
+    if (modalActionType === ModalActionName.AddReview && data && onInfoModalOpen) {
+      return <ReviewForm id={data.id} onModalClose={onActionModalClose} onSuccessModalOpen={onInfoModalOpen}/>;
     }
 
     if (data) {
@@ -36,31 +36,43 @@ const ModalAction = ({usingComponent, data, onModalClose, onSuccessModalOpen}: M
   };
 
   const getButtons = () => {
-    if (usingComponent === ComponentName.Basket && data) {
-      return <BasketRemoveButtons id={data.id} handleCloseModal={onModalClose}/>;
+    if (modalActionType === ModalActionName.RemoveFromBasket && data) {
+      return <BasketRemoveButtons id={data.id} handleCloseModal={onActionModalClose}/>;
     }
 
-    if (usingComponent === ComponentName.Catalog) {
-      return <BasketAddButton data={data} handleCloseModal={onModalClose} handleOpenSuccessModal={onSuccessModalOpen}/>;
+    if (modalActionType === ModalActionName.AddToBasket) {
+      return <BasketAddButton data={data} handleCloseModal={onActionModalClose} handleOpenSuccessModal={onInfoModalOpen}/>;
     }
   };
 
-  const title = getTitle(usingComponent, ModalContent.Action);
+  const getTitle = () => {
+    switch (modalActionType) {
+      case ModalActionName.RemoveFromBasket:
+        return ModalMessage.BasketRemove;
+      case ModalActionName.AddToBasket:
+        return ModalMessage.CatalogAdd;
+      case ModalActionName.AddReview:
+        return ModalMessage.ProductReviewAdd;
+    }
+  };
+
+  const title = getTitle();
+
   const modalDetails = getDetails();
   const modalButtons = getButtons();
 
   const handleModalClose = () => {
-    if (usingComponent === ComponentName.Product) {
+    if (modalActionType === ModalActionName.AddReview) {
       dispatch(cleanForm());
     }
-    onModalClose();
+    onActionModalClose();
   };
 
   const handleOutsideModalClick = (evt: SyntheticEvent) => {
     evt.stopPropagation();
   };
 
-  useEscClose(onModalClose);
+  useEscClose(onActionModalClose);
   useBodyBlock();
 
   return (

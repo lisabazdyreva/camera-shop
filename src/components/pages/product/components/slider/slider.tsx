@@ -4,47 +4,40 @@ import {ErrorInfo, Loader, ProductCard} from '../../../../common/common';
 
 import {Camera, Cameras} from '../../../../../types/camera';
 import {LoadingStatusType} from '../../../../../types/types';
-import {ErrorData, LoadingStatus, Step} from '../../../../../utils/const';
-// import {useAppDispatch} from '../../../../../hooks';
+import {ACTIVE_CLASS, ErrorData, LoadingStatus} from '../../../../../utils/const';
 
 import useSlider from '../../../../../hooks/use-slider';
-// import {setBasket} from '../../../../../store/process/process';
 
 
 interface SliderProps {
   similarCameras: Cameras;
   fetchStatus: LoadingStatusType;
-  handleAddCameraModalShow: (data: Camera) => void;
+  onCameraAddToBasket: (data: Camera) => void;
 }
 
-const Slider = ({similarCameras, fetchStatus, handleAddCameraModalShow}: SliderProps):JSX.Element => {
-  // const dispatch = useAppDispatch();
-  const {items, handlePreviousClick, handleNextClick, disabling} = useSlider(similarCameras, Step.Slider);
+const Slider = ({similarCameras, fetchStatus, onCameraAddToBasket}: SliderProps):JSX.Element => {
+  const {items, handlePreviousClick, handleNextClick, disabling} = useSlider(similarCameras);
 
-  const handleButtonAddToBasketClick = (data: Camera) => {
-    // dispatch(setBasket(data));
-    handleAddCameraModalShow(data);
+  const handleAddToBasketButtonClick = (data: Camera) => {
+    onCameraAddToBasket(data);
   };
 
   const isSimilarCamerasLoaded = fetchStatus === LoadingStatus.Success;
-  const isSimilarCamerasLoading = fetchStatus === LoadingStatus.Loading;
-  const isSimilarCamerasError = fetchStatus === LoadingStatus.Error;
 
   return (
     <div className="product-similar__slider">
-      {isSimilarCamerasLoading && <Loader />}
-      {isSimilarCamerasError && <ErrorInfo text={ErrorData.Catalog} />}
+      {fetchStatus === LoadingStatus.Loading && <Loader />}
+      {fetchStatus === LoadingStatus.Error && <ErrorInfo text={ErrorData.Catalog} />}
       {isSimilarCamerasLoaded &&
         <>
           <div className="product-similar__slider-list">
             {
               items.map((similarCamera) => (
                 <ProductCard
-                  handleAddModal={handleButtonAddToBasketClick}
+                  handleAddModal={handleAddToBasketButtonClick}
                   data={similarCamera}
                   key={similarCamera.id}
-                  additionalClass={'is-active'}
-                  withoutBasketImplementation
+                  additionalClass={ACTIVE_CLASS}
                 />
               ))
             }

@@ -6,29 +6,27 @@ import {useParams, useSearchParams} from 'react-router-dom';
 import {Breadcrumbs, ModalInfo, ModalAction} from '../../common/common';
 import {Banner, SideFilter, CatalogContent} from './components/components';
 
-import {initialCamera, Step, ComponentName, BreadcrumbsItem} from '../../../utils/const';
+import {initialCamera, Step, ComponentName, BreadcrumbsItem, ModalActionName, ModalInfoName} from '../../../utils/const';
 import {Camera} from '../../../types/camera';
 
 import {useAppDispatch, useAppSelector} from '../../../hooks';
 import useQueryParams from '../../../hooks/use-query-params';
 
-
-import {fetchCamerasAction} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
-import {fetchPromosAction} from '../../../store/api-actions/api-actions-promo/api-actions-promo';
-
 import {setCurrentPage, setCurrentPath} from '../../../store/process/process';
 import {getAllSorting, getCurrentPage} from '../../../store/process/selectors';
 import {getAllFilters} from '../../../store/filter-cameras/selectors';
+import {fetchCamerasAction} from '../../../store/api-actions/api-actions-cameras/api-actions-cameras';
+import {fetchPromosAction} from '../../../store/api-actions/api-actions-promo/api-actions-promo';
 
 
 const Catalog = ():JSX.Element => {
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
 
-  const [selectedCameraData, setSelectedCameraData] = useState(initialCamera);
+  const [selectedCamera, setSelectedCamera] = useState(initialCamera);
 
-  const [isModalAddOpen, setIsModalAddOpen] = useState(false);
-  const [isModalSuccessOpen, setIsModalSuccessOpen] = useState(false);
+  const [isCameraAddModalOpen, setIsCameraAddModalOpen] = useState(false);
+  const [isCameraAddedSuccessModalOpen, setIsCameraAddedSuccessModalOpen] = useState(false);
 
   const currentPageNumber = useAppSelector(getCurrentPage);
   const allFilters = useAppSelector(getAllFilters);
@@ -42,21 +40,21 @@ const Catalog = ():JSX.Element => {
     dispatch(setCurrentPage(page));
   };
 
-  const handleModalClose = () => {
-    setIsModalAddOpen(false);
+  const handleAddToBasketModalClose = () => {
+    setIsCameraAddModalOpen(false);
   };
 
-  const handleSuccessModalClose = () => {
-    setIsModalSuccessOpen(false);
+  const handleAddToBasketModalOpen = (data: Camera) => {
+    setIsCameraAddModalOpen(true);
+    setSelectedCamera(data);
   };
 
-  const handleSuccessModalOpen = () => {
-    setIsModalSuccessOpen(true);
+  const handleCameraAddedSuccessModalClose = () => {
+    setIsCameraAddedSuccessModalOpen(false);
   };
 
-  const handleModalShow = (data: Camera) => {
-    setIsModalAddOpen(true);
-    setSelectedCameraData(data);
+  const handleCameraAddedSuccessModalOpen = () => {
+    setIsCameraAddedSuccessModalOpen(true);
   };
 
   useQueryParams();
@@ -84,7 +82,7 @@ const Catalog = ():JSX.Element => {
             <div className="page-content__columns">
               <SideFilter />
               <CatalogContent
-                handleAddModal={handleModalShow}
+                handleAddModal={handleAddToBasketModalOpen}
                 currentPageNumber={currentPageNumber}
                 setCurrentPageNumber={handlePageNumberClick}
               />
@@ -92,15 +90,15 @@ const Catalog = ():JSX.Element => {
           </div>
         </section>
       </div>
-      {isModalAddOpen
+      {isCameraAddModalOpen
         &&
         <ModalAction
-          data={selectedCameraData}
-          usingComponent={ComponentName.Catalog}
-          onModalClose={handleModalClose}
-          onSuccessModalOpen={handleSuccessModalOpen}
+          data={selectedCamera}
+          onActionModalClose={handleAddToBasketModalClose}
+          onInfoModalOpen={handleCameraAddedSuccessModalOpen}
+          modalActionType={ModalActionName.AddToBasket}
         />}
-      {isModalSuccessOpen && <ModalInfo usingComponent={ComponentName.Catalog} onModalClose={handleSuccessModalClose}/>}
+      {isCameraAddedSuccessModalOpen && <ModalInfo modalInfoType={ModalInfoName.AddedToBasket} onInfoModalClose={handleCameraAddedSuccessModalClose}/>}
     </main>
   );
 };

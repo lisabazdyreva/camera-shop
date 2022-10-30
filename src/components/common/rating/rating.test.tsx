@@ -4,6 +4,7 @@ import {RatingClass} from '../../../utils/const';
 import {getFakeID} from '../../../utils/mocks';
 
 const fakeId = getFakeID();
+
 describe('rating component', () => {
   it('should render correctly on review page', () => {
     render (

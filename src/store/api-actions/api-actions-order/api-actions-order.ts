@@ -1,11 +1,12 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {AppDispatch, State} from '../../../types/state';
 import {AxiosInstance, AxiosError} from 'axios';
-import {UrlRoute} from '../../../utils/const';
-//eslint-disable-next-line
+
+import {NOT_FOUND_ERROR_STATUS, UrlRoute} from '../../../utils/const';
+
+import {AppDispatch, State} from '../../../types/state';
 import {Coupon, Order} from '../../../types/order';
 
-export const postOrderAction = createAsyncThunk<undefined, Order, {
+export const postOrderAction = createAsyncThunk<void, Order, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -13,9 +14,7 @@ export const postOrderAction = createAsyncThunk<undefined, Order, {
   'order/postOrder',
   async (order, {extra: api}) => {
     await api.post(`${UrlRoute.Base}${UrlRoute.Orders}`, order);
-    //eslint-disable-next-line
-    // console.log(response);
-    return undefined;
+    //TODO потестировать на ошибки и этот undefined?
   },
 );
 
@@ -26,21 +25,18 @@ export const postCouponAction = createAsyncThunk<number, Coupon, {
   extra: AxiosInstance
 }>(
   'order/postCoupon',
-  async (_arg, {extra: api}) => {
+  async (coupon, {extra: api}) => {
     try {
-      const response = await api.post(`${UrlRoute.Base}${UrlRoute.Coupons}`, _arg);
+      const response = await api.post(`${UrlRoute.Base}${UrlRoute.Coupons}`, coupon);
       return response.data;
     } catch (err) {
       const status = (err as AxiosError)?.response?.status;
 
-      if (status === 400) {
+      if (status === NOT_FOUND_ERROR_STATUS) {
         return null;
       }
       throw new Error();
     }
-    //404 - ошибка
-    //400 - такого нет
-    //'camera-555' | 'camera-444' | 'camera-333'
   },
 );
 

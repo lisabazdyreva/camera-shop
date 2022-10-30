@@ -9,7 +9,7 @@ import {
   InputErrorMessage,
   InputName,
   InputPlaceholder,
-  InputTitle,
+  InputTitle, ValidClass,
   ValidStatus
 } from '../../../../../utils/const';
 import {checkValidity, setValidationMessage} from '../../../../../utils/utils';
@@ -41,7 +41,7 @@ interface ReviewFormProps {
   onSuccessModalOpen: () => void;
   id: number;
 }
-
+//TODO мб по валидности взять ищ промокода
 const ReviewForm = ({onModalClose, onSuccessModalOpen, id}: ReviewFormProps):JSX.Element => {
   const dispatch = useAppDispatch();
   const formData = useAppSelector(getReviewFormData);
@@ -90,8 +90,8 @@ const ReviewForm = ({onModalClose, onSuccessModalOpen, id}: ReviewFormProps):JSX
     handleInputInvalid(evt);
   };
 
-  const getBlockClasses = (value: boolean | null) => `custom-input form-review__item
-  ${value === false && 'is-invalid'} ${value && 'is-valid'}`;
+  const getBlockClasses = (value: boolean | null) =>
+    `custom-input form-review__item ${value === false && ValidClass.Invalid} ${value && ValidClass.Valid}`;
 
   const icon = (
     <svg width="9" height="9" aria-hidden="true">

@@ -3,9 +3,7 @@ import {ReviewPost} from '../../types/review';
 
 import {NameSpace} from '../../utils/const';
 import {SortingOrderType, SortingTypesType} from '../../types/types';
-import {Cameras} from '../../types/camera';
 
-export const getBasket = (state: State): Cameras => state[NameSpace.App].basket;
 
 export const getCurrentPage = (state: State): number => state[NameSpace.App].currentCatalogPage;
 export const getCamerasTotalCount = (state: State): number => state[NameSpace.App].camerasTotalCount;

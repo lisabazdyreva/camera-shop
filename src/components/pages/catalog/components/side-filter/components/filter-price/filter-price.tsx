@@ -1,14 +1,14 @@
 import React, {ChangeEvent, SyntheticEvent, useCallback, useEffect, useState} from 'react';
 import {useSearchParams} from 'react-router-dom';
 
-import {fetchHighPriceAction, fetchLowPriceAction} from '../../../../../../../store/api-actions/api-actions-filters/api-actions-filters';
+import {QueryRoute} from '../../../../../../../utils/const';
 import {useAppDispatch, useAppSelector} from '../../../../../../../hooks';
+
+import {fetchHighPriceAction, fetchLowPriceAction} from '../../../../../../../store/api-actions/api-actions-filters/api-actions-filters';
 import {getHighPrice, getLowPrice} from '../../../../../../../store/filter-cameras/selectors';
 import {getMaxPrice, getMinPrice} from '../../../../../../../store/filter-cameras/selectors';
-
-import {QueryRoute} from '../../../../../../../utils/const';
-
 import {setHighPrice, setLowPrice} from '../../../../../../../store/filter-cameras/filter-cameras';
+
 
 interface FilterPriceProps {
   lowPriceValue: number | string;
@@ -35,7 +35,7 @@ const FilterPrice = ({lowPriceValue, onLowPriceChange, highPriceValue, onHighPri
   const [fixedLowPrice, setFixedLowPrice] = useState<string | number>(0);
   const [fixedHighPrice, setFixedHighPrice] = useState<string | number>(0);
 
-  const handlePriceChange = (evt: ChangeEvent<HTMLInputElement>) => {
+  const handlePriceInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
     const filter = evt.target.dataset.filter;
 
@@ -73,7 +73,7 @@ const FilterPrice = ({lowPriceValue, onLowPriceChange, highPriceValue, onHighPri
     }
   };
 
-  const handlePriceBlur = (evt: SyntheticEvent) => {
+  const handlePriceInputBlur = (evt: SyntheticEvent) => {
     const target = evt.target as HTMLInputElement;
     const filter = target.dataset.filter;
 
@@ -174,8 +174,8 @@ const FilterPrice = ({lowPriceValue, onLowPriceChange, highPriceValue, onHighPri
               data-filter={QueryRoute.LowPrice}
               type="number"
               name="price"
-              onBlur={handlePriceBlur}
-              onChange={handlePriceChange}
+              onBlur={handlePriceInputBlur}
+              onChange={handlePriceInputChange}
               placeholder={`от ${minPrice}`}
               value={lowPriceValue}
               onKeyDown={handleEnterKeyDown}
@@ -188,8 +188,8 @@ const FilterPrice = ({lowPriceValue, onLowPriceChange, highPriceValue, onHighPri
               data-filter={QueryRoute.HighPrice}
               type="number"
               name="priceUp"
-              onBlur={handlePriceBlur}
-              onChange={handlePriceChange}
+              onBlur={handlePriceInputBlur}
+              onChange={handlePriceInputChange}
               placeholder={`до ${maxPrice}`}
               value={highPriceValue}
               onKeyDown={handleEnterKeyDown}

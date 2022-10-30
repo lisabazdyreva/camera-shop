@@ -1,56 +1,43 @@
 import './basket-item.css';
 
-import {ChangeEvent, useState} from 'react';
+import {useState} from 'react';
 
 import {Picture} from '../../../../common/common';
+import {BasketQuantity} from '../components';
+
 import {Camera} from '../../../../../types/camera';
 import {getFormattedPrice} from '../../../../../utils/utils';
+import {useAppSelector} from '../../../../../hooks';
 
-import {useAppDispatch, useAppSelector} from '../../../../../hooks';
-import {getBasket} from '../../../../../store/process/selectors';
-import {removeBasketItem, setBasketItem, setBasketItems} from '../../../../../store/process/process';
+import {getBasket} from '../../../../../store/order/selectors';
+
 
 interface BasketItemProps {
-  onModalOpen: (id: number) => void;
+  onCameraRemoveModalOpen: (id: number) => void;
   camera: Camera;
 }
 
-const BasketItem = ({onModalOpen, camera}: BasketItemProps):JSX.Element => {
+const BasketItem = ({onCameraRemoveModalOpen, camera}: BasketItemProps):JSX.Element => {
   const {name, vendorCode, category, type, level, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x} = camera;
   const formattedPrice = getFormattedPrice(price);
-  const dispatch = useAppDispatch();
 
   const cameras = useAppSelector(getBasket);
-  const similarCameras = cameras.filter((item) => item.id === camera.id);
+  const sameCamerasAmount = cameras.filter((item) => item.id === camera.id).length;
 
-  const count = similarCameras.length;
-  const [cameraAmount, setCameraAmount] = useState(count);
+  const [cameraAmount, setCameraAmount] = useState(sameCamerasAmount);
 
-  const totalPrice = cameraAmount * price;
-  const totalFormattedPrice = getFormattedPrice(totalPrice);
+  const totalFormattedPrice = getFormattedPrice(cameraAmount * price);
 
-  const handleCameraAmountChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    //TODO валидация на больше - меньше
-    dispatch(setBasketItems({id: camera.id, amount: Number(evt.target.value)}));
-    setCameraAmount(Number(evt.target.value));
+  const handleRemoveCamerasButtonClick = () => {
+    onCameraRemoveModalOpen(camera.id);
   };
 
-  const handleDecreaseAmountButtonClick = () => {
-    dispatch(removeBasketItem(camera.id));
-    setCameraAmount(cameraAmount - 1);
-  };
-
-  const handleIncreaseAmountButtonClick = () => {
-    dispatch(setBasketItem(camera));
-    setCameraAmount(cameraAmount + 1);
-  };
-
-  const handleRemoveCamerasClick = () => {
-    onModalOpen(camera.id);
+  const handleCameraAmountChange = (amount: number) => {
+    setCameraAmount(amount);
   };
 
   return (
-    <li className="basket-item">
+    <li className="basket-item" data-testid='basket-item'>
       <div className="basket-item__img">
         <Picture
           width={140}
@@ -73,42 +60,11 @@ const BasketItem = ({onModalOpen, camera}: BasketItemProps):JSX.Element => {
         </ul>
       </div>
       <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{formattedPrice}</p>
-      <div className="quantity">
-        <button
-          className="btn-icon btn-icon--prev"
-          aria-label="уменьшить количество товара"
-          disabled={cameraAmount === 1}
-          onClick={handleDecreaseAmountButtonClick}
-        >
-          <svg width="7" height="12" aria-hidden="true">
-            <use xlinkHref="#icon-arrow"></use>
-          </svg>
-        </button>
-        <label className="visually-hidden" htmlFor="counter1"></label>
-        <input
-          type="number"
-          id="counter1"
-          min="1"
-          max="99"
-          aria-label="количество товара"
-          value={cameraAmount}
-          onChange={handleCameraAmountChange}
-        />
-        <button
-          className="btn-icon btn-icon--next"
-          aria-label="увеличить количество товара"
-          disabled={cameraAmount === 99}
-          onClick={handleIncreaseAmountButtonClick}
-        >
-          <svg width="7" height="12" aria-hidden="true">
-            <use xlinkHref="#icon-arrow"></use>
-          </svg>
-        </button>
-      </div>
+      <BasketQuantity camera={camera} cameraAmount={cameraAmount} onCameraAmountChange={handleCameraAmountChange}/>
       <div className="basket-item__total-price">
-        <span className="visually-hidden">Общая цена:</span>{totalFormattedPrice} {/*TODO большая цена обрезается*/}
+        <span className="visually-hidden">Общая цена:</span>{totalFormattedPrice}
       </div>
-      <button className="cross-btn" type="button" aria-label="Удалить товар" onClick={handleRemoveCamerasClick}>
+      <button className="cross-btn" type="button" aria-label="Удалить товар" onClick={handleRemoveCamerasButtonClick}>
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>
         </svg>

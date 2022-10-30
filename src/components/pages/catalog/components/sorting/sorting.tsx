@@ -3,14 +3,7 @@ import './sorting.css';
 import {useNavigate, useSearchParams} from 'react-router-dom';
 import {ChangeEvent, useEffect} from 'react';
 
-import {
-  AppRoute,
-  PaginationRoute,
-  QueryRoute,
-  SortingOrderDictionary,
-  SortingOrder,
-  SortingType, SortingTypeDictionary
-} from '../../../../../utils/const';
+import {AppRoute, QueryRoute, SortingOrderDictionary, SortingOrder, SortingType, SortingTypeDictionary} from '../../../../../utils/const';
 import {useAppDispatch, useAppSelector} from '../../../../../hooks';
 
 import {getCurrentSortingOrder, getCurrentSortingType} from '../../../../../store/process/selectors';
@@ -33,10 +26,10 @@ const Sorting = ():JSX.Element => {
     searchParams.set(...orderParam);
 
     setSearchParams(searchParams);
-    navigate(`${AppRoute.Catalog}${PaginationRoute.Page}1?${searchParams.toString()}`);
+    navigate(`${AppRoute.Catalog}${AppRoute.Page}1?${searchParams.toString()}`);
   };
 
-  const handleSortingTypeChange = (evt: ChangeEvent) => {
+  const handleSortingTypeRadioChange = (evt: ChangeEvent) => {
     const target = evt.target as HTMLInputElement;
     const value = target.dataset.value;
 
@@ -48,7 +41,7 @@ const Sorting = ():JSX.Element => {
     }
   };
 
-  const handleSortingOrderChange = (evt: ChangeEvent) => {
+  const handleSortingOrderRadioChange = (evt: ChangeEvent) => {
     const target = evt.target as HTMLInputElement;
     const value = target.dataset.value;
 
@@ -83,7 +76,7 @@ const Sorting = ():JSX.Element => {
                       name="sort"
                       checked={currentSortingType === type}
                       data-value={type}
-                      onChange={handleSortingTypeChange}
+                      onChange={handleSortingTypeRadioChange}
                     />
                     <label htmlFor={id}>{type === SortingType.Price ? SortingTypeDictionary.Price : SortingTypeDictionary.Popular}</label>
                   </div>
@@ -94,10 +87,7 @@ const Sorting = ():JSX.Element => {
           <div className="catalog-sort__order">
             {
               Object.values(SortingOrder).map((order) => (
-                <div
-                  className={`catalog-sort__btn catalog-sort__btn--${order === SortingOrder.Ascending ? 'up' : 'down'}`}
-                  key={order}
-                >
+                <div className={`catalog-sort__btn catalog-sort__btn--${order}`} key={order}>
                   <input
                     type="radio"
                     id={order}
@@ -105,7 +95,7 @@ const Sorting = ():JSX.Element => {
                     aria-label={order === SortingOrder.Ascending ? SortingOrderDictionary.Ascending : SortingOrderDictionary.Descending}
                     checked={currentSortingOrder === order}
                     data-value={order}
-                    onChange={handleSortingOrderChange}
+                    onChange={handleSortingOrderRadioChange}
                   />
                   <label htmlFor={order}>
                     <svg width="16" height="14" aria-hidden="true">

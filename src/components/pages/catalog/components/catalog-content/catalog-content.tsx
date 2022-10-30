@@ -4,7 +4,6 @@ import {useEffect, useState} from 'react';
 
 import {Pagination, Sorting} from '../components';
 import {ErrorInfo, Loader, ProductCard, WarningInfo} from '../../../../common/common';
-
 import {Camera} from '../../../../../types/camera';
 
 import {ErrorData, LoadingStatus, Step, WarningNotification} from '../../../../../utils/const';
