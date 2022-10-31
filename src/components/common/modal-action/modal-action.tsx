@@ -24,7 +24,7 @@ interface ModalActionProps {
 
 const ModalAction = ({data, onActionModalClose, onInfoModalOpen, modalActionType}: ModalActionProps):JSX.Element => {
   const dispatch = useAppDispatch();
-  //TODO посмотреть на тему ретернов упрощение
+
   const getDetails = () => {
     if (modalActionType === ModalActionName.AddReview && data && onInfoModalOpen) {
       return <ReviewForm id={data.id} onModalClose={onActionModalClose} onSuccessModalOpen={onInfoModalOpen}/>;

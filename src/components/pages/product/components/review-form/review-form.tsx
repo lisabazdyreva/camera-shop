@@ -41,7 +41,8 @@ interface ReviewFormProps {
   onSuccessModalOpen: () => void;
   id: number;
 }
-//TODO мб по валидности взять ищ промокода
+
+
 const ReviewForm = ({onModalClose, onSuccessModalOpen, id}: ReviewFormProps):JSX.Element => {
   const dispatch = useAppDispatch();
   const formData = useAppSelector(getReviewFormData);

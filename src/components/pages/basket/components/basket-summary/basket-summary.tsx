@@ -36,7 +36,7 @@ const BasketSummary = ({onPostOrderModalOpen}: BasketSummaryProps) :JSX.Element 
   };
 
   const handlePromoCodeFormSubmit = (evt: FormEvent) => {
-    evt.preventDefault(); //TODO если адрес промокода неверный
+    evt.preventDefault();
     dispatch(postCouponAction({coupon: promoCode.trim()}));
   };
 

@@ -4,7 +4,7 @@ import React, {ChangeEvent, SyntheticEvent, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import {Loader} from '../common';
-import {AppRoute, LoadingStatus, SEARCH_ERROR_NOTIFICATION, WarningNotification, TabType} from '../../../utils/const';
+import {AppRoute, LoadingStatus, ErrorNotification, WarningNotification, TabType} from '../../../utils/const';
 
 import {useAppDispatch, useAppSelector} from '../../../hooks';
 import {useFocus} from '../../../hooks/use-focus';
@@ -104,7 +104,7 @@ const Search = ():JSX.Element => {
           />
         </label>
         <ul className="form-search__select-list scroller">
-          {fetchStatus === LoadingStatus.Error && <li className="form-search__select-item">{SEARCH_ERROR_NOTIFICATION}</li>}
+          {fetchStatus === LoadingStatus.Error && <li className="form-search__select-item">{ErrorNotification.Search}</li>}
           {fetchStatus === LoadingStatus.Loading && <Loader />}
           {fetchStatus === LoadingStatus.Success && !searchedCameras.length && searchValue !== '' &&
             <li className="form-search__select-item" tabIndex={0}>{WarningNotification.Search}</li>}

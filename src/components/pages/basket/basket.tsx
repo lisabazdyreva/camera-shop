@@ -58,7 +58,7 @@ const Basket = () :JSX.Element => {
                   if (index !== 0) {
                     const previousId = cameras[index - 1].id;
                     if (camera.id === previousId) {
-                      return; // TODO eslint ругается
+                      return null;
                     }
                   }
                   return <BasketItem camera={camera} key={camera.id} onCameraRemoveModalOpen={handleCameraRemoveModalOpen}/>;

@@ -14,7 +14,6 @@ export const postOrderAction = createAsyncThunk<void, Order, {
   'order/postOrder',
   async (order, {extra: api}) => {
     await api.post(`${UrlRoute.Base}${UrlRoute.Orders}`, order);
-    //TODO потестировать на ошибки и этот undefined?
   },
 );
 

@@ -2,7 +2,7 @@ import './basket-promo.css';
 
 import {ChangeEvent, FormEvent} from 'react';
 
-import {CouponValidityStatus, LoadingStatus, PROMO_ERROR_NOTIFICATION, PROMO_WARNING_NOTIFICATION, ValidClass} from '../../../../../utils/const';
+import {CouponValidityStatus, LoadingStatus, ErrorNotification, WarningNotification, ValidClass} from '../../../../../utils/const';
 import {CouponValidityStatusType, LoadingStatusType} from '../../../../../types/types';
 
 
@@ -44,7 +44,7 @@ const BasketPromo = ({isCameras, couponValidity, onPromoCodeFormSubmit, promoCod
               />
             </label>
             <p className="custom-input__error">
-              {couponPostStatus === LoadingStatus.Success ? PROMO_WARNING_NOTIFICATION : PROMO_ERROR_NOTIFICATION}
+              {couponPostStatus === LoadingStatus.Success ? WarningNotification.Promo : ErrorNotification.Promo}
             </p>
             <p className="custom-input__success">Промокод принят!</p>
           </div>

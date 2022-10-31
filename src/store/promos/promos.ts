@@ -9,7 +9,7 @@ import {fetchPromosAction} from '../api-actions/api-actions-promo/api-actions-pr
 export const initialStatePromos: AppPromos = {
   promos: [],
   promosFetchStatus: LoadingStatus.Default,
-}; //TODO import
+};
 
 export const promos = createSlice({
   name: NameSpace.Promos,

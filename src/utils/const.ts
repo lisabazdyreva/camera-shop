@@ -6,15 +6,10 @@ export const FORM_ID_TYPE = 'id';
 export const MAX_RATING = 5;
 export const LOADER_NOTIFICATION = 'Идёт загрузка...';
 
-export const SEARCH_ERROR_NOTIFICATION = 'При загрузке произошла ошибка. Попробуйте позже';
-export const PROMO_ERROR_NOTIFICATION = 'Ошибка при отправке.';
-export const PROMO_WARNING_NOTIFICATION = 'Промокод неверный'; //TODO mb const
 export const DEBOUNCE_DELAY = 100;
-
 export const NOT_FOUND_ERROR_STATUS = 400;
 
 export const RU_FORMAT = 'ru';
-
 export const ACTIVE_CLASS = 'is-active';
 
 export const ServerAdaptValue = {
@@ -113,11 +108,6 @@ export const ComponentName = {
   Catalog: 'catalog',
   Product: 'product',
   Basket: 'basket',
-} as const;
-
-export const ModalContent = {
-  Info: 'info',
-  Action: 'action',
 } as const;
 
 export const BreadcrumbsItem = {
@@ -363,6 +353,7 @@ export const WarningNotification = {
   Filter: 'По таким фильтрам ничего не найдено.',
   Page: 'Такой страницы не найдено.',
   Basket: 'Добавьте товары в корзину.',
+  Promo: 'Промокод неверный',
 } as const;
 
 
@@ -413,4 +404,9 @@ export const ValidationMessage = {
 export const ValidClass = {
   Valid: 'is-valid',
   Invalid: 'is-invalid',
+} as const;
+
+export const ErrorNotification = {
+  Search: 'При загрузке произошла ошибка. Попробуйте позже',
+  Promo: 'Ошибка при отправке.',
 } as const;
