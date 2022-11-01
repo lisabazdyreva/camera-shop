@@ -11,8 +11,8 @@ import {removeBasketItem, setBasketItem, setBasketItems} from '../../../../../st
 
 interface BasketQuantityProps {
   camera: Camera;
-  cameraAmount: number;
-  onCameraAmountChange: (amount: number) => void;
+  cameraAmount: number | string;
+  onCameraAmountChange: (amount: number | string) => void;
 }
 
 
@@ -25,13 +25,23 @@ const BasketQuantity = ({camera, cameraAmount, onCameraAmountChange}: BasketQuan
   const isMaximum = cameraAmount === CamerasAmount.Max;
 
   const handleCameraAmountInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    if (evt.target.value === '') {
+      onCameraAmountChange('');
+      return;
+    }
     onCameraAmountChange(Number(evt.target.value));
   };
 
   const handleCameraAmountInputBlur = () => {
-    if (cameraAmount > CamerasAmount.Max || cameraAmount < CamerasAmount.Min) {
+    if (cameraAmount < CamerasAmount.Min) {
       onCameraAmountChange(Number(CamerasAmount.Min));
       dispatch(setBasketItems({id: camera.id, amount: CamerasAmount.Min}));
+      return;
+    }
+
+    if (cameraAmount > CamerasAmount.Max) {
+      onCameraAmountChange(Number(CamerasAmount.Max));
+      dispatch(setBasketItems({id: camera.id, amount: CamerasAmount.Max}));
       return;
     }
     onCameraAmountChange(Number(cameraAmount));
@@ -40,12 +50,12 @@ const BasketQuantity = ({camera, cameraAmount, onCameraAmountChange}: BasketQuan
 
   const handleDecreaseAmountButtonClick = () => {
     dispatch(removeBasketItem(camera.id));
-    onCameraAmountChange(cameraAmount - 1);
+    onCameraAmountChange(Number(cameraAmount) - 1);
   };
 
   const handleIncreaseAmountButtonClick = () => {
     dispatch(setBasketItem(camera));
-    onCameraAmountChange(cameraAmount + 1);
+    onCameraAmountChange(Number(cameraAmount) + 1);
   };
 
   return (

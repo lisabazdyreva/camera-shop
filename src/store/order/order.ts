@@ -25,10 +25,10 @@ export const order = createSlice({
     },
     setBasketItems: (state, action) => {
       const item = state.basket.find((camera) => camera.id === action.payload.id);
-      state.basket = state.basket.filter((camera) => camera.id !== action.payload.id);
+      const index = state.basket.findIndex((camera) => camera.id === action.payload.id);
 
       const newItems = new Array(action.payload.amount).fill(item);
-      state.basket.push(...newItems);
+      state.basket = [...state.basket.slice(0 , index), ...newItems, ...state.basket.slice(index + 1)];
     },
     removeBasketItem: (state, action) => {
       const index = state.basket.findIndex((camera) => camera.id === action.payload);

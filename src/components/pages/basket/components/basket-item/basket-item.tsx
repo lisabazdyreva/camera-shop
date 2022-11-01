@@ -24,15 +24,15 @@ const BasketItem = ({onCameraRemoveModalOpen, camera}: BasketItemProps):JSX.Elem
   const cameras = useAppSelector(getBasket);
   const sameCamerasAmount = cameras.filter((item) => item.id === camera.id).length;
 
-  const [cameraAmount, setCameraAmount] = useState(sameCamerasAmount);
+  const [cameraAmount, setCameraAmount] = useState<string | number>(sameCamerasAmount);
 
-  const totalFormattedPrice = getFormattedPrice(cameraAmount * price);
+  const totalFormattedPrice = getFormattedPrice(Number(cameraAmount) * price);
 
   const handleRemoveCamerasButtonClick = () => {
     onCameraRemoveModalOpen(camera.id);
   };
 
-  const handleCameraAmountChange = (amount: number) => {
+  const handleCameraAmountChange = (amount: number | string) => {
     setCameraAmount(amount);
   };
 
