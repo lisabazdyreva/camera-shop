@@ -1,31 +1,41 @@
 # Camera shop
 
-Camera shop - is an online shopping sevice to buy video and photo cameras. 
+Camera shop - is an online shopping service to buy video and photo cameras. 
+
+![Alt text]( "Camera shop catalog screen")
 
 
 It has a pretty user friendly interface with a simple familiar structure. In application you can find everything you need to find a perfect product in a short time.
 
+![Alt text]( "Camera shop filters screen")
 
 There is a filters user can select. Price arange, type of camera, professional level of camera. You can apply several filters at the same time to make you search more flexible and comfortable.
 
+![Alt text]( "Camera shop sorting screen")
 
 There is a sorting. You can sort cameras by price, by rating in defferent order. It also sum up with selected filters. So sorting is very convenient feature, because customer always pay attention on rating and especially price.
 
+![Alt text]( "Camera shop detailed information about camera")
+
 User can go to detailed information about camera by clicking a button from the main page. Every product has a block with description and features of the camera. You can toggle in tabs.
+
+
+![Alt text]( "Camera shop similar offers")
 
 Below a detailed information there is a gallery with similar offers. You can directly add the offer to cart or open a detailed information from interactive gallery. 
 
+![Alt text]( "Camera shop list of comments")
+
 Below the gallery you can view a list of comments with rating and add your owm comment by clicking a button on the right. 
+
+![Alt text]( "Camera shop add review")
 
 Comment form has 5 fields to fill in and they all are required. As soon as you click the submit button, your comment will appear at the top in the list.
 
+![Alt text]( "Camera shop cart screen")
+
 You can go to cart and view cameras you selected. Also user can apply a promo code and get the total price with discount.
 
-
-
-## Структура проекта
-
----
 
 
 
