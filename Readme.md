@@ -1,29 +1,33 @@
-# Руководство по работе с проектом
+# Camera shop
 
-Данный проект создан с помощью [Create React App](https://github.com/facebook/create-react-app).
+Camera shop - is an online shopping sevice to buy video and photo cameras. 
+
+
+It has a pretty user friendly interface with a simple familiar structure. In application you can find everything you need to find a perfect product in a short time.
+
+
+There is a filters user can select. Price arange, type of camera, professional level of camera. You can apply several filters at the same time to make you search more flexible and comfortable.
+
+
+There is a sorting. You can sort cameras by price, by rating in defferent order. It also sum up with selected filters. So sorting is very convenient feature, because customer always pay attention on rating and especially price.
+
+User can go to detailed information about camera by clicking a button from the main page. Every product has a block with description and features of the camera. You can toggle in tabs.
+
+Below a detailed information there is a gallery with similar offers. You can directly add the offer to cart or open a detailed information from interactive gallery. 
+
+Below the gallery you can view a list of comments with rating and add your owm comment by clicking a button on the right. 
+
+Comment form has 5 fields to fill in and they all are required. As soon as you click the submit button, your comment will appear at the top in the list.
+
+You can go to cart and view cameras you selected. Also user can apply a promo code and get the total price with discount.
+
+
 
 ## Структура проекта
 
 ---
 
-_Не удаляйте и не изменяйте папки и файлы:_
-_`.editorconfig`, `.gitattributes`, `.gitignore`, `package.json`._
 
----
-
-### public
-
-Директория для размещения статичных ресурсов (шрифты, стили, изображения и так далее). Корневая директория проекта.
-
-**Обратите внимание**, файл `Readme.md`, в директории `public`, содержит описание подготовительного процесса, который вам необходимо выполнить перед тем, как приступать к работе над проектом.
-
-### src
-
-В директории размещаются исходный код проекта: компоненты, файлы с тестами, модули и так далее. Структура директории `src` может быть произвольной.
-
-## Сценарии
-
-После создания проекта вам доступны следующие сценарии. Обратите внимание, для запуска сценария, вы должны находится в директории проекта (`./project`).
 
 ### Запуск проекта
 
