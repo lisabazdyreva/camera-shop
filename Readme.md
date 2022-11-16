@@ -2,101 +2,71 @@
 
 Camera shop - is an online shopping service to buy video and photo cameras. 
 
-![Alt text]( "Camera shop catalog screen")
+![Alt text]( ./github/camera-shop-main.png "Camera shop catalog screen")
 
 
-It has a pretty user friendly interface with a simple familiar structure. In application you can find everything you need to find a perfect product in a short time.
+It has a pretty user-friendly interface with a simple familiar structure. In application, you can find everything you need to find a perfect product in a short time.
 
-![Alt text]( "Camera shop filters screen")
+![Alt text]( ./github/camera-shop-filters.png "Camera shop filters screen")
 
-There is a filters user can select. Price arange, type of camera, professional level of camera. You can apply several filters at the same time to make you search more flexible and comfortable.
+There is a filters user can select. Price arrange, type of camera, professional level of camera. You can apply several filters at the same time to make you search more flexible and comfortable.
 
-![Alt text]( "Camera shop sorting screen")
+![Alt text]( ./github/camera-shop-sorting.png "Camera shop sorting screen")
 
-There is a sorting. You can sort cameras by price, by rating in defferent order. It also sum up with selected filters. So sorting is very convenient feature, because customer always pay attention on rating and especially price.
+There is a sorting. You can sort cameras by price, by rating in different order. It also sums up with selected filters. So sorting is very convenient feature, because customer always pay attention on rating and especially price.
 
-![Alt text]( "Camera shop detailed information about camera")
+![Alt text](./github/camera-shop-detailed.png "Camera shop detailed information about camera")
 
 User can go to detailed information about camera by clicking a button from the main page. Every product has a block with description and features of the camera. You can toggle in tabs.
 
+![Alt text](./github/camera-shop-similar.png "Camera shop similar offers")
 
-![Alt text]( "Camera shop similar offers")
+Below detailed information there is a gallery with similar offers. You can directly add the offer to cart or open detailed information from interactive gallery. 
 
-Below a detailed information there is a gallery with similar offers. You can directly add the offer to cart or open a detailed information from interactive gallery. 
-
-![Alt text]( "Camera shop list of comments")
+![Alt text](./github/camera-shop-comments.png "Camera shop list of comments")
 
 Below the gallery you can view a list of comments with rating and add your owm comment by clicking a button on the right. 
 
-![Alt text]( "Camera shop add review")
+![Alt text](./github/camera-shop-review.png "Camera shop add review")
 
-Comment form has 5 fields to fill in and they all are required. As soon as you click the submit button, your comment will appear at the top in the list.
+Comment form has 5 fields to fill in, and they all are required. As soon as you click the submit button, your comment will appear at the top in the list.
 
-![Alt text]( "Camera shop cart screen")
+![Alt text](./github/camera-shop-cart.png "Camera shop cart screen")
 
-You can go to cart and view cameras you selected. Also user can apply a promo code and get the total price with discount.
+You can go to cart and view cameras you selected. Also, user can apply a promo code and get the total price with discount.
+
+## Stack
+- React,
+- Typescript,
+- React Dom Router,
+- Redux Toolkit,
+- Jest,
+- Axios.
 
 
+## Demo site
+[Go to Camera shop application >>](https://bazdyreva-camera-shop-lisabazdyreva.vercel.app/)
 
+## How to run app locally:
 
-### Запуск проекта
+- Clone repository:
+```bash
+git clone git@github.com:lisabazdyreva/camera-shop.git
+```
+
+- Install dependencies repository:
+
+```bash
+npm install
+```
+
+- Run application:
 
 ```bash
 npm start
 ```
 
-После запуска, приложение доступно для просмотра в браузере по адресу [http://localhost:3000](http://localhost:3000).
-
-При сохранении изменений, проект перезапускается и обновляется в браузере. Таким образом, вы можете следить за разработкой проекта в режиме реального времени.
-
-**Обратите внимание**, режим разработки настроен таким образом, при котором ошибки, найденные статическим анализатором кода **ESLint**, отображаются в той же вкладке браузера, в которой запущен проект.
-
-### Запуск тестов
-
+- Check tests
 ```bash
 npm test
 ```
-
-Запуск тестов приложения в интерактивном режиме.
-
-В данном случае, имеются в виду тесты, которые вынесены в отдельные файлы, в имени которых присутствует суффикс `*.test.*`. Например, `app.test.tsx`.
-
-Подробную информацию вы можете найти на странице [Запуск тестов](https://facebook.github.io/create-react-app/docs/running-tests).
-
-### Проверка линтером
-
-```bash
-npm run lint
-```
-
-Запуск проверки проекта статическим анализатором кода **ESLint**.
-
-Анализ кода производится только в файлах, которые находятся в директории `src`.
-
-**Обратите внимание**, при запуске данной команды, ошибки выводятся в терминал.
-
-### Сборка проекта
-
-```bash
-npm run build
-```
-
-Запуск сборки приложения.
-
-В процессе сборки приложения, код приложения оптимизируется и минимизируется, для достижения наилучшей производительности.
-
-Во время выполнения инструкций по сборке проекта, в корне проекта создается директория `build`, в которую будут помещены результирующие файлы. После сборки проект готов к публикации.
-
-Подробную информацию вы можете найти на странице [Развертывание проекта](https://facebook.github.io/create-react-app/docs/deployment).
-
-### Извлечение конфигурации проекта
-
-```bash
-npm run eject
-```
-
-**Обратите внимание**, при запуске команды `npm run eject` нет возможности вернуть внесённые изменения обратно!
-
-Выполнение данной команды, `react-scripts` скопирует все конфигурационные файлы и скрипты в корень проекта. Данный процесс позволяет получить полный контроль над конфигурацией проекта.
-
-Не используйте данную команду, если не уверены как именно она работает или к какому результату приведёт ее выполнение.
